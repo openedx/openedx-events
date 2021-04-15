@@ -1,12 +1,12 @@
-.. openedx-events documentation top level file, created by
+.. openedx-hooks documentation top level file, created by
    sphinx-quickstart on Wed Apr 07 10:13:29 2021.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-openedx-events
+openedx-hookss
 ==============
 
-What is this project?
+Library with definitions and utilities for the Open edX hooks framework.
 
 Contents:
 

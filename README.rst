@@ -1,22 +1,11 @@
-openedx-events
+openedx-hooks
 =============================
 
-|pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
+|pypi-badge| |ci-badge| |codecov-badge| |pyversions-badge|
 |license-badge|
 
-The ``README.rst`` file should start with a brief description of the repository,
-which sets it in the context of other repositories under the ``edx``
-organization. It should make clear where this fits in to the overall edX
-codebase.
+openedx-hooks is a python library that contains the common definitions (django signals) and utilities for the Open edX hooks framework.
 
-What is this project?
-
-Overview (please modify)
-------------------------
-
-The ``README.rst`` file should then provide an overview of the code in this
-repository, including the main components and useful entry points for starting
-to understand the code in more detail.
 
 Documentation
 -------------
@@ -31,11 +20,11 @@ One Time Setup
 .. code-block::
 
   # Clone the repository
-  git clone git@github.com:edx/openedx-events.git
-  cd openedx-events
+  git clone git@github.com:edx/openedx-hooks.git
+  cd openedx-hooks
 
   # Set up a virtualenv using virtualenvwrapper with the same name as the repo and activate it
-  mkvirtualenv -p python3.8 openedx-events
+  mkvirtualenv -p python3.8 openedx-hooks
 
 
 Every time you develop something in this repo
@@ -43,7 +32,7 @@ Every time you develop something in this repo
 .. code-block::
 
   # Activate the virtualenv
-  workon openedx-events
+  workon openedx-hooks
 
   # Grab the latest code
   git checkout master
@@ -113,26 +102,26 @@ For more information about these options, see the `Getting Help`_ page.
 .. _community Slack workspace: https://openedx.slack.com/
 .. _Getting Help: https://openedx.org/getting-help
 
-.. |pypi-badge| image:: https://img.shields.io/pypi/v/openedx-events.svg
-    :target: https://pypi.python.org/pypi/openedx-events/
+.. |pypi-badge| image:: https://img.shields.io/pypi/v/openedx-hooks.svg
+    :target: https://pypi.python.org/pypi/openedx-hooks/
     :alt: PyPI
 
-.. |ci-badge| image:: https://github.com/edx/openedx-events/workflows/Python%20CI/badge.svg?branch=master
-    :target: https://github.com/edx/openedx-events/actions
+.. |ci-badge| image:: https://github.com/edunext/openedx-hooks/workflows/Python%20CI/badge.svg?branch=main
+    :target: https://github.com/edunext/openedx-hooks/actions
     :alt: CI
 
-.. |codecov-badge| image:: https://codecov.io/github/edx/openedx-events/coverage.svg?branch=master
-    :target: https://codecov.io/github/edx/openedx-events?branch=master
+.. |codecov-badge| image:: https://codecov.io/github/edunext/openedx-hooks/coverage.svg?branch=master
+    :target: https://codecov.io/github/edunext/openedx-hooks?branch=main
     :alt: Codecov
 
-.. |doc-badge| image:: https://readthedocs.org/projects/openedx-events/badge/?version=latest
-    :target: https://openedx-events.readthedocs.io/en/latest/
+.. |doc-badge| image:: https://readthedocs.org/projects/openedx-hooks/badge/?version=latest
+    :target: https://openedx-hooks.readthedocs.io/en/latest/
     :alt: Documentation
 
-.. |pyversions-badge| image:: https://img.shields.io/pypi/pyversions/openedx-events.svg
-    :target: https://pypi.python.org/pypi/openedx-events/
+.. |pyversions-badge| image:: https://img.shields.io/pypi/pyversions/openedx-hooks.svg
+    :target: https://pypi.python.org/pypi/openedx-hooks/
     :alt: Supported Python versions
 
-.. |license-badge| image:: https://img.shields.io/github/license/edx/openedx-events.svg
-    :target: https://github.com/edx/openedx-events/blob/master/LICENSE.txt
+.. |license-badge| image:: https://img.shields.io/github/license/edx/openedx-hooks.svg
+    :target: https://github.com/edunext/openedx-hooks/blob/main/LICENSE.txt
     :alt: License

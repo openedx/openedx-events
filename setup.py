@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 """
-Package metadata for openedx_events.
+Package metadata for openedx_hooks.
 """
 import os
 import re
@@ -53,7 +53,7 @@ def is_requirement(line):
     return line and not line.startswith(('-r', '#', '-e', 'git+', '-c'))
 
 
-VERSION = get_version('openedx_events', '__init__.py')
+VERSION = get_version('openedx_hooks', '__init__.py')
 
 if sys.argv[-1] == 'tag':
     print("Tagging the version on github:")
@@ -65,15 +65,15 @@ README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 CHANGELOG = open(os.path.join(os.path.dirname(__file__), 'CHANGELOG.rst')).read()
 
 setup(
-    name='openedx-events',
+    name='openedx-hooks',
     version=VERSION,
-    description="""What is this project?""",
+    description="""Open edX hooks definitions and utilities.""",
     long_description=README + '\n\n' + CHANGELOG,
     author='edX',
     author_email='oscm@edx.org',
-    url='https://github.com/edx/openedx-events',
+    url='https://github.com/edx/openedx-hooks',
     packages=[
-        'openedx_events',
+        'openedx_hooks',
     ],
     include_package_data=True,
     install_requires=load_requirements('requirements/base.in'),

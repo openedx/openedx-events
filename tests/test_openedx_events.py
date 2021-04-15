@@ -1,11 +1,11 @@
 """
-Tests for openedx_events.py.
+Tests for openedx_hooks.py.
 """
 
 
 class TestEvents:
     """
-    Tests of openedx events.
+    Tests of openedx hooks.
     """
 
     def test_something(self):

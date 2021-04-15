@@ -1,6 +1,6 @@
 # pylint: disable=invalid-name
 """
-openedx-events documentation build configuration file.
+openedx-hooks documentation build configuration file.
 
 This file is execfile()d with the current directory set to its
 containing dir.
@@ -40,7 +40,7 @@ def get_version(*file_paths):
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(REPO_ROOT)
 
-VERSION = get_version('../openedx_events', '__init__.py')
+VERSION = get_version('../openedx_hooks', '__init__.py')
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -91,10 +91,10 @@ source_suffix = '.rst'
 top_level_doc = 'index'
 
 # General information about the project.
-project = 'openedx-events'
+project = 'openedx-hooks'
 copyright = edx_theme.COPYRIGHT  # pylint: disable=redefined-builtin
 author = edx_theme.AUTHOR
-project_title = 'openedx-events'
+project_title = 'openedx-hooks'
 documentation_title = "{project_title}".format(project_title=project_title)
 
 
@@ -102,7 +102,7 @@ documentation_title = "{project_title}".format(project_title=project_title)
 html_context = {
     "display_github": True,  # Integrate GitHub
     "github_user": "edx",  # Username
-    "github_repo": 'openedx-events',  # Repo name
+    "github_repo": 'openedx-hooks',  # Repo name
     "github_version": "master",  # Version
     "conf_py_path": "/docs/",  # Path in the checkout to the docs root
 }
@@ -188,7 +188,7 @@ html_theme_path = [edx_theme.get_html_theme_path()]
 # The name for this set of Sphinx documents.
 # "<project> v<release> documentation" by default.
 #
-# html_title = 'openedx-events v0.1.0'
+# html_title = 'openedx-hooks v0.1.0'
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #
@@ -500,8 +500,8 @@ def on_init(app):  # pylint: disable=unused-argument
         # If we are, assemble the path manually
         bin_path = os.path.abspath(os.path.join(sys.prefix, 'bin'))
         apidoc_path = os.path.join(bin_path, apidoc_path)
-    check_call([apidoc_path, '-o', docs_path, os.path.join(root_path, 'openedx_events'),
-                os.path.join(root_path, 'openedx_events/migrations')])
+    check_call([apidoc_path, '-o', docs_path, os.path.join(root_path, 'openedx_hooks'),
+                os.path.join(root_path, 'openedx_hooks/migrations')])
 
 
 def setup(app):

@@ -2,7 +2,7 @@
 # https://open-edx-proposals.readthedocs.io/en/latest/oep-0002-bp-repo-metadata.html#specification
 
 ---
-nick: openedx-events
+nick: openedx-hooks
 tags:
     - tools
 oeps:

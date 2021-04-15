@@ -48,11 +48,11 @@ upgrade: ## update the requirements/*.txt files with the latest packages satisfy
 
 quality: ## check coding style with pycodestyle and pylint
 	touch tests/__init__.py
-	pylint openedx_events tests test_utils *.py
+	pylint openedx_hooks tests test_utils *.py
 	rm tests/__init__.py
-	pycodestyle openedx_events tests  *.py
-	pydocstyle openedx_events tests *.py
-	isort --check-only --diff --recursive tests test_utils openedx_events *.py test_settings.py
+	pycodestyle openedx_hooks tests  *.py
+	pydocstyle openedx_hooks tests *.py
+	isort --check-only --diff --recursive tests test_utils openedx_hooks *.py test_settings.py
 	python setup.py bdist_wheel
 	twine check dist/*
 	make selfcheck

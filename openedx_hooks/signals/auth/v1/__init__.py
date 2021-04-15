@@ -1,5 +1,5 @@
 """
-openedx_events.signals.auth.v1 module.
+openedx_hooks.signals.auth.v1 module.
 """
 
 from django.dispatch import Signal
