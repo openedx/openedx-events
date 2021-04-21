@@ -8,7 +8,7 @@ asgiref==3.3.4
     # via
     #   -r requirements/test.txt
     #   django
-astroid==2.5.2
+astroid==2.5.3
     # via
     #   pylint
     #   pylint-celery
@@ -44,18 +44,20 @@ coverage==5.5
     #   pytest-cov
 cryptography==3.4.7
     # via secretstorage
+ddt==1.4.2
+    # via -r requirements/test.txt
 django==3.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
     #   edx-lint
-docutils==0.17
+docutils==0.17.1
     # via readme-renderer
 edx-lint==5.0.0
     # via -r requirements/quality.in
 idna==2.10
     # via requests
-importlib-metadata==3.10.0
+importlib-metadata==4.0.1
     # via
     #   keyring
     #   twine
@@ -114,7 +116,7 @@ pygments==2.8.1
     # via readme-renderer
 pylint-celery==0.3
     # via edx-lint
-pylint-django==2.4.2
+pylint-django==2.4.3
     # via edx-lint
 pylint-plugin-utils==0.6
     # via
@@ -132,7 +134,7 @@ pyparsing==2.4.7
     #   packaging
 pytest-cov==2.11.1
     # via -r requirements/test.txt
-pytest-django==4.1.0
+pytest-django==4.2.0
     # via -r requirements/test.txt
 pytest==6.2.3
     # via

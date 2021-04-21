@@ -12,7 +12,7 @@ asgiref==3.3.4
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.5.2
+astroid==2.5.3
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -72,6 +72,8 @@ cryptography==3.4.7
     # via
     #   -r requirements/quality.txt
     #   secretstorage
+ddt==1.4.2
+    # via -r requirements/quality.txt
 diff-cover==5.0.1
     # via -r requirements/dev.in
 distlib==0.3.1
@@ -83,7 +85,7 @@ django==3.2
     #   -r requirements/quality.txt
     #   code-annotations
     #   edx-lint
-docutils==0.17
+docutils==0.17.1
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
@@ -99,7 +101,7 @@ idna==2.10
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==3.10.0
+importlib-metadata==4.0.1
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -158,7 +160,7 @@ pep517==0.10.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-pip-tools==6.0.1
+pip-tools==6.1.0
     # via -r requirements/pip-tools.txt
 pkginfo==1.7.0
     # via
@@ -194,7 +196,7 @@ pylint-celery==0.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-pylint-django==2.4.2
+pylint-django==2.4.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -217,7 +219,7 @@ pyparsing==2.4.7
     #   packaging
 pytest-cov==2.11.1
     # via -r requirements/quality.txt
-pytest-django==4.1.0
+pytest-django==4.2.0
     # via -r requirements/quality.txt
 pytest==6.2.3
     # via
@@ -310,7 +312,7 @@ urllib3==1.26.4
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-virtualenv==20.4.3
+virtualenv==20.4.4
     # via
     #   -r requirements/ci.txt
     #   tox
