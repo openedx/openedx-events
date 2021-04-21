@@ -22,8 +22,8 @@ class TestTriggerFilter(TestCase):
             "request": Mock(),
         }
 
-    @patch("edx_django_utils.hooks.triggers.run_pipeline")
-    @patch("edx_django_utils.hooks.triggers.get_pipeline_configuration")
+    @patch("openedx_hooks.filters.triggers.run_pipeline")
+    @patch("openedx_hooks.filters.triggers.get_pipeline_configuration")
     def test_run_empty_pipeline(self, get_configuration_mock, run_pipeline_mock):
         """
         This method runs trigget_filter with an empty pipeline.
@@ -38,8 +38,8 @@ class TestTriggerFilter(TestCase):
         self.assertDictEqual(result, self.kwargs)
         run_pipeline_mock.assert_not_called()
 
-    @patch("edx_django_utils.hooks.triggers.run_pipeline")
-    @patch("edx_django_utils.hooks.triggers.get_pipeline_configuration")
+    @patch("openedx_hooks.filters.triggers.run_pipeline")
+    @patch("openedx_hooks.filters.triggers.get_pipeline_configuration")
     def test_affecting_execution(self, get_configuration_mock, run_pipeline_mock):
         """
         This method runs trigget_filter affecting the application flow

@@ -46,11 +46,11 @@ class TestUtilityFunctions(TestCase):
             Returns a list without the non-existing function.
         """
         pipeline = [
-            "edx_django_utils.hooks.tests.test_utils.test_function",
-            "edx_django_utils.hooks.tests.test_utils.non_existent",
+            "openedx_hooks.filters.tests.test_utils.test_function",
+            "openedx_hooks.filters.tests.test_utils.non_existent",
         ]
         log_message = "Failed to import '{}'.".format(
-            "edx_django_utils.hooks.tests.test_utils.non_existent"
+            "openedx_hooks.filters.tests.test_utils.non_existent"
         )
 
         with self.assertLogs() as captured:
@@ -71,11 +71,11 @@ class TestUtilityFunctions(TestCase):
             Returns a list without the non-existing function.
         """
         pipeline = [
-            "edx_django_utils.hooks.tests.test_utils.test_function",
-            "edx_django_utils.hooks.non_existent.test_utils.test_function",
+            "openedx_hooks.filters.tests.test_utils.test_function",
+            "openedx_hooks.filters.non_existent.test_utils.test_function",
         ]
         log_message = "Failed to import '{}'.".format(
-            "edx_django_utils.hooks.non_existent.test_utils.test_function"
+            "openedx_hooks.filters.non_existent.test_utils.test_function"
         )
 
         with self.assertLogs() as captured:
@@ -94,8 +94,8 @@ class TestUtilityFunctions(TestCase):
             Returns a list with the function objects.
         """
         pipeline = [
-            "edx_django_utils.hooks.tests.test_utils.test_function",
-            "edx_django_utils.hooks.tests.test_utils.test_function",
+            "openedx_hooks.filters.tests.test_utils.test_function",
+            "openedx_hooks.filters.tests.test_utils.test_function",
         ]
 
         function_list = get_functions_for_pipeline(pipeline)
@@ -119,8 +119,8 @@ class TestUtilityFunctions(TestCase):
         HOOKS_EXTENSION_CONFIG={
             "trigger_name": {
                 "pipeline": [
-                    "edx_django_utils.hooks.tests.test_utils.test_function",
-                    "edx_django_utils.hooks.tests.test_utils.test_function",
+                    "openedx_hooks.filters.tests.test_utils.test_function",
+                    "openedx_hooks.filters.tests.test_utils.test_function",
                 ],
                 "async": False,
             }
@@ -137,8 +137,8 @@ class TestUtilityFunctions(TestCase):
         """
         expected_result = {
             "pipeline": [
-                "edx_django_utils.hooks.tests.test_utils.test_function",
-                "edx_django_utils.hooks.tests.test_utils.test_function",
+                "openedx_hooks.filters.tests.test_utils.test_function",
+                "openedx_hooks.filters.tests.test_utils.test_function",
             ],
             "async": False,
         }
@@ -147,35 +147,35 @@ class TestUtilityFunctions(TestCase):
 
         self.assertDictEqual(result, expected_result)
 
-    @patch("edx_django_utils.hooks.utils.get_hook_configurations")
+    @patch("openedx_hooks.filters.utils.get_hook_configurations")
     @ddt.data(
-        (("edx_django_utils.hooks.tests.test_utils.test_function",), []),
+        (("openedx_hooks.filters.tests.test_utils.test_function",), []),
         ({}, []),
         (
             {
                 "pipeline": [
-                    "edx_django_utils.hooks.tests.test_utils.test_function",
-                    "edx_django_utils.hooks.tests.test_utils.test_function",
+                    "openedx_hooks.filters.tests.test_utils.test_function",
+                    "openedx_hooks.filters.tests.test_utils.test_function",
                 ],
             },
             [
-                "edx_django_utils.hooks.tests.test_utils.test_function",
-                "edx_django_utils.hooks.tests.test_utils.test_function",
+                "openedx_hooks.filters.tests.test_utils.test_function",
+                "openedx_hooks.filters.tests.test_utils.test_function",
             ],
         ),
         (
             [
-                "edx_django_utils.hooks.tests.test_utils.test_function",
-                "edx_django_utils.hooks.tests.test_utils.test_function",
+                "openedx_hooks.filters.tests.test_utils.test_function",
+                "openedx_hooks.filters.tests.test_utils.test_function",
             ],
             [
-                "edx_django_utils.hooks.tests.test_utils.test_function",
-                "edx_django_utils.hooks.tests.test_utils.test_function",
+                "openedx_hooks.filters.tests.test_utils.test_function",
+                "openedx_hooks.filters.tests.test_utils.test_function",
             ],
         ),
         (
-            "edx_django_utils.hooks.tests.test_utils.test_function",
-            ["edx_django_utils.hooks.tests.test_utils.test_function", ],
+            "openedx_hooks.filters.tests.test_utils.test_function",
+            ["openedx_hooks.filters.tests.test_utils.test_function", ],
         ),
     )
     @ddt.unpack
