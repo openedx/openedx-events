@@ -11,11 +11,18 @@ log = getLogger(__name__)
 
 def get_functions_for_pipeline(pipeline):
     """
-    Helper function that given a pipeline with functions paths gets the objects related
-    to each path.
+    Get function objects from paths.
+
+    Helper function that given a pipeline with functions paths gets
+    the objects related to each path.
 
     Example usage:
-        functions = get_functions_for_pipeline(['1st_path_to_function', ...])
+        functions = get_functions_for_pipeline(
+            [
+                '1st_path_to_function',
+                ...
+            ]
+        )
         >>> functions
         [
             <function 1st_function at 0x00000000000>,
@@ -42,8 +49,11 @@ def get_functions_for_pipeline(pipeline):
 
 def get_pipeline_configuration(trigger_name):
     """
-    Helper function used to get the configuration needed to execute the Pipeline Runner.
-    It will take from the hooks configuration the ist of functions to execute and how to execute them.
+    Get pipeline configuration from filter settings.
+
+    Helper function used to get the configuration needed to execute
+    the Pipeline Runner. It will take from the hooks configuration
+    the list of functions to execute and how to execute them.
 
     Example usage:
         pipeline_config = get_pipeline_configuration('trigger')
@@ -56,10 +66,12 @@ def get_pipeline_configuration(trigger_name):
             )
 
     Arguments:
-        trigger_name (str): determines which is the trigger of this pipeline.
+        trigger_name (str): determines which is the trigger of this
+        pipeline.
 
     Returns:
-        pipeline (list): paths where functions for the pipeline are defined.
+        pipeline (list): paths where functions for the pipeline are
+        defined.
     """
     hook_config = get_hook_configurations(trigger_name)
 
@@ -82,7 +94,10 @@ def get_pipeline_configuration(trigger_name):
 
 def get_hook_configurations(trigger_name):
     """
-    Helper function used to get configuration needed for using Hooks Extension Framework.
+    Get filters configuration from settings.
+
+    Helper function used to get configuration needed for using
+    Hooks Extension Framework.
 
     Example usage:
             configuration = get_hook_configurations('trigger')
@@ -99,7 +114,8 @@ def get_hook_configurations(trigger_name):
         trigger_name (str): determines which configuration to use.
 
     Returns:
-        hooks configuration (dict): taken from Django settings containing hooks configuration.
+        hooks configuration (dict): taken from Django settings
+        containing hooks configuration.
     """
     hooks_config = getattr(settings, "HOOKS_EXTENSION_CONFIG", {})
 

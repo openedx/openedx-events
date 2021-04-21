@@ -27,7 +27,8 @@ class TestRunningPipeline(TestCase):
     @patch("edx_django_utils.hooks.pipeline.get_functions_for_pipeline")
     def test_run_empty_pipeline(self, get_functions_mock):
         """
-        This method runs an empty pipeline, i.e, a pipeline without defined functions.
+        This method runs an empty pipeline, i.e, a pipeline without
+        defined functions.
 
         Expected behavior:
             Returns the same input arguments.
@@ -42,7 +43,8 @@ class TestRunningPipeline(TestCase):
     @patch("edx_django_utils.hooks.pipeline.get_functions_for_pipeline")
     def test_raise_hook_exception(self, get_functions_mock):
         """
-        This method runs a pipeline with a function that raises HookException.
+        This method runs a pipeline with a function that raises
+        HookException.
 
         Expected behavior:
             The pipeline re-raises the exception caught.
@@ -64,8 +66,8 @@ class TestRunningPipeline(TestCase):
     @patch("edx_django_utils.hooks.pipeline.get_functions_for_pipeline")
     def test_not_raise_hook_exception(self, get_functions_mock):
         """
-        This method runs a pipeline with a function that raises HookException but
-        raise_exception is set to False.
+        This method runs a pipeline with a function that raises
+        HookException but raise_exception is set to False.
 
         Expected behavior:
             The pipeline does not re-raise the exception caught.
@@ -88,7 +90,8 @@ class TestRunningPipeline(TestCase):
     @patch("edx_django_utils.hooks.pipeline.get_functions_for_pipeline")
     def test_not_raise_common_exception(self, get_functions_mock):
         """
-        This method runs a pipeline with a function that raises a common Exception.
+        This method runs a pipeline with a function that raises a
+        common Exception.
 
         Expected behavior:
             The pipeline continues execution after caughting Exception.
@@ -104,8 +107,8 @@ class TestRunningPipeline(TestCase):
             function_without_exception,
         ]
         log_message = (
-            "Exception raised while running 'function_with_exception': Value error exception\n"
-            "Continuing execution."
+            "Exception raised while running 'function_with_exception': "
+            "Value error exception\nContinuing execution."
         )
 
         with self.assertLogs() as captured:
@@ -162,7 +165,10 @@ class TestRunningPipeline(TestCase):
             first_function,
             second_function,
         ]
-        log_message = "Pipeline stopped by 'first_function' for returning an object."
+        log_message = (
+            "Pipeline stopped by 'first_function' for returning "
+            "an object."
+        )
 
         with self.assertLogs() as captured:
             result = run_pipeline(self.pipeline, **self.kwargs)

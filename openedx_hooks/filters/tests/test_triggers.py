@@ -42,12 +42,14 @@ class TestTriggerFilter(TestCase):
     @patch("edx_django_utils.hooks.triggers.get_pipeline_configuration")
     def test_affecting_execution(self, get_configuration_mock, run_pipeline_mock):
         """
-        This method runs trigget_filter affecting the application flow raising exceptions.
+        This method runs trigget_filter affecting the application flow
+        raising exceptions.
 
         Expected behavior:
             Run pipeline is called with raise_exception equals to True.
-            Also, given that by default filters are synchronous, then get_pipeline_configuration is
-            called with async_default equals to False.
+            Also, given that by default filters are synchronous,
+            then get_pipeline_configuration is called with async_default equals
+            to False.
         """
         pipeline = Mock()
         get_configuration_mock.return_value = pipeline

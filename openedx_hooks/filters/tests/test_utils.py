@@ -23,8 +23,9 @@ class TestUtilityFunctions(TestCase):
 
     def test_get_empty_function_list(self):
         """
-        This method is used to verify the behavior of get_functions_for_pipeline
-        when an empty pipeline is passed as argument.
+        This method is used to verify the behavior of
+        get_functions_for_pipeline when an empty pipeline is
+        passed as argument.
 
         Expected behavior:
             Returns an empty list.
@@ -37,8 +38,9 @@ class TestUtilityFunctions(TestCase):
 
     def test_get_non_existing_function(self):
         """
-        This method is used to verify the behavior of get_functions_for_pipeline
-        when a non-existing function path is passed inside the pipeline argument.
+        This method is used to verify the behavior of
+        get_functions_for_pipeline when a non-existing function
+        path is passed inside the pipeline argument.
 
         Expected behavior:
             Returns a list without the non-existing function.
@@ -61,8 +63,9 @@ class TestUtilityFunctions(TestCase):
 
     def test_get_non_existing_module_func(self):
         """
-        This method is used to verify the behavior of get_functions_for_pipeline
-        when a non-existing module path is passed inside the pipeline argument.
+        This method is used to verify the behavior of
+        get_functions_for_pipeline when a non-existing module
+        path is passed inside the pipeline argument.
 
         Expected behavior:
             Returns a list without the non-existing function.
@@ -83,8 +86,9 @@ class TestUtilityFunctions(TestCase):
 
     def test_get_function_list(self):
         """
-        This method is used to verify the behavior of get_functions_for_pipeline
-        when a list of functions paths is passed as the pipeline parameter.
+        This method is used to verify the behavior of
+        get_functions_for_pipeline when a list of functions
+        paths is passed as the pipeline parameter.
 
         Expected behavior:
             Returns a list with the function objects.
@@ -100,8 +104,9 @@ class TestUtilityFunctions(TestCase):
 
     def test_get_empty_hook_config(self):
         """
-        This method is used to verify the behavior of get_hook_configurations
-        when a trigger without a HOOKS_EXTENSION_CONFIG is passed as parameter.
+        This method is used to verify the behavior of
+        get_hook_configurations when a trigger without a
+        HOOKS_EXTENSION_CONFIG is passed as parameter.
 
         Expected behavior:
             Returns an empty dictionary.
@@ -123,8 +128,9 @@ class TestUtilityFunctions(TestCase):
     )
     def test_get_hook_config(self):
         """
-        This method is used to verify the behavior of get_hook_configurations
-        when a trigger with HOOKS_EXTENSION_CONFIG defined is passed as parameter.
+        This method is used to verify the behavior of
+        get_hook_configurations when a trigger with
+        HOOKS_EXTENSION_CONFIG defined is passed as parameter.
 
         Expected behavior:
             Returns a tuple with pipeline configurations.
@@ -175,11 +181,13 @@ class TestUtilityFunctions(TestCase):
     @ddt.unpack
     def test_get_pipeline_config(self, config, expected_result, get_config_mock):
         """
-        This method is used to verify the behavior of get_pipeline_configuration
-        when a trigger with HOOKS_EXTENSION_CONFIG defined is passed as parameter.
+        This method is used to verify the behavior of
+        get_pipeline_configuration when a trigger with
+        HOOKS_EXTENSION_CONFIG defined is passed as parameter.
 
         Expected behavior:
-            Returns a tuple with the pipeline and synchronous configuration.
+            Returns a tuple with the pipeline and synchronous
+            configuration.
         """
         get_config_mock.return_value = config
 
