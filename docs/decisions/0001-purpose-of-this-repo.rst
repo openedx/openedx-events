@@ -9,21 +9,14 @@ Draft
 Context
 -------
 
-TODO: Give context on what lead to the creation of this repo.
-      What project is the repo related to?
+OEP-50 was created with the intention of create a common pattern to extend some places of the platform in a more suitable way. In this regard, it was defined a set of requirements that requires the creation of a repository to store the Django Signals definitions used in edx-platform that could be used by plugins or in other Djangoapps.
 
 Decision
 --------
 
-TODO: Clearly state how the context above led you to creating this repo.
+This repository was created as a home for all the definitions of the Django Signals (events) of the edx-platform.
 
 Consequences
 ------------
 
-TODO: As a result of this repo's creation, what other things will change.
-
-Rejected Alternatives
----------------------
-
-TODO: If applicable, list viable alternatives to creating this new repo and
- give reasons for why they were rejected.
+Some Django Signals defined in edx-platform will moved to this library.
