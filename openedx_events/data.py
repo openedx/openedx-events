@@ -52,7 +52,7 @@ class StudentDataV3:
     """
     Attributes defined for Open edX User object.
     """
-    username = attr.ib(type=str, kw_only=True)
+    username = attr.ib(type=str, kw_only=True, validator=attr.validators.instance_of(str))
     email = attr.ib(type=str, kw_only=True)
     profile_meta = attr.ib(factory=dict, type=Dict[str, str], kw_only=True)
     is_active = attr.ib(type=bool, kw_only=True)
