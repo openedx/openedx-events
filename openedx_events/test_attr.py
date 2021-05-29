@@ -41,7 +41,7 @@ print(student_data_v3)
 #    email='email@gmail.com',
 #    profile_meta={'ci': 123456789},
 #    is_active=True,
-#)
+# )
 #   raise ValueError("email must be valid.")
 #    ValueError: email must be valid.
 # StudentDataV3(username='username', email='email', profile_meta={'ci': 123456789}, is_active=True)
@@ -51,6 +51,14 @@ print(student_data_v3)
 #    email='email',
 #    profile_meta={'ci': 123456789},
 #    is_active=True,
-#)
+# )
 #   File "<string>", line 46, in <module>
 # TypeError: __init__() takes 1 positional argument but 2 positional arguments (and 3 keyword-only arguments) were given
+# student_data_v3 = StudentDataV3(
+#     username=1,
+#     email='email',
+#     profile_meta={'ci': 123456789},
+#     is_active=True,
+# )
+# TypeError: ("'username' must be <class 'str'> (got 1 that is a <class 'int'>)."
+#
