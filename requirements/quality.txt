@@ -40,6 +40,8 @@ coverage==5.5
     #   pytest-cov
 cryptography==3.4.7
     # via secretstorage
+ddt==1.4.2
+    # via -r requirements/test.txt
 django==2.2.24
     # via
     #   -c requirements/constraints.txt

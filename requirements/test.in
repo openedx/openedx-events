@@ -3,6 +3,7 @@
 
 -r base.txt               # Core dependencies for this package
 
+ddt                       # A library to multiply test cases
 pytest-cov                # pytest extension for code coverage statistics
 pytest-django             # pytest extension for better Django support
 code-annotations          # provides commands used by the pii_check make target.

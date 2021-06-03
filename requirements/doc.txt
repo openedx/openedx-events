@@ -34,6 +34,8 @@ django==2.2.24
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/test.txt
+ddt==1.4.2
+    # via -r requirements/test.txt
 doc8==0.8.1
     # via -r requirements/doc.in
 docutils==0.17.1
