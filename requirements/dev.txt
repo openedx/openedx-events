@@ -68,6 +68,8 @@ cryptography==3.4.7
     # via
     #   -r requirements/quality.txt
     #   secretstorage
+ddt==1.4.2
+    # via -r requirements/quality.txt
 diff-cover==6.0.0
     # via -r requirements/dev.in
 distlib==0.3.2
