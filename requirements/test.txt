@@ -5,13 +5,17 @@
 #    make upgrade
 #
 attrs==21.2.0
-    # via pytest
+    # via
+    #   -r requirements/base.txt
+    #   pytest
 click==8.0.1
     # via code-annotations
-code-annotations==1.1.2
+code-annotations==1.2.0
     # via -r requirements/test.in
 coverage==5.5
     # via pytest-cov
+ddt==1.4.2
+    # via -r requirements/test.in
 django==2.2.24
     # via
     #   -c requirements/constraints.txt

@@ -4,6 +4,8 @@
 #
 #    make upgrade
 #
+attrs==21.2.0
+    # via -r requirements/base.in
 django==2.2.24
     # via
     #   -c requirements/constraints.txt
