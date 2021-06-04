@@ -48,7 +48,7 @@ Definition will be grouped by subdomain along with other data structures in a
 way that favors reuse.
 There will be a subclass of Django signal that accepts the event name and makes
 available for listeners of the emitted events and the frameworks other event
-processing queues. Only the Architecture Subdomain part of the event name will
+processing queues. Only the `Architecture Subdomain`_ part of the event name will
 be used in the package name of the signal definition.
 
 3. The events library will use SemVer 2. The major version will not be tied to
@@ -70,6 +70,7 @@ with a logical boundary such that if the project ever decides to separate them
 in a split library there is no necessary large refactor.
 
 .. _type format: https://open-edx-proposals.readthedocs.io/en/latest/oep-0041-arch-async-server-event-messaging.html#id5
+.. _Architecture Subdomain: https://openedx.atlassian.net/wiki/spaces/AC/pages/663224968/edX+DDD+Bounded+Contexts
 .. _OEP-41: https://open-edx-proposals.readthedocs.io/en/latest/oep-0041-arch-async-server-event-messaging.html#specification
 
 
@@ -89,3 +90,10 @@ signal until deprecated and removed.
 3. Changing the arguments passed to an event must always be done in a backwards
 compatible way since making it incompatible warrants the use of a new major
 version.
+
+4. Since it was decided from the OEP-50 that Django Signals is the underlying
+mechanism for messages, service developers wanting to listen for events using
+message queues will still require a way to transform the signal-based events
+into the message queue technology. This part of the solution is not covered by
+this library
+
