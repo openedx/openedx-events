@@ -4,11 +4,21 @@
 #
 #    make upgrade
 #
+attrs==21.2.0
+    # via -r requirements/base.in
 django==2.2.24
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/base.in
+edx-opaque-keys[django]==2.2.2
+    # via -r requirements/base.in
+pbr==5.6.0
+    # via stevedore
+pymongo==3.11.4
+    # via edx-opaque-keys
 pytz==2021.1
     # via django
 sqlparse==0.4.1
     # via django
+stevedore==3.3.0
+    # via edx-opaque-keys
