@@ -1,4 +1,6 @@
 # Core requirements for using this application
 -c constraints.txt
 
+attrs
 django
+edx-opaque-keys[django]
