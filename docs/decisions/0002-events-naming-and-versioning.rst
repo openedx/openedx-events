@@ -40,7 +40,6 @@ Examples:
 * org.openedx.learning.course.enrollment.created.v1
 * org.openedx.learning.student.registration.completed.v2
 * org.openedx.learning.session.login.completed.v1
-* org.openedx.learning.session.login.completed.v1
 
 2. The signal definitions will be placed written in code in the way that is more
 practical and familiar for python developer with emphasis on Django experience.
@@ -95,5 +94,6 @@ version.
 mechanism for messages, service developers wanting to listen for events using
 message queues will still require a way to transform the signal-based events
 into the message queue technology. This part of the solution is not covered by
-this library
-
+this library at this time. In the future we may consider adding it here or setup
+a separate library for those events. We leave that decision open for now because
+many details about the implementation are still unclear.
