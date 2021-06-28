@@ -9,14 +9,23 @@ Draft
 Context
 -------
 
-OEP-50 was created with the intention of create a common pattern to extend some places of the platform in a more suitable way. In this regard, it was defined a set of requirements that requires the creation of a repository to store the Django Signals definitions used in edx-platform that could be used by plugins or in other Djangoapps.
+OEP-50 (Hooks Extension Framework) was written with the intention of defining a
+common pattern to extend the platform in a number of locations in a very stable
+way. After receiving feedback from different community members and edx arch
+team, it was decided that the best path forward would be to create a repository
+that holds the signature of the public promise made by the framework.
 
 Decision
 --------
 
-This repository was created as a home for all the definitions of the Django Signals (events) of the edx-platform.
+In this repository will reside the signals that define the events used by the
+edx-platform repo. The same applies to the necessary tooling used by the Hooks
+Extension Framework to manage the events execution and extra tools.
 
 Consequences
 ------------
 
-Some Django Signals defined in edx-platform will moved to this library.
+All tools needed to manage events will be implemented in this repository and
+imported into Open edX platform. Developers who want to extend the use of
+events on the defined hook should also import this repository as a dependency
+in their Open edX plugins and use the same definitions.
