@@ -14,8 +14,17 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[0.1.2] - 2021-06-29
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Changed
+_______
+
+* Update documentation with current organization info.
+
 [0.1.1] - 2021-06-29
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Added
+_____
 
 * Add Django testing configuration.
 
