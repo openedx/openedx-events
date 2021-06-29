@@ -13,6 +13,10 @@ Change Log
 
 Unreleased
 ~~~~~~~~~~
+Changed
+_______
+
+* Update setup.cfg with complete bumpversion configuration.
 
 [0.1.2] - 2021-06-29
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
