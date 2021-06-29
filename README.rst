@@ -1,22 +1,18 @@
-openedx-events
-=============================
+Open edX Events
+===============
 
 |pypi-badge| |ci-badge| |codecov-badge| |doc-badge| |pyversions-badge|
 |license-badge|
 
-The ``README.rst`` file should start with a brief description of the repository,
-which sets it in the context of other repositories under the ``edx``
-organization. It should make clear where this fits in to the overall edX
-codebase.
+Open edX Events from Hooks Extensions Framework (`OEP-50`_).
 
 What is this project?
 
-Overview (please modify)
-------------------------
+Overview
+--------
 
-The ``README.rst`` file should then provide an overview of the code in this
-repository, including the main components and useful entry points for starting
-to understand the code in more detail.
+This repository implements the necessary tooling and definitions used by the
+Hooks Extension Framework to manage the events execution and extra tools.
 
 Documentation
 -------------
@@ -31,7 +27,7 @@ One Time Setup
 .. code-block::
 
   # Clone the repository
-  git clone git@github.com:edx/openedx-events.git
+  git clone git@github.com:edxuNEXT/openedx-events.git
   cd openedx-events
 
   # Set up a virtualenv using virtualenvwrapper with the same name as the repo and activate it
@@ -112,17 +108,18 @@ For more information about these options, see the `Getting Help`_ page.
 .. _Slack invitation: https://openedx-slack-invite.herokuapp.com/
 .. _community Slack workspace: https://openedx.slack.com/
 .. _Getting Help: https://openedx.org/getting-help
+.. _OEP-50: https://open-edx-proposals.readthedocs.io/en/latest/oep-0050-hooks-extension-framework.html
 
 .. |pypi-badge| image:: https://img.shields.io/pypi/v/openedx-events.svg
     :target: https://pypi.python.org/pypi/openedx-events/
     :alt: PyPI
 
-.. |ci-badge| image:: https://github.com/edx/openedx-events/workflows/Python%20CI/badge.svg?branch=master
-    :target: https://github.com/edx/openedx-events/actions
+.. |ci-badge| image:: https://github.com/eduNEXT/openedx-events/workflows/Python%20CI/badge.svg?branch=main
+    :target: https://github.com/eduNEXT/openedx-events/actions
     :alt: CI
 
-.. |codecov-badge| image:: https://codecov.io/github/edx/openedx-events/coverage.svg?branch=master
-    :target: https://codecov.io/github/edx/openedx-events?branch=master
+.. |codecov-badge| image:: https://codecov.io/github/eduNEXT/openedx-events/coverage.svg?branch=main
+    :target: https://codecov.io/github/eduNEXT/openedx-events?branch=main
     :alt: Codecov
 
 .. |doc-badge| image:: https://readthedocs.org/projects/openedx-events/badge/?version=latest
@@ -133,6 +130,6 @@ For more information about these options, see the `Getting Help`_ page.
     :target: https://pypi.python.org/pypi/openedx-events/
     :alt: Supported Python versions
 
-.. |license-badge| image:: https://img.shields.io/github/license/edx/openedx-events.svg
-    :target: https://github.com/edx/openedx-events/blob/master/LICENSE.txt
+.. |license-badge| image:: https://img.shields.io/github/license/eduNEXT/openedx-events.svg
+    :target: https://github.com/eduNEXT/openedx-events/blob/main/LICENSE.txt
     :alt: License
