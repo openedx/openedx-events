@@ -4,10 +4,6 @@
 #
 #    make upgrade
 #
-asgiref==3.4.1
-    # via
-    #   -r requirements/base.txt
-    #   django
 attrs==21.2.0
     # via pytest
 click==8.0.1
@@ -16,8 +12,10 @@ code-annotations==1.1.2
     # via -r requirements/test.in
 coverage==5.5
     # via pytest-cov
-django==3.2.5
-    # via -r requirements/base.txt
+django==2.2.24
+    # via
+    #   -c requirements/constraints.txt
+    #   -r requirements/base.txt
 iniconfig==1.1.1
     # via pytest
 jinja2==3.0.1
