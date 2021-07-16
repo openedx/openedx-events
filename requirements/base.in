@@ -1,5 +1,6 @@
 # Core requirements for using this application
 -c constraints.txt
 
-django
 attrs
+django
+edx-opaque-keys[django]
