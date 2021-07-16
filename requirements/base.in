@@ -3,3 +3,4 @@
 
 django
 attrs
+edx-opaque-keys[django]
