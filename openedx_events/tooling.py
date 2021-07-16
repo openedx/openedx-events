@@ -1,6 +1,7 @@
 """
 Tooling necessary to use Open edX events.
 """
+import socket
 import warnings
 from datetime import datetime
 
@@ -10,25 +11,20 @@ from django.dispatch import Signal
 import openedx_events
 from openedx_events.exceptions import InstantiationError, SenderValidationError
 
-try:
-    import crum
-except ImportError:
-    crum = None
-
 
 class OpenEdxPublicSignal(Signal):
     """
     Custom class used to create Open edX events.
     """
 
-    def __init__(self, event_type, data, minor_version="0.0"):
+    def __init__(self, event_type, data, minor_version=0):
         """
         Init method for OpenEdxPublicSignal definition class.
 
         Arguments:
             event_type (str): name of the event.
             data (dict): attributes passed to the event.
-            minor_version (str): version of the event type.
+            minor_version (int): version of the event type.
         """
         if not event_type:
             raise InstantiationError(
@@ -49,23 +45,23 @@ class OpenEdxPublicSignal(Signal):
         """
         return "<OpenEdxPublicSignal: {event_type}>".format(event_type=self.event_type)
 
-    def get_signal_metadata(self):
+    def generate_signal_metadata(self):
         """
-        Get signal extra metadata when an event is sent.
+        Generate signal metadata when an event is sent.
 
         These fields are generated on the fly and are a subset of the Event
         Message defined in the OEP-41.
 
         Example usage:
-            >>> STUDENT_REGISTRATION_COMPLETED.get_signal_metadata()
+            >>> STUDENT_REGISTRATION_COMPLETED.generate_signal_metadata()
             {
                 'event_type': '...learning.student.registration.completed.v1',
-                'minorversion': '0.0',
+                'minorversion': 0,
                 'time': '2021-06-09T14:12:45.320819Z',
                 'source': 'openedx/lms/web',
                 'sourcehost': 'edx.devstack.lms',
                 'specversion': '1.0',
-                'events_version: '0.1.0',
+                'sourcelib: '0.1.0',
             }
         """
 
@@ -87,23 +83,20 @@ class OpenEdxPublicSignal(Signal):
             """
             Getter function used to get physical source of the event.
             """
-            if not crum:
-                return 'Unknown host'
-            current_request = crum.get_current_request()
-            return current_request.get_host() if current_request else None
+            return socket.gethostname()
 
         def get_spec_version():
             """
-            Getter function used to get the version of CloudEvents.
+            Getter function used to obtain CloudEvents version.
 
             This field is added to be compliant with OEP-41, it's not
             necessarily significant to the Open edX events metadata.
             """
             return "1.0"
 
-        def get_events_version():
+        def get_source_lib():
             """
-            Getter function used to get the Open edX Events version.
+            Getter function used to obtain Open edX Events version.
             """
             return openedx_events.__version__
 
@@ -114,7 +107,7 @@ class OpenEdxPublicSignal(Signal):
             "source": get_source(),
             "sourcehost": get_source_host(),
             "specversion": get_spec_version(),
-            "events_version": get_events_version(),
+            "sourcelib": get_source_lib(),
         }
 
     def send_event(self, send_robust=False, **kwargs):
@@ -177,7 +170,7 @@ class OpenEdxPublicSignal(Signal):
 
         validate_sender()
 
-        kwargs["metadata"] = self.get_signal_metadata()
+        kwargs["metadata"] = self.generate_signal_metadata()
         kwargs["metadata"]["raise_exception"] = not send_robust
 
         if send_robust:
