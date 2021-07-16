@@ -43,8 +43,8 @@ class OpenEdxPublicSignalTest(TestCase):
 
     @override_settings(SERVICE_VARIANT="lms")
     @patch("openedx_events.tooling.openedx_events")
-    @patch("openedx_events.tooling.crum")
-    def test_get_signal_metadata(self, crum_mock, events_package_mock):
+    @patch("openedx_events.tooling.socket")
+    def test_get_signal_metadata(self, socket_mock, events_package_mock):
         """
         This methods tests getting the generated metadata for an event.
 
@@ -52,40 +52,17 @@ class OpenEdxPublicSignalTest(TestCase):
             Returns the metadata containing information about the event.
         """
         events_package_mock.__version__ = "0.1.0"
-        crum_mock.get_current_request.return_value.get_host.return_value = "edx.devstack.lms"
+        socket_mock.gethostname.return_value = "edx.devstack.lms"
         expected_metadata = {
             "event_type": self.event_type,
-            "minorversion": "0.0",
+            "minorversion": 0,
             "source": "openedx/lms/web",
             "sourcehost": "edx.devstack.lms",
             "specversion": "1.0",
-            "events_version": "0.1.0",
+            "sourcelib": "0.1.0",
         }
 
-        metadata = self.public_signal.get_signal_metadata()
-
-        self.assertDictContainsSubset(expected_metadata, metadata)
-
-    @override_settings(SERVICE_VARIANT="lms")
-    @patch("openedx_events.tooling.openedx_events")
-    def test_get_signal_metadata_unknown_host(self, events_package_mock):
-        """
-        This methods tests getting the generated metadata without a host.
-
-        Expected behavior:
-            Returns the metadata containing information about the event.
-        """
-        events_package_mock.__version__ = "0.1.0"
-        expected_metadata = {
-            "event_type": self.event_type,
-            "minorversion": "0.0",
-            "source": "openedx/lms/web",
-            "sourcehost": "Unknown host",
-            "specversion": "1.0",
-            "events_version": "0.1.0",
-        }
-
-        metadata = self.public_signal.get_signal_metadata()
+        metadata = self.public_signal.generate_signal_metadata()
 
         self.assertDictContainsSubset(expected_metadata, metadata)
 
@@ -112,7 +89,7 @@ class OpenEdxPublicSignalTest(TestCase):
         with self.assertRaisesMessage(InstantiationError, exception_message):
             OpenEdxPublicSignal(event_type=event_type, data=event_data)
 
-    @patch("openedx_events.tooling.OpenEdxPublicSignal.get_signal_metadata")
+    @patch("openedx_events.tooling.OpenEdxPublicSignal.generate_signal_metadata")
     @patch("openedx_events.tooling.Signal.send")
     def test_send_event_successfully(self, send_mock, fake_metadata):
         """
@@ -135,7 +112,7 @@ class OpenEdxPublicSignalTest(TestCase):
             metadata=expected_metadata,
         )
 
-    @patch("openedx_events.tooling.OpenEdxPublicSignal.get_signal_metadata")
+    @patch("openedx_events.tooling.OpenEdxPublicSignal.generate_signal_metadata")
     @patch("openedx_events.tooling.Signal.send_robust")
     def test_send_robust_event_successfully(self, send_robust_mock, fake_metadata):
         """
