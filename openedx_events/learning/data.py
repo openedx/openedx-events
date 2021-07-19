@@ -12,7 +12,7 @@ from opaque_keys.edx.keys import CourseKey
 
 
 @attr.s(frozen=True)
-class StudentData:
+class UserNonPersonalData:
     """
     Attributes defined for Open edX user object based on non-PII data.
     """
@@ -38,7 +38,7 @@ class UserData:
     Attributes defined for Open edX user object.
     """
 
-    student = attr.ib(type=StudentData)
+    user_non_pii = attr.ib(type=UserNonPersonalData, default=None)
     user = attr.ib(type=UserPersonalData)
 
 
@@ -70,6 +70,8 @@ class CourseEnrollmentData:
     Attributes defined for Open edX Course Enrollment object.
     """
 
+    creation_date = attr.ib(type=datetime)
+    created_by = attr.ib(type=UserData, default=None)
     user = attr.ib(type=UserData)
     course = attr.ib(type=CourseData)
     mode = attr.ib(type=str)
