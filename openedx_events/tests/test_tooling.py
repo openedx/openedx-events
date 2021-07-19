@@ -58,7 +58,6 @@ class OpenEdxPublicSignalTest(TestCase):
             "minorversion": 0,
             "source": "openedx/lms/web",
             "sourcehost": "edx.devstack.lms",
-            "specversion": "1.0",
             "sourcelib": "0.1.0",
         }
 
