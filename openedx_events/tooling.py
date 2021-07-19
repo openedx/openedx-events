@@ -10,6 +10,7 @@ from django.conf import settings
 from django.dispatch import Signal
 
 import openedx_events
+from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import InstantiationError, SenderValidationError
 
 
@@ -97,15 +98,15 @@ class OpenEdxPublicSignal(Signal):
             """
             return tuple(map(int, openedx_events.__version__.split(".")))
 
-        return {
-            "id": generate_uuid(),
-            "event_type": self.event_type,
-            "minorversion": self.minor_version,
-            "time": get_current_time(),
-            "source": get_source(),
-            "sourcehost": get_source_host(),
-            "sourcelib": get_source_lib(),
-        }
+        return EventsMetadata(
+            id=generate_uuid(),
+            event_type=self.event_type,
+            minorversion=self.minor_version,
+            time=get_current_time(),
+            source=get_source(),
+            sourcehost=get_source_host(),
+            sourcelib=get_source_lib(),
+        )
 
     def send_event(self, send_robust=False, **kwargs):
         """
