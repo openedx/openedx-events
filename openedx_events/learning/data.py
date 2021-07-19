@@ -14,14 +14,32 @@ from opaque_keys.edx.keys import CourseKey
 @attr.s(frozen=True)
 class StudentData:
     """
-    Attributes defined for Open edX student object.
+    Attributes defined for Open edX user object based on non-PII data.
+    """
+
+    id = attr.ib(type=int)
+    is_active = attr.ib(type=bool, default=True)
+
+
+@attr.s(frozen=True)
+class UserPersonalData:
+    """
+    Attributes defined for Open edX user object based on PII data.
     """
 
     username = attr.ib(type=str)
     email = attr.ib(type=str)
-    is_active = attr.ib(type=bool, default=True)
-    meta = attr.ib(type=Dict[str, str], factory=dict)
     name = attr.ib(type=str, factory=str)
+
+
+@attr.s(frozen=True)
+class UserData:
+    """
+    Attributes defined for Open edX user object.
+    """
+
+    student = attr.ib(type=StudentData)
+    user = attr.ib(type=UserPersonalData)
 
 
 @attr.s(frozen=True)
@@ -52,7 +70,7 @@ class CourseEnrollmentData:
     Attributes defined for Open edX Course Enrollment object.
     """
 
-    user = attr.ib(type=StudentData)
+    user = attr.ib(type=UserData)
     course = attr.ib(type=CourseData)
     mode = attr.ib(type=str)
     is_active = attr.ib(type=bool)
@@ -64,7 +82,7 @@ class CertificateData:
     Attributes defined for Open edX Certificate data object.
     """
 
-    user = attr.ib(type=StudentData)
+    user = attr.ib(type=UserData)
     course = attr.ib(type=CourseData)
     mode = attr.ib(type=str)
     grade = attr.ib(type=str)
@@ -79,6 +97,6 @@ class CohortData:
     Attributes defined for Open edX Cohort Membership object.
     """
 
-    user = attr.ib(type=StudentData)
+    user = attr.ib(type=UserData)
     course = attr.ib(type=CourseData)
     name = attr.ib(type=str)
