@@ -13,14 +13,14 @@ from openedx_events.learning.data import (
     CohortData,
     CourseEnrollmentData,
     RegistrationFormData,
-    StudentData,
+    UserData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
 
 STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.student.registration.completed.v1",
     data={
-        "user": StudentData,
+        "user": UserData,
         "registration_form": RegistrationFormData,
     }
 )
@@ -29,7 +29,7 @@ STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
 SESSION_LOGIN_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.auth.session.login.completed.v1",
     data={
-        "user": StudentData,
+        "user": UserData,
     }
 )
 
@@ -50,7 +50,7 @@ COURSE_ENROLLMENT_CHANGED = OpenEdxPublicSignal(
 )
 
 
-COURSE_ENROLLMENT_DEACTIVATED = OpenEdxPublicSignal(
+COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.enrollment.deactivated.v1",
     data={
         "enrollment": CourseEnrollmentData,
