@@ -29,7 +29,8 @@ class OpenEdxPublicSignalTest(TestCase):
             "user": Mock,
         }
         self.public_signal = OpenEdxPublicSignal(
-            event_type=self.event_type, data=self.data_attr,
+            event_type=self.event_type,
+            data=self.data_attr,
         )
 
     def test_string_representation(self):
@@ -58,8 +59,7 @@ class OpenEdxPublicSignalTest(TestCase):
             "minorversion": 0,
             "source": "openedx/lms/web",
             "sourcehost": "edx.devstack.lms",
-            "specversion": "1.0",
-            "sourcelib": "0.1.0",
+            "sourcelib": (0, 1, 0),
         }
 
         metadata = self.public_signal.generate_signal_metadata()
@@ -82,8 +82,7 @@ class OpenEdxPublicSignalTest(TestCase):
             An InstantiationError exception is raised.
         """
         exception_message = "InstantiationError {event_type}: Missing required argument '{missing_argument}'".format(
-            event_type=event_type,
-            missing_argument=missing_argument
+            event_type=event_type, missing_argument=missing_argument
         )
 
         with self.assertRaisesMessage(InstantiationError, exception_message):

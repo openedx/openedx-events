@@ -4,6 +4,7 @@ Tooling necessary to use Open edX events.
 import socket
 import warnings
 from datetime import datetime
+from uuid import uuid1
 
 from django.conf import settings
 from django.dispatch import Signal
@@ -61,19 +62,24 @@ class OpenEdxPublicSignal(Signal):
                 'source': 'openedx/lms/web',
                 'sourcehost': 'edx.devstack.lms',
                 'specversion': '1.0',
-                'sourcelib: '0.1.0',
+                'sourcelib: (0,1,0,),
             }
         """
+        def generate_uuid():
+            """
+            Generate events id based on UUID version 1.
+            """
+            return uuid1()
 
         def get_current_time():
             """
-            Getter function used to get timestamp when the event ocurred.
+            Get timestamp when the event was sent.
             """
-            return datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ")
+            return datetime.utcnow()
 
         def get_source():
             """
-            Getter function used to get logical source of an event.
+            Get logical source of an event.
             """
             return "openedx/{service}/web".format(
                 service=getattr(settings, "SERVICE_VARIANT", "")
@@ -81,32 +87,23 @@ class OpenEdxPublicSignal(Signal):
 
         def get_source_host():
             """
-            Getter function used to get physical source of the event.
+            Get physical source of the event.
             """
             return socket.gethostname()
-
-        def get_spec_version():
-            """
-            Getter function used to obtain CloudEvents version.
-
-            This field is added to be compliant with OEP-41, it's not
-            necessarily significant to the Open edX events metadata.
-            """
-            return "1.0"
 
         def get_source_lib():
             """
             Getter function used to obtain Open edX Events version.
             """
-            return openedx_events.__version__
+            return tuple(map(int, openedx_events.__version__.split(".")))
 
         return {
+            "id": generate_uuid(),
             "event_type": self.event_type,
             "minorversion": self.minor_version,
             "time": get_current_time(),
             "source": get_source(),
             "sourcehost": get_source_host(),
-            "specversion": get_spec_version(),
             "sourcelib": get_source_lib(),
         }
 
