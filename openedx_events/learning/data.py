@@ -43,16 +43,6 @@ class UserData:
 
 
 @attr.s(frozen=True)
-class RegistrationFormData:
-    """
-    Attributes defined for Open edX student object.
-    """
-
-    account_form = attr.ib(type=Dict[str, str], factory=dict)
-    extension_form = attr.ib(type=Dict[str, str], factory=dict)
-
-
-@attr.s(frozen=True)
 class CourseData:
     """
     Attributes defined for Open edX Course Overview object.
@@ -70,12 +60,12 @@ class CourseEnrollmentData:
     Attributes defined for Open edX Course Enrollment object.
     """
 
-    creation_date = attr.ib(type=datetime)
-    created_by = attr.ib(type=UserData)
     user = attr.ib(type=UserData)
     course = attr.ib(type=CourseData)
     mode = attr.ib(type=str)
     is_active = attr.ib(type=bool)
+    creation_date = attr.ib(type=datetime)
+    created_by = attr.ib(type=UserData, default=None)
 
 
 @attr.s(frozen=True)
