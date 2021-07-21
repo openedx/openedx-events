@@ -5,7 +5,6 @@ These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
 """
 from datetime import datetime
-from typing import Dict
 
 import attr
 from opaque_keys.edx.keys import CourseKey
@@ -39,7 +38,7 @@ class UserData:
     """
 
     user_non_pii = attr.ib(type=UserNonPersonalData)
-    user = attr.ib(type=UserPersonalData)
+    user_pii = attr.ib(type=UserPersonalData)
 
 
 @attr.s(frozen=True)
