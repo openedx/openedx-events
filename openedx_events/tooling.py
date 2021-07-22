@@ -1,15 +1,10 @@
 """
 Tooling necessary to use Open edX events.
 """
-import socket
 import warnings
-from datetime import datetime
-from uuid import uuid1
 
-from django.conf import settings
 from django.dispatch import Signal
 
-import openedx_events
 from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import InstantiationError, SenderValidationError
 
@@ -55,7 +50,9 @@ class OpenEdxPublicSignal(Signal):
         Message defined in the OEP-41.
 
         Example usage:
-            >>> STUDENT_REGISTRATION_COMPLETED.generate_signal_metadata()
+            >>> metadata = \
+                STUDENT_REGISTRATION_COMPLETED.generate_signal_metadata()
+                attr.asdict(metadata)
             {
                 'event_type': '...learning.student.registration.completed.v1',
                 'minorversion': 0,
@@ -66,46 +63,9 @@ class OpenEdxPublicSignal(Signal):
                 'sourcelib: (0,1,0,),
             }
         """
-        def generate_uuid():
-            """
-            Generate events id based on UUID version 1.
-            """
-            return uuid1()
-
-        def get_current_time():
-            """
-            Get timestamp when the event was sent.
-            """
-            return datetime.utcnow()
-
-        def get_source():
-            """
-            Get logical source of an event.
-            """
-            return "openedx/{service}/web".format(
-                service=getattr(settings, "SERVICE_VARIANT", "")
-            )
-
-        def get_source_host():
-            """
-            Get physical source of the event.
-            """
-            return socket.gethostname()
-
-        def get_source_lib():
-            """
-            Getter function used to obtain Open edX Events version.
-            """
-            return tuple(map(int, openedx_events.__version__.split(".")))
-
         return EventsMetadata(
-            id=generate_uuid(),
             event_type=self.event_type,
             minorversion=self.minor_version,
-            time=get_current_time(),
-            source=get_source(),
-            sourcehost=get_source_host(),
-            sourcelib=get_source_lib(),
         )
 
     def send_event(self, send_robust=False, **kwargs):

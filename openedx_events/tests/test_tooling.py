@@ -4,8 +4,8 @@ Classes:
     EventsToolingTest: Test events tooling.
 """
 from unittest.mock import Mock, patch
-import attr
 
+import attr
 import ddt
 from django.test import TestCase, override_settings
 
@@ -44,8 +44,8 @@ class OpenEdxPublicSignalTest(TestCase):
         self.assertIn(self.event_type, str(self.public_signal))
 
     @override_settings(SERVICE_VARIANT="lms")
-    @patch("openedx_events.tooling.openedx_events")
-    @patch("openedx_events.tooling.socket")
+    @patch("openedx_events.data.openedx_events")
+    @patch("openedx_events.data.socket")
     def test_get_signal_metadata(self, socket_mock, events_package_mock):
         """
         This methods tests getting the generated metadata for an event.
@@ -60,7 +60,7 @@ class OpenEdxPublicSignalTest(TestCase):
             "minorversion": 0,
             "source": "openedx/lms/web",
             "sourcehost": "edx.devstack.lms",
-            "sourcelib": (0, 1, 0),
+            "sourcelib": [0, 1, 0],
         }
 
         metadata = self.public_signal.generate_signal_metadata()
