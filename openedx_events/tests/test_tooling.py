@@ -4,6 +4,7 @@ Classes:
     EventsToolingTest: Test events tooling.
 """
 from unittest.mock import Mock, patch
+import attr
 
 import ddt
 from django.test import TestCase, override_settings
@@ -64,7 +65,7 @@ class OpenEdxPublicSignalTest(TestCase):
 
         metadata = self.public_signal.generate_signal_metadata()
 
-        self.assertDictContainsSubset(expected_metadata, metadata)
+        self.assertDictContainsSubset(expected_metadata, attr.asdict(metadata))
 
     @ddt.data(
         ("", {"user": Mock()}, "event_type"),
