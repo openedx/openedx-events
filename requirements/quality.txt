@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-astroid==2.6.2
+astroid==2.6.5
     # via
     #   pylint
     #   pylint-celery
@@ -12,13 +12,13 @@ attrs==21.2.0
     # via
     #   -r requirements/test.txt
     #   pytest
-bleach==3.3.0
+bleach==3.3.1
     # via readme-renderer
 certifi==2021.5.30
     # via requests
-cffi==1.14.5
+cffi==1.14.6
     # via cryptography
-chardet==4.0.0
+charset-normalizer==2.0.3
     # via requests
 click==8.0.1
     # via
@@ -28,7 +28,7 @@ click==8.0.1
     #   edx-lint
 click-log==0.3.2
     # via edx-lint
-code-annotations==1.1.2
+code-annotations==1.2.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
@@ -40,6 +40,8 @@ coverage==5.5
     #   pytest-cov
 cryptography==3.4.7
     # via secretstorage
+ddt==1.4.2
+    # via -r requirements/test.txt
 django==2.2.24
     # via
     #   -c requirements/constraints.txt
@@ -49,7 +51,7 @@ docutils==0.17.1
     # via readme-renderer
 edx-lint==5.0.0
     # via -r requirements/quality.in
-idna==2.10
+idna==3.2
     # via requests
 importlib-metadata==4.6.1
     # via
@@ -63,7 +65,7 @@ isort==5.9.2
     # via
     #   -r requirements/quality.in
     #   pylint
-jeepney==0.6.0
+jeepney==0.7.0
     # via
     #   keyring
     #   secretstorage
@@ -90,7 +92,7 @@ pbr==5.6.0
     # via
     #   -r requirements/test.txt
     #   stevedore
-pkginfo==1.7.0
+pkginfo==1.7.1
     # via twine
 pluggy==0.13.1
     # via
@@ -108,7 +110,7 @@ pydocstyle==6.1.1
     # via -r requirements/quality.in
 pygments==2.9.0
     # via readme-renderer
-pylint==2.9.3
+pylint==2.9.5
     # via
     #   edx-lint
     #   pylint-celery
@@ -149,7 +151,7 @@ pyyaml==5.4.1
     #   code-annotations
 readme-renderer==29.0
     # via twine
-requests==2.25.1
+requests==2.26.0
     # via
     #   requests-toolbelt
     #   twine
@@ -186,7 +188,7 @@ toml==0.10.2
     #   pytest-cov
 tqdm==4.61.2
     # via twine
-twine==3.4.1
+twine==3.4.2
     # via -r requirements/quality.in
 urllib3==1.26.6
     # via requests
@@ -196,3 +198,6 @@ wrapt==1.12.1
     # via astroid
 zipp==3.5.0
     # via importlib-metadata
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools
