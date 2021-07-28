@@ -14,6 +14,14 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[0.2.0] - 2021-07-28
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Changed
+_______
+
+* Update reposirtory purpose.
+* Changed max-doc-length from 79 to 120 following community recommendation.
+
 [0.1.3] - 2021-07-01
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Changed
