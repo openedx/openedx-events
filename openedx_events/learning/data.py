@@ -21,7 +21,7 @@ class UserNonPersonalData:
     """
 
     id = attr.ib(type=int)
-    is_active = attr.ib(type=bool, default=True)
+    is_active = attr.ib(type=bool)
 
 
 @attr.s(frozen=True)
@@ -41,19 +41,18 @@ class UserPersonalData:
 
 
 @attr.s(frozen=True)
-class UserData:
+class UserData(UserNonPersonalData):
     """
     Attributes defined for Open edX user object.
 
+    This class extends UserNonPersonalData to include PII data completing the
+    user object.
+
     Arguments:
-        user_non_pii (UserNonPersonalData): user's Personal Identifiable
-        Information.
-        user_pii (UserPersonalData): user's Non Personal Identifiable
-        Information.
+        pii (UserPersonalData): user's Personal Identifiable Information.
     """
 
-    user_non_pii = attr.ib(type=UserNonPersonalData)
-    user_pii = attr.ib(type=UserPersonalData)
+    pii = attr.ib(type=UserPersonalData)
 
 
 @attr.s(frozen=True)
