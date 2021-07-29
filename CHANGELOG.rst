@@ -15,7 +15,8 @@ Unreleased
 ~~~~~~~~~~
 Added
 _____
-* Add tooling needed to create and trigger events in Open edX platform
+* Add tooling needed to create and trigger events in Open edX platform.
+* Add Data Attribute classes used as arguments by Open edX Events.
 
 
 [0.2.0] - 2021-07-28
