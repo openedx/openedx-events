@@ -13,6 +13,9 @@ Change Log
 
 Unreleased
 ~~~~~~~~~~
+Changed
+_______
+* Remove unnecessary InstantiationError exception.
 
 [0.5.1] - 2021-08-26
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

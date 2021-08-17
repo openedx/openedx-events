@@ -6,7 +6,7 @@ import warnings
 from django.dispatch import Signal
 
 from openedx_events.data import EventsMetadata
-from openedx_events.exceptions import InstantiationError, SenderValidationError
+from openedx_events.exceptions import SenderValidationError
 
 
 class OpenEdxPublicSignal(Signal):
@@ -26,14 +26,6 @@ class OpenEdxPublicSignal(Signal):
             data (dict): attributes passed to the event.
             minor_version (int): version of the event type.
         """
-        if not event_type:
-            raise InstantiationError(
-                message="Missing required argument 'event_type'"
-            )
-        if not data:
-            raise InstantiationError(
-                event_type=event_type, message="Missing required argument 'data'"
-            )
         self.init_data = data
         self.event_type = event_type
         self.minor_version = minor_version
