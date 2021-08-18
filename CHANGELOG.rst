@@ -14,6 +14,9 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+
+[0.4.0] - 2021-08-18
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Added
 _____
 * Preliminary Open edX events definitions.
