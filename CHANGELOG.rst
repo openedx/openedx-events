@@ -13,6 +13,9 @@ Change Log
 
 Unreleased
 ~~~~~~~~~~
+
+[0.3.0] - 2021-08-18
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Added
 _____
 * Add tooling needed to create and trigger events in Open edX platform.
