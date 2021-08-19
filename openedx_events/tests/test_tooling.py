@@ -98,10 +98,7 @@ class OpenEdxPublicSignalTest(TestCase):
         Expected behavior:
             The event is sent as a django signal.
         """
-        expected_metadata = {
-            "some_data": "data",
-            "raise_exception": True,
-        }
+        expected_metadata = Mock(some_data="some_data")
         fake_metadata.return_value = expected_metadata
 
         self.public_signal.send_event(user=self.user_mock)
@@ -121,10 +118,7 @@ class OpenEdxPublicSignalTest(TestCase):
         Expected behavior:
             The event is sent as a django signal.
         """
-        expected_metadata = {
-            "some_data": "data",
-            "raise_exception": True,
-        }
+        expected_metadata = Mock(some_data="some_data")
         fake_metadata.return_value = expected_metadata
 
         self.public_signal.send_event(user=self.user_mock, send_robust=True)

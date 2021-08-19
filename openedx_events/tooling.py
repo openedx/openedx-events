@@ -129,7 +129,6 @@ class OpenEdxPublicSignal(Signal):
         validate_sender()
 
         kwargs["metadata"] = self.generate_signal_metadata()
-        kwargs["metadata"]["raise_exception"] = not send_robust
 
         if send_robust:
             return super().send_robust(sender=None, **kwargs)
