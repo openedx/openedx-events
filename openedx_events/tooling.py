@@ -14,6 +14,9 @@ class OpenEdxPublicSignal(Signal):
     Custom class used to create Open edX events.
     """
 
+    _mapping = {}
+    instances = []
+
     def __init__(self, event_type, data, minor_version=0):
         """
         Init method for OpenEdxPublicSignal definition class.
@@ -34,6 +37,9 @@ class OpenEdxPublicSignal(Signal):
         self.init_data = data
         self.event_type = event_type
         self.minor_version = minor_version
+        self._allow_events = True
+        self.__class__.instances.append(self)
+        self.__class__._mapping[self.event_type] = self
         super().__init__()
 
     def __repr__(self):
@@ -41,6 +47,20 @@ class OpenEdxPublicSignal(Signal):
         Represent OpenEdxPublicSignal as a string.
         """
         return "<OpenEdxPublicSignal: {event_type}>".format(event_type=self.event_type)
+
+    @classmethod
+    def all_events(cls):
+        """
+        Get all current events.
+        """
+        return cls.instances
+
+    @classmethod
+    def get_signal_by_type(cls, event_type):
+        """
+        Get event identified by type.
+        """
+        return cls._mapping[event_type]
 
     def generate_signal_metadata(self):
         """
@@ -76,6 +96,8 @@ class OpenEdxPublicSignal(Signal):
         some validations are run on the arguments, and then relevant metadata
         that can be used for logging or debugging purposes is generated.
         Besides this behavior, send_event behaves just like the send method.
+        If the event is disabled (i.e _allow_events is False), then this method
+        won't have any effect. Meaning, the Django Signal won't be sent.
 
         Example usage:
             >>> STUDENT_REGISTRATION_COMPLETED.send_event(
@@ -89,7 +111,7 @@ class OpenEdxPublicSignal(Signal):
 
         Returns:
             list: response of each receiver following the format
-            [(receiver, response), ... ]
+            [(receiver, response), ... ]. Empty list if the event is disabled.
 
         Exceptions raised:
             SenderValidationError: raised when there's a mismatch between
@@ -126,6 +148,9 @@ class OpenEdxPublicSignal(Signal):
                         ),
                     )
 
+        if not self._allow_events:
+            return []
+
         validate_sender()
 
         kwargs["metadata"] = self.generate_signal_metadata()
@@ -147,3 +172,15 @@ class OpenEdxPublicSignal(Signal):
         warnings.warn(
             "Please, use 'send_event' with send_robust equals to True when triggering an Open edX event."
         )
+
+    def enable(self):
+        """
+        Enable all events. Meaning, send_event will send a Django signal.
+        """
+        self._allow_events = True
+
+    def disable(self):
+        """
+        Disable all events. Meaning, send_event will have no effect.
+        """
+        self._allow_events = False

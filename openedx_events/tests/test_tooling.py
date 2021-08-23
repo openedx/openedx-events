@@ -185,3 +185,18 @@ class OpenEdxPublicSignalTest(TestCase):
 
         with self.assertWarns(Warning, msg=message):
             self.public_signal.send_robust(sender=Mock())
+
+    @patch("openedx_events.tooling.Signal.send")
+    def test_send_event_disabled(self, send_mock):
+        """
+        This method tests sending an event that has been disabled.
+
+        Expected behavior:
+            The Django Signal associated to the event is not sent.
+        """
+        self.public_signal.disable()
+
+        result = self.public_signal.send_event(sender=Mock())
+
+        send_mock.assert_not_called()
+        self.assertListEqual([], result)
