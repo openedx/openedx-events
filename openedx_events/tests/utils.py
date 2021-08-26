@@ -1,8 +1,6 @@
 """
 Utils used by Open edX events.
 """
-from django.test import TestCase
-
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
@@ -48,15 +46,17 @@ class EventsIsolationMixin:
             event.enable()
 
 
-class OpenEdxEventsTestCase(EventsIsolationMixin, TestCase):
+class OpenEdxEventsTestMixin(EventsIsolationMixin):
     """
     A mixin to be used by TestCases that want to isolate their use of Open edX Events.
 
     Example usage:
 
-        class MyTestCase(OpenEdxEventsTestCase):
+        class MyTestCase(TestCase, OpenEdxEventsTestCase):
 
             ENABLED_OPENEDX_EVENTS = ['org.openedx.learning.student.registration.completed.v1']
+
+    This class assumes that's it's being used in conjunction TestCase or TestCase subclasses.
     """
 
     ENABLED_OPENEDX_EVENTS = []
@@ -66,7 +66,7 @@ class OpenEdxEventsTestCase(EventsIsolationMixin, TestCase):
         """
         Start events isolation for class.
         """
-        super().setUpClass()
+        super().setUpClass()  # pylint: disable=no-member
         cls().start_events_isolation()
 
     @classmethod
