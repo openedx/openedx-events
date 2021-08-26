@@ -13,6 +13,9 @@ Change Log
 
 Unreleased
 ~~~~~~~~~~
+
+[0.5.1] - 2021-08-26
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Changed
 _______
 * Remove TestCase inheritance from OpenEdxTestMixin.
