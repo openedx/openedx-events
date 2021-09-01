@@ -9,7 +9,7 @@ import attr
 import ddt
 from django.test import TestCase, override_settings
 
-from openedx_events.exceptions import InstantiationError, SenderValidationError
+from openedx_events.exceptions import SenderValidationError
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
@@ -66,28 +66,6 @@ class OpenEdxPublicSignalTest(TestCase):
         metadata = self.public_signal.generate_signal_metadata()
 
         self.assertDictContainsSubset(expected_metadata, attr.asdict(metadata))
-
-    @ddt.data(
-        ("", {"user": Mock()}, "event_type"),
-        ("org.openedx.learning.session.login.completed.v1", None, "data"),
-    )
-    @ddt.unpack
-    def test_event_instantiation_exception(
-        self, event_type, event_data, missing_argument
-    ):
-        """
-        This method tests when an event is instantiated without event_type or
-        event data.
-
-        Expected behavior:
-            An InstantiationError exception is raised.
-        """
-        exception_message = "InstantiationError {event_type}: Missing required argument '{missing_argument}'".format(
-            event_type=event_type, missing_argument=missing_argument
-        )
-
-        with self.assertRaisesMessage(InstantiationError, exception_message):
-            OpenEdxPublicSignal(event_type=event_type, data=event_data)
 
     @patch("openedx_events.tooling.OpenEdxPublicSignal.generate_signal_metadata")
     @patch("openedx_events.tooling.Signal.send")
