@@ -13,9 +13,15 @@ Change Log
 
 Unreleased
 ~~~~~~~~~~
+Added
+_____
+* Add custom formatting class for events responses.
+* Add a way to use send method instead of send_robust while testing.
+
 Changed
 _______
 * Remove unnecessary InstantiationError exception.
+* Default is send_robust instead of send unless specified otherwise.
 
 [0.5.1] - 2021-08-26
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
