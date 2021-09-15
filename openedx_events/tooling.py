@@ -2,11 +2,16 @@
 Tooling necessary to use Open edX events.
 """
 import warnings
+from logging import getLogger
 
+from django.conf import settings
 from django.dispatch import Signal
 
 from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import SenderValidationError
+from openedx_events.utils import format_responses
+
+log = getLogger(__name__)
 
 
 class OpenEdxPublicSignal(Signal):
@@ -30,6 +35,7 @@ class OpenEdxPublicSignal(Signal):
         self.event_type = event_type
         self.minor_version = minor_version
         self._allow_events = True
+        self._allow_send_event_failure = False
         self.__class__.instances.append(self)
         self.__class__._mapping[self.event_type] = self
         super().__init__()
@@ -80,7 +86,7 @@ class OpenEdxPublicSignal(Signal):
             minorversion=self.minor_version,
         )
 
-    def send_event(self, send_robust=False, **kwargs):
+    def send_event(self, send_robust=True, **kwargs):
         """
         Send events to all connected receivers.
 
@@ -147,9 +153,17 @@ class OpenEdxPublicSignal(Signal):
 
         kwargs["metadata"] = self.generate_signal_metadata()
 
-        if send_robust:
-            return super().send_robust(sender=None, **kwargs)
-        return super().send(sender=None, **kwargs)
+        if self._allow_send_event_failure or settings.DEBUG or not send_robust:
+            return super().send(sender=None, **kwargs)
+
+        responses = super().send_robust(sender=None, **kwargs)
+        log.info(
+            "Responses of the Open edX Event <%s>: \n%s",
+            self.event_type,
+            format_responses(responses, depth=2),
+        )
+
+        return responses
 
     def send(self, sender, **kwargs):  # pylint: disable=unused-argument
         """
@@ -176,3 +190,11 @@ class OpenEdxPublicSignal(Signal):
         Disable all events. Meaning, send_event will have no effect.
         """
         self._allow_events = False
+
+    def allow_send_event_failure(self):
+        """
+        Allow Django signal to fail. Meaning, uses send_robust instead of send.
+
+        More information on send_robust in the Django official documentation.
+        """
+        self._allow_send_event_failure = True

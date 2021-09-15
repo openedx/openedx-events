@@ -45,6 +45,29 @@ class EventsIsolationMixin:
                 raise ValueError(err_msg.format(event_type, all_event_types))  # pylint: disable=raise-missing-from
             event.enable()
 
+    @classmethod
+    def allow_send_events_failure(cls, *event_types):
+        """
+        Allow that send_event method fails for the specified event.
+
+        This method determines which `send` method to use, send or send_robust.
+        The first, raises receivers exceptions while the latter catches them.
+
+        Arguments:
+            event_types (list of `str`): types of events to enable.
+        """
+        for event_type in event_types:
+            try:
+                event = OpenEdxPublicSignal.get_signal_by_type(event_type)
+            except KeyError:
+                all_event_types = sorted(s.event_type for s in OpenEdxPublicSignal.all_events())
+                err_msg = (
+                    "You tried to enable event '{}', but I don't recognize that "
+                    "signal type. Did you mean one of these?: {}"
+                )
+                raise ValueError(err_msg.format(event_type, all_event_types))  # pylint: disable=raise-missing-from
+            event.allow_send_event_failure()
+
 
 class OpenEdxEventsTestMixin(EventsIsolationMixin):
     """
@@ -76,3 +99,4 @@ class OpenEdxEventsTestMixin(EventsIsolationMixin):
         """
         cls().disable_all_events()
         cls().enable_events_by_type(*cls.ENABLED_OPENEDX_EVENTS)
+        cls().allow_send_events_failure(*cls.ENABLED_OPENEDX_EVENTS)

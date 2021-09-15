@@ -71,13 +71,14 @@ class OpenEdxPublicSignalTest(TestCase):
     @patch("openedx_events.tooling.Signal.send")
     def test_send_event_successfully(self, send_mock, fake_metadata):
         """
-        This method tests the process of sending an event.
+        This method tests the process of sending an event that's allow to fail.
 
         Expected behavior:
-            The event is sent as a django signal.
+            The event is sent as a django signal with send method.
         """
         expected_metadata = Mock(some_data="some_data")
         fake_metadata.return_value = expected_metadata
+        self.public_signal.allow_send_event_failure()
 
         self.public_signal.send_event(user=self.user_mock)
 
@@ -91,15 +92,16 @@ class OpenEdxPublicSignalTest(TestCase):
     @patch("openedx_events.tooling.Signal.send_robust")
     def test_send_robust_event_successfully(self, send_robust_mock, fake_metadata):
         """
-        This method tests the process of sending an event.
+        This method tests the process of sending an event that won't crash.
 
         Expected behavior:
-            The event is sent as a django signal.
+            The event is sent as a django signal with send_robust method.
         """
         expected_metadata = Mock(some_data="some_data")
         fake_metadata.return_value = expected_metadata
+        send_robust_mock.return_value.__name__ = "func_name"
 
-        self.public_signal.send_event(user=self.user_mock, send_robust=True)
+        self.public_signal.send_event(user=self.user_mock)
 
         send_robust_mock.assert_called_once_with(
             sender=None,
