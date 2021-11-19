@@ -12,6 +12,8 @@ import json
 import fastavro
 import io
 
+from opaque_keys.edx.keys import CourseKey, UsageKey
+
 
 # A mapping of python types to the avro type that we want to use make valid avro schema.
 AVRO_TYPE_FOR = {
@@ -25,7 +27,11 @@ AVRO_TYPE_FOR = {
     list: "array",
 }
 
+
 class AvroAttrsBridgeExtention(ABC):
+
+    def type(self):
+        return type(self.cls)
 
     def serialize(self, obj) -> bytes:
         NotImplemented
@@ -33,15 +39,41 @@ class AvroAttrsBridgeExtention(ABC):
     def deserialize(self, data: bytes) -> object:
         NotImplemented
 
-    def record_fields(self, obj_class, field_name: str = "data"):
+    def record_fields(self):
         NotImplemented
+
+class CourseKeyAvroAttrsBridgeExtension(AvroAttrsBridgeExtention):
+    cls = CourseKey
+
+    def serialize(self, obj) -> bytes:
+        return str(obj)
+
+    def deserialize(self, data: bytes):
+        return CourseKey.from_string(data)
+
+    def record_fields(self):
+        return AVRO_TYPE_FOR[str]
 
 # Some version of this will let us work with pulsar/kafka and abstract their serialization from the end users.
 class AvroAttrsBridge:
-    def __init__(self, attrs_cls, extension):
+    def __init__(self, attrs_cls, extensions=None):
         self._attrs_cls = attrs_cls
+        # TODO switch extensions to be a dict with key of class
+        if extensions is None:
+            self.extensions = []
+        else:
+            self.extensions = extensions
+
+        self.names = set()
         schema_string = self.attrs_to_avro_schema(attrs_cls)
         self._schema = fastavro.parse_schema(schema_string)
+
+    def extension_serializer(self, inst, field, value):
+        for extension in self.extensions:
+            if isinstance(value, extension.cls):
+                return extension.serialize(value)
+            break
+        return value
 
     def serialize(self, obj) -> bytes:
         """
@@ -58,7 +90,7 @@ class AvroAttrsBridge:
             source="test_attrs",
             sourcehost="enki",
             minorversion=0,
-            data=attr.asdict(obj),
+            data=attr.asdict(obj, value_serializer=self.extension_serializer),
         )
 
         # Try to serialize using the generated schema.
@@ -76,8 +108,7 @@ class AvroAttrsBridge:
         return self.attrs_to_avro_schema(self._attrs_cls)
 
     def record_field_for_attrs_class(
-        self, attrs_class, field_name: str = "data"
-    ) -> Dict[str, Any]:
+        self, attrs_class, field_name: str = "data") -> Dict[str, Any]:
         field: Dict[str, Any] = {}
         field["name"] = field_name
         field["type"] = dict(name=attrs_class.__name__, type="record", fields=[])
@@ -92,11 +123,26 @@ class AvroAttrsBridge:
             # Attribute is another attrs class
             elif hasattr(attribute.type, "__attrs_attrs__"):
                 # Inner Attrs Class
-                inner_field = self.record_field_for_attrs_class(
-                    attribute.type, attribute.name
-                )
+                if attribute.type.__name__ in self.names:
+                    # fastavro does not allow you to redefine the same record type more than once,
+                    # so only define an attr record once
+                    # TODO: make sure this always works, what is the dict comes in diff order
+                    inner_field = {'name': attribute.name, 'type': attribute.type.__name__}
+                else:
+                    self.names.add(attribute.type.__name__)
+                    inner_field = self.record_field_for_attrs_class(
+                        attribute.type, attribute.name
+                    )
             else:
-                NotImplemented
+                inner_field = None
+                for extension in self.extensions:
+                    # TODO:maybe change extension.cls to something different
+                    if attribute.type == extension.cls:
+                        inner_field = dict(name=attribute.name, type=extension.record_fields())
+                        break
+                    # TODO better handle when type not in case
+                    if inner_field is None:
+                        raise Exception
 
             field["type"]["fields"].append(inner_field)
 
@@ -136,5 +182,13 @@ class AvroAttrsBridge:
                     data[attribute.name] = self.dict_to_attrs(
                         sub_attr_data, attribute.type
                     )
+            for extension in self.extensions:
+                if attribute.type == extension.cls:
+                    if attribute.name in data:
+                        sub_data = data[attribute.name]
+                        data[attribute.name] = extension.deserialize(sub_data)
+                    else:
+                        raise Exception
+                    break
 
         return attrs_cls(**data)
