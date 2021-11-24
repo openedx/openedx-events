@@ -6,6 +6,7 @@ from typing import Dict, Any
 
 import attr
 import fastavro
+import json
 
 
 # A mapping of python types to the avro type that we want to use make valid avro schema.
@@ -47,6 +48,9 @@ class AvroAttrsBridge:
         self.schema_record_names = set()
         self._schema_dict = self.attrs_to_avro_schema(attrs_cls)
         self._schema = fastavro.parse_schema(self._schema_dict)
+
+    def schema(self):
+        return json.dumps(self._schema, sort_keys=True)
 
     def attrs_to_avro_schema(self, attrs_cls):
         """
@@ -156,6 +160,7 @@ class AvroAttrsBridge:
         out.seek(0)
         return out.read()
 
+
     def extension_serializer(self, _, field, value):
         """
         Callback passed in as "value_serializer" arg in attr.asdict function.
@@ -201,3 +206,19 @@ class AvroAttrsBridge:
                 )
 
         return attrs_cls(**data)
+
+
+class KafkaWrapper(AvroAttrsBridge):
+    """
+    Wrapper class to help AvroAttrsBridge to work with kafka.
+
+    confluent_kafka::SerializingProducer needs a callable input that serializes an obj. The callback needs to take in obj and kafka context.
+
+    confluent_kafka::DeSerializingConsumer needs a callable input that deserializes data. The callback needs to take in data (bytes string) and kafka context.
+    """
+
+    def serialize_wrapper(self, obj, context):
+        return self.serialize(obj)
+
+    def deserialize_wrapper(self, data, context):
+        return self.deserialize(data)
