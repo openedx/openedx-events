@@ -1,102 +1,109 @@
-#!/usr/bin/env python3
-
-import attr
-from opaque_keys.edx.keys import CourseKey, UsageKey
-from opaque_keys import InvalidKeyError
-
+"""
+Tests for AvroAttrsBridge.
+"""
+from unittest import TestCase
 from datetime import datetime
 
-from openedx_events.avro_attrs_bridge import AvroAttrsBridge, CourseKeyAvroAttrsBridgeExtension
+import attr
+
+from opaque_keys.edx.keys import CourseKey
+
+from openedx_events.avro_attrs_bridge import AvroAttrsBridge
+from openedx_events.avro_attrs_bridge_extensions import (
+    CourseKeyAvroAttrsBridgeExtension,
+    DatetimeAvroAttrsBridgeExtension,
+)
 from openedx_events.learning.data import (
     CourseEnrollmentData,
     UserData,
     CourseData,
-    CourseKey,
     UserPersonalData,
 )
 
 
-# def test_non_base_types():
-#     user_personal_data = UserPersonalData(
-#         username="username", email="email", name="name"
-#     )
-#     user_data = UserData(id=1, is_active=True, pii=user_personal_data)
-#     # define Coursedata, which needs Coursekey, which needs opaque key
-#     course_id = "course-v1:edX+DemoX.1+2014"
-#     course_key = CourseKey.from_string(course_id)
-#     course_data = CourseData(
-#         course_key=course_key,
-#         display_name="display_name",
-#     )
-#     course_enrollment_data = CourseEnrollmentData(
-#         user=user_data,
-#         course=course_data,
-#         mode="mode",
-#         is_active=False,
-#         creation_date=datetime.now(),
-#         created_by=user_data,
-#     )
+class TestNoneBaseTypesInBridge(TestCase):
+    """
+    Tests to make sure AttrsAvroBridge handles custom types correctly.
+    """
+    def setUp(self):
+        super().setUp()
+        user_personal_data = UserPersonalData(
+            username="username", email="email", name="name"
+        )
+        user_data = UserData(id=1, is_active=True, pii=user_personal_data)
+        # define Coursedata, which needs Coursekey, which needs opaque key
+        course_id = "course-v1:edX+DemoX.1+2014"
+        course_key = CourseKey.from_string(course_id)
+        course_data = CourseData(
+            course_key=course_key,
+            display_name="display_name",
+            start=datetime.now(),
+            end=datetime.now(),
+        )
+        self.course_enrollment_data = CourseEnrollmentData(
+            user=user_data,
+            course=course_data,
+            mode="mode",
+            is_active=False,
+            creation_date=datetime.now(),
+            created_by=user_data,
+        )
 
-#     breakpoint()
+    def test_non_base_types_in_bridge(self):
+        """
+        Test to makes ure AvroattrsBridge works correctly with non-attr classes.
 
-#     serialized_course_enrollment_data = attr.asdict(course_enrollment_data)
-#     deserialized_course_enrollment_data = CourseEnrollmentData(
-#         **serialized_course_enrollment_data
-#     )
-#     assert course_enrollment_data == deserialized_course_enrollment_data
+        Specifically, testing to make sure the extension classes work as intended.
+        """
+        bridge = AvroAttrsBridge(
+            CourseEnrollmentData,
+            extensions={
+                CourseKeyAvroAttrsBridgeExtension.cls: CourseKeyAvroAttrsBridgeExtension(),
+                DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension(),
+            },
+        )
+        serialized_course_enrollment_data = bridge.serialize(
+            self.course_enrollment_data
+        )
 
+        object_from_wire = bridge.deserialize(serialized_course_enrollment_data)
+        assert self.course_enrollment_data == object_from_wire
 
-def test_non_base_types_in_bridge():
-    user_personal_data = UserPersonalData(
-        username="username", email="email", name="name"
-    )
-    user_data = UserData(id=1, is_active=True, pii=user_personal_data)
-    # define Coursedata, which needs Coursekey, which needs opaque key
-    course_id = "course-v1:edX+DemoX.1+2014"
-    course_key = CourseKey.from_string(course_id)
-    course_data = CourseData(
-        course_key=course_key,
-        display_name="display_name",
-    )
-    course_enrollment_data = CourseEnrollmentData(
-        user=user_data,
-        course=course_data,
-        mode="mode",
-        is_active=False,
-        creation_date=datetime.now(),
-        created_by=user_data,
-    )
-
-    bridge = AvroAttrsBridge(CourseEnrollmentData, extensions=[CourseKeyAvroAttrsBridgeExtension()])
-    serialized_course_enrollment_data = bridge.serialize(course_enrollment_data)
-
-    object_from_wire = bridge.deserialize(serialized_course_enrollment_data)
-    assert course_enrollment_data == object_from_wire
-
+    def test_throw_exception_on_unextended_custom_type(self):
+        with self.assertRaises(TypeError):
+            # CourseEnrollmentData has CourseKey and datetime as custom types
+            # This should raise TypeError cause no extensions are being passed to bridge
+            AvroAttrsBridge(CourseEnrollmentData)
 
 def test_base_types():
     @attr.s(auto_attribs=True)
-    class SubTest:
+    class SubTestData:
         sub_name: str
         course_id: str
 
     @attr.s(auto_attribs=True)
-    class UberSubTest:
+    class SubTestData2:
         sub_name: str
         course_id: str
 
     @attr.s(auto_attribs=True)
-    class Test:
+    class TestData:                   # pylint: disable=missing-class-docstring
         name: str
         course_id: str
         user_id: int
-        sub_test: SubTest
-        uber_sub_test: UberSubTest
+        sub_test: SubTestData
+        uber_sub_test: SubTestData2
 
-    bridge = AvroAttrsBridge(Test)
+    bridge = AvroAttrsBridge(TestData)
 
     # A test record that we can try to serialize to avro.
-    record = Test("foo", "bar.course", 1, SubTest("a.sub.name", "a.nother.course"), UberSubTest('b.uber.sub.name', 'b.uber.another.course'))
+    record = TestData(
+        "foo",
+        "bar.course",
+        1,
+        SubTestData("a.sub.name", "a.nother.course"),
+        SubTestData2("b.uber.sub.name", "b.uber.another.course"),
+    )
     serialized_record = bridge.serialize(record)
 
     # Try to de-serialize back to an attrs class.
