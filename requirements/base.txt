@@ -12,13 +12,15 @@ django==2.2.24
     #   -r requirements/base.in
 edx-opaque-keys[django]==2.2.2
     # via -r requirements/base.in
-pbr==5.6.0
+fastavro==1.4.7
+    # via -r requirements/base.in
+pbr==5.8.0
     # via stevedore
-pymongo==3.11.4
+pymongo==3.12.1
     # via edx-opaque-keys
-pytz==2021.1
+pytz==2021.3
     # via django
-sqlparse==0.4.1
+sqlparse==0.4.2
     # via django
-stevedore==3.3.0
+stevedore==3.5.0
     # via edx-opaque-keys
