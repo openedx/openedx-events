@@ -217,8 +217,8 @@ class KafkaWrapper(AvroAttrsBridge):
     confluent_kafka::DeSerializingConsumer needs a callable input that deserializes data. The callback needs to take in data (bytes string) and kafka context.
     """
 
-    def serialize_wrapper(self, obj, context):
+    def serialize_wrapper(self, obj, _context):
         return self.serialize(obj)
 
-    def deserialize_wrapper(self, data, context):
+    def deserialize_wrapper(self, data, _context):
         return self.deserialize(data)
