@@ -16,55 +16,32 @@ def parse_with_schemas(data, *schemas):
         data_file = io.BytesIO(data)
         # make sure data with old schema can still be read by old schema
         try:
-            deserialied_data = fastavro.schemaless_reader(data_file, schema)
+            deserialied_data = fastavro.schemaless_reader(data_file, *schema)
             inner_output['data'] = deserialied_data
         except Exception as exc:
             inner_output['exception'] = exc
         output.append(inner_output)
     return output
 
-def parse_with_schemas_avro(data, *schemas):
-    output = []
-    for schema in schemas:
-        inner_output = {}
-        inner_output['schema'] = schema
-        data_file = io.BytesIO(data)
-        # make sure data with old schema can still be read by old schema
-        deserialied_data =DatumReader(schema).read(BinaryDecoder(data_file))
-        inner_output['data'] = deserialied_data
-        output.append(inner_output)
-    return output
-
-def temp_serializer_fastavro(data, schema):
+def temp_serializer(data, schema):
     out = io.BytesIO()
     fastavro.schemaless_writer(out, schema, data)
     out.seek(0)
     return out.read()
 
-def temp_serializer_avro(data, schema):
-    writer = DatumWriter(schema)
-    out = io.BytesIO()
-    writer.write(data, BinaryEncoder(out))
-    out.seek(0)
-    return out.read()
-
-def create_schema_fastavro(schema):
-    return fastavro.parse_schema(schema)
-
-def create_schema_avro(schema):
-    return avro.schema.parse(json.dumps(schema))
-
-
-
-# TODO Create parse_with_schemas for python avro
-
 
 def test_avro_changed_schema_add_value():
+    """
+    Make sure adding an new optional value works
+    """
     datum = {
         "userName": "Martin",
         "interests": ["daydreaming", "hacking"],
     }
 
+    expected_datum = dict()
+    expected_datum.update(datum)
+    expected_datum['favoriteNumber'] = None
     schema = {
         "type": "record",
         "name": "Person",
@@ -79,17 +56,19 @@ def test_avro_changed_schema_add_value():
         "name": "Person",
         "fields": [
             {"name": "userName", "type": "string"},
-            {"name": "favouriteNumber", "type": ["string", "null"], "default":"default"},
+            {"name": "favoriteNumber", "type": ["null","string"], "default": None},
             {"name": "interests", "type": {"type": "array", "items": "string"}},
         ],
     }
-    parsed_schema = create_schema_avro(schema)
-    parsed_schema_v2 = create_schema_avro(schema_v2)
+    parsed_schema = fastavro.parse_schema(schema)
+    parsed_schema_v2 = fastavro.parse_schema(schema_v2)
 
-    serialized_data = temp_serializer_avro(datum, parsed_schema)
+    serialized_data = temp_serializer(datum, parsed_schema)
 
-    output = parse_with_schemas_avro(serialized_data, parsed_schema, parsed_schema_v2)
+    output = parse_with_schemas(serialized_data,(parsed_schema, parsed_schema), (parsed_schema, parsed_schema_v2))
     assert datum == output[0]['data']
+    assert output[1]['data'] == expected_datum
+
     # TODO Figure out what is happening
     # data_file = io.BytesIO(serialized_data)
     # # make sure data with old schema can still be read by old schema
@@ -103,19 +82,23 @@ def test_avro_changed_schema_add_value():
 def test_avro_changed_schema_remove_value():
     datum = {
         "userName": "Martin",
-        "favouriteNumber": "removed_val",
+        "favoriteNumber": "removed_val",
         "interests": ["daydreaming", "hacking"],
     }
 
+    expected_datum = dict()
+    expected_datum.update(datum)
+    del expected_datum['favoriteNumber']
     schema = {
         "type": "record",
         "name": "Person",
         "fields": [
             {"name": "userName", "type": "string"},
-            {"name": "favouriteNumber", "type": ["null", "string"]},
+            {"name": "favoriteNumber", "type": "string"},
             {"name": "interests", "type": {"type": "array", "items": "string"}},
         ],
     }
+
     schema_v2 = {
         "type": "record",
         "name": "Person",
@@ -124,22 +107,14 @@ def test_avro_changed_schema_remove_value():
             {"name": "interests", "type": {"type": "array", "items": "string"}},
         ],
     }
+
     parsed_schema = fastavro.parse_schema(schema)
     parsed_schema_v2 = fastavro.parse_schema(schema_v2)
+    serialized_data = temp_serializer(datum, parsed_schema)
 
-    out = io.BytesIO()
-    fastavro.schemaless_writer(out, schema, datum)
-    out.seek(0)
-    serialized_data = out.read()
-
-    data_file = io.BytesIO(serialized_data)
-    # make sure data with old schema can still be read by old schema
-    assert datum == fastavro.schemaless_reader(data_file, parsed_schema)
-
-    data_file = io.BytesIO(serialized_data)
-    record = fastavro.schemaless_reader(data_file, parsed_schema_v2)
-    string_record = json.dumps(record)
-    assert "removed_val" not in string_record
+    output = parse_with_schemas(serialized_data,(parsed_schema, parsed_schema), (parsed_schema, parsed_schema_v2))
+    assert datum == output[0]['data']
+    assert output[1]['data'] == expected_datum
 
 
 
@@ -149,15 +124,19 @@ def test_avro_changed_schema_missing_val():
         "interests": ["daydreaming", "hacking"],
     }
 
+    expected_datum = dict()
+    expected_datum.update(datum)
+    expected_datum['favoriteNumber'] = None
     schema = {
         "type": "record",
         "name": "Person",
         "fields": [
             {"name": "userName", "type": "string"},
-            {"name": "favouriteNumber", "type": ["string", "null"], "default": "default"},
+            {"name": "favoriteNumber", "type": ["null","string"], "default":None},
             {"name": "interests", "type": {"type": "array", "items": "string"}},
         ],
     }
+
     schema_v2 = {
         "type": "record",
         "name": "Person",
@@ -166,17 +145,11 @@ def test_avro_changed_schema_missing_val():
             {"name": "interests", "type": {"type": "array", "items": "string"}},
         ],
     }
+
     parsed_schema = fastavro.parse_schema(schema)
     parsed_schema_v2 = fastavro.parse_schema(schema_v2)
+    serialized_data = temp_serializer(datum, parsed_schema)
 
-    out = io.BytesIO()
-    fastavro.schemaless_writer(out, parsed_schema, datum)
-    out.seek(0)
-    serialized_data = out.read()
-
-    data_file = io.BytesIO(serialized_data)
-    # make sure data with old schema can still be read by old schema
-    read_record = fastavro.schemaless_reader(data_file, parsed_schema)
-
-    data_file = io.BytesIO(serialized_data)
-    record = fastavro.schemaless_reader(data_file, parsed_schema_v2)
+    output = parse_with_schemas(serialized_data,(parsed_schema, parsed_schema), (parsed_schema, parsed_schema_v2))
+    assert expected_datum == output[0]['data']
+    assert output[1]['data'] == datum
