@@ -9,17 +9,8 @@ import fastavro
 import json
 
 
-# A mapping of python types to the avro type that we want to use make valid avro schema.
-AVRO_TYPE_FOR = {
-    None: "null",
-    bool: "boolean",
-    int: "long",
-    float: "double",
-    bytes: "bytes",
-    str: "string",
-    dict: "record",
-    list: "array",
-}
+from openedx_events.avro_attrs_bridge_extensions import DatetimeAvroAttrsBridgeExtension
+from openedx_events.avro_types import AVRO_TYPE_FOR
 
 
 class AvroAttrsBridge:
@@ -28,6 +19,9 @@ class AvroAttrsBridge:
 
     Intended usecase: To abstract serilalization and deserialization of openedx-events to send over pulsar or kafka
     """
+
+    # default extensions, can be overwriteen by passing in extensions during obj initialization
+    default_extensions = {DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension}
 
     def __init__(self, attrs_cls, extensions=None):
         """
@@ -38,10 +32,11 @@ class AvroAttrsBridge:
             extensions: dict mapping Class Object to its AvroAttrsBridgeExtention subclass instance
         """
         self._attrs_cls = attrs_cls
-        if extensions is None:
-            self.extensions = {}
-        else:
-            self.extensions = extensions
+
+        self.extensions = {}
+        self.extensions.update(self.default_extensions)
+        if isinstance(extensions, dict):
+            self.extensions.update(extensions)
 
         # used by record_field_for_attrs_class function to track of which records have already been defined in schema
         # Reason: fastavro does no allow you to define record with same name twice
@@ -78,11 +73,11 @@ class AvroAttrsBridge:
             ],
         }
 
-        record_field = self.record_field_for_attrs_class(attrs_cls)
-        base_schema["fields"].append(record_field)
+        record_fields = self.record_fields_for_attrs_class(attrs_cls)
+        base_schema["fields"].append(record_fields)
         return base_schema
 
-    def record_field_for_attrs_class(
+    def record_fields_for_attrs_class(
         self, attrs_class, field_name: str = "data"
     ) -> Dict[str, Any]:
         """
@@ -97,6 +92,8 @@ class AvroAttrsBridge:
         field["type"] = dict(name=attrs_class.__name__, type="record", fields=[])
 
         for attribute in attrs_class.__attrs_attrs__:
+            # if attribute.name == 'course_key':
+                # breakpoint()
             # Attribute is a simple type.
             if attribute.type in AVRO_TYPE_FOR:
                 inner_field = {
@@ -116,20 +113,26 @@ class AvroAttrsBridge:
                     }
                 else:
                     self.schema_record_names.add(attribute.type.__name__)
-                    inner_field = self.record_field_for_attrs_class(
+                    inner_field = self.record_fields_for_attrs_class(
                         attribute.type, attribute.name
                     )
+                    # breakpoint()
             else:
                 inner_field = None
                 extension = self.extensions.get(attribute.type)
                 if extension is not None:
-                    inner_field = dict(
-                        name=attribute.name, type=extension.record_fields()
-                    )
+                    inner_field = {
+                        "name":attribute.name,
+                        "type":extension.record_fields()
+                    }
                 else:
+                    # breakpoint()
                     raise TypeError(
-                        f"AvroAttrsBridgeExtension for {attribute.type} not in self.exceptions."
+                        f"AvroAttrsBridgeExtension for {attribute.type} not in self.extensions."
                     )
+
+            if attribute.default is not attr.NOTHING:
+                # breakpoint()
             field["type"]["fields"].append(inner_field)
 
         return field
@@ -171,12 +174,12 @@ class AvroAttrsBridge:
             return extension.serialize(value)
         return value
 
-    def deserialize(self, data: bytes) -> object:
+    def deserialize(self, data: bytes, option_schema=None) -> object:
         """
         Deserializes data into self.attrs_cls instance
         """
         data_file = io.BytesIO(data)
-        record = fastavro.schemaless_reader(data_file, self._schema)
+        record = fastavro.schemaless_reader(data_file, self._schema, option_schema)
         return self.dict_to_attrs(record["data"], self._attrs_cls)
 
     def dict_to_attrs(self, data: dict, attrs_cls):

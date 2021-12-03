@@ -6,7 +6,7 @@ from datetime import datetime
 
 from opaque_keys.edx.keys import CourseKey
 
-from openedx_events.avro_attrs_bridge import AVRO_TYPE_FOR
+from openedx_events.avro_types import AVRO_TYPE_FOR
 
 
 class AvroAttrsBridgeExtention(ABC):

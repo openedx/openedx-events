@@ -75,6 +75,31 @@ class TestNoneBaseTypesInBridge(TestCase):
             # This should raise TypeError cause no extensions are being passed to bridge
             AvroAttrsBridge(CourseEnrollmentData)
 
+def test_object_evolution():
+    @attr.s(auto_attribs=True)
+    class TestData:
+        sub_name: str
+        course_id: str
+
+    original_bridge = AvroAttrsBridge(TestData)
+
+    record = TestData('sub_name', 'course_id')
+    serialized_record = original_bridge.serialize(record)
+
+    @attr.s(auto_attribs=True)
+    class TestData:
+        sub_name: str
+        course_id: str
+        hello: str = "blah"
+
+    new_bridge = AvroAttrsBridge(TestData)
+    deserialized_obj = new_bridge.deserialize(serialized_record, original_bridge._schema)
+
+    # breakpoint()
+
+
+
+
 def test_base_types():
     @attr.s(auto_attribs=True)
     class SubTestData:
