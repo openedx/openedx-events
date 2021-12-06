@@ -21,7 +21,7 @@ class AvroAttrsBridge:
     """
 
     # default extensions, can be overwriteen by passing in extensions during obj initialization
-    default_extensions = {DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension}
+    default_extensions = {DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension()}
 
     def __init__(self, attrs_cls, extensions=None):
         """
@@ -42,10 +42,11 @@ class AvroAttrsBridge:
         # Reason: fastavro does no allow you to define record with same name twice
         self.schema_record_names = set()
         self._schema_dict = self.attrs_to_avro_schema(attrs_cls)
-        self._schema = fastavro.parse_schema(self._schema_dict)
+        # make sure the schema is parsable
+        fastavro.parse_schema(self._schema_dict)
 
     def schema(self):
-        return json.dumps(self._schema, sort_keys=True)
+        return json.dumps(self._schema_dict, sort_keys=True)
 
     def attrs_to_avro_schema(self, attrs_cls):
         """
@@ -100,6 +101,7 @@ class AvroAttrsBridge:
                     "name": attribute.name,
                     "type": AVRO_TYPE_FOR[attribute.type],
                 }
+
             # Attribute is another attrs class
             elif hasattr(attribute.type, "__attrs_attrs__"):
                 # Inner Attrs Class
@@ -116,7 +118,6 @@ class AvroAttrsBridge:
                     inner_field = self.record_fields_for_attrs_class(
                         attribute.type, attribute.name
                     )
-                    # breakpoint()
             else:
                 inner_field = None
                 extension = self.extensions.get(attribute.type)
@@ -126,13 +127,15 @@ class AvroAttrsBridge:
                         "type":extension.record_fields()
                     }
                 else:
-                    # breakpoint()
                     raise TypeError(
                         f"AvroAttrsBridgeExtension for {attribute.type} not in self.extensions."
                     )
-
+            # Assume attribute is optional if it has a default value
+            # The default value is always set to None to allow attr class to handle dealing with default values
+            # in dict_to_attrs function in this class
             if attribute.default is not attr.NOTHING:
-                # breakpoint()
+                inner_field['type'] = ['null', inner_field['type']]
+                inner_field['default'] = None
             field["type"]["fields"].append(inner_field)
 
         return field
@@ -159,7 +162,7 @@ class AvroAttrsBridge:
 
         # Try to serialize using the generated schema.
         out = io.BytesIO()
-        fastavro.schemaless_writer(out, self._schema, avro_record)
+        fastavro.schemaless_writer(out, self._schema_dict, avro_record)
         out.seek(0)
         return out.read()
 
@@ -174,12 +177,16 @@ class AvroAttrsBridge:
             return extension.serialize(value)
         return value
 
-    def deserialize(self, data: bytes, option_schema=None) -> object:
+    def deserialize(self, data: bytes, writer_schema=None) -> object:
         """
         Deserializes data into self.attrs_cls instance
+        # TODO document writer schema
         """
         data_file = io.BytesIO(data)
-        record = fastavro.schemaless_reader(data_file, self._schema, option_schema)
+        if writer_schema is not None:
+            record = fastavro.schemaless_reader(data_file, writer_schema, self._schema_dict)
+        else:
+            record = fastavro.schemaless_reader(data_file, self._schema_dict)
         return self.dict_to_attrs(record["data"], self._attrs_cls)
 
     def dict_to_attrs(self, data: dict, attrs_cls):
@@ -188,25 +195,31 @@ class AvroAttrsBridge:
         passed in.
         """
         for attribute in attrs_cls.__attrs_attrs__:
-            if hasattr(attribute.type, "__attrs_attrs__"):
-                if attribute.name in data:
-                    sub_attr_data = data[attribute.name]
-                    data[attribute.name] = self.dict_to_attrs(
-                        sub_attr_data, attribute.type
-                    )
-            elif attribute.type in self.extensions:
-                extension = self.extensions.get(attribute.type)
-                if attribute.name in data:
-                    sub_data = data[attribute.name]
-                    data[attribute.name] = extension.deserialize(sub_data)
+            if attribute.name in data:
+                sub_data = data[attribute.name]
+                if sub_data is None:
+                    # delete keys that have defaults in attr class and which have None as value
+                    # this is to let attr class take care of creating default values
+                    if attribute.default is not attr.NOTHING:
+                        del data[attribute.name]
                 else:
-                    raise Exception(
-                        f"Necessary key: {attribute.name} not found in data dict"
-                    )
-            elif attribute.type not in AVRO_TYPE_FOR:
-                raise TypeError(
-                    f"Unable to deserialize {attribute.type} data, please add extension for custom data type"
-                )
+                    if hasattr(attribute.type, "__attrs_attrs__"):
+                        if attribute.name in data:
+                            data[attribute.name] = self.dict_to_attrs(
+                                sub_data, attribute.type
+                            )
+                    elif attribute.type in self.extensions:
+                        extension = self.extensions.get(attribute.type)
+                        if attribute.name in data:
+                            data[attribute.name] = extension.deserialize(sub_data)
+                        else:
+                            raise Exception(
+                                f"Necessary key: {attribute.name} not found in data dict"
+                            )
+                    elif attribute.type not in AVRO_TYPE_FOR:
+                        raise TypeError(
+                            f"Unable to deserialize {attribute.type} data, please add extension for custom data type"
+                        )
 
         return attrs_cls(**data)
 
