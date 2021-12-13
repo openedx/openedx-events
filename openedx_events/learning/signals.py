@@ -117,3 +117,39 @@ COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
         "cohort": CohortData,
     }
 )
+
+
+# .. event_type: org.openedx.learning.account_settings.changed.v1
+# .. event_name: ACCOUNT_SETTINGS_CHANGED
+# .. event_description: emitted when the user's account settings update is completed.
+# .. event_data: UserData
+ACCOUNT_SETTINGS_CHANGED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.account_settings.changed.v1",
+    data={
+        "user": UserData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.user.password.changed.v1
+# .. event_name: PASSWORD_CHANGED
+# .. event_description: emitted when the user's password update is completed.
+# .. event_data: UserData
+PASSWORD_CHANGED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.password.changed.v1",
+    data={
+        "user": UserData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.user.password.changed.v1
+# .. event_name: LEARNER_VERIFICATION_COMPLETED
+# .. event_description: emitted when the learner's verification process is completed.
+# .. event_data: UserData
+LEARNER_VERIFICATION_COMPLETED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.learner.verification.completed.v1",
+    data={
+        "user": UserData,
+    }
+)
