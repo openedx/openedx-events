@@ -140,9 +140,9 @@ class AvroAttrsBridge:
 
         return field
 
-    def serialize(self, obj) -> bytes:
+    def to_dict(self, obj):
         """
-        Convert from attrs to a valid avro record.
+        TODO: document
         """
         # Make an valid avro record from the attrs class. in the future `ID`, and time would be generated, the rest
         # would be defined once and maybe passed into the class at instantiation time?
@@ -159,7 +159,13 @@ class AvroAttrsBridge:
             minorversion=0,
             data=obj_as_dict,
         )
+        return avro_record
 
+    def serialize(self, obj) -> bytes:
+        """
+        Convert from attrs to a valid avro record.
+        """
+        avro_record = self.to_dict(obj)
         # Try to serialize using the generated schema.
         out = io.BytesIO()
         fastavro.schemaless_writer(out, self._schema_dict, avro_record)
