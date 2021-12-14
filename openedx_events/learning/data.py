@@ -74,6 +74,26 @@ class CourseData:
 
 
 @attr.s(frozen=True)
+class CourseGradeData:
+    """
+    Attributes defined for Open edX Course Overview object.
+
+    Arguments:
+        user (UserData): identifier of the Course object.
+        course (CourseData): display name associated with the course.
+        percent_grade (str):
+        letter_grade (str):
+        passed (bool):
+    """
+
+    user = attr.ib(type=UserData)
+    course = attr.ib(type=CourseData)
+    percent_grade = attr.ib(type=str)
+    letter_grade = attr.ib(type=str)
+    passed = attr.ib(type=bool)
+
+
+@attr.s(frozen=True)
 class CourseEnrollmentData:
     """
     Attributes defined for Open edX Course Enrollment object.

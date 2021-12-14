@@ -8,7 +8,7 @@ They also must comply with the payload definition specified in
 docs/decisions/0003-events-payload.rst
 """
 
-from openedx_events.learning.data import CertificateData, CohortData, CourseEnrollmentData, UserData
+from openedx_events.learning.data import CertificateData, CohortData, CourseEnrollmentData, CourseGradeData, UserData
 from openedx_events.tooling import OpenEdxPublicSignal
 
 # .. event_type: org.openedx.learning.student.registration.completed.v1
@@ -150,6 +150,45 @@ PASSWORD_CHANGED = OpenEdxPublicSignal(
 LEARNER_VERIFICATION_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.learner.verification.completed.v1",
     data={
+        "user": UserData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.course.grade.changed.v1
+# .. event_name: COURSE_GRADE_CHANGED
+# .. event_description: emitted when the course grade for a user changes.
+# .. event_data: CourseGradeData, UserData
+COURSE_GRADE_CHANGED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.grade.changed.v1",
+    data={
+        "course": CourseGradeData,
+        "user": UserData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.course.grade.changed.v1
+# .. event_name: COURSE_GRADE_NOW_PASSED
+# .. event_description: emitted when a user has passed a course.
+# .. event_data: CourseGradeData, UserData
+COURSE_GRADE_NOW_PASSED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.grade.changed.v1",
+    data={
+        "course": CourseGradeData,
+        "user": UserData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.course.grade.changed.v1
+# .. event_name: COURSE_GRADE_NOW_FAILED
+# .. event_description: emitted when a user has failed a course.
+# .. event_data: CourseGradeData, UserData
+COURSE_GRADE_NOW_FAILED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.grade.changed.v1",
+    data={
+        "course": CourseGradeData,
         "user": UserData,
     }
 )
