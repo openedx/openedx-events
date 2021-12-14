@@ -157,7 +157,7 @@ LEARNER_VERIFICATION_COMPLETED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.course.grade.changed.v1
 # .. event_name: COURSE_GRADE_CHANGED
-# .. event_description: emitted when the course grade for a user changes.
+# .. event_description: emitted when a learner is graded.
 # .. event_data: CourseGradeData, UserData
 COURSE_GRADE_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.grade.changed.v1",
@@ -170,7 +170,7 @@ COURSE_GRADE_CHANGED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.course.grade.changed.v1
 # .. event_name: COURSE_GRADE_NOW_PASSED
-# .. event_description: emitted when a user has passed a course.
+# .. event_description: emitted when a learner has passed a course.
 # .. event_data: CourseGradeData, UserData
 COURSE_GRADE_NOW_PASSED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.grade.changed.v1",
@@ -183,7 +183,7 @@ COURSE_GRADE_NOW_PASSED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.course.grade.changed.v1
 # .. event_name: COURSE_GRADE_NOW_FAILED
-# .. event_description: emitted when a user has failed a course.
+# .. event_description: emitted when a learner has failed a course.
 # .. event_data: CourseGradeData, UserData
 COURSE_GRADE_NOW_FAILED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.grade.changed.v1",
