@@ -234,13 +234,13 @@ class KafkaWrapper(AvroAttrsBridge):
     """
     Wrapper class to help AvroAttrsBridge to work with kafka.
 
-    confluent_kafka::SerializingProducer needs a callable input that serializes an obj. The callback needs to take in obj and kafka context.
+    confluent_kafka::AvroSerializing needs a callable input that converts obj to avro dict. The callback needs to take in obj and kafka context.
 
-    confluent_kafka::DeSerializingConsumer needs a callable input that deserializes data. The callback needs to take in data (bytes string) and kafka context.
+    confluent_kafka::AvroDeSerializing needs a callable input that converts avro dict into obj. The callback needs to take in data (avro record dict) and kafka context.
     """
 
-    def serialize_wrapper(self, obj, _context):
-        return self.serialize(obj)
+    def to_dict(self, obj, _context):
+        return super().to_dict(obj)
 
-    def deserialize_wrapper(self, data, _context):
-        return self.deserialize(data)
+    def from_dict(self, data, _context):
+        return self.dict_to_attrs(data["data"], self._attrs_cls)
