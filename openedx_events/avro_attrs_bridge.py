@@ -26,6 +26,7 @@ class AvroAttrsBridge:
     default_extensions = {
         DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension()
     }
+    # default config, should be overwritten by passing in config during obj initialization
     default_config = {
         "source": "/openedx/unknown/avro_attrs_bridge",
         "sourcehost": "unknown",
@@ -39,6 +40,12 @@ class AvroAttrsBridge:
         Arguments:
             attrs_cls: Attr Class Object (not instance)
             extensions: dict mapping Class Object to its AvroAttrsBridgeExtention subclass instance
+            config: dict with followings keys
+                - source:  This field will be used to indicate the logical source of an event, and will be of the form /{namespace}/{service}/{web|worker}. All services that are part of the standard distribution of Open edX should use openedx for the namespace. Examples of services might be “discovery”, “lms”, “studio”, etc. The value “web” will be used for events emitted by the web application, and “worker” will be used for events emitted by asynchronous tasks such as celery workers.
+                           For more, see: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#id3
+                - sourcehost: should represent the physical source of message -- i.e. the host identifier of the server that emitted this event (exampl: edx.devstack.lms)
+                - type: The name of event. Should be formatted `{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}`.
+                        To find out more see: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#id5
         """
         self._attrs_cls = attrs_cls
 
@@ -55,14 +62,14 @@ class AvroAttrsBridge:
         # used by record_field_for_attrs_class function to keep track of which records have already been defined in schema
         # Reason: fastavro does no allow you to define record with same name twice
         self.schema_record_names = set()
-        self._schema_dict = self.attrs_to_avro_schema(attrs_cls)
+        self._schema_dict = self._attrs_to_avro_schema(attrs_cls)
         # make sure the schema is parsable
         fastavro.parse_schema(self._schema_dict)
 
     def schema(self):
         return json.dumps(self._schema_dict, sort_keys=True)
 
-    def attrs_to_avro_schema(self, attrs_cls):
+    def _attrs_to_avro_schema(self, attrs_cls):
         """
         Generate avro schema for attr_cls
 
@@ -88,11 +95,11 @@ class AvroAttrsBridge:
             ],
         }
 
-        record_fields = self.record_fields_for_attrs_class(attrs_cls)
+        record_fields = self._record_fields_for_attrs_class(attrs_cls)
         base_schema["fields"].append(record_fields)
         return base_schema
 
-    def record_fields_for_attrs_class(
+    def _record_fields_for_attrs_class(
         self, attrs_class, field_name: str = "data"
     ) -> Dict[str, Any]:
         """
@@ -127,7 +134,7 @@ class AvroAttrsBridge:
                     }
                 else:
                     self.schema_record_names.add(attribute.type.__name__)
-                    inner_field = self.record_fields_for_attrs_class(
+                    inner_field = self._record_fields_for_attrs_class(
                         attribute.type, attribute.name
                     )
             else:
@@ -154,13 +161,17 @@ class AvroAttrsBridge:
 
     def to_dict(self, obj, context=None):
         """
-        TODO: document
+        Converts obj into dictionary that matches avro schema (self.schema).
+
+        Args:
+            obj: instance of self._attr_cls
+            context: dict with following value overwrites:
+                - id: unique id for this event. If id is not in dict, a uuid1 will be created for this event
+                - time: time stamp for this event. If time is not in dict, datetime.now() will be called
         """
-        # Make an valid avro record from the attrs class. in the future `ID`, and time would be generated, the rest
-        # would be defined once and maybe passed into the class at instantiation time?
         # Not sure if it makes sense to keep version info here since the schema registry will actually
         # keep track of versions and the topic can have only one associated schema at a time.
-        obj_as_dict = attr.asdict(obj, value_serializer=self.extension_serializer)
+        obj_as_dict = attr.asdict(obj, value_serializer=self._extension_serializer)
         # TODO what should the default values of the following be
         avro_record = dict(
             id=context["id"]
@@ -188,7 +199,7 @@ class AvroAttrsBridge:
         out.seek(0)
         return out.read()
 
-    def extension_serializer(self, _, field, value):
+    def _extension_serializer(self, _, field, value):
         """
         Callback passed in as "value_serializer" arg in attr.asdict function.
         Serializes values for which an extention exists in self.extensions dict.
