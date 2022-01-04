@@ -107,8 +107,6 @@ class AvroAttrsBridge:
         field["type"] = dict(name=attrs_class.__name__, type="record", fields=[])
 
         for attribute in attrs_class.__attrs_attrs__:
-            # if attribute.name == 'course_key':
-            # breakpoint()
             # Attribute is a simple type.
             if attribute.type in AVRO_TYPE_FOR:
                 inner_field = {
