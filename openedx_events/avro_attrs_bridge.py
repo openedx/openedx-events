@@ -23,8 +23,14 @@ class AvroAttrsBridge:
     """
 
     # default extensions, can be overwriteen by passing in extensions during obj initialization
-    default_extensions = {DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension()}
-    default_config = {'source':'/openedx/unknown/avro_attrs_bridge', 'sourcehost': 'unknown', 'type': 'org.openedx.test.test.test.v0'}
+    default_extensions = {
+        DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension()
+    }
+    default_config = {
+        "source": "/openedx/unknown/avro_attrs_bridge",
+        "sourcehost": "unknown",
+        "type": "org.openedx.test.test.test.v0",
+    }
 
     def __init__(self, attrs_cls, extensions=None, config=None):
         """
@@ -102,7 +108,7 @@ class AvroAttrsBridge:
 
         for attribute in attrs_class.__attrs_attrs__:
             # if attribute.name == 'course_key':
-                # breakpoint()
+            # breakpoint()
             # Attribute is a simple type.
             if attribute.type in AVRO_TYPE_FOR:
                 inner_field = {
@@ -131,8 +137,8 @@ class AvroAttrsBridge:
                 extension = self.extensions.get(attribute.type)
                 if extension is not None:
                     inner_field = {
-                        "name":attribute.name,
-                        "type":extension.record_fields()
+                        "name": attribute.name,
+                        "type": extension.record_fields(),
                     }
                 else:
                     raise TypeError(
@@ -142,8 +148,8 @@ class AvroAttrsBridge:
             # The default value is always set to None to allow attr class to handle dealing with default values
             # in dict_to_attrs function in this class
             if attribute.default is not attr.NOTHING:
-                inner_field['type'] = ['null', inner_field['type']]
-                inner_field['default'] = None
+                inner_field["type"] = ["null", inner_field["type"]]
+                inner_field["default"] = None
             field["type"]["fields"].append(inner_field)
 
         return field
@@ -159,11 +165,15 @@ class AvroAttrsBridge:
         obj_as_dict = attr.asdict(obj, value_serializer=self.extension_serializer)
         # TODO what should the default values of the following be
         avro_record = dict(
-            id=context['id'] if isinstance(context, dict) and 'id' in context else str(uuid.uuid1()),
-            type=self.config['type'],
-            time=context['time'] if  isinstance(context, dict) and 'time' in context else datetime.now().isoformat(),
-            source=self.config['source'],
-            sourcehost=self.config['sourcehost'],
+            id=context["id"]
+            if isinstance(context, dict) and "id" in context
+            else str(uuid.uuid1()),
+            type=self.config["type"],
+            time=context["time"]
+            if isinstance(context, dict) and "time" in context
+            else datetime.now().isoformat(),
+            source=self.config["source"],
+            sourcehost=self.config["sourcehost"],
             minorversion=0,
             data=obj_as_dict,
         )
@@ -179,7 +189,6 @@ class AvroAttrsBridge:
         fastavro.schemaless_writer(out, self._schema_dict, avro_record)
         out.seek(0)
         return out.read()
-
 
     def extension_serializer(self, _, field, value):
         """
@@ -198,7 +207,9 @@ class AvroAttrsBridge:
         """
         data_file = io.BytesIO(data)
         if writer_schema is not None:
-            record = fastavro.schemaless_reader(data_file, writer_schema, self._schema_dict)
+            record = fastavro.schemaless_reader(
+                data_file, writer_schema, self._schema_dict
+            )
         else:
             record = fastavro.schemaless_reader(data_file, self._schema_dict)
         return self.dict_to_attrs(record["data"], self._attrs_cls)
