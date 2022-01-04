@@ -7,6 +7,8 @@ from typing import Dict, Any
 import attr
 import fastavro
 import json
+from datetime import datetime
+import uuid
 
 
 from openedx_events.avro_attrs_bridge_extensions import DatetimeAvroAttrsBridgeExtension
@@ -22,8 +24,9 @@ class AvroAttrsBridge:
 
     # default extensions, can be overwriteen by passing in extensions during obj initialization
     default_extensions = {DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension()}
+    default_config = {'source':'/openedx/unknown/avro_attrs_bridge', 'sourcehost': 'unknown', 'type': 'org.openedx.test.test.test.v0'}
 
-    def __init__(self, attrs_cls, extensions=None):
+    def __init__(self, attrs_cls, extensions=None, config=None):
         """
         Init method for Avro Attrs Bridge
 
@@ -37,6 +40,11 @@ class AvroAttrsBridge:
         self.extensions.update(self.default_extensions)
         if isinstance(extensions, dict):
             self.extensions.update(extensions)
+
+        self.config = {}
+        self.config.update(self.default_config)
+        if isinstance(config, dict):
+            self.config.update(config)
 
         # used by record_field_for_attrs_class function to track of which records have already been defined in schema
         # Reason: fastavro does no allow you to define record with same name twice
@@ -140,7 +148,7 @@ class AvroAttrsBridge:
 
         return field
 
-    def to_dict(self, obj):
+    def to_dict(self, obj, context=None):
         """
         TODO: document
         """
@@ -151,11 +159,11 @@ class AvroAttrsBridge:
         obj_as_dict = attr.asdict(obj, value_serializer=self.extension_serializer)
         # TODO what should the default values of the following be
         avro_record = dict(
-            id="1",
-            type="Test.v1",
-            time="uea",
-            source="test_attrs",
-            sourcehost="enki",
+            id=context['id'] if isinstance(context, dict) and 'id' in context else str(uuid.uuid1()),
+            type=self.config['type'],
+            time=context['time'] if  isinstance(context, dict) and 'time' in context else datetime.now().isoformat(),
+            source=self.config['source'],
+            sourcehost=self.config['sourcehost'],
             minorversion=0,
             data=obj_as_dict,
         )
