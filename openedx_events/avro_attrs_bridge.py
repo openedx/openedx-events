@@ -52,7 +52,7 @@ class AvroAttrsBridge:
         if isinstance(config, dict):
             self.config.update(config)
 
-        # used by record_field_for_attrs_class function to track of which records have already been defined in schema
+        # used by record_field_for_attrs_class function to keep track of which records have already been defined in schema
         # Reason: fastavro does no allow you to define record with same name twice
         self.schema_record_names = set()
         self._schema_dict = self.attrs_to_avro_schema(attrs_cls)
@@ -69,7 +69,7 @@ class AvroAttrsBridge:
         Arguments:
             attrs_cls: Attr class object
         Returns:
-            complex dict tha deines avro schema for attrs_cls
+            complex dict that defines avro schema for attrs_cls
         """
         base_schema = {
             "namespace": "io.cloudevents",
