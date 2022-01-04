@@ -172,7 +172,6 @@ class AvroAttrsBridge:
         # Not sure if it makes sense to keep version info here since the schema registry will actually
         # keep track of versions and the topic can have only one associated schema at a time.
         obj_as_dict = attr.asdict(obj, value_serializer=self._extension_serializer)
-        # TODO what should the default values of the following be
         avro_record = dict(
             id=context["id"]
             if isinstance(context, dict) and "id" in context
