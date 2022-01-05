@@ -90,7 +90,7 @@ class AvroAttrsBridge:
             "type": "record",
             "name": "CloudEvent",
             "version": "1.0",
-            "doc": "Avro Event Format for CloudEvents",
+            "doc": "Avro Event Format for CloudEvents created with openedx_events/avro_attrs_bridge",
             "fields": [
                 {"name": "id", "type": "string"},
                 {"name": "type", "type": "string"},
