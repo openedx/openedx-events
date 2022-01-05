@@ -3,12 +3,12 @@ Code to convert attr classes to avro specification.
 """
 import io
 from typing import Dict, Any
-
-import attr
-import fastavro
 import json
 from datetime import datetime
 import uuid
+
+import attr
+import fastavro
 
 
 from openedx_events.avro_attrs_bridge_extensions import DatetimeAvroAttrsBridgeExtension
@@ -41,9 +41,15 @@ class AvroAttrsBridge:
             attrs_cls: Attr Class Object (not instance)
             extensions: dict mapping Class Object to its AvroAttrsBridgeExtention subclass instance
             config: dict with followings keys
-                - source:  This field will be used to indicate the logical source of an event, and will be of the form /{namespace}/{service}/{web|worker}. All services that are part of the standard distribution of Open edX should use openedx for the namespace. Examples of services might be “discovery”, “lms”, “studio”, etc. The value “web” will be used for events emitted by the web application, and “worker” will be used for events emitted by asynchronous tasks such as celery workers.
-                           For more, see: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#id3
-                - sourcehost: should represent the physical source of message -- i.e. the host identifier of the server that emitted this event (exampl: edx.devstack.lms)
+                - source:  This field will be used to indicate the logical source of an event, and will be of the form
+                           /{namespace}/{service}/{web|worker}.
+                           All services in standard distribution of Open edX should use openedx for the namespace.
+                           Examples of services might be “discovery”, “lms”, “studio”, etc.
+                           The value “web” will be used for events emitted by the web application,
+                           and “worker” will be used for events emitted by asynchronous tasks such as celery workers.
+                           For more, see: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#id3  # pylint: disable=line-too-long
+                - sourcehost: should represent the physical source of message
+                              -- i.e. host identifier of the server that emitted this event (example: edx.devstack.lms)
                 - type: The name of event. Should be formatted `{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}`.
                         To find out more see: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#id5
         """
@@ -59,7 +65,8 @@ class AvroAttrsBridge:
         if isinstance(config, dict):
             self.config.update(config)
 
-        # used by record_field_for_attrs_class function to keep track of which records have already been defined in schema
+        # Used by record_field_for_attrs_class function to keep track of which
+        # records have already been defined in schema.
         # Reason: fastavro does no allow you to define record with same name twice
         self.schema_record_names = set()
         self._schema_dict = self._attrs_to_avro_schema(attrs_cls)
@@ -159,13 +166,13 @@ class AvroAttrsBridge:
 
         return field
 
-    def to_dict(self, obj, context=None):
+    def to_dict(self, obj, event_overrides=None):
         """
         Converts obj into dictionary that matches avro schema (self.schema).
 
         Args:
             obj: instance of self._attr_cls
-            context: dict with following value overwrites:
+            event_overrides: dict with following value overwrites:
                 - id: unique id for this event. If id is not in dict, a uuid1 will be created for this event
                 - time: time stamp for this event. If time is not in dict, datetime.now() will be called
         """
@@ -173,13 +180,11 @@ class AvroAttrsBridge:
         # keep track of versions and the topic can have only one associated schema at a time.
         obj_as_dict = attr.asdict(obj, value_serializer=self._extension_serializer)
         avro_record = dict(
-            id=context["id"]
-            if isinstance(context, dict) and "id" in context
-            else str(uuid.uuid1()),
+            id=event_overrides["id"] if isinstance(event_overrides, dict) and "id" in event_overrides
+                else str(uuid.uuid1()),
             type=self.config["type"],
-            time=context["time"]
-            if isinstance(context, dict) and "time" in context
-            else datetime.now().isoformat(),
+            time=event_overrides["time"] if isinstance(event_overrides, dict) and "time" in event_overrides
+                else datetime.now().isoformat(),
             source=self.config["source"],
             sourcehost=self.config["sourcehost"],
             minorversion=0,
@@ -261,13 +266,15 @@ class KafkaWrapper(AvroAttrsBridge):
     """
     Wrapper class to help AvroAttrsBridge to work with kafka.
 
-    confluent_kafka::AvroSerializing needs a callable input that converts obj to avro dict. The callback needs to take in obj and kafka context.
+    confluent_kafka::AvroSerializing needs a callable input that converts obj to avro dict.
+        The callback needs to take in obj and kafka context.
 
-    confluent_kafka::AvroDeSerializing needs a callable input that converts avro dict into obj. The callback needs to take in data (avro record dict) and kafka context.
+    confluent_kafka::AvroDeSerializing needs a callable input that converts avro dict into obj.
+        The callback needs to take in data (avro record dict) and kafka context.
     """
 
-    def to_dict(self, obj, _context):
+    def to_dict(self, obj, _kafka_context):  # pylint: disable=signature-differs
         return super().to_dict(obj)
 
-    def from_dict(self, data, _context):
+    def from_dict(self, data, _kafka_context):
         return self.dict_to_attrs(data["data"], self._attrs_cls)
