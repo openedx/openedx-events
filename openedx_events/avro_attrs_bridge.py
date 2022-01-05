@@ -16,7 +16,7 @@ from openedx_events.avro_types import AVRO_TYPE_FOR
 
 class AvroAttrsBridge:
     """
-    Use to covert between Avro and Attrs data specifications.
+    Use to convert between Avro and Attrs data specifications.
 
     Intended usecase: To abstract serilalization and deserialization of openedx-events to send over pulsar or kafka
     """
