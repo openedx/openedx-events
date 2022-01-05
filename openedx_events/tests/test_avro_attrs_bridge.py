@@ -11,7 +11,6 @@ from opaque_keys.edx.keys import CourseKey
 from openedx_events.avro_attrs_bridge import AvroAttrsBridge
 from openedx_events.avro_attrs_bridge_extensions import (
     CourseKeyAvroAttrsBridgeExtension,
-    DatetimeAvroAttrsBridgeExtension,
 )
 from openedx_events.learning.data import (
     CourseEnrollmentData,
@@ -25,6 +24,7 @@ class TestNoneBaseTypesInBridge(TestCase):
     """
     Tests to make sure AttrsAvroBridge handles custom types correctly.
     """
+
     def setUp(self):
         super().setUp()
         user_personal_data = UserPersonalData(
@@ -79,9 +79,10 @@ class TestNoneBaseTypesInBridge(TestCase):
         serialized_course_enrollment_data = old_bridge.serialize(
             self.course_enrollment_data
         )
+
         def inner_scope(self):
             @attr.s(frozen=True)
-            class CourseEnrollmentData:
+            class CourseEnrollmentData:  # pylint: disable=redefined-outer-name
                 """
                 Temp class create to test schema evolution.
                 """
@@ -100,11 +101,16 @@ class TestNoneBaseTypesInBridge(TestCase):
                     CourseKeyAvroAttrsBridgeExtension.cls: CourseKeyAvroAttrsBridgeExtension(),
                 },
             )
-            object_from_wire_as_dict = attr.asdict(new_bridge.deserialize(serialized_course_enrollment_data, old_bridge._schema_dict))
+            object_from_wire_as_dict = attr.asdict(
+                new_bridge.deserialize(
+                    serialized_course_enrollment_data, old_bridge.schema_dict
+                )
+            )
 
             original_object_as_dict = attr.asdict(self.course_enrollment_data)
-            original_object_as_dict['is_active_2'] = False
+            original_object_as_dict["is_active_2"] = False
             assert object_from_wire_as_dict == original_object_as_dict
+
         inner_scope(self)
 
     def test_evolution_remove_value(self):
@@ -118,9 +124,10 @@ class TestNoneBaseTypesInBridge(TestCase):
         serialized_course_enrollment_data = old_bridge.serialize(
             self.course_enrollment_data
         )
+
         def inner_scope(self):
             @attr.s(frozen=True)
-            class CourseEnrollmentData:
+            class CourseEnrollmentData:  # pylint: disable=redefined-outer-name
                 """
                 Temp class create to test schema evolution.
                 """
@@ -137,14 +144,17 @@ class TestNoneBaseTypesInBridge(TestCase):
                     CourseKeyAvroAttrsBridgeExtension.cls: CourseKeyAvroAttrsBridgeExtension(),
                 },
             )
-            object_from_wire_as_dict = attr.asdict(new_bridge.deserialize(serialized_course_enrollment_data, old_bridge._schema_dict))
+            object_from_wire_as_dict = attr.asdict(
+                new_bridge.deserialize(
+                    serialized_course_enrollment_data, old_bridge.schema_dict
+                )
+            )
 
             original_object_as_dict = attr.asdict(self.course_enrollment_data)
-            del original_object_as_dict['is_active']
+            del original_object_as_dict["is_active"]
             assert object_from_wire_as_dict == original_object_as_dict
+
         inner_scope(self)
-
-
 
     def test_evolution_add_complex_value(self):
         # Create object from old specification
@@ -157,6 +167,7 @@ class TestNoneBaseTypesInBridge(TestCase):
         serialized_course_enrollment_data = old_bridge.serialize(
             self.course_enrollment_data
         )
+
         def inner_scope(self):
 
             user_personal_data = UserPersonalData(
@@ -165,7 +176,7 @@ class TestNoneBaseTypesInBridge(TestCase):
             user_data = UserData(id=1, is_active=True, pii=user_personal_data)
 
             @attr.s(frozen=True)
-            class CourseEnrollmentData:
+            class CourseEnrollmentData:  # pylint: disable=redefined-outer-name
                 """
                 Temp class create to test schema evolution.
                 """
@@ -184,11 +195,16 @@ class TestNoneBaseTypesInBridge(TestCase):
                     CourseKeyAvroAttrsBridgeExtension.cls: CourseKeyAvroAttrsBridgeExtension(),
                 },
             )
-            object_from_wire_as_dict = attr.asdict(new_bridge.deserialize(serialized_course_enrollment_data, old_bridge._schema_dict))
+            object_from_wire_as_dict = attr.asdict(
+                new_bridge.deserialize(
+                    serialized_course_enrollment_data, old_bridge.schema_dict
+                )
+            )
 
             original_object_as_dict = attr.asdict(self.course_enrollment_data)
-            original_object_as_dict['user2'] = attr.asdict(user_data)
+            original_object_as_dict["user2"] = attr.asdict(user_data)
             assert object_from_wire_as_dict == original_object_as_dict
+
         inner_scope(self)
 
     def test_evolution_add_complex_extension_value(self):
@@ -202,15 +218,11 @@ class TestNoneBaseTypesInBridge(TestCase):
         serialized_course_enrollment_data = old_bridge.serialize(
             self.course_enrollment_data
         )
+
         def inner_scope(self):
 
-            user_personal_data = UserPersonalData(
-                username="username", email="email", name="name"
-            )
-            user_data = UserData(id=1, is_active=True, pii=user_personal_data)
-
             @attr.s(frozen=True)
-            class CourseEnrollmentData:
+            class CourseEnrollmentData:  # pylint: disable=redefined-outer-name
                 """
                 Temp class create to test schema evolution.
                 """
@@ -229,10 +241,15 @@ class TestNoneBaseTypesInBridge(TestCase):
                     CourseKeyAvroAttrsBridgeExtension.cls: CourseKeyAvroAttrsBridgeExtension(),
                 },
             )
-            object_from_wire_as_dict = attr.asdict(new_bridge.deserialize(serialized_course_enrollment_data, old_bridge._schema_dict))
+            object_from_wire_as_dict = attr.asdict(
+                new_bridge.deserialize(
+                    serialized_course_enrollment_data, old_bridge.schema_dict
+                )
+            )
             original_object_as_dict = attr.asdict(self.course_enrollment_data)
-            original_object_as_dict['added_date'] = None
+            original_object_as_dict["added_date"] = None
             assert object_from_wire_as_dict == original_object_as_dict
+
         inner_scope(self)
 
     def test_throw_exception_on_unextended_custom_type(self):
@@ -240,6 +257,7 @@ class TestNoneBaseTypesInBridge(TestCase):
             # CourseEnrollmentData has CourseKey and datetime as custom types
             # This should raise TypeError cause no extensions are being passed to bridge
             AvroAttrsBridge(CourseEnrollmentData)
+
 
 def test_object_evolution_add_value():
     @attr.s(auto_attribs=True)
@@ -249,18 +267,22 @@ def test_object_evolution_add_value():
 
     original_bridge = AvroAttrsBridge(TestData)
 
-    record = TestData('sub_name', 'course_id')
+    record = TestData("sub_name", "course_id")
     serialized_record = original_bridge.serialize(record)
 
     @attr.s(auto_attribs=True)
-    class TestData:
+    class TestData:  # pylint: disable=function-redefined
         sub_name: str
         course_id: str
         added_key: str = "default_value"
 
     new_bridge = AvroAttrsBridge(TestData)
-    deserialized_obj = new_bridge.deserialize(serialized_record, original_bridge._schema_dict)
-    assert deserialized_obj == TestData(sub_name='sub_name', course_id='course_id', added_key='default_value')
+    deserialized_obj = new_bridge.deserialize(
+        serialized_record, original_bridge.schema_dict
+    )
+    assert deserialized_obj == TestData(
+        sub_name="sub_name", course_id="course_id", added_key="default_value"
+    )
 
 
 def test_object_evolution_remove_value():
@@ -272,17 +294,20 @@ def test_object_evolution_remove_value():
 
     original_bridge = AvroAttrsBridge(TestData)
 
-    record = TestData('sub_name', 'course_id', 'removed_value')
+    record = TestData("sub_name", "course_id", "removed_value")
     serialized_record = original_bridge.serialize(record)
 
     @attr.s(auto_attribs=True)
-    class TestData:
+    class TestData:  # pylint: disable=function-redefined
         sub_name: str
         course_id: str
 
     new_bridge = AvroAttrsBridge(TestData)
-    deserialized_obj = new_bridge.deserialize(serialized_record, original_bridge._schema_dict)
-    assert deserialized_obj == TestData(sub_name='sub_name', course_id='course_id')
+    deserialized_obj = new_bridge.deserialize(
+        serialized_record, original_bridge.schema_dict
+    )
+    assert deserialized_obj == TestData(sub_name="sub_name", course_id="course_id")
+
 
 def test_base_types():
     @attr.s(auto_attribs=True)
@@ -296,7 +321,7 @@ def test_base_types():
         course_id: str
 
     @attr.s(auto_attribs=True)
-    class TestData:                   # pylint: disable=missing-class-docstring
+    class TestData:  # pylint: disable=missing-class-docstring
         name: str
         course_id: str
         user_id: int

@@ -69,12 +69,12 @@ class AvroAttrsBridge:
         # records have already been defined in schema.
         # Reason: fastavro does no allow you to define record with same name twice
         self.schema_record_names = set()
-        self._schema_dict = self._attrs_to_avro_schema(attrs_cls)
+        self.schema_dict = self._attrs_to_avro_schema(attrs_cls)
         # make sure the schema is parsable
-        fastavro.parse_schema(self._schema_dict)
+        fastavro.parse_schema(self.schema_dict)
 
-    def schema(self):
-        return json.dumps(self._schema_dict, sort_keys=True)
+    def schema_str(self):
+        return json.dumps(self.schema_dict, sort_keys=True)
 
     def _attrs_to_avro_schema(self, attrs_cls):
         """
@@ -199,7 +199,7 @@ class AvroAttrsBridge:
         avro_record = self.to_dict(obj)
         # Try to serialize using the generated schema.
         out = io.BytesIO()
-        fastavro.schemaless_writer(out, self._schema_dict, avro_record)
+        fastavro.schemaless_writer(out, self.schema_dict, avro_record)
         out.seek(0)
         return out.read()
 
@@ -221,10 +221,10 @@ class AvroAttrsBridge:
         data_file = io.BytesIO(data)
         if writer_schema is not None:
             record = fastavro.schemaless_reader(
-                data_file, writer_schema, self._schema_dict
+                data_file, writer_schema, self.schema_dict
             )
         else:
-            record = fastavro.schemaless_reader(data_file, self._schema_dict)
+            record = fastavro.schemaless_reader(data_file, self.schema_dict)
         return self.dict_to_attrs(record["data"], self._attrs_cls)
 
     def dict_to_attrs(self, data: dict, attrs_cls):
