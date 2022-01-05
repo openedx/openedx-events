@@ -176,15 +176,22 @@ class AvroAttrsBridge:
                 - id: unique id for this event. If id is not in dict, a uuid1 will be created for this event
                 - time: time stamp for this event. If time is not in dict, datetime.now() will be called
         """
+
+        if isinstance(event_overrides, dict) and "id" in event_overrides:
+            event_id =  event_overrides["id"]
+        else:
+            event_id = str(uuid.uuid1())
+        if isinstance(event_overrides, dict) and "time" in event_overrides:
+            event_timestamp = event_overrides["time"]
+        else:
+            event_timestamp = datetime.now().isoformat()
         # Not sure if it makes sense to keep version info here since the schema registry will actually
         # keep track of versions and the topic can have only one associated schema at a time.
         obj_as_dict = attr.asdict(obj, value_serializer=self._extension_serializer)
         avro_record = dict(
-            id=event_overrides["id"] if isinstance(event_overrides, dict) and "id" in event_overrides
-                else str(uuid.uuid1()),
+            id= event_id,
             type=self.config["type"],
-            time=event_overrides["time"] if isinstance(event_overrides, dict) and "time" in event_overrides
-                else datetime.now().isoformat(),
+            time=event_timestamp,
             source=self.config["source"],
             sourcehost=self.config["sourcehost"],
             minorversion=0,
