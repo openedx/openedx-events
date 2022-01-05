@@ -2,14 +2,13 @@
 Code to convert attr classes to avro specification.
 """
 import io
-from typing import Dict, Any
 import json
-from datetime import datetime
 import uuid
+from datetime import datetime
+from typing import Any, Dict
 
 import attr
 import fastavro
-
 
 from openedx_events.avro_attrs_bridge_extensions import DatetimeAvroAttrsBridgeExtension
 from openedx_events.avro_types import AVRO_TYPE_FOR

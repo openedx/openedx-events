@@ -1,23 +1,15 @@
 """
 Tests for AvroAttrsBridge.
 """
-from unittest import TestCase
 from datetime import datetime
+from unittest import TestCase
 
 import attr
-
 from opaque_keys.edx.keys import CourseKey
 
 from openedx_events.avro_attrs_bridge import AvroAttrsBridge
-from openedx_events.avro_attrs_bridge_extensions import (
-    CourseKeyAvroAttrsBridgeExtension,
-)
-from openedx_events.learning.data import (
-    CourseEnrollmentData,
-    UserData,
-    CourseData,
-    UserPersonalData,
-)
+from openedx_events.avro_attrs_bridge_extensions import CourseKeyAvroAttrsBridgeExtension
+from openedx_events.learning.data import CourseData, CourseEnrollmentData, UserData, UserPersonalData
 
 
 class TestNoneBaseTypesInBridge(TestCase):
