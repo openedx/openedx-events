@@ -60,7 +60,7 @@ class TestNoneBaseTypesInBridge(TestCase):
         object_from_wire = bridge.deserialize(serialized_course_enrollment_data)
         assert self.course_enrollment_data == object_from_wire
 
-    def test_evolution_add_value(self):
+    def test_schema_evolution_add_value(self):
         # Create object from old specification
         old_bridge = AvroAttrsBridge(
             CourseEnrollmentData,
@@ -105,7 +105,7 @@ class TestNoneBaseTypesInBridge(TestCase):
 
         inner_scope(self)
 
-    def test_evolution_remove_value(self):
+    def test_schema_evolution_remove_value(self):
         # Create object from old specification
         old_bridge = AvroAttrsBridge(
             CourseEnrollmentData,
@@ -148,7 +148,7 @@ class TestNoneBaseTypesInBridge(TestCase):
 
         inner_scope(self)
 
-    def test_evolution_add_complex_value(self):
+    def test_schema_evolution_add_complex_value(self):
         # Create object from old specification
         old_bridge = AvroAttrsBridge(
             CourseEnrollmentData,
@@ -199,7 +199,7 @@ class TestNoneBaseTypesInBridge(TestCase):
 
         inner_scope(self)
 
-    def test_evolution_add_complex_extension_value(self):
+    def test_schema_evolution_add_complex_extension_value(self):
         # Create object from old specification
         old_bridge = AvroAttrsBridge(
             CourseEnrollmentData,

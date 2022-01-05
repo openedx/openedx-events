@@ -46,11 +46,13 @@ class AvroAttrsBridge:
                            Examples of services might be “discovery”, “lms”, “studio”, etc.
                            The value “web” will be used for events emitted by the web application,
                            and “worker” will be used for events emitted by asynchronous tasks such as celery workers.
-
+                           For more info, see OEP-41: Asynchronous Server Event Message Format
                 - sourcehost: should represent the physical source of message
                                -- i.e. host identifier of the server that emitted this event (example: edx.devstack.lms)
+                              For more info, see OEP-41: Asynchronous Server Event Message Format
                 - type: The name of event.
                         Should be formatted `{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}`.
+                        For more info, see OEP-41: Asynchronous Server Event Message Format
         """
         self._attrs_cls = attrs_cls
 
@@ -144,6 +146,8 @@ class AvroAttrsBridge:
                     inner_field = self._record_fields_for_attrs_class(
                         attribute.type, attribute.name
                     )
+            # else attribute is an costom type and
+            # there needs to be AvroAttrsBridgeExtension for attribute in self.extensions
             else:
                 inner_field = None
                 extension = self.extensions.get(attribute.type)
@@ -174,7 +178,9 @@ class AvroAttrsBridge:
             obj: instance of self._attr_cls
             event_overrides: dict with following value overwrites:
                 - id: unique id for this event. If id is not in dict, a uuid1 will be created for this event
+                      For more info, see OEP-41: Asynchronous Server Event Message Format
                 - time: time stamp for this event. If time is not in dict, datetime.now() will be called
+                        For more info, see OEP-41: Asynchronous Server Event Message Format
         """
         if isinstance(event_overrides, dict) and "id" in event_overrides:
             event_id = event_overrides["id"]
@@ -184,9 +190,9 @@ class AvroAttrsBridge:
             event_timestamp = event_overrides["time"]
         else:
             event_timestamp = datetime.now().isoformat()
+        obj_as_dict = attr.asdict(obj, value_serializer=self._extension_serializer)
         # Not sure if it makes sense to keep version info here since the schema registry will actually
         # keep track of versions and the topic can have only one associated schema at a time.
-        obj_as_dict = attr.asdict(obj, value_serializer=self._extension_serializer)
         avro_record = dict(
             id=event_id,
             type=self.config["type"],
