@@ -89,7 +89,7 @@ class OpenEdxEventsTestMixin(EventsIsolationMixin):
         """
         Start events isolation for class.
         """
-        super().setUpClass()  # pylint: disable=no-member
+        super().setUpClass()
         cls().start_events_isolation()
 
     @classmethod

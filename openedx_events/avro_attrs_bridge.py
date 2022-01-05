@@ -35,7 +35,7 @@ class AvroAttrsBridge:
 
     def __init__(self, attrs_cls, extensions=None, config=None):
         """
-        Init method for Avro Attrs Bridge
+        Init method for Avro Attrs Bridge.
 
         Arguments:
             attrs_cls: Attr Class Object (not instance)
@@ -47,11 +47,11 @@ class AvroAttrsBridge:
                            Examples of services might be “discovery”, “lms”, “studio”, etc.
                            The value “web” will be used for events emitted by the web application,
                            and “worker” will be used for events emitted by asynchronous tasks such as celery workers.
-                           For more, see: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#id3  # pylint: disable=line-too-long
+
                 - sourcehost: should represent the physical source of message
-                              -- i.e. host identifier of the server that emitted this event (example: edx.devstack.lms)
-                - type: The name of event. Should be formatted `{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}`.
-                        To find out more see: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#id5
+                               -- i.e. host identifier of the server that emitted this event (example: edx.devstack.lms)
+                - type: The name of event.
+                        Should be formatted `{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}`.
         """
         self._attrs_cls = attrs_cls
 
@@ -74,11 +74,12 @@ class AvroAttrsBridge:
         fastavro.parse_schema(self.schema_dict)
 
     def schema_str(self):
+        """Json dumps schema dict into a string."""
         return json.dumps(self.schema_dict, sort_keys=True)
 
     def _attrs_to_avro_schema(self, attrs_cls):
         """
-        Generate avro schema for attr_cls
+        Generate avro schema for attr_cls.
 
         Arguments:
             attrs_cls: Attr class object
@@ -168,7 +169,7 @@ class AvroAttrsBridge:
 
     def to_dict(self, obj, event_overrides=None):
         """
-        Converts obj into dictionary that matches avro schema (self.schema).
+        Convert obj into dictionary that matches avro schema (self.schema).
 
         Args:
             obj: instance of self._attr_cls
@@ -176,9 +177,8 @@ class AvroAttrsBridge:
                 - id: unique id for this event. If id is not in dict, a uuid1 will be created for this event
                 - time: time stamp for this event. If time is not in dict, datetime.now() will be called
         """
-
         if isinstance(event_overrides, dict) and "id" in event_overrides:
-            event_id =  event_overrides["id"]
+            event_id = event_overrides["id"]
         else:
             event_id = str(uuid.uuid1())
         if isinstance(event_overrides, dict) and "time" in event_overrides:
@@ -189,7 +189,7 @@ class AvroAttrsBridge:
         # keep track of versions and the topic can have only one associated schema at a time.
         obj_as_dict = attr.asdict(obj, value_serializer=self._extension_serializer)
         avro_record = dict(
-            id= event_id,
+            id=event_id,
             type=self.config["type"],
             time=event_timestamp,
             source=self.config["source"],
@@ -212,7 +212,8 @@ class AvroAttrsBridge:
 
     def _extension_serializer(self, _, field, value):
         """
-        Callback passed in as "value_serializer" arg in attr.asdict function.
+        Pass this callback into attrs.asdict function as "value_serializer" arg.
+
         Serializes values for which an extention exists in self.extensions dict.
         """
         extension = self.extensions.get(field.type, None)
@@ -222,8 +223,11 @@ class AvroAttrsBridge:
 
     def deserialize(self, data: bytes, writer_schema=None) -> object:
         """
-        Deserializes data into self.attrs_cls instance
-        # TODO document writer schema
+        Deserialize data into self.attrs_cls instance.
+
+        Args:
+            data: bytes that you want to deserialize
+            writer_schema: pass the schema used to serialize data if it is differnt from current schema
         """
         data_file = io.BytesIO(data)
         if writer_schema is not None:
@@ -236,8 +240,7 @@ class AvroAttrsBridge:
 
     def dict_to_attrs(self, data: dict, attrs_cls):
         """
-        This function mutates the incoming `data` dict argument that's
-        passed in.
+        Convert data into instantiated object of attrs_cls.
         """
         for attribute in attrs_cls.__attrs_attrs__:
             if attribute.name in data:
@@ -272,16 +275,16 @@ class AvroAttrsBridge:
 class KafkaWrapper(AvroAttrsBridge):
     """
     Wrapper class to help AvroAttrsBridge to work with kafka.
-
-    confluent_kafka::AvroSerializing needs a callable input that converts obj to avro dict.
-        The callback needs to take in obj and kafka context.
-
-    confluent_kafka::AvroDeSerializing needs a callable input that converts avro dict into obj.
-        The callback needs to take in data (avro record dict) and kafka context.
     """
 
     def to_dict(self, obj, _kafka_context):  # pylint: disable=signature-differs
+        """
+        Pass this function as callable input to confluent_kafka::AvroSerializer.
+        """
         return super().to_dict(obj)
 
     def from_dict(self, data, _kafka_context):
+        """
+        Pass this function as callable input to confluent_kafka::AvroDeSerializer.
+        """
         return self.dict_to_attrs(data["data"], self._attrs_cls)
