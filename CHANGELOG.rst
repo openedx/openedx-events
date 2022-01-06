@@ -14,6 +14,13 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[0.7.0] - 2022-01-06
+____________________
+
+Added
+-----
+* Added AvroAttrsBridge class to convert between avro standard and attrs classes
+
 [0.6.0] - 2021-09-15
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Added
