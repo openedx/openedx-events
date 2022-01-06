@@ -14,7 +14,9 @@ How To Use
 ----------
 
 If you want to go from attrs obj to serialized bytes and back:
+
 .. code-block:: python
+
    from openedx_events.learning.data import UserData
    from openedx_events.avro_attrs_bridge import AvroAttrsBridge
 
@@ -38,7 +40,9 @@ To learn more about what is in config, see Fields in `OEP 41`_:Asynchronous Serv
 
 
 If you want to go from attrs obj to avro dict and back:
+
 .. code-block:: python
+
    from openedx_events.learning.data import UserData
    from openedx_events.avro_attrs_bridge import AvroAttrsBridge
 
@@ -53,3 +57,4 @@ If you want to go from attrs obj to avro dict and back:
    user_data_dict = user_data_bridge.to_dict(user_data_object)
    user_data_new_object = user_data_bridge.dict_to_attrs(user_data_dict)
    assert deserealize_user_data == user_data_new_object
+
