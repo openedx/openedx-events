@@ -3,4 +3,5 @@
 
 django
 attrs
+fastavro
 edx-opaque-keys[django]
