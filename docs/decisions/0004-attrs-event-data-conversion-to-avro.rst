@@ -39,7 +39,7 @@ The purpose of this ADR is to document decisions made while developing `AvroAttr
           json.dumps(data)
           # output:'{"dt": "2020-05-04T13:37:00"}'
 
-2. Each attrs-decorated class has a attrs\_attrs class attribute (`source attrs docs<https://www.attrs.org/en/stable/extending.html#extending>`_). It’s a tuple of attrs.Attribute carrying metadata about each attribute.
+2. Each attrs-decorated class has a attrs\_attrs class attribute (`source attrs docs <https://www.attrs.org/en/stable/extending.html#extending>`_). It’s a tuple of attrs.Attribute carrying metadata about each attribute.
    You can get \`type\` info on everything datum defined in an attrs class.
 
    .. code:: python
