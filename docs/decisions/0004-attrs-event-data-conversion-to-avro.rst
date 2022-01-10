@@ -91,6 +91,8 @@ The purpose of this ADR is to document decisions made while developing `AvroAttr
 2 Decision
 ----------
 
+Each AvroAttrsBridge class will support:
+
 1. Creation of Avro Schema of the attrs\_cls arg at instantiation
    It will throw an exception if unable to create Avro Schema
 
