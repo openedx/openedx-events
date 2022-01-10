@@ -103,21 +103,15 @@ Each AvroAttrsBridge class will support:
 
    Schema is created in the __init__ function.
 
-2. Converting attrs_cls object into a dict that follow the Avro Schema for attrs_cls
+2. Allows for following conversions:
 
-3. Serialize attrs_cls object into a byte string that represents that object
-   This is done through following transformations:
-   attrs_cls object -> dict (avro schema) -> byte array (avro schema)
+   attrs decorated class object => dict => Avro encoded string => dict => attrs decorated class object
 
-4. Convert byte string representing attrs_cls object into dict that follows the Avro Schema
+3. Support doing the above by default for all attrs decorated classes in openedx-events repository
 
-5. Converts byte string representation of the attrs_cls object into attrs_cls object
+4. Provide ability to extend AvroAttrsBridge to support any attrs decorated classes outside of openedx-events repository
 
-6. Support doing the above by default for all attrs decorated classes in openedx-events repository
-
-7. Provide ability to extend AvroAttrsBridge to support any attrs decorated classes outside of openedx-events repository
-
-8. Follow cloudevents specification as stated in OEP-TODO
+5. Follow cloudevents specification as stated in OEP-TODO
 
 
 AvroAttrsBridge is generalized to serialize/deserialize  basic attrs decorated class. Any specific Kafka requirements will be implemented in KafkaWrapper class, a subclass of AvroAttrsBridge.
@@ -125,24 +119,26 @@ AvroAttrsBridge is generalized to serialize/deserialize  basic attrs decorated c
 How to extend AvroAttrsBridge class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At defult, attrs.asdict only supports basics types for conversion to dict (Basically, only things you could json.dump). To allow AvroAttrsBridge to work with custom classes, a function will be passed to  value_serializer arg in attrs.asdict. The value_serializer function needs to be able to handle any custom classes used in an events attrs class.
+At defult, attrs.asdict only supports basics types for conversion to dict (Basically, only things you could json.dump). To allow AvroAttrsBridge to work with non-primitive types, a function will be passed to  value_serializer arg in attrs.asdict. The value_serializer function needs to be able to handle any non-primitive types used in an events attrs class.
 
 To make is easier to developers, an extensions interface has been implemented into AvroAttrsBridge.
-To allow AvroAttrsBridge to work with these classes, you can pass in an extensions keyword to AvroAttrsBridge. The extensions keyword expects a dict with following format: {<type of custom class>: <AvroAttrsBridgeExtention subclass for custom class>}
+To allow AvroAttrsBridge to work with these classes, you can pass in a dict to the extensions keyword to AvroAttrsBridge. The extensions keyword expects a dict with following format: {<type of non-primitive>: <AvroAttrsBridgeExtention subclass for non-primitive>}
 
 The AvroAttrsBridgeExtention subclass should have the following methods:
 
 1. serialize(obj)
-   serializes \`obj\` (a instance of custom class)
+   serializes \`obj\` (a instance of non-primitive)
 
 2. deserialize(data: str)
-   converts \`data\` back to instance of custom class. The data str should have been created by self.serialize method.
+   converts \`data\` back to instance of non-primitive. The data str should have been created by self.serialize method.
 
 3. record_fields
-   returns the avro schema for this custom class. Usually, this is just a str
+   returns the avro schema for this non-primitive. Usually, this is just a str
 
 
-Lots of attrs decorated classes in openedx-events repository have data with custom class types. AvroAttrsBridge class comes with default_extensions which should hold AvroAttrsBridgeExtention classes for each of those custom classes. If you find any default_extensions in AvroattrsBridge is missing a custom class, please add it yourself or reach out to the developers of the repository!
+AvroAttrsBridge class comes with default_extensions which should hold AvroAttrsBridgeExtention classes for all the non-primitive types necessary to work with all attrs-decorated classes defined in openedx_events.
+
+If you find default_extension for a non-primitive type (used in openedx_events) is missing, please add it yourself or reach out to the developers of the repository!
 
 Handling Evolution
 ~~~~~~~~~~~~~~~~~~
