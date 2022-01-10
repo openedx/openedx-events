@@ -121,7 +121,7 @@ AvroAttrsBridge is generalized to serialize/deserialize  basic attrs decorated c
 How to extend AvroAttrsBridge class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At defult, attrs.asdict only supports basics types for conversion to dict (Basically, only things you could json.dump). To allow AvroAttrsBridge to work with non-primitive types, a function will be passed to  value_serializer arg in attrs.asdict. The value_serializer function needs to be able to handle any non-primitive types used in an events attrs class.
+At default, attrs.asdict only supports basics types for conversion to dict (Basically, only things you could json.dump). To allow AvroAttrsBridge to work with non-primitive types, a function will be passed to  value_serializer arg in attrs.asdict. The value_serializer function needs to be able to handle any non-primitive types used in an events attrs class.
 
 To make is easier to developers, an extensions interface has been implemented into AvroAttrsBridge.
 To allow AvroAttrsBridge to work with these classes, you can pass in a dict to the extensions keyword to AvroAttrsBridge. The extensions keyword expects a dict with following format: {<type of non-primitive>: <AvroAttrsBridgeExtention subclass for non-primitive>}
@@ -147,7 +147,7 @@ Handling Evolution
 
 If an attrs decorated class has a default value for one of its attributes, avro_attrs_bridge will assume that attribute is optional. This is to allow attrs events to change over time. If you want to add a new attribute to old attrs decorated class, please set a default value for it so that data created using old version can still be read.
 
-This has not been tested that well, so if you do some testing, please update this and create further how_tos to handle schema evolution.
+This has not been tested in production. If you do some testing, please update this and create further how_tos to handle schema evolution.
 
 Open Questions
 --------------
