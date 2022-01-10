@@ -1,6 +1,6 @@
-===================================
-Attrs event data conversion to Avro
-===================================
+========================================
+AvroAttrsBridge implementation decisions
+========================================
 .. contents::
 
 Context
@@ -19,7 +19,7 @@ Some relavant info about `Attrs <https://www.attrs.org/en/stable/examples.html>`
 
 1. attrs allows you to serialize instances of attrs classes to dicts using attrs.asdict. Though at default, this only works for data types that are JSON serializable.
 
-   1. For complex data types (like datetime), you can pass a value_serializer hook to attr.asdict, such as (`docs on asdict <https://www.attrs.org/en/stable/extending.html?highlight=value_serializer#customize-value-serialization-in-asdict>`_):
+   1. For non-primitive types (like datetime), you can pass a value_serializer hook to attr.asdict, such as (`docs on asdict <https://www.attrs.org/en/stable/extending.html?highlight=value_serializer#customize-value-serialization-in-asdict>`_):
 
       .. code:: python
 
@@ -92,7 +92,9 @@ Some relevant info about Avro specification
 
    - Avro can handle some schema evolution. When schema has evolved, to read encoded data with older version of schema, both new version and old version must be passed into the reader.
 
-   - Case: Adding a new field: A default value can be specified for a field in the Avro schema. This value is only used when reading instances that lack field. This default does not make field optional at encoding time.
+   - Case: Adding a new field: A default value can be specified for a field in the new Avro schema. This would allow you to continue reading data produced with older schema.
+
+     Note: This default value is only used when reading instances that lack field. This default does not make field optional at encoding time.
 
 Decision
 --------
