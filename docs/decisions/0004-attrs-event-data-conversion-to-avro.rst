@@ -77,26 +77,33 @@ Some relevant info about Avro specification
 1. An Avro schema is represented in JSON
 
 2. Avro specifies two serialization encodings: binary and JSON.
+
    Binary encoding is smaller and faster. Binary encoding does not include field names, self-contained information about the types of individual bytes, nor field or record separators. Therefore readers are wholly reliant on the schema used when the data was encoded.
 
+3. Avro deals with conversion between "dict" like objects to bytes.
+
+   So our solution needs to go from attrs decorated classes to "dict" like objects
+
 3. A schema must be used to deserialize encoded data.
+
    The encoded data does not include type or field names. To read the data, the schema used to read the data must be identical to the schema used to write data.
 
 4. evolution requirements
 
    - Avro can handle some schema evolution. When schema has evolved, to read encoded data with older version of schema, both new version and old version must be passed into the reader.
 
-   - Case \`Adding a new field\`: A default value can be specified for a field in the Avro schema. This value is only used when reading instances that lack field. This default does not make field optional at encoding time.
+   - Case `Adding a new field`: A default value can be specified for a field in the Avro schema. This value is only used when reading instances that lack field. This default does not make field optional at encoding time.
 
 Decision
 --------
 
 Each AvroAttrsBridge class will support:
 
-1. Creation of Avro Schema of the attrs_cls arg at instantiation
-   It will throw an exception if unable to create Avro Schema
+1. Avro Schema creation is validated at instatiation.
 
-2. Convert attrs_cls object into a dict that follow the Avro Schema for attrs_cls
+   Schema is created in the __init__ function.
+
+2. Converting attrs_cls object into a dict that follow the Avro Schema for attrs_cls
 
 3. Serialize attrs_cls object into a byte string that represents that object
    This is done through following transformations:
