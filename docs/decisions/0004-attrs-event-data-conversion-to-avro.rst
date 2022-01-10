@@ -92,7 +92,7 @@ Some relevant info about Avro specification
 
    - Avro can handle some schema evolution. When schema has evolved, to read encoded data with older version of schema, both new version and old version must be passed into the reader.
 
-   - Case `Adding a new field`: A default value can be specified for a field in the Avro schema. This value is only used when reading instances that lack field. This default does not make field optional at encoding time.
+   - Case: Adding a new field: A default value can be specified for a field in the Avro schema. This value is only used when reading instances that lack field. This default does not make field optional at encoding time.
 
 Decision
 --------
