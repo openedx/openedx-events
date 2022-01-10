@@ -19,7 +19,7 @@ Some relavant info about `Attrs <https://www.attrs.org/en/stable/examples.html>`
 
 1. attrs allows you to serialize instances of attrs classes to dicts using attrs.asdict. Though at default, this only works for data types that are JSON serializable.
 
-   1. For complex data types (like datetime), you can pass a value\_serializer hook to attr.asdict, such as (`docs on asdict <https://www.attrs.org/en/stable/extending.html?highlight=value_serializer#customize-value-serialization-in-asdict>`_):
+   1. For complex data types (like datetime), you can pass a value_serializer hook to attr.asdict, such as (`docs on asdict <https://www.attrs.org/en/stable/extending.html?highlight=value_serializer#customize-value-serialization-in-asdict>`_):
 
       .. code:: python
 
@@ -39,7 +39,7 @@ Some relavant info about `Attrs <https://www.attrs.org/en/stable/examples.html>`
           json.dumps(data)
           # output:'{"dt": "2020-05-04T13:37:00"}'
 
-2. Each attrs-decorated class has a attrs\_attrs class attribute (`source attrs docs <https://www.attrs.org/en/stable/extending.html#extending>`_). It’s a tuple of attrs.Attribute carrying metadata about each attribute.
+2. Each attrs-decorated class has a attrs_attrs class attribute (`source attrs docs <https://www.attrs.org/en/stable/extending.html#extending>`_). It’s a tuple of attrs.Attribute carrying metadata about each attribute.
    You can get \`type\` info on everything datum defined in an attrs class.
 
    .. code:: python
@@ -93,18 +93,18 @@ Decision
 
 Each AvroAttrsBridge class will support:
 
-1. Creation of Avro Schema of the attrs\_cls arg at instantiation
+1. Creation of Avro Schema of the attrs_cls arg at instantiation
    It will throw an exception if unable to create Avro Schema
 
-2. Convert attrs\_cls object into a dict that follow the Avro Schema for attrs\_cls
+2. Convert attrs_cls object into a dict that follow the Avro Schema for attrs_cls
 
-3. Serialize attrs\_cls object into a byte string that represents that object
+3. Serialize attrs_cls object into a byte string that represents that object
    This is done through following transformations:
-   attrs\_cls object -> dict (avro schema) -> byte array (avro schema)
+   attrs_cls object -> dict (avro schema) -> byte array (avro schema)
 
-4. Convert byte string representing attrs\_cls object into dict that follows the Avro Schema
+4. Convert byte string representing attrs_cls object into dict that follows the Avro Schema
 
-5. Converts byte string representation of the attrs\_cls object into attrs\_cls object
+5. Converts byte string representation of the attrs_cls object into attrs_cls object
 
 6. Support doing the above by default for all attrs decorated classes in openedx-events repository
 
@@ -118,7 +118,7 @@ AvroAttrsBridge is generalized to serialize/deserialize  basic attrs decorated c
 How to extend AvroAttrsBridge class
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-At defult, attrs.asdict only supports basics types for conversion to dict (Basically, only things you could json.dump). To allow AvroAttrsBridge to work with custom classes, a function will be passed to  value\_serializer arg in attrs.asdict. The value_serializer function needs to be able to handle any custom classes used in an events attrs class.
+At defult, attrs.asdict only supports basics types for conversion to dict (Basically, only things you could json.dump). To allow AvroAttrsBridge to work with custom classes, a function will be passed to  value_serializer arg in attrs.asdict. The value_serializer function needs to be able to handle any custom classes used in an events attrs class.
 
 To make is easier to developers, an extensions interface has been implemented into AvroAttrsBridge.
 To allow AvroAttrsBridge to work with these classes, you can pass in an extensions keyword to AvroAttrsBridge. The extensions keyword expects a dict with following format: {<type of custom class>: <AvroAttrsBridgeExtention subclass for custom class>}
@@ -131,18 +131,18 @@ The AvroAttrsBridgeExtention subclass should have the following methods:
 2. deserialize(data: str)
    converts \`data\` back to instance of custom class. The data str should have been created by self.serialize method.
 
-3. record\_fields
+3. record_fields
    returns the avro schema for this custom class. Usually, this is just a str
 
 
-Lots of attrs decorated classes in openedx-events repository have data with custom class types. AvroAttrsBridge class comes with default\_extensions which should hold AvroAttrsBridgeExtention classes for each of those custom classes. If you find any default\_extensions in AvroattrsBridge is missing a custom class, please add it yourself or reach out to the developers of the repository!
+Lots of attrs decorated classes in openedx-events repository have data with custom class types. AvroAttrsBridge class comes with default_extensions which should hold AvroAttrsBridgeExtention classes for each of those custom classes. If you find any default_extensions in AvroattrsBridge is missing a custom class, please add it yourself or reach out to the developers of the repository!
 
 Handling Evolution
 ~~~~~~~~~~~~~~~~~~
 
-If an attrs decorated class has a default value for one of its attributes, avro\_attrs\_bridge will assume that attribute is optional. This is to allow attrs events to change over time. If you want to add a new attribute to old attrs decorated class, please set a default value for it so that data created using old version can still be read.
+If an attrs decorated class has a default value for one of its attributes, avro_attrs_bridge will assume that attribute is optional. This is to allow attrs events to change over time. If you want to add a new attribute to old attrs decorated class, please set a default value for it so that data created using old version can still be read.
 
-This has not been tested that well, so if you do some testing, please update this and create further how\_tos to handle schema evolution.
+This has not been tested that well, so if you do some testing, please update this and create further how_tos to handle schema evolution.
 
 Open Questions
 --------------
@@ -165,7 +165,7 @@ For more info about above, see `OEP- 41: Asynchronous Server Event Message Forma
 How well does schema evolution work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Basic schema evolution has been tested in unit tests in openedx\_events/tests/test\_avro\_attrs\_bridge.py, but schema evolution has not be testing out in the field.
+Basic schema evolution has been tested in unit tests in openedx_events/tests/test_avro_attrs_bridge.py, but schema evolution has not be testing out in the field.
 
 What handles versioning?
 ^^^^^^^^^^^^^^^^^^^^^^^^
