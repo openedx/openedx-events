@@ -3,8 +3,8 @@ Attrs event data conversion to Avro
 ===================================
 .. contents::
 
-1 Context
----------
+Context
+-------
 
 - `0003-events-payload.rst <https://github.com/eduNEXT/openedx-events/blob/main/docs/decisions/0003-events-payload.rst#decisions>`_: Openedx has standardized around using attrs classes to define event data.
 
@@ -14,8 +14,8 @@ Attrs event data conversion to Avro
 
 The purpose of this ADR is to document decisions made while developing `AvroAttrsBridge <https://github.com/eduNEXT/openedx-events/blob/main/openedx_events/avro_attrs_bridge.py>`_ class.
 
-1.1 Some relavant info about `Attrs <https://www.attrs.org/en/stable/examples.html>`_ decorated classes
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Some relavant info about `Attrs <https://www.attrs.org/en/stable/examples.html>`_ decorated classes
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. attrs allows you to serialize instances of attrs classes to dicts using attrs.asdict. Though at default, this only works for data types that are JSON serializable.
 
@@ -71,8 +71,8 @@ The purpose of this ADR is to document decisions made while developing `AvroAttr
        print(Example(...example_as_dict))
        # Example(datum2=1, time=datetime.datetime(2022, 1, 7, 14, 1, 51, 672141), datum1='default')
 
-1.2 Some relevant info about Avro specification
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Some relevant info about Avro specification
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 1. An Avro schema is represented in JSON
 
@@ -88,8 +88,8 @@ The purpose of this ADR is to document decisions made while developing `AvroAttr
 
    - Case \`Adding a new field\`: A default value can be specified for a field in the Avro schema. This value is only used when reading instances that lack field. This default does not make field optional at encoding time.
 
-2 Decision
-----------
+Decision
+--------
 
 Each AvroAttrsBridge class will support:
 
@@ -115,8 +115,8 @@ Each AvroAttrsBridge class will support:
 
 AvroAttrsBridge is generalized to serialize/deserialize  basic attrs decorated class. Any specific Kafka requirements will be implemented in KafkaWrapper class, a subclass of AvroAttrsBridge.
 
-2.1 How to extend AvroAttrsBridge class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How to extend AvroAttrsBridge class
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 At defult, attrs.asdict only supports basics types for conversion to dict (Basically, only things you could json.dump). To allow AvroAttrsBridge to work with custom classes, a function will be passed to  value\_serializer arg in attrs.asdict. The value_serializer function needs to be able to handle any custom classes used in an events attrs class.
 
@@ -137,18 +137,18 @@ The AvroAttrsBridgeExtention subclass should have the following methods:
 
 Lots of attrs decorated classes in openedx-events repository have data with custom class types. AvroAttrsBridge class comes with default\_extensions which should hold AvroAttrsBridgeExtention classes for each of those custom classes. If you find any default\_extensions in AvroattrsBridge is missing a custom class, please add it yourself or reach out to the developers of the repository!
 
-2.2 Handling Evolution
-~~~~~~~~~~~~~~~~~~~~~~
+Handling Evolution
+~~~~~~~~~~~~~~~~~~
 
 If an attrs decorated class has a default value for one of its attributes, avro\_attrs\_bridge will assume that attribute is optional. This is to allow attrs events to change over time. If you want to add a new attribute to old attrs decorated class, please set a default value for it so that data created using old version can still be read.
 
 This has not been tested that well, so if you do some testing, please update this and create further how\_tos to handle schema evolution.
 
-3 Open Questions
-----------------
+Open Questions
+--------------
 
-3.1 What should go in config?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+What should go in config?
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 AvroAttrsBridge allows you to config the following values. It provides some default value for testing, but those should not be used in production.
 
@@ -162,12 +162,12 @@ AvroAttrsBridge allows you to config the following values. It provides some defa
 
 For more info about above, see `OEP- 41: Asynchronous Server Event Message Format <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#fields>`_
 
-3.2 How well does schema evolution work?
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+How well does schema evolution work?
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Basic schema evolution has been tested in unit tests in openedx\_events/tests/test\_avro\_attrs\_bridge.py, but schema evolution has not be testing out in the field.
 
-3.2.1 What handles versioning?
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+What handles versioning?
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 AvroAttrsBridge does not handle versioning logistics.
