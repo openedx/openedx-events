@@ -40,7 +40,7 @@ Some relavant info about `Attrs <https://www.attrs.org/en/stable/examples.html>`
           # output:'{"dt": "2020-05-04T13:37:00"}'
 
 2. Each attrs-decorated class has a attrs_attrs class attribute (`source attrs docs <https://www.attrs.org/en/stable/extending.html#extending>`_). It’s a tuple of attrs.Attribute carrying metadata about each attribute.
-   You can get \`type\` info on everything datum defined in an attrs class.
+   You can get `type` info on every field defined in an attrs-decorated class.
 
    .. code:: python
 
