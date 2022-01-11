@@ -113,7 +113,7 @@ Each AvroAttrsBridge class will support:
 
 4. Provide ability to extend AvroAttrsBridge to support any attrs decorated classes outside of openedx-events repository
 
-5. Follow cloudevents specification as stated in OEP-TODO
+5. Follow cloudevents specification as stated in `OEP-41: Asynchronous Server Event Message Format`_ .
 
 
 AvroAttrsBridge is generalized to serialize/deserialize  basic attrs decorated class. Any specific Kafka requirements will be implemented in KafkaWrapper class, a subclass of AvroAttrsBridge.
