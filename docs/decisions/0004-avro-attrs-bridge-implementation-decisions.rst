@@ -113,7 +113,7 @@ Each AvroAttrsBridge class will support:
 
 4. Provide ability to extend AvroAttrsBridge to support any attrs decorated classes outside of openedx-events repository
 
-5. Follow cloudevents specification as stated in `OEP-41: Asynchronous Server Event Message Format`_ .
+5. Follow cloudevents specification as stated in `OEP-41`_: Asynchronous Server Event Message Format.
 
 
 AvroAttrsBridge is generalized to serialize/deserialize  basic attrs decorated class. Any specific Kafka requirements will be implemented in KafkaWrapper class, a subclass of AvroAttrsBridge.
@@ -165,7 +165,10 @@ AvroAttrsBridge allows you to config the following values. It provides some defa
 - type: The name of event.
   Should be formatted \`{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}\`.
 
-For more info about above, see `OEP- 41: Asynchronous Server Event Message Format <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#fields>`_
+For more info about above, see `OEP-41`_: Asynchronous Server Event Message Format
+
+.. _OEP-41: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#fields>
+
 
 How well does schema evolution work?
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
