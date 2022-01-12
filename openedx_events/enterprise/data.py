@@ -34,7 +34,7 @@ class TrackingEvent:
     previous_license_uuid = attr.ib(type=str)
     assigned_date = attr.ib(type=str)
     activation_date = attr.ib(type=str)
-    assigned_lms_user_id = attr.ib(type=str)
+    assigned_lms_user_id = attr.ib(type=int, default=None)
     assigned_email = attr.ib(type=str)
     expiration_processed = attr.ib(type=bool)
     auto_applied = attr.ib(type=bool, default=False)
