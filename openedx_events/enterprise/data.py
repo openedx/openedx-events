@@ -4,14 +4,14 @@ Data attributes for events within the architecture subdomain `enterprise`.
 These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
 """
-from datetime import datetime
-
 import attr
+
 
 @attr.s(frozen=True)
 class TrackingEvent:
     """
-    License events to be put on event bus
+    License events to be put on event bus.
+
     TODO: figure out proper description
 
     Arguments:
@@ -29,6 +29,7 @@ class TrackingEvent:
         enterprise_customer_name (str):
         customer_agreement_uuid (str):
     """
+
     license_uuid = attr.ib(type=str)
     license_activation_key = attr.ib(type=str)
     previous_license_uuid = attr.ib(type=str)
