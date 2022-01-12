@@ -14,15 +14,19 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+Added
+-----
+* Added event definition for enterprise/TrackingEvent
+
 [0.7.0] - 2022-01-06
-____________________
+~~~~~~~~~~~~~~~~~~~~
 
 Added
 -----
 * Added AvroAttrsBridge class to convert between avro standard and attrs classes
 
 [0.6.0] - 2021-09-15
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Added
 _____
 * Add custom formatting class for events responses.
@@ -34,31 +38,31 @@ _______
 * Default is send_robust instead of send unless specified otherwise.
 
 [0.5.1] - 2021-08-26
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Changed
 _______
 * Remove TestCase inheritance from OpenEdxTestMixin.
 
 [0.5.0] - 2021-08-24
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Added
 _____
 * Utilities to use while testing in other platforms.
 
 [0.4.1] - 2021-08-18
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Changed
 _______
 * Remove raise_exception assignment in events metadata.
 
 [0.4.0] - 2021-08-18
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Added
 _____
 * Preliminary Open edX events definitions.
 
 [0.3.0] - 2021-08-18
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Added
 _____
 * Add tooling needed to create and trigger events in Open edX platform.
@@ -66,7 +70,7 @@ _____
 
 
 [0.2.0] - 2021-07-28
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~
 Changed
 _______
 
