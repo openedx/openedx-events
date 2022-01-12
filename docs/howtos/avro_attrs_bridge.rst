@@ -97,6 +97,7 @@ This has not been tested in production. If you do some testing, please update th
 context
 -------
 
+
 Some relavant info about `Attrs <https://www.attrs.org/en/stable/examples.html>`_ decorated classes
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -153,6 +154,7 @@ Some relavant info about `Attrs <https://www.attrs.org/en/stable/examples.html>`
        example_as_dict = { 'datum2': 1, time: datetime.now()} # there is no value for datum1
        print(Example(...example_as_dict))
        # Example(datum2=1, time=datetime.datetime(2022, 1, 7, 14, 1, 51, 672141), datum1='default')
+
 
 Some relevant info about Avro specification
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
