@@ -13,6 +13,21 @@ class TrackingEvent:
     """
     License events to be put on event bus
     TODO: figure out proper description
+
+    Arguments:
+        license_uuid (str):
+        license_activation_key (str):
+        previous_license_uuid (str):
+        assigned_date (str):
+        activation_date (str):
+        assigned_lms_user_id (str):
+        assigned_email (str):
+        expiration_processed (bool):
+        auto_applied (bool):
+        enterprise_customer_uuid (str):
+        enterprise_customer_slug (str):
+        enterprise_customer_name (str):
+        customer_agreement_uuid (str):
     """
     license_uuid = attr.ib(type=str)
     license_activation_key = attr.ib(type=str)
