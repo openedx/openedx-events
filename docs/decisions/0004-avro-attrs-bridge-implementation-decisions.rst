@@ -118,36 +118,6 @@ Each AvroAttrsBridge class will support:
 
 AvroAttrsBridge is generalized to serialize/deserialize  basic attrs decorated class. Any specific Kafka requirements will be implemented in KafkaWrapper class, a subclass of AvroAttrsBridge.
 
-How to extend AvroAttrsBridge class
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-At default, attrs.asdict only supports basics types for conversion to dict (Basically, only things you could json.dump). To allow AvroAttrsBridge to work with non-primitive types, a function will be passed to  value_serializer arg in attrs.asdict. The value_serializer function needs to be able to handle any non-primitive types used in an events attrs class.
-
-To make is easier to developers, an extensions interface has been implemented into AvroAttrsBridge.
-To allow AvroAttrsBridge to work with these classes, you can pass in a dict to the extensions keyword to AvroAttrsBridge. The extensions keyword expects a dict with following format: {<type of non-primitive>: <AvroAttrsBridgeExtention subclass for non-primitive>}
-
-The AvroAttrsBridgeExtention subclass should have the following methods:
-
-1. serialize(obj)
-   serializes \`obj\` (a instance of non-primitive)
-
-2. deserialize(data: str)
-   converts \`data\` back to instance of non-primitive. The data str should have been created by self.serialize method.
-
-3. record_fields
-   returns the avro schema for this non-primitive. Usually, this is just a str
-
-
-AvroAttrsBridge class comes with default_extensions which should hold AvroAttrsBridgeExtention classes for all the non-primitive types necessary to work with all attrs-decorated classes defined in openedx_events.
-
-If you find default_extension for a non-primitive type (used in openedx_events) is missing, please add it yourself or reach out to the developers of the repository!
-
-Handling Evolution
-~~~~~~~~~~~~~~~~~~
-
-If an attrs decorated class has a default value for one of its attributes, avro_attrs_bridge will assume that attribute is optional. This is to allow attrs events to change over time. If you want to add a new attribute to old attrs decorated class, please set a default value for it so that data created using old version can still be read.
-
-This has not been tested in production. If you do some testing, please update this and create further how_tos to handle schema evolution.
 
 Open Questions
 --------------
