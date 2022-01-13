@@ -33,7 +33,8 @@ class LicenseLifecycle:
                                      True means a license is expired.
         auto_applied (bool):
         enterprise_customer_uuid (str): UUID used to internally represent an enterprise
-        enterprise_customer_slug (str): Short name of an enterprise used in the URLs and other places for display purposes
+        enterprise_customer_slug (str): Short name of an enterprise used in the URLs and other places
+                                        for display purposes.
         enterprise_customer_name (str): Long Name of an enterprise customer. Used for display and reporting
         customer_agreement_uuid (str): The active Customer Agreement UUID that this license is linked to.
     """
