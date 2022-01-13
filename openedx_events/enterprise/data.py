@@ -16,11 +16,14 @@ class TrackingEvent:
         license_uuid (str): The UUID linked to this license and storing in the License Manager DB.
                             This value is always present.
         license_activation_key (str):
-        previous_license_uuid (str): The UUID linked to the previous license that this license is a renewal for.
-                                     Non-empty only on after the edx.server.license-manager.license-lifecycle.renewed event has occurred.
-        assigned_date (str): Formatted ISO-8601 Date String representing the date this license was most recently assigned to the assigned_email.
+        previous_license_uuid (str): The UUID linked to the previous license that this license is
+                                     a renewal for. Non-empty only on after the
+                                     edx.server.license-manager.license-lifecycle.renewed event has occurred.
+        assigned_date (str): Formatted ISO-8601 Date String representing the date
+                             this license was most recently assigned to the assigned_email.
                              May be empty.
-        activation_date (str): Formatted ISO-8601 Date String this license was most recently activated for the assigned_email.
+        activation_date (str): Formatted ISO-8601 Date String this license was most recently activated
+                               for the assigned_email.
                                May be empty.
         assigned_lms_user_id (str): The LMS User id of the user that this license 'belongs to'.
                                     May be empty if this license is not activated yet.
