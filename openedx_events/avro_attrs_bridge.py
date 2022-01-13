@@ -277,7 +277,7 @@ class AvroAttrsBridge:
         return attrs_cls(**data)
 
 
-class KafkaWrapper(AvroAttrsBridge):
+class AvroAttrsBridgeKafkaWrapper(AvroAttrsBridge):
     """
     Wrapper class to help AvroAttrsBridge to work with kafka.
     """
