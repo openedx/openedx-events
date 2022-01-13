@@ -16,7 +16,7 @@ Unreleased
 
 Added
 -----
-* Added event definition for enterprise/TrackingEvent
+* Added event definition for enterprise/LicenseLifecycle
 
 [0.7.0] - 2022-01-06
 ~~~~~~~~~~~~~~~~~~~~

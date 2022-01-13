@@ -8,7 +8,7 @@ import attr
 
 
 @attr.s(frozen=True)
-class TrackingEvent:
+class LicenseLifecycle:
     """
     Event to track changes to subscriptsion.License records.
 
