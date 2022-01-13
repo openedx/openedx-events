@@ -16,7 +16,9 @@ Unreleased
 
 Added
 -----
-* Added event definition for enterprise/LicenseLifecycle
+* Added data definition for enterprise/LicenseLifecycle
+* Added LicenseCreated signal definition
+
 
 [0.7.0] - 2022-01-06
 ~~~~~~~~~~~~~~~~~~~~
