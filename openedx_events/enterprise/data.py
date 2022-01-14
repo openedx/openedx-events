@@ -8,9 +8,9 @@ import attr
 
 
 @attr.s(frozen=True)
-class LicenseLifecycle:
+class SubscriptionLicenseData:
     """
-    Event to track changes to subscriptsion.License records.
+    Attributes defined for Open edX Subscription License object.
 
     Arguments:
         license_uuid (str): The UUID linked to this license and storing in the License Manager DB.
