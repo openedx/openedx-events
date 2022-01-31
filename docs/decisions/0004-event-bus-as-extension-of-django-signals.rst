@@ -4,7 +4,7 @@
 1.1 Context
 ~~~~~~~~~~~
 
-- Django Signals are widely used in edx-platform and elsewhere.OpenedX developers are familiar with Django Signals.
+- Django Signals are widely used in edx-platform and elsewhere. OpenedX developers are familiar with Django Signals.
 
 - Django Signals are much cheaper to send, and offer pretty much no additional work as compared to sending via Kafka.
 
