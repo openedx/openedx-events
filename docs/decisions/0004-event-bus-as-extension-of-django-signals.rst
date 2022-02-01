@@ -12,7 +12,18 @@
 
 - We want to make it easy to integrate different event bus technologies
 
+
+This decision came out based on following conversations:
+
+- `#38: What to send over the wire (Kafka)? <https://github.com/eduNEXT/openedx-events/issues/38>`_
+
+- `#39: ARCHBOM-2010: How does Event Bus interact with OpenedX Django Signals? <https://github.com/eduNEXT/openedx-events/issues/39>`_
+
 1.2 Decision
 ~~~~~~~~~~~~
 
-Django signals will be used as the event bus for internal service communication and external event bus will be implemented as an app listening for relevant Django signals and passing it on to external event bus.
+- Django signals will be the method for communication within an OpenedX Django service.
+- An external event bus will be used to transport messages between services.
+- For production of messages, the external event bus will hook onto a django service as another django app. The Event Bus app will listen for relevant django signals, convert them to event bus's format (using AvroAttrsBridge), and send the messages over the wire.
+- For consumption, the event bus implementation will convert the messages back into django signals and emit them.
+  - The exact design of the consuming event bus implementation is unclear at this time.
