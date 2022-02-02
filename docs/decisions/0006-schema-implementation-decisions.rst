@@ -24,11 +24,9 @@ And this decision is a result of following conversations:
 1.2 Decision
 ~~~~~~~~~~~~
 
-- Signal classes in \_ will define the schema for event bus messages
+-  Since the external event bus is an extension of Django signals as stated in  `0004-event-bus-as-extension-of-django-signals.rst`_, it will use the event message payload method specified in  `0003-events-payload.rst`_. OpenEdxPublicSignal classes will define the schema for event bus messages
 
-  - the “data” attribute will specify the exact data to be sent over the wire.
-
-    - The ’data’ attribute will be a data dict
+  - All the data to be sent over the message bus will be sent as a dict. This dict will be passed to OpenEdxPublicSignal class as the "data" keyword.
 
       - The keys in the data will be strings
 
@@ -52,7 +50,7 @@ And this decision is a result of following conversations:
             }
         )
 
-- If you need to add more information to a message, add it as an additional field in “data” attribute in your signal class.
+- If you need to add more information to a message, add it as an additional field in “data” dict in your signal class.
 
 - Once a keyword has been added to “data” dict, it will be required for all new messages.
 
