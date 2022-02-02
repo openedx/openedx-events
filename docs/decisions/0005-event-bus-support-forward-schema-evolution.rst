@@ -14,7 +14,7 @@
 
   - Backward / Backward Transitive: Allows you to delete fields and add optional fields. The consumer of the messages must upgrade to handle new schema before producer.
 
-  - Forward / Forward Transitive: Allows you to add fields and delete optional fields.The producer of  the messages must upgrade to handle new schema before consumer of  messages.
+  - Forward / Forward Transitive: Allows you to add fields and delete optional fields. The producer of the messages must upgrade to handle new schema before consumer of  messages.
 
   - Full / Full Transitive: Allows you to add or delete optional fields. Either producer or consumer can change first.
 

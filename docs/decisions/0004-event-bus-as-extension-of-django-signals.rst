@@ -1,4 +1,4 @@
-1 Event bus as extension of django signals
+1 Event bus as extension of Django signals
 ------------------------------------------
 
 1.1 Context
