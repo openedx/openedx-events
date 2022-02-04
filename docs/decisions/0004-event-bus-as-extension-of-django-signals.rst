@@ -1,16 +1,16 @@
 1 Event bus as extension of Django signals
 ------------------------------------------
+TODO: fix name
+
+Status
+~~~~~~
+
+Provisional
 
 1.1 Context
 ~~~~~~~~~~~
 
-- Django Signals are widely used in edx-platform and elsewhere. OpenedX developers are familiar with Django Signals.
-
-- Django Signals are much cheaper to send, and offer pretty much no additional work as compared to sending via Kafka.
-
-- Django Signals don’t require extra infrastructure and are simpler for people to test with.
-
-- We want to make it easy to integrate different event bus technologies
+It was previously decided to use Django signals for internal events (TODO provide link). We will be adding the ability to trigger external events using an Event Bus(TODO provide link to OEP). It needs to be decided how and where the external events will be triggered, and what relationship these have to the previously designed internal events.
 
 
 This decision came out based on following conversations:
@@ -22,8 +22,31 @@ This decision came out based on following conversations:
 1.2 Decision
 ~~~~~~~~~~~~
 
-- Django signals will be the method for communication within an OpenedX Django service.
-- An external event bus will be used to transport messages between services.
-- For production of messages, the external event bus will hook onto a django service as another django app. The Event Bus app will listen for relevant django signals, convert them to event bus's format (using AvroAttrsBridge), and send the messages over the wire.
-- For consumption, the event bus implementation will convert the messages back into django signals and emit them.
-  - The exact design of the consuming event bus implementation is unclear at this time.
+- Event definitions (in the form of OpenEdxPublicSignal) will be shared between internal and external events.
+
+- At this time, event bus events will be triggered from a Django signal handler of the Django signal representing the corresponding internal event.
+
+- The Django signal must contain all event envelope and data to be sent across the event bus, such that it can be converted back into Django signals again on the consumer side.
+
+- For consumption, the event bus implementation will convert the messages back into django signals and emit them within the consumer application.
+
+Consequences
+~~~~~~~~~~~~
+
+- The OpenEdxPublicSignal (name?) serves as the event definition, and doubles as a Django signal.
+
+- An external event will never be sent without a corresponding internal event (at this time, based on the current design).
+
+- The external event bus handler will listen for relevant django signals (OpenEdxPublicSignals?), and serialize them for the event bus (using AvroAttrsBridge [point to other ADR?]), and then send the messages over the wire.
+
+- The use of the OpenEdxPublicSignal(name?) on both the event producing and event consuming sides for external events should hopefully provide a consistent mechanism to plug in for events.
+
+- It is unclear whether the use of an extra layer of signals when sending/consuming external events will cause difficulties for implementations. If so, we may need to adjust and document when and where an alternative approach should be taken.
+
+- The data definition in OpenEdxPublicSignal is geared toward signals, where the top-level dict represents keyword arguments emitted to the signal. This definition is not designed for event bus events, except in that it could be converted back to a signal.
+
+Rejected Alternatives
+~~~~~~~~~~~~~~~~
+
+- Sending external event at same place of code as the internal Signal is sent. Decided that this is more complex than we need, and we can add this later if it becomes necessary.
+- Sending external events without a corresponding internal event. This might be useful for Event Sourcing, and is not being ruled out forever, but is not currently being designed for.
