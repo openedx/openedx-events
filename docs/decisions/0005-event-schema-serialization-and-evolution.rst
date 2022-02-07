@@ -15,13 +15,13 @@ Context
 
 Open edX is currently experimenting with event bus technology (`OEP-52: Event Bus <https://github.com/openedx/open-edx-proposals/pull/233>`_). The goal is to iterate through different implementations of an event bus and slowly get to a solution that works for the larger Open edX developer community.
 
-Currently, the specification for an event are written as OpenEdxPublicSignal instances in signal.py modules in `openedx-events<https://github.com/eduNEXT/openedx-events/blob/main/openedx_events/learning/signals.py>`_ repository.
+Currently, the specification for an event are written as OpenEdxPublicSignal instances in signal.py modules in `openedx-events <https://github.com/eduNEXT/openedx-events/blob/main/openedx_events/learning/signals.py>`_ repository.
 
 Over time, as needs change, applications will need the schema for an event to change.
 
 For internal events, there is some discussion of versioning events related to how they might change in https://github.com/eduNEXT/openedx-events/blob/main/docs/decisions/0002-events-naming-and-versioning.rst. Schema for event bus messages is defined in openedx-events as signal classes.
 
-However, for the event bus, we will be introducing more rigorous event evolution rules using an explicit schema and schema registry. We have decided to use Avro elsewhere (`OEP-52/decisions/001-schema-representation.rst<https://github.com/openedx/open-edx-proposals/pull/233/files#diff-70c71499189a23f546da507c5bfdc0fea674f4cbbc5c039298d8390d6930a5ca>`_).
+However, for the event bus, we will be introducing more rigorous event evolution rules using an explicit schema and schema registry. We have decided to use Avro elsewhere (`OEP-52/decisions/001-schema-representation.rst <https://github.com/openedx/open-edx-proposals/pull/233/files#diff-70c71499189a23f546da507c5bfdc0fea674f4cbbc5c039298d8390d6930a5ca>`_).
 
 Event schemas can evolve in various ways and each implementation of an event bus should choose a schema evolution configuration. The choices include how data can change, as well as the order in which producer and consumer needs to be deployed with new changes.
 
