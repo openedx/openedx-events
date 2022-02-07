@@ -10,19 +10,20 @@ Provisional
 Context
 ~~~~~~~
 
-TODO: figure out what is note and what is context
 
-Note: Because the event definitions are shared, this applies to both external and internal events
-.. note:: Open edX is currently experimenting with event bus technology [point to OEP?]. The goal is to iterate through different implementations of an event bus and slowly get to a solution that works for the larger Open edX developer community.
+.. note:: Because the event definitions are shared, this decision applies to both external and internal events
 
-Over time, as needs change, applications will need the schema for an event to change. Since the event definitions will be shared between internal and external events, changes to the event will affect both cases (internal and external).
+Open edX is currently experimenting with event bus technology (`OEP-52: Event Bus <https://github.com/openedx/open-edx-proposals/pull/233>`_). The goal is to iterate through different implementations of an event bus and slowly get to a solution that works for the larger Open edX developer community.
+
+Currently, the specification for an event are written as OpenEdxPublicSignal instances in signal.py modules in `openedx-events<https://github.com/eduNEXT/openedx-events/blob/main/openedx_events/learning/signals.py>`_ repository.
+
+Over time, as needs change, applications will need the schema for an event to change.
 
 For internal events, there is some discussion of versioning events related to how they might change in https://github.com/eduNEXT/openedx-events/blob/main/docs/decisions/0002-events-naming-and-versioning.rst. Schema for event bus messages is defined in openedx-events as signal classes.
 
-However, for the event bus, we will be introducing more rigorous event evolution rules using an explicit schema and schema registry. We have decided to use Avro elsewhere (TODO point to ADR).
+However, for the event bus, we will be introducing more rigorous event evolution rules using an explicit schema and schema registry. We have decided to use Avro elsewhere (`OEP-52/decisions/001-schema-representation.rst<https://github.com/openedx/open-edx-proposals/pull/233/files#diff-70c71499189a23f546da507c5bfdc0fea674f4cbbc5c039298d8390d6930a5ca>`_).
 
-Using Avro, there are specific configurations for schema evolution, that affect how data can change, as well as the order in which producers and consumers need to be deployed to handle updated schemas. (TODO Point to doc for definitions.)
-
+Event schemas can evolve in various ways and each implementation of an event bus should choose a schema evolution configuration. The choices include how data can change, as well as the order in which producer and consumer needs to be deployed with new changes.
 
 Event bus technologies support various schema evolutions::
 
@@ -33,22 +34,24 @@ Event bus technologies support various schema evolutions::
 - Full / Full Transitive: Allows you to add or delete optional fields. Either producer or consumer can change first.
 
 
+Currently, the schema for event bus messages in defined through two classes: OpenEdxPublicSignal and attrs decorated classes in data.py modules (`example <https://github.com/eduNEXT/openedx-events/blob/main/openedx_events/learning/data.py>`_).
 
-At this time, the current implementation of the data inside the OpenEdxPublicSignal class is split into two parts:
-There is a top-level data dict of key/value pairs. These keys correspond to keyword arguments sent via the signal.
-There are also attr based Data classes. Some of the values in the top-level dict may include instances of these attr based Data classes.
+OpenEdxPublicSignal defines all the information necessary to create, serialize, and send an event. This includes the data to be sent and the metadata. The data to be sent is defined as the 'init_data' attribute. 'init_data' is a dict of key/value pairs. The keys are strings and the values can be of various types (the exact supported types has not be specified yet). These keys correspond to keyword arguments sent via the signal.
 
+The attrs decorated classes (`example<https://github.com/eduNEXT/openedx-events/blob/main/openedx_events/learning/data.py>`_) are used to structure the data sent. Hopefully, most of the values in 'init_data' attribute in OpenEdxPublicSignal are of these attrs decorated classes.
+Some helpful information about OpenEdxPublicSignal class:
 
 
 Decision
 ~~~~~~~~
 
 - The ability to add new data to an event definition is being prioritized over the ability to delete information. Deleting will not be allowed without introducing breaking changes.
+
 - The top-level data dict of an OpenEdxPublicSignal can be evolved by adding new key/values. At this time, they will all be considered required.
+
 - An attr Data class will not be evolved once in use. If new fields are required for an event, they can only be added into the top-level data dict.
+
 - The above decisions result in a decision to use “Forward / Forward Transitive” schema evolution for external events. Although, it is possible to use “Full / Full Transitive” schema evolution and defer adjusting the rule until schema changes are required, or we add more flexibility.
-
-
 
 Consequences
 ~~~~~~~~~~~~
