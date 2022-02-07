@@ -1,6 +1,5 @@
-1 Event bus as extension of Django signals
-------------------------------------------
-TODO: fix name
+External event bus and Django Signal events
+-------------------------------------------
 
 Status
 ~~~~~~
@@ -10,8 +9,9 @@ Provisional
 1.1 Context
 ~~~~~~~~~~~
 
-It was previously decided to use Django signals for internal events (TODO provide link). We will be adding the ability to trigger external events using an Event Bus(TODO provide link to OEP). It needs to be decided how and where the external events will be triggered, and what relationship these have to the previously designed internal events.
+OpenedX services already use Django signals for internal events (`OEP-49: Django App Pattern <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0049-django-app-patterns.html#signals>`_). Additionally, we are adding the ability to trigger external events using an Event Bus(`OEP-52: Event Bus <https://github.com/openedx/open-edx-proposals/pull/233>`_).
 
+This ADR concerns decisions made during trial of event bus regarding how external events will be triggered, and how external event bus builds off of decisions made for internal events.
 
 This decision came out based on following conversations:
 
@@ -33,13 +33,13 @@ This decision came out based on following conversations:
 Consequences
 ~~~~~~~~~~~~
 
-- The OpenEdxPublicSignal (name?) serves as the event definition, and doubles as a Django signal.
+- The OpenEdxPublicSignal serves as the event definition, and doubles as a Django signal.
 
 - An external event will never be sent without a corresponding internal event (at this time, based on the current design).
 
-- The external event bus handler will listen for relevant django signals (OpenEdxPublicSignals?), and serialize them for the event bus (using AvroAttrsBridge [point to other ADR?]), and then send the messages over the wire.
+- The external event bus handler will listen for relevant django signals (OpenEdxPublicSignals), and serialize them for the event bus (using AvroAttrsBridge [point to other ADR?]), and then send the messages over the wire.
 
-- The use of the OpenEdxPublicSignal(name?) on both the event producing and event consuming sides for external events should hopefully provide a consistent mechanism to plug in for events.
+- The use of the OpenEdxPublicSignal on both the event producing and event consuming sides for external events should hopefully provide a consistent mechanism to plug in for events.
 
 - It is unclear whether the use of an extra layer of signals when sending/consuming external events will cause difficulties for implementations. If so, we may need to adjust and document when and where an alternative approach should be taken.
 
