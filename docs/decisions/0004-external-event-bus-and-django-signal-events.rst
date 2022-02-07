@@ -1,13 +1,13 @@
 External event bus and Django Signal events
--------------------------------------------
+===========================================
 
 Status
-~~~~~~
+------
 
 Provisional
 
-1.1 Context
-~~~~~~~~~~~
+Context
+-------
 
 OpenedX services already use Django signals for internal events (`OEP-49: Django App Pattern <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0049-django-app-patterns.html#signals>`_). Additionally, we are adding the ability to trigger external events using an Event Bus(`OEP-52: Event Bus <https://github.com/openedx/open-edx-proposals/pull/233>`_).
 
@@ -19,8 +19,8 @@ This decision came out based on following conversations:
 
 - `#39: ARCHBOM-2010: How does Event Bus interact with OpenedX Django Signals? <https://github.com/eduNEXT/openedx-events/issues/39>`_
 
-1.2 Decision
-~~~~~~~~~~~~
+Decision
+--------
 
 - Event definitions (in the form of OpenEdxPublicSignal) will be shared between internal and external events.
 
@@ -31,7 +31,7 @@ This decision came out based on following conversations:
 - For consumption, the event bus implementation will convert the messages back into django signals and emit them within the consumer application.
 
 Consequences
-~~~~~~~~~~~~
+------------
 
 - The OpenEdxPublicSignal serves as the event definition, and doubles as a Django signal.
 
@@ -46,7 +46,7 @@ Consequences
 - The data definition in OpenEdxPublicSignal is geared toward signals, where the top-level dict represents keyword arguments emitted to the signal. This definition is not designed for event bus events, except in that it could be converted back to a signal.
 
 Rejected Alternatives
-~~~~~~~~~~~~~~~~
+---------------------
 
 - Sending external event at same place of code as the internal Signal is sent. Decided that this is more complex than we need, and we can add this later if it becomes necessary.
 - Sending external events without a corresponding internal event. This might be useful for Event Sourcing, and is not being ruled out forever, but is not currently being designed for.

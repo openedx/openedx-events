@@ -1,14 +1,14 @@
 Event schema serialization and evolution
-----------------------------------------
+========================================
 
 
 Status
-~~~~~~
+------
 
 Provisional
 
 Context
-~~~~~~~
+-------
 
 
 .. note:: Because the event definitions are shared, this decision applies to both external and internal events
@@ -43,7 +43,7 @@ Some helpful information about OpenEdxPublicSignal class:
 
 
 Decision
-~~~~~~~~
+--------
 
 - The ability to add new data to an event definition is being prioritized over the ability to delete information. Deleting will not be allowed without introducing breaking changes.
 
@@ -54,7 +54,7 @@ Decision
 - The above decisions result in a decision to use “Forward / Forward Transitive” schema evolution for external events. Although, it is possible to use “Full / Full Transitive” schema evolution and defer adjusting the rule until schema changes are required, or we add more flexibility.
 
 Consequences
-~~~~~~~~~~~~
+------------
 
 - As noted in the decision, once events are evolved, we must use “Forward / Forward Transitive” with the event bus for external events. This means that the producer of an updated event must upgrade to handle the new schema before consumers can be upgraded.
 - It is unclear what CI functionality can exist to catch schema changes that break the rules before the schema registry tests the rules for external events in some test environment.
@@ -62,7 +62,7 @@ Consequences
 
 
 Deferred/Rejected Decisions
-~~~~~~~~~~~~~~~~~~~~~~
+---------------------------
 
 We could add the ability to add optional fields to an event, possibly into the attr Data classes and/or possibly into the top-level data dict in the OpenEdxPublicSignal.
 
