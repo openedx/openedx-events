@@ -10,8 +10,8 @@ from typing import Any, Dict
 import attr
 import fastavro
 
-from openedx_events.bridge.avro_attrs_bridge_extensions import DatetimeAvroAttrsBridgeExtension
-from openedx_events.bridge.avro_types import AVRO_TYPE_FOR
+from openedx_events.avro_attrs_bridge_extensions import DatetimeAvroAttrsBridgeExtension
+from openedx_events.avro_types import AVRO_TYPE_FOR
 
 
 class AvroAttrsBridge:
