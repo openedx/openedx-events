@@ -9,20 +9,14 @@ Provisional
 Context
 -------
 
-OpenedX services already use Django signals for internal events (`OEP-49: Django App Pattern <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0049-django-app-patterns.html#signals>`_). Additionally, we are adding the ability to trigger external events using an Event Bus(`OEP-52: Event Bus <https://github.com/openedx/open-edx-proposals/pull/233>`_).
+Open edX services already use Django signals for internal events (`OEP-50: Hooks extension framework <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0050-hooks-extension-framework.html>`_). Additionally, we are adding the ability to trigger external events using an Event Bus(`OEP-52: Event Bus <https://github.com/openedx/open-edx-proposals/pull/233>`_).
 
 This ADR concerns decisions made during trial of event bus regarding how external events will be triggered, and how external event bus builds off of decisions made for internal events.
-
-This decision came out based on following conversations:
-
-- `#38: What to send over the wire (Kafka)? <https://github.com/eduNEXT/openedx-events/issues/38>`_
-
-- `#39: ARCHBOM-2010: How does Event Bus interact with OpenedX Django Signals? <https://github.com/eduNEXT/openedx-events/issues/39>`_
 
 Decision
 --------
 
-- Event definitions (in the form of OpenEdxPublicSignal) will be shared between internal and external events.
+- Event definitions will be shared between internal and external events. The event definitions will continue to be in the form of OpenEdxPublicSignal, as decided in ADR `0003-events-payload.rst <0003-events-payload.rst>`_.
 
 - At this time, event bus events will be triggered from a Django signal handler of the Django signal representing the corresponding internal event.
 
@@ -33,11 +27,11 @@ Decision
 Consequences
 ------------
 
-- The OpenEdxPublicSignal serves as the event definition, and doubles as a Django signal.
+- The OpenEdxPublicSignal serves as the event definition, and doubles as a Django signal, for both internal and external events. 
 
 - An external event will never be sent without a corresponding internal event (at this time, based on the current design).
 
-- The external event bus handler will listen for relevant django signals (OpenEdxPublicSignals), and serialize them for the event bus (using AvroAttrsBridge [point to other ADR?]), and then send the messages over the wire.
+- The external event bus handler will listen for relevant django signals (OpenEdxPublicSignals), and serialize them for the event bus (using AvroAttrsBridge as decided in unmerged ADR `001-schema-representation.rst <https://github.com/openedx/open-edx-proposals/blob/9ac929a667b46e046a46a59056447db343a51161/oeps/architectural-decisions/oep-0052/decisions/001-schema-representation.rst>`_), and then send the messages over the wire.
 
 - The use of the OpenEdxPublicSignal on both the event producing and event consuming sides for external events should hopefully provide a consistent mechanism to plug in for events.
 
@@ -50,3 +44,12 @@ Rejected Alternatives
 
 - Sending external event at same place of code as the internal Signal is sent. Decided that this is more complex than we need, and we can add this later if it becomes necessary.
 - Sending external events without a corresponding internal event. This might be useful for Event Sourcing, and is not being ruled out forever, but is not currently being designed for.
+
+Additional Resources
+--------------------
+
+If you want further background for this decision, see the following discussions:
+
+- `#38: What to send over the wire (Kafka)? <https://github.com/eduNEXT/openedx-events/issues/38>`_
+
+- `#39: ARCHBOM-2010: How does Event Bus interact with OpenedX Django Signals? <https://github.com/eduNEXT/openedx-events/issues/39>`_
