@@ -14,6 +14,13 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+Changed
+--------
+* Changed openedx_events/enterprise/LicenseLifecycle class to openedx_events/enterprise/SubscriptionLicenseData
+* Changed LicenseCreated signal class to SUBSCRIPTION_LICENSE_MODIFIED signal class
+
+[0.7.1] - 2022-01-13
+~~~~~~~~~~~~~~~~~~~~
 Added
 -----
 * Added data definition for enterprise/LicenseLifecycle
