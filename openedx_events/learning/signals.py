@@ -8,7 +8,13 @@ They also must comply with the payload definition specified in
 docs/decisions/0003-events-payload.rst
 """
 
-from openedx_events.learning.data import CertificateData, CohortData, CourseEnrollmentData, UserData
+from openedx_events.learning.data import (
+    CertificateData,
+    CohortData,
+    CourseDiscussionConfigurationData,
+    CourseEnrollmentData,
+    UserData,
+)
 from openedx_events.tooling import OpenEdxPublicSignal
 
 # .. event_type: org.openedx.learning.student.registration.completed.v1
@@ -115,5 +121,17 @@ COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.cohort_membership.changed.v1",
     data={
         "cohort": CohortData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.discussions.configuration.changed.v1
+# .. event_name: COURSE_DISCUSSIONS_CHANGED
+# .. event_description: emitted when the configuration for a course's discussions changes in the course
+# .. event_data: CourseDiscussionConfigurationData
+COURSE_DISCUSSIONS_CHANGED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.discussions.configuration.changed.v1",
+    data={
+        "configuration": CourseDiscussionConfigurationData
     }
 )

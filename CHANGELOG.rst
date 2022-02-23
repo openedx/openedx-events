@@ -23,6 +23,7 @@ Changed
 ~~~~~~~~~~~~~~~~~~~~
 Added
 -----
+* Added COURSE_DISCUSSIONS_CHANGED for discussion event
 * Added data definition for enterprise/LicenseLifecycle
 * Added LicenseCreated signal definition
 

@@ -5,9 +5,10 @@ These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
 """
 from datetime import datetime
+from typing import List
 
 import attr
-from opaque_keys.edx.keys import CourseKey
+from opaque_keys.edx.keys import CourseKey, UsageKey
 
 
 @attr.s(frozen=True)
@@ -135,3 +136,49 @@ class CohortData:
     user = attr.ib(type=UserData)
     course = attr.ib(type=CourseData)
     name = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class DiscussionTopicContext:
+    """
+    Attributes defined for Open edX Discussion Topic Context object.
+
+    Context for linking the external id for a discussion topic to its associated usage key.
+
+    Arguments:
+        title (str): is cached to improve the performance.
+        usage_key (str): usage key.
+        group_id(int): can be used for providers that don't internally support cohorting.
+        external_id(str): store the commentable id.
+    """
+
+    title = attr.ib(type=str)
+    usage_key = attr.ib(type=UsageKey, default=None)
+    group_id = attr.ib(type=int, default=None)
+    external_id = attr.ib(type=str, default=None)
+
+
+@attr.s(frozen=True)
+class CourseDiscussionConfigurationData:
+    """
+    Attributes defined for Open edX Course Discussion Configuration Data object.
+
+    Contains all the metadata needed to configure discussions for a course.
+
+    Arguments:
+        course_key(str): information about the course
+        provider_type(str): provider type
+        enable_in_context(bool): enable in context
+        enable_graded_units(bool): enable grade units
+        plugin_configuration(dict): plugin configuration
+        contexts(List): field contains all the contexts for which discussion
+        is to be enabled.
+    """
+
+    course_key = attr.ib(type=CourseKey)
+    provider_type = attr.ib(type=str)
+    enable_in_context = attr.ib(type=bool, default=True)
+    enable_graded_units = attr.ib(type=bool, default=False)
+    unit_level_visibility = attr.ib(type=bool, default=False)
+    plugin_configuration = attr.ib(type=dict, default={})
+    contexts = attr.ib(type=List[DiscussionTopicContext], factory=list)
