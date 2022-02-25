@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[0.8.0] - 2022-02-25
+~~~~~~~~~~~~~~~~~~~~
+Added
+-----
+* Added COURSE_DISCUSSIONS_CHANGED for discussion event
+
 Changed
 --------
 * Changed openedx_events/enterprise/LicenseLifecycle class to openedx_events/enterprise/SubscriptionLicenseData
@@ -23,14 +29,11 @@ Changed
 ~~~~~~~~~~~~~~~~~~~~
 Added
 -----
-* Added COURSE_DISCUSSIONS_CHANGED for discussion event
 * Added data definition for enterprise/LicenseLifecycle
 * Added LicenseCreated signal definition
 
-
 [0.7.0] - 2022-01-06
 ~~~~~~~~~~~~~~~~~~~~
-
 Added
 -----
 * Added AvroAttrsBridge class to convert between avro standard and attrs classes
