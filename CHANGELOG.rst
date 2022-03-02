@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ~~~~~~~~~~
 
+[0.8.1] - 2022-03-03
+~~~~~~~~~~~~~~~~~~~~
+Added
+-----
+* Added missing field for event COURSE_DISCUSSIONS_CHANGED
+
 [0.8.0] - 2022-02-25
 ~~~~~~~~~~~~~~~~~~~~
 Added

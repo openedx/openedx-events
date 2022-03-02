@@ -146,16 +146,20 @@ class DiscussionTopicContext:
     Context for linking the external id for a discussion topic to its associated usage key.
 
     Arguments:
-        title (str): is cached to improve the performance.
-        usage_key (str): usage key.
-        group_id(int): can be used for providers that don't internally support cohorting.
-        external_id(str): store the commentable id.
+        title (str): title of the discussion. This field is cached to improve the performance, since otherwise we'd
+        need to look it up in the course structure each time.
+        usage_key (str): unit location.
+        group_id (int): can be used for providers that don't internally support
+        cohorting but we can emulate that with different contexts for different groups.
+        external_id (str): store the commentable id that is used by cs_comments_service.
+        ordering (int): represent the position of the discussion topic.
     """
 
     title = attr.ib(type=str)
     usage_key = attr.ib(type=UsageKey, default=None)
     group_id = attr.ib(type=int, default=None)
     external_id = attr.ib(type=str, default=None)
+    ordering = attr.ib(type=int, default=None)
 
 
 @attr.s(frozen=True)
@@ -163,15 +167,16 @@ class CourseDiscussionConfigurationData:
     """
     Attributes defined for Open edX Course Discussion Configuration Data object.
 
-    Contains all the metadata needed to configure discussions for a course.
+    Course configuration information for discussions. Contains all the metadata
+    needed to configure discussions for a course.
 
     Arguments:
-        course_key(str): information about the course
-        provider_type(str): provider type
-        enable_in_context(bool): enable in context
-        enable_graded_units(bool): enable grade units
-        plugin_configuration(dict): plugin configuration
-        contexts(List): field contains all the contexts for which discussion
+        course_key (str): identifier of the course to which the discussion belongs.
+        provider_type (str): provider type from discussion settings.
+        enable_in_context (bool): indicates whether in-context discussion is enabled for the course
+        enable_graded_units (bool): If enabled, discussion topics will be created for graded units as well.
+        plugin_configuration (dict): The plugin configuration data for this context/provider.
+        contexts (List[DiscussionTopicContext]): contains all the contexts for which discussion
         is to be enabled.
     """
 
