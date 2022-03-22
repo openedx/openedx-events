@@ -12,6 +12,7 @@ Contents:
 
 .. toctree::
    :maxdepth: 2
+   :caption: General Contents
 
    readme
    getting_started
@@ -20,6 +21,22 @@ Contents:
    modules
    changelog
 
+.. toctree::
+   :maxdepth: 2
+   :caption: Decisions
+
+   decisions/0001-purpose-of-this-repo
+   decisions/0002-events-naming-and-versioning
+   decisions/0003-events-payload
+   decisions/0004-external-event-bus-and-django-signal-events
+   decisions/0005-external-event-schema-format
+   decisions/0006-event-schema-serialization-and-evolution
+
+.. toctree::
+   :maxdepth: 2
+   :caption: How-Tos
+
+   how_tos/avro_attrs_bridge
 
 Indices and tables
 ==================
