@@ -1,15 +1,18 @@
-Schema Representation
-==================================================================================
+5. External Event Schema Format
+===============================
+
+Status
+------
+
+Provisional
+
 
 Context
 -------
 
 * It is a best practice to use an explicit schema definition. Avro is the recommended serialization format for Kafka.
 
-* The attrs objects that we currently have for signal-based events don't easily inter-operate with event bus client objects. Source ADR: `0003-events-payload.rst`_
-
-.. _0003-events-payload.rst: https://github.com/eduNEXT/openedx-events/blob/1a65c11d2a126bc2e651eaf259df20b8427a5bd2/docs/decisions/0003-events-payload.rst
-
+* The attrs objects that we currently have for signal-based events don't easily inter-operate with event bus client objects. Source ADR ":doc:`0003-events-payload`".
 
 * Industry best practices seem to suggest using a binary encoding of messages.
 
@@ -35,7 +38,7 @@ Implementation Notes
 
 `AvroAttrsBridge`_ class is a potential approach to this using the `built-in metadata`_ that the ``attrs`` library provides for extending ``attrs``.
 
-.. _AvroAttrsBridge: https://github.com/eduNEXT/openedx-events/blob/1a65c11d2a126bc2e651eaf259df20b8427a5bd2/openedx_events/avro_attrs_bridge.py#L17
+.. _AvroAttrsBridge: https://github.com/openedx/openedx-events/blob/main/openedx_events/bridge/avro_attrs_bridge.py
 .. _built-in metadata: https://www.attrs.org/en/stable/extending.html
 
 Consequences
@@ -45,5 +48,12 @@ Consequences
 
 * For non primitive types (eg. Opaque Keys objects), the bridging code between ``Avro`` and ``attrs`` will need to have special serializers or clearly fail.
 
-* Any reference to using JSON or JSONSchema in :ref:`OEP-41 <oep_41>` should be review and updated to clarify implied or explicit decisions that
-  may be reversed by this decision.
+* Any reference to using JSON or JSONSchema in `OEP-41: Asynchronous Server Event Message Format`_ should be review and updated to clarify implied or explicit decisions that may be reversed by this decision.
+
+* `OEP-41: Asynchronous Server Event Message Format`_ also dictates the use of the CloudEvents specification. Combined with this ADR, we would be required to adhere to the `CloudEvents Avro Format`_. There may also be additional CloudEvent related work tied to a particular protocol binding, like the `Kafka Protocol Binding for CloudEvents`_. This, however, is out of scope of this particular decision.
+
+.. _`OEP-41: Asynchronous Server Event Message Format`: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html
+
+.. _CloudEvents Avro Format: https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/formats/avro-format.md
+
+.. _Kafka Protocol Binding for CloudEvents: https://github.com/cloudevents/spec/blob/v1.0.2/cloudevents/bindings/kafka-protocol-binding.md#3-kafka-message-mapping
