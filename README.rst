@@ -114,12 +114,12 @@ For more information about these options, see the `Getting Help`_ page.
     :target: https://pypi.python.org/pypi/openedx-events/
     :alt: PyPI
 
-.. |ci-badge| image:: https://github.com/eduNEXT/openedx-events/workflows/Python%20CI/badge.svg?branch=main
-    :target: https://github.com/eduNEXT/openedx-events/actions
+.. |ci-badge| image:: https://github.com/openedx/openedx-events/workflows/Python%20CI/badge.svg?branch=main
+    :target: https://github.com/openedx/openedx-events/actions
     :alt: CI
 
-.. |codecov-badge| image:: https://codecov.io/github/eduNEXT/openedx-events/coverage.svg?branch=main
-    :target: https://codecov.io/github/eduNEXT/openedx-events?branch=main
+.. |codecov-badge| image:: https://codecov.io/github/openedx/openedx-events/coverage.svg?branch=main
+    :target: https://codecov.io/github/openedx/openedx-events?branch=main
     :alt: Codecov
 
 .. |doc-badge| image:: https://readthedocs.org/projects/openedx-events/badge/?version=latest
@@ -130,6 +130,6 @@ For more information about these options, see the `Getting Help`_ page.
     :target: https://pypi.python.org/pypi/openedx-events/
     :alt: Supported Python versions
 
-.. |license-badge| image:: https://img.shields.io/github/license/eduNEXT/openedx-events.svg
-    :target: https://github.com/eduNEXT/openedx-events/blob/main/LICENSE.txt
+.. |license-badge| image:: https://img.shields.io/github/license/openedx/openedx-events.svg
+    :target: https://github.com/openedx/openedx-events/blob/main/LICENSE.txt
     :alt: License

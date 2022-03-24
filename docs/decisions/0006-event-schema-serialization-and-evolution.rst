@@ -31,7 +31,7 @@ Event bus technologies support various schema evolutions (`source <https://docs.
 
 - Full / Full Transitive: Allows you to add or delete optional fields. Either producer or consumer can change first.
 
-Currently, there are two notable classes related to schema: OpenEdxPublicSignal and attrs decorated classes in data.py modules (`example <https://github.com/eduNEXT/openedx-events/blob/main/openedx_events/learning/data.py>`_).
+Currently, there are two notable classes related to schema: OpenEdxPublicSignal and attrs decorated classes in data.py modules (`example <https://github.com/openedx/openedx-events/blob/main/openedx_events/learning/data.py>`_).
 
 OpenEdxPublicSignal defines all the information necessary to create, serialize, and send an event. This includes the data to be sent and the metadata. The data to be sent is defined as the 'init_data' attribute. 'init_data' is a dict of key/value pairs. The keys are strings and the values can be of various types (the exact supported types has not be specified yet). These keys correspond to keyword arguments sent via the signal.
 
