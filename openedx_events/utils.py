@@ -40,14 +40,18 @@ def format_responses(obj, indent=1, width=80, depth=None, *, compact=False, sort
     """
     Format a Django Signal response object into a pretty-printed representation.
 
-    Example usage:
+    Example usage::
 
         log.info(
                 "Responses of the Open edX Event <%s>: %s",
                 self.event_type,
                 format_responses(responses, depth=2),
-            )
-        Will result in:
+        )
+
+    Will result in:
+
+    .. code-block:: none
+
         [
             (
                 'openedx_basic_hooks.receivers.login_receiver',
