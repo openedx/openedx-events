@@ -42,6 +42,9 @@ sys.path.append(REPO_ROOT)
 
 VERSION = get_version('../openedx_events', '__init__.py')
 
+# Set the DJANGO_SETTINGS_MODULE if it's not set.
+if not os.environ.get('DJANGO_SETTINGS_MODULE'):
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'test_utils.test_settings'
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
