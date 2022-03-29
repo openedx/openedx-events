@@ -5,7 +5,7 @@ These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
 """
 from datetime import datetime
-from typing import List
+from typing import List, Optional
 
 import attr
 from opaque_keys.edx.keys import CourseKey, UsageKey
@@ -149,17 +149,20 @@ class DiscussionTopicContext:
         title (str): title of the discussion. This field is cached to improve the performance, since otherwise we'd
         need to look it up in the course structure each time.
         usage_key (str): unit location.
-        group_id (int): can be used for providers that don't internally support
+        group_id (Optional[int]): can be used for providers that don't internally support
         cohorting but we can emulate that with different contexts for different groups.
         external_id (str): store the commentable id that is used by cs_comments_service.
         ordering (int): represent the position of the discussion topic.
+        context (dict): additional structured information about the context in
+          which this topic is used, such as the section, subsection etc.
     """
 
     title = attr.ib(type=str)
     usage_key = attr.ib(type=UsageKey, default=None)
-    group_id = attr.ib(type=int, default=None)
+    group_id = attr.ib(type=Optional[int], default=None)
     external_id = attr.ib(type=str, default=None)
     ordering = attr.ib(type=int, default=None)
+    context = attr.ib(type=dict, factory=dict)
 
 
 @attr.s(frozen=True)
