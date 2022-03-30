@@ -17,7 +17,7 @@ Hooks Extension Framework to manage the events execution and extra tools.
 Documentation
 -------------
 
-(TODO: `Set up documentation <https://openedx.atlassian.net/wiki/spaces/DOC/pages/21627535/Publish+Documentation+on+Read+the+Docs>`_)
+See `documentation on Read the Docs <https://openedx-events.readthedocs.io/en/latest/>`_.
 
 Development Workflow
 --------------------
