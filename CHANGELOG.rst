@@ -14,6 +14,13 @@ Change Log
 Unreleased
 ----------
 
+[0.8.2] - 2022-04-13
+--------------------
+Changed
+~~~~~~~
+* Changed openedx_events.learning.data.DiscussionTopicContext to make the group id optional
+* Changed DiscussionTopicContext to add a `context` attribute
+
 [0.8.1] - 2022-03-03
 --------------------
 
@@ -94,7 +101,7 @@ Added
 Changed
 ~~~~~~~
 
-* Update reposirtory purpose.
+* Update repository purpose.
 * Changed max-doc-length from 79 to 120 following community recommendation.
 
 [0.1.3] - 2021-07-01
