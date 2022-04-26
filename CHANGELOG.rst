@@ -15,6 +15,11 @@ Unreleased
 ----------
 Changed
 ~~~~~~~
+
+[0.8.3] - 2022-04-26
+--------------------
+Changed
+~~~~~~~
 * Updated AvroAttrsBridge to create schemas from signal data dict rather than individual attrs classes
 
 [0.8.2] - 2022-04-13
