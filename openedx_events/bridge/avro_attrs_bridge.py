@@ -82,7 +82,7 @@ class AvroAttrsBridge:
 
     def _create_avro_field_definition(self, data_key, data_type):
         """
-        Create an Avro schema field definition from a data definition.
+        Create an Avro schema field definition from an OpenEdxPublicSignal data definition.
 
         Arguments:
             data_key: Field name
