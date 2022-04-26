@@ -1,76 +1,59 @@
 """
-Code to convert attr classes to avro specification.
+Code to convert attr classes to Avro specification.
+
+TODO (EventBus): handle optional parameters and allow for schema evolution (ARCHBOM-2013)
 """
-import io
 import json
-import uuid
-from datetime import datetime
 from typing import Any, Dict
 
 import attr
 import fastavro
 
-from openedx_events.bridge.avro_attrs_bridge_extensions import DatetimeAvroAttrsBridgeExtension
-from openedx_events.bridge.avro_types import AVRO_TYPE_FOR
+from openedx_events.bridge.avro_attrs_bridge_extensions import (
+    CourseKeyAvroAttrsBridgeExtension,
+    DatetimeAvroAttrsBridgeExtension,
+)
+from openedx_events.bridge.avro_types import PYTHON_TYPE_TO_AVRO_MAPPING
 
 
 class AvroAttrsBridge:
     """
-    Use to convert between Avro and Attrs data specifications.
+    Convert between Avro and OpenEdxPublicSignal data specifications.
 
-    Intended usecase: To abstract serilalization and deserialization of openedx-events to send over pulsar or kafka
+    Intended use: To abstract serialization and deserialization of openedx-events to send over an event bus
+    The bridge can be used to both automatically generate an Avro schema for the events sent by the associated
+    signal instance and to serialize the events themselves using the generated schema.
+    TODO (EventBus): rename this class and file to convey that the bridge now works with entire signal
+    definitions rather than just attrs classes (ARCHBOM-2101)
     """
 
-    # default extensions, can be overwriteen by passing in extensions during obj initialization
+    # default extensions, can be overwritten by passing in extensions during obj initialization
     default_extensions = {
-        DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension()
-    }
-    # default config, should be overwritten by passing in config during obj initialization
-    default_config = {
-        "source": "/openedx/unknown/avro_attrs_bridge",
-        "sourcehost": "unknown",
-        "type": "org.openedx.test.test.test.v0",
+        DatetimeAvroAttrsBridgeExtension.cls: DatetimeAvroAttrsBridgeExtension(),
+        CourseKeyAvroAttrsBridgeExtension.cls: CourseKeyAvroAttrsBridgeExtension(),
     }
 
-    def __init__(self, attrs_cls, extensions=None, config=None):
+    def __init__(self, signal, extensions=None):
         """
         Init method for Avro Attrs Bridge.
 
         Arguments:
-            attrs_cls: Attr Class Object (not instance)
-            extensions: dict mapping Class Object to its AvroAttrsBridgeExtention subclass instance
-            config: dict with followings keys
-                - source:  This field will be used to indicate the logical source of an event, and will be of the form
-                           /{namespace}/{service}/{web|worker}.
-                           All services in standard distribution of Open edX should use openedx for the namespace.
-                           Examples of services might be “discovery”, “lms”, “studio”, etc.
-                           The value “web” will be used for events emitted by the web application,
-                           and “worker” will be used for events emitted by asynchronous tasks such as celery workers.
-                           For more info, see OEP-41: Asynchronous Server Event Message Format
-                - sourcehost: should represent the physical source of message
-                               -- i.e. host identifier of the server that emitted this event (example: edx.devstack.lms)
-                              For more info, see OEP-41: Asynchronous Server Event Message Format
-                - type: The name of event.
-                        Should be formatted `{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}`.
-                        For more info, see OEP-41: Asynchronous Server Event Message Format
+            signal: An instance of OpenEdxPublicSignal
+            extensions: dict mapping a Class to an instance of the required AvroAttrsBridgeExtension subclass, eg
+                       { MyDataClass : MyDataClassAvroAttrsBridgeExtension() }
         """
-        self._attrs_cls = attrs_cls
-
         self.extensions = {}
         self.extensions.update(self.default_extensions)
         if isinstance(extensions, dict):
             self.extensions.update(extensions)
 
-        self.config = {}
-        self.config.update(self.default_config)
-        if isinstance(config, dict):
-            self.config.update(config)
-
-        # Used by record_field_for_attrs_class function to keep track of which
+        self._signal = signal
+        # Used by _create_avro_field_definition function to keep track of which
         # records have already been defined in schema.
-        # Reason: fastavro does no allow you to define record with same name twice
+        # Reason: fastavro does not allow you to define record with same name twice
         self.schema_record_names = set()
-        self.schema_dict = self._attrs_to_avro_schema(attrs_cls)
+        self.schema_dict = self._avro_schema_dict_from_signal()
+
         # make sure the schema is parsable
         fastavro.parse_schema(self.schema_dict)
 
@@ -78,176 +61,171 @@ class AvroAttrsBridge:
         """Json dumps schema dict into a string."""
         return json.dumps(self.schema_dict, sort_keys=True)
 
-    def _attrs_to_avro_schema(self, attrs_cls):
+    def _avro_schema_dict_from_signal(self):
         """
-        Generate avro schema for attr_cls.
+        Generate the Avro schema for events sent by self._signal.
 
-        Arguments:
-            attrs_cls: Attr class object
+        TODO (EventBus): Include required CloudEvent fields with sensible defaults
         Returns:
-            complex dict that defines avro schema for attrs_cls
+            complex dict that defines Avro schema for events sent by self._signal
         """
         base_schema = {
-            "namespace": "io.cloudevents",
-            "type": "record",
             "name": "CloudEvent",
-            "version": "1.0",
+            "type": "record",
             "doc": "Avro Event Format for CloudEvents created with openedx_events/avro_attrs_bridge",
-            "fields": [
-                {"name": "id", "type": "string"},
-                {"name": "type", "type": "string"},
-                {"name": "specversion", "type": "string", "default": "1.0"},
-                {"name": "time", "type": "string"},
-                {"name": "source", "type": "string"},
-                {"name": "sourcehost", "type": "string"},
-                {"name": "minorversion", "type": "int"},
-            ],
+            "fields": [],
         }
 
-        record_fields = self._record_fields_for_attrs_class(attrs_cls)
-        base_schema["fields"].append(record_fields)
+        for data_key, data_type in self._signal.init_data.items():
+            base_schema["fields"].append(self._create_avro_field_definition(data_key, data_type))
         return base_schema
 
-    def _record_fields_for_attrs_class(
-        self, attrs_class, field_name: str = "data"
+    def _create_avro_field_definition(self, data_key, data_type):
+        """
+        Create an Avro schema field definition from an OpenEdxPublicSignal data definition.
+
+        Arguments:
+            data_key: Field name
+            data_type: Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`
+        """
+        # Case 1: data_type has known extension
+        if extension := self.extensions.get(data_type, None):
+            return {
+                "name": data_key,
+                "type": extension.record_fields(),
+            }
+        # Case 2: data_type is a simple type that can be converted directly to an Avro type
+        elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
+            if PYTHON_TYPE_TO_AVRO_MAPPING[data_type] in ["record", "array"]:
+                # TODO (EventBus): figure out how to handle container types (dicts and arrays). (ARCHBOM-2095)
+                raise Exception("Unable to generate Avro schema for dict or array fields")
+            return {
+                "name": data_key,
+                "type": PYTHON_TYPE_TO_AVRO_MAPPING[data_type],
+            }
+
+        # Case 2: data_type is an attrs class
+        elif hasattr(data_type, "__attrs_attrs__"):
+            # Inner Attrs Class
+
+            # fastavro does not allow you to redefine the same record type more than once,
+            # so only define an attr record once
+            if data_type.__name__ in self.schema_record_names:
+                return {
+                    "name": data_key,
+                    "type": data_type.__name__,
+                }
+            else:
+                self.schema_record_names.add(data_type.__name__)
+                return self._generate_avro_record_for_attrs_class(
+                    data_type, data_key
+                )
+        else:
+            raise TypeError(
+                f"Data type {data_type} is not supported by AvroAttrsBridge. The data type needs to either"
+                " be one of the types in PYTHON_TYPE_TO_AVRO_MAPPING, an attrs decorated class, or one of the types"
+                " defined in self.extensions."
+            )
+
+    def _generate_avro_record_for_attrs_class(
+        self, attrs_class, field_name: str
     ) -> Dict[str, Any]:
         """
-        Generate avro record for attrs_class.
+        Generate Avro record for attrs_class.
 
-        Will also recursively generate avro records for any sub attr classes and any custom types.
+        Will also recursively generate Avro records for any sub attr classes and any custom types.
 
-        Custom types are handled by AvroAttrsBridgeExtention subclass instance values defined in self.extensions dict
+        Custom types are handled by AvroAttrsBridgeExtension subclass instance values defined in self.extensions dict
         """
         field: Dict[str, Any] = {}
         field["name"] = field_name
         field["type"] = dict(name=attrs_class.__name__, type="record", fields=[])
 
         for attribute in attrs_class.__attrs_attrs__:
-            # Attribute is a simple type.
-            if attribute.type in AVRO_TYPE_FOR:
-                inner_field = {
-                    "name": attribute.name,
-                    "type": AVRO_TYPE_FOR[attribute.type],
-                }
-
-            # Attribute is another attrs class
-            elif hasattr(attribute.type, "__attrs_attrs__"):
-                # Inner Attrs Class
-
-                # fastavro does not allow you to redefine the same record type more than once,
-                # so only define an attr record once
-                if attribute.type.__name__ in self.schema_record_names:
-                    inner_field = {
-                        "name": attribute.name,
-                        "type": attribute.type.__name__,
-                    }
-                else:
-                    self.schema_record_names.add(attribute.type.__name__)
-                    inner_field = self._record_fields_for_attrs_class(
-                        attribute.type, attribute.name
-                    )
-            # else attribute is an costom type and
-            # there needs to be AvroAttrsBridgeExtension for attribute in self.extensions
-            else:
-                inner_field = None
-                extension = self.extensions.get(attribute.type)
-                if extension is not None:
-                    inner_field = {
-                        "name": attribute.name,
-                        "type": extension.record_fields(),
-                    }
-                else:
-                    raise TypeError(
-                        f"AvroAttrsBridgeExtension for {attribute.type} not in self.extensions."
-                    )
-            # Assume attribute is optional if it has a default value
-            # The default value is always set to None to allow attr class to handle dealing with default values
-            # in dict_to_attrs function in this class
-            if attribute.default is not attr.NOTHING:
-                inner_field["type"] = ["null", inner_field["type"]]
-                inner_field["default"] = None
-            field["type"]["fields"].append(inner_field)
-
+            field["type"]["fields"].append(
+                self._create_avro_field_definition(attribute.name, attribute.type)
+            )
         return field
 
-    def to_dict(self, obj, event_overrides=None):
+    def to_dict(self, event_data):
         """
-        Convert obj into dictionary that matches avro schema (self.schema).
+        Convert event_data into dictionary that matches Avro schema (self.schema).
 
-        Args:
-            obj: instance of self._attr_cls
-            event_overrides: dict with following value overwrites:
-                - id: unique id for this event. If id is not in dict, a uuid1 will be created for this event
-                      For more info, see OEP-41: Asynchronous Server Event Message Format
-                - time: time stamp for this event. If time is not in dict, datetime.now() will be called
-                        For more info, see OEP-41: Asynchronous Server Event Message Format
+        Warning: this does not validate that the data_dict input matches self._signal
+
+        Arguments:
+            event_data: dict with all the values specified in OpenEdxPublicSignal.init_data.
         """
-        if isinstance(event_overrides, dict) and "id" in event_overrides:
-            event_id = event_overrides["id"]
-        else:
-            event_id = str(uuid.uuid1())
-        if isinstance(event_overrides, dict) and "time" in event_overrides:
-            event_timestamp = event_overrides["time"]
-        else:
-            event_timestamp = datetime.now().isoformat()
-        obj_as_dict = attr.asdict(obj, value_serializer=self._extension_serializer)
-        # Not sure if it makes sense to keep version info here since the schema registry will actually
-        # keep track of versions and the topic can have only one associated schema at a time.
-        avro_record = dict(
-            id=event_id,
-            type=self.config["type"],
-            time=event_timestamp,
-            source=self.config["source"],
-            sourcehost=self.config["sourcehost"],
-            minorversion=0,
-            data=obj_as_dict,
+        # TODO (EventBus): is there better way to do this besides using json?
+        # This first converts data_dict to json string and then back to dict.
+
+        return json.loads(
+            json.dumps(
+                event_data, sort_keys=True, default=self._event_value_to_json
+            )
         )
-        return avro_record
 
-    def serialize(self, obj) -> bytes:
+    def _event_value_to_json(self, value):
         """
-        Convert from attrs to a valid avro record.
+        Serialize a top-level value in an event data dictionary to match the Avro schema.
         """
-        avro_record = self.to_dict(obj)
-        # Try to serialize using the generated schema.
-        out = io.BytesIO()
-        fastavro.schemaless_writer(out, self.schema_dict, avro_record)
-        out.seek(0)
-        return out.read()
+        # Case 1: Value is an instance of an attrs-decorated class
+        if hasattr(value, "__attrs_attrs__"):
+            return attr.asdict(value, value_serializer=self._serialize_non_attrs_instance)
+        # Case 2: Value is an instance of a class (or subclass) for which the bridge has a known extension
+        for extended_class, extension in self.extensions.items():
+            if issubclass(type(value), extended_class):
+                return extension.serialize(value)
+        # Case 3: Default
+        return value
 
-    def _extension_serializer(self, _, field, value):
+    def _serialize_non_attrs_instance(self, _, field, value):
         """
-        Pass this callback into attrs.asdict function as "value_serializer" arg.
+        Use an extension to serialize a value of the appropriate class.
 
-        Serializes values for which an extention exists in self.extensions dict.
+        Used as a callback to attr.asdict to handle any inner fields that are not attrs classes or primitives
         """
         extension = self.extensions.get(field.type, None)
         if extension is not None:
             return extension.serialize(value)
         return value
 
-    def deserialize(self, data: bytes, writer_schema=None) -> object:
+    def from_dict(self, data: dict):
         """
-        Deserialize data into self.attrs_cls instance.
+        Convert dict into event data that can be sent with self._signal.
 
-        Args:
-            data: bytes that you want to deserialize
-            writer_schema: pass the schema used to serialize data if it is differnt from current schema
-        """
-        data_file = io.BytesIO(data)
-        if writer_schema is not None:
-            record = fastavro.schemaless_reader(
-                data_file, writer_schema, self.schema_dict
-            )
-        else:
-            record = fastavro.schemaless_reader(data_file, self.schema_dict)
-        return self.dict_to_attrs(record["data"], self._attrs_cls)
+        Arguments:
+            data: Dictionary returned from AvroDeserializer
 
-    def dict_to_attrs(self, data: dict, attrs_cls):
+        Returns:
+            dict: Event data dictionary
         """
-        Convert data into instantiated object of attrs_cls.
+        return dict([(data_key, self._deserialized_avro_dict_to_object(data[data_key], data_type))
+                     for data_key, data_type in self._signal.init_data.items()])
+
+    def _deserialized_avro_dict_to_object(self, data: dict, data_type):
         """
-        for attribute in attrs_cls.__attrs_attrs__:
+        Convert dictionary entry into an instance of data_type.
+
+        Used to convert messages from an AvroDeserializer into events that can be sent by the
+        appropriate signal instance
+
+        Arguments:
+            data: Dictionary returned from AvroDeserializer
+            data_type: Desired Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`
+
+        Returns:
+            An instance of data_type
+        """
+        if not hasattr(data_type, '__attrs_attrs__'):
+            if extension := self.extensions.get(data_type, None):
+                return extension.deserialize(data)
+            else:
+                raise TypeError(
+                    f"Unable to deserialize {data_type} data, please add extension for custom data type"
+                )
+
+        for attribute in data_type.__attrs_attrs__:
             if attribute.name in data:
                 sub_data = data[attribute.name]
                 if sub_data is None:
@@ -258,7 +236,7 @@ class AvroAttrsBridge:
                 else:
                     if hasattr(attribute.type, "__attrs_attrs__"):
                         if attribute.name in data:
-                            data[attribute.name] = self.dict_to_attrs(
+                            data[attribute.name] = self._deserialized_avro_dict_to_object(
                                 sub_data, attribute.type
                             )
                     elif attribute.type in self.extensions:
@@ -269,27 +247,9 @@ class AvroAttrsBridge:
                             raise Exception(
                                 f"Necessary key: {attribute.name} not found in data dict"
                             )
-                    elif attribute.type not in AVRO_TYPE_FOR:
+                    elif attribute.type not in PYTHON_TYPE_TO_AVRO_MAPPING:
                         raise TypeError(
                             f"Unable to deserialize {attribute.type} data, please add extension for custom data type"
                         )
 
-        return attrs_cls(**data)
-
-
-class AvroAttrsBridgeKafkaWrapper(AvroAttrsBridge):
-    """
-    Wrapper class to help AvroAttrsBridge to work with kafka.
-    """
-
-    def to_dict(self, obj, _kafka_context):  # pylint: disable=signature-differs
-        """
-        Pass this function as callable input to confluent_kafka::AvroSerializer.
-        """
-        return super().to_dict(obj)
-
-    def from_dict(self, data, _kafka_context):
-        """
-        Pass this function as callable input to confluent_kafka::AvroDeSerializer.
-        """
-        return self.dict_to_attrs(data["data"], self._attrs_cls)
+        return data_type(**data)

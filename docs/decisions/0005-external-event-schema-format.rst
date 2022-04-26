@@ -25,13 +25,16 @@ Context
 Decision
 --------
 
-* We will continue using ``attrs`` decorated classes for explicit schema definition.
+* We will continue favoring ``attrs`` decorated classes for explicit schema definitions for signals
 
 * We will also use the binary serialization of messages that are transmitted over the event bus.
 
 * The binary encoding of messages will use AVRO specification.
 
-* A new utility will be created to auto generate Avro schema based on ``attrs`` decorated classes.
+* A new utility will be created to auto generate Avro schema from the ``init_dict`` property of an OpenEdxPublicSignal instance
+
+  * Out of the box, bridge will generate schemas for ``attrs`` decorated classes and Avro primitives
+  * Developers will be able to create extensions to the bridge to make it handle non-attrs, non-primitive classes
 
 Implementation Notes
 --------------------
@@ -46,7 +49,7 @@ Consequences
 
 * There will be bridging code that will abstract away schema generation from most developers of events.  This may have a negative impact as it might make it harder for developers to reason about schema evolution.
 
-* For non primitive types (eg. Opaque Keys objects), the bridging code between ``Avro`` and ``attrs`` will need to have special serializers or clearly fail.
+* For non-primitive, non-attr types (eg. Opaque Keys objects), the bridging code between will need to have special serializers or clearly fail.
 
 * Any reference to using JSON or JSONSchema in `OEP-41: Asynchronous Server Event Message Format`_ should be review and updated to clarify implied or explicit decisions that may be reversed by this decision.
 
