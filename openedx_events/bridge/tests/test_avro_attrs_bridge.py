@@ -10,6 +10,7 @@ from openedx_events.bridge.avro_attrs_bridge import AvroAttrsBridge
 from openedx_events.bridge.tests.test_utilities import (
     NonAttrs,
     SimpleAttrs,
+    SimpleAttrsWithDefaults,
     SimpleBridgeExtension,
     SubTestData0,
     SubTestData1,
@@ -277,3 +278,18 @@ class TestAvroAttrsBridge(TestCase):
 
         with self.assertRaises(Exception):
             AvroAttrsBridge(DICT_SIGNAL)
+
+    def test_optional_fields(self):
+        OPTIONAL_SIGNAL = create_simple_signal({
+            "data": SimpleAttrsWithDefaults
+        })
+        bridge = AvroAttrsBridge(OPTIONAL_SIGNAL)
+        event_data = {"data": SimpleAttrsWithDefaults()}
+        as_bytes = serialize_event_data_to_bytes(bridge, event_data)
+        deserialized = deserialize_bytes_to_event_data(bridge, as_bytes)
+        simple_attrs = deserialized["data"]
+        self.assertIsNone(simple_attrs.boolean_field)
+        self.assertIsNone(simple_attrs.int_field)
+        self.assertIsNone(simple_attrs.float_field)
+        self.assertIsNone(simple_attrs.bytes_field)
+        self.assertIsNone(simple_attrs.string_field)

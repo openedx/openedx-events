@@ -16,6 +16,12 @@ Unreleased
 Changed
 ~~~~~~~
 
+[0.8.4] - 2022-04-28
+--------------------
+Changed
+~~~~~~~
+* Updated AvroAttrsBridge to handle nullable fields
+
 [0.8.3] - 2022-04-26
 --------------------
 Changed

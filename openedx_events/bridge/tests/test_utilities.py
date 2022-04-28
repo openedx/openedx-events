@@ -91,6 +91,16 @@ class TestData:
     sub_test_1: SubTestData1
 
 
+@attr.s(frozen=True)
+class SimpleAttrsWithDefaults:
+    """Test attrs with optional (default=None) values"""
+    boolean_field = attr.ib(type=bool, default=None)
+    int_field = attr.ib(type=int, default=None)
+    float_field = attr.ib(type=float, default=None)
+    bytes_field = attr.ib(type=bytes, default=None)
+    string_field = attr.ib(type=str, default=None)
+
+
 class NonAttrs:
     """Data class not decorated with @attr. For testing bridge extension"""
     def __init__(self, val0, val1):
