@@ -279,11 +279,11 @@ class TestAvroAttrsBridge(TestCase):
         with self.assertRaises(Exception):
             AvroAttrsBridge(DICT_SIGNAL)
 
-    def test_optional_fields(self):
-        OPTIONAL_SIGNAL = create_simple_signal({
+    def test_nullable_fields(self):
+        SIGNAL = create_simple_signal({
             "data": SimpleAttrsWithDefaults
         })
-        bridge = AvroAttrsBridge(OPTIONAL_SIGNAL)
+        bridge = AvroAttrsBridge(SIGNAL)
         event_data = {"data": SimpleAttrsWithDefaults()}
         as_bytes = serialize_event_data_to_bytes(bridge, event_data)
         deserialized = deserialize_bytes_to_event_data(bridge, as_bytes)
