@@ -101,6 +101,12 @@ class SimpleAttrsWithDefaults:
     string_field = attr.ib(type=str, default=None)
 
 
+@attr.s(frozen=True)
+class NestedAttrsWithDefaults:
+    """Test attrs with nullable values"""
+    field_0 = attr.ib(type=SimpleAttrsWithDefaults, default=None)
+
+
 class NonAttrs:
     """Data class not decorated with @attr. For testing bridge extension"""
     def __init__(self, val0, val1):

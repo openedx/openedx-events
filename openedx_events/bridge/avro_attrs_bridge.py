@@ -53,6 +53,7 @@ class AvroAttrsBridge:
         # Reason: fastavro does not allow you to define record with same name twice
         self.schema_record_names = set()
         self.schema_dict = self._avro_schema_dict_from_signal()
+        print(json.dumps(self.schema_dict, indent=4))
 
         # make sure the schema is parsable
         fastavro.parse_schema(self.schema_dict)
@@ -114,7 +115,7 @@ class AvroAttrsBridge:
             else:
                 self.schema_record_names.add(data_type.__name__)
                 return self._generate_avro_record_for_attrs_class(
-                    data_type, data_key
+                    data_type, data_key, default_is_none=default_is_none
                 )
         else:
             raise TypeError(
@@ -125,7 +126,7 @@ class AvroAttrsBridge:
         return field
 
     def _generate_avro_record_for_attrs_class(
-        self, attrs_class, field_name: str
+        self, attrs_class, field_name: str, default_is_none=False
     ) -> Dict[str, Any]:
         """
         Generate Avro record for attrs_class.
@@ -136,10 +137,15 @@ class AvroAttrsBridge:
         """
         field: Dict[str, Any] = {}
         field["name"] = field_name
-        field["type"] = dict(name=attrs_class.__name__, type="record", fields=[])
+        record_type = dict(name=attrs_class.__name__, type="record", fields=[])
+        field["type"] = ["null", record_type] if default_is_none else record_type
+
+        if default_is_none:
+            field["default"] = "null"
 
         for attribute in attrs_class.__attrs_attrs__:
-            field["type"]["fields"].append(
+            print(f"dealing with attribute {attribute}")
+            record_type["fields"].append(
                 self._create_avro_field_definition(attribute.name, attribute.type, attribute.default is None)
             )
         return field

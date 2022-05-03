@@ -1,4 +1,4 @@
-6. Event schema serialization and evolution
+6. Optional fields in events
 ===========================================
 
 Status
