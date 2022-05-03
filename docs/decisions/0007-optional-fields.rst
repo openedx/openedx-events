@@ -18,7 +18,7 @@ The Avro documentation describes somewhat similar mechanics for its fields. If a
 "null," the user can set the value of the field to null/None. Separately, if a field is defined with a ``default``
 parameter, then the user does not have to set the value at all. However, it seems the ``default`` parameter may not be
 fully-supported with Kafka (see https://github.com/confluentinc/kafka-rest/issues/427 ). The Avro documentation,
-similar to that of ``attrs``, uses the default parameter to define optionality.
+in contrast to that of ``attrs``, uses the default parameter to define optionality.
 
 Decision
 --------
