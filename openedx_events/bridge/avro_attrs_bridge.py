@@ -53,7 +53,6 @@ class AvroAttrsBridge:
         # Reason: fastavro does not allow you to define record with same name twice
         self.schema_record_names = set()
         self.schema_dict = self._avro_schema_dict_from_signal()
-        print(json.dumps(self.schema_dict, indent=4))
 
         # make sure the schema is parsable
         fastavro.parse_schema(self.schema_dict)
@@ -91,18 +90,17 @@ class AvroAttrsBridge:
             default_is_none: boolean indicating whether this field has 'None' as a default
         """
         field = {"name": data_key}
-        if default_is_none:
-            field["default"] = "null"
+
         # Case 1: data_type has known extension
         if extension := self.extensions.get(data_type, None):
-            field["type"] = ["null", extension.record_fields()] if default_is_none else extension.record_fields()
+            field["type"] = extension.record_fields()
         # Case 2: data_type is a simple type that can be converted directly to an Avro type
         elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
             if PYTHON_TYPE_TO_AVRO_MAPPING[data_type] in ["record", "array"]:
                 # TODO (EventBus): figure out how to handle container types (dicts and arrays). (ARCHBOM-2095)
                 raise Exception("Unable to generate Avro schema for dict or array fields")
             avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[data_type]
-            field["type"] = ["null", avro_type] if default_is_none else avro_type
+            field["type"] = avro_type
 
         # Case 2: data_type is an attrs class
         elif hasattr(data_type, "__attrs_attrs__"):
@@ -111,11 +109,11 @@ class AvroAttrsBridge:
             # fastavro does not allow you to redefine the same record type more than once,
             # so only define an attr record once
             if data_type.__name__ in self.schema_record_names:
-                field["type"] = ["null", data_type.__name__] if default_is_none else data_type.__name__
+                field["type"] = data_type.__name__
             else:
                 self.schema_record_names.add(data_type.__name__)
-                return self._generate_avro_record_for_attrs_class(
-                    data_type, data_key, default_is_none=default_is_none
+                field = self._generate_avro_record_for_attrs_class(
+                    data_type, data_key
                 )
         else:
             raise TypeError(
@@ -123,10 +121,14 @@ class AvroAttrsBridge:
                 " be one of the types in PYTHON_TYPE_TO_AVRO_MAPPING, an attrs decorated class, or one of the types"
                 " defined in self.extensions."
             )
+        if default_is_none:
+            field["default"] = "null"
+            single_type = field["type"]
+            field["type"] = ["null", single_type]
         return field
 
     def _generate_avro_record_for_attrs_class(
-        self, attrs_class, field_name: str, default_is_none=False
+        self, attrs_class, field_name: str
     ) -> Dict[str, Any]:
         """
         Generate Avro record for attrs_class.
@@ -138,13 +140,9 @@ class AvroAttrsBridge:
         field: Dict[str, Any] = {}
         field["name"] = field_name
         record_type = dict(name=attrs_class.__name__, type="record", fields=[])
-        field["type"] = ["null", record_type] if default_is_none else record_type
-
-        if default_is_none:
-            field["default"] = "null"
+        field["type"] = record_type
 
         for attribute in attrs_class.__attrs_attrs__:
-            print(f"dealing with attribute {attribute}")
             record_type["fields"].append(
                 self._create_avro_field_definition(attribute.name, attribute.type, attribute.default is None)
             )
