@@ -37,5 +37,5 @@ Consequences
 Deferred/Rejected Decisions
 ---------------------------
 
-- We are deferring any work to around making top-level fields in event data optional. This reverses the plan laid out in ":doc:`0006-event-schema-serialization-and-evolution.rst`", which stated that the initial bridge would treat all new top-level fields as optional and deferred any work around making sub-fields optional
+- We are deferring any work to around making top-level fields in event data optional. This reverses the plan laid out in ":doc:`0006-event-schema-serialization-and-evolution`", which stated that the initial bridge would treat all new top-level fields as optional and deferred any work around making sub-fields optional
 - We are also deferring any work around making an explicit ``Optional`` keyword for attrs fields
