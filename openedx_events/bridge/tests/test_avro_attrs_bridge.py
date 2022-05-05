@@ -8,8 +8,10 @@ from opaque_keys.edx.keys import CourseKey
 
 from openedx_events.bridge.avro_attrs_bridge import AvroAttrsBridge
 from openedx_events.bridge.tests.test_utilities import (
+    NestedAttrsWithDefaults,
     NonAttrs,
     SimpleAttrs,
+    SimpleAttrsWithDefaults,
     SimpleBridgeExtension,
     SubTestData0,
     SubTestData1,
@@ -24,9 +26,6 @@ class TestAvroAttrsBridge(TestCase):
     """
     Test AvroAttrsBridge functionality
     """
-
-    def setUp(self) -> None:
-        self.maxDiff = None
 
     def test_simple_schema_generation(self):
         SIGNAL = create_simple_signal({"event_data": SimpleAttrs})
@@ -277,3 +276,29 @@ class TestAvroAttrsBridge(TestCase):
 
         with self.assertRaises(Exception):
             AvroAttrsBridge(DICT_SIGNAL)
+
+    def test_optional_fields(self):
+        SIGNAL = create_simple_signal({
+            "data": SimpleAttrsWithDefaults
+        })
+        bridge = AvroAttrsBridge(SIGNAL)
+        event_data = {"data": SimpleAttrsWithDefaults()}
+        as_bytes = serialize_event_data_to_bytes(bridge, event_data)
+        deserialized = deserialize_bytes_to_event_data(bridge, as_bytes)
+        simple_attrs = deserialized["data"]
+        self.assertIsNone(simple_attrs.boolean_field)
+        self.assertIsNone(simple_attrs.int_field)
+        self.assertIsNone(simple_attrs.float_field)
+        self.assertIsNone(simple_attrs.bytes_field)
+        self.assertIsNone(simple_attrs.string_field)
+
+    def test_nested_optional_fields(self):
+        SIGNAL = create_simple_signal({
+            "data": NestedAttrsWithDefaults
+        })
+        bridge = AvroAttrsBridge(SIGNAL)
+        event_data = {"data": NestedAttrsWithDefaults()}
+        as_bytes = serialize_event_data_to_bytes(bridge, event_data)
+        deserialized = deserialize_bytes_to_event_data(bridge, as_bytes)
+        simple_attrs = deserialized["data"]
+        self.assertIsNone(simple_attrs.field_0)

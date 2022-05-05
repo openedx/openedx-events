@@ -31,6 +31,7 @@ Contents:
    decisions/0004-external-event-bus-and-django-signal-events
    decisions/0005-external-event-schema-format
    decisions/0006-event-schema-serialization-and-evolution
+   decisions/0007-optional-fields
 
 .. toctree::
    :maxdepth: 2
