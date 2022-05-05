@@ -140,12 +140,12 @@ class AvroAttrsBridge:
         field: Dict[str, Any] = {}
         field["name"] = field_name
         record_type = dict(name=attrs_class.__name__, type="record", fields=[])
-        field["type"] = record_type
 
         for attribute in attrs_class.__attrs_attrs__:
             record_type["fields"].append(
                 self._create_avro_field_definition(attribute.name, attribute.type, attribute.default is None)
             )
+        field["type"] = record_type
         return field
 
     def to_dict(self, event_data):
