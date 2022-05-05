@@ -20,7 +20,7 @@ Changed
 --------------------
 Changed
 ~~~~~~~
-* Updated AvroAttrsBridge to handle nullable fields
+* Updated AvroAttrsBridge to handle optional/nullable fields
 
 [0.8.3] - 2022-04-26
 --------------------
