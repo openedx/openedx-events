@@ -1,0 +1,15 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: 'openedx-events'
+  description: "This repository implements the necessary tooling and definitions used by the Hooks Extension Framework to manage the events execution and extra tools."
+  links:
+    - url: "http://github.com/openedx/openedx-events"
+      title: "Source Code"
+      icon: "Code"
+  annotations:
+    openedx.org/arch-interest-groups: "mariajgrimaldi,felipemontoya"
+spec:
+  owner: group:hooks-extension-framework
+  type: 'source-code'
+  lifecycle: 'production'
