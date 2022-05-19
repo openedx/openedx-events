@@ -6,25 +6,27 @@ Open edX Events
 
 Open edX Events from Hooks Extensions Framework (`OEP-50`_).
 
-What is this project?
-
 Overview
 --------
 
 This repository implements the necessary tooling and definitions used by the
 Hooks Extension Framework to manage the events execution and extra tools.
 
-Documentation
--------------
+Getting started
+---------------
 
-See `documentation on Read the Docs <https://openedx-events.readthedocs.io/en/latest/>`_.
+Dependencies
+~~~~~~~~~~~~
+
+Installation
+~~~~~~~~~~~~
+
+Configuration
+~~~~~~~~~~~~~
 
 Development Workflow
---------------------
-
-One Time Setup
-~~~~~~~~~~~~~~
-.. code-block::
+~~~~~~~~~~~~~~~~~~~~
+.. code-block:: bash
 
   # Clone the repository
   git clone git@github.com:openedx/openedx-events.git
@@ -32,11 +34,6 @@ One Time Setup
 
   # Set up a virtualenv using virtualenvwrapper with the same name as the repo and activate it
   mkvirtualenv -p python3.8 openedx-events
-
-
-Every time you develop something in this repo
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-.. code-block::
 
   # Activate the virtualenv
   workon openedx-events
@@ -57,17 +54,34 @@ Every time you develop something in this repo
   # Using your favorite editor, edit the code to make your change.
   vim …
 
+  # Commit all your changes
+  git commit …
+  git push
+
+  # Open a PR and ask for review.
+
+Running the tests
+~~~~~~~~~~~~~~~~~
+
+.. code-block:: bash
+
   # Run your new tests
   pytest ./path/to/new/tests
 
   # Run all the tests and quality checks
   make validate
 
-  # Commit all your changes
-  git commit …
-  git push
 
-  # Open a PR and ask for review.
+Getting help
+------------
+
+Documentation
+~~~~~~~~~~~~~
+
+See `documentation on Read the Docs <https://openedx-events.readthedocs.io/en/latest/>`_.
+
+
+
 
 License
 -------
