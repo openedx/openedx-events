@@ -7,6 +7,7 @@ pattern.
 import attr
 
 
+# TODO (EventBus): consider how to proactively prevent PII from being sent to kafka
 @attr.s(frozen=True)
 class SubscriptionLicenseData:
     """
@@ -27,8 +28,6 @@ class SubscriptionLicenseData:
                                May be empty.
         assigned_lms_user_id (str): The LMS User id of the user that this license 'belongs to'.
                                     May be empty if this license is not activated yet.
-        assigned_email (str): The email assigned to this license.
-                              Will be empty if this license is not assigned to a learner yet.
         expiration_processed (bool): Boolean value of License 'expiration_processed' field, may be True or False.
                                      True means a license is expired.
         auto_applied (bool):
@@ -44,7 +43,6 @@ class SubscriptionLicenseData:
     previous_license_uuid = attr.ib(type=str)
     assigned_date = attr.ib(type=str)
     activation_date = attr.ib(type=str)
-    assigned_email = attr.ib(type=str)
     expiration_processed = attr.ib(type=bool)
     assigned_lms_user_id = attr.ib(type=int, default=None)
     auto_applied = attr.ib(type=bool, default=False)
