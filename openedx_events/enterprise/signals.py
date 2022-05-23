@@ -23,7 +23,7 @@ from openedx_events.tooling import OpenEdxPublicSignal
 #           See: https://openedx.atlassian.net/browse/ARCHBOM-2008 for more details.
 # .. event_data: SubscriptionLicenseData
 SUBSCRIPTION_LICENSE_MODIFIED = OpenEdxPublicSignal(
-    event_type="org.openedx.enterprise.subscription.license.modified.v1",
+    event_type="org.openedx.enterprise.subscription.license.modified.v0",
     data={
         "license": SubscriptionLicenseData,
     }

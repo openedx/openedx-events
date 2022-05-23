@@ -16,6 +16,12 @@ Unreleased
 Changed
 ~~~~~~~
 
+[0.9.1] - 2022-05-20
+--------------------
+Changed
+~~~~~~~
+* Remove assigned_email from SubscriptionLicenseData
+
 [0.9.0] - 2022-04-28
 --------------------
 Changed
