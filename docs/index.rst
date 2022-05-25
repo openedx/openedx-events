@@ -37,7 +37,7 @@ Contents:
    :maxdepth: 2
    :caption: How-Tos
 
-   how_tos/avro_attrs_bridge
+   how_tos/avro_module
 
 Indices and tables
 ==================

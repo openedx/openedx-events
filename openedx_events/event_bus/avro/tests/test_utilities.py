@@ -1,5 +1,5 @@
 """
-Utility methods and classes for testing AvroAttrsBridge
+Utility methods and classes for testing AvroSchemaGenerator.
 """
 import io
 import re
@@ -7,13 +7,16 @@ import re
 import attr
 import fastavro
 
-from openedx_events.bridge.avro_attrs_bridge_extensions import AvroAttrsBridgeExtention
+from openedx_events.event_bus.avro.custom_serializers import BaseCustomTypeAvroSerializer
+from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer
+from openedx_events.event_bus.avro.serializer import AvroSignalSerializer
+from openedx_events.event_bus.avro.types import PYTHON_TYPE_TO_AVRO_MAPPING
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
 def create_simple_signal(data_dict):
     """
-    Create a basic OpenEdxPublicSignal with init_data = data_dict
+    Create a basic OpenEdxPublicSignal with init_data = data_dict.
 
     Arguments:
         data_dict: Description of attributes passed to the signal
@@ -24,37 +27,38 @@ def create_simple_signal(data_dict):
     )
 
 
-def serialize_event_data_to_bytes(bridge, event_data):
+def serialize_event_data_to_bytes(event_data, serializer):
     """
-    Utility method to make sure an Avro serializer can actually serialize given a bridge schema and data
+    Utility method to make sure an Avro serializer can actually serialize given a schema and data
     to serialize
 
     Arguments:
-        bridge: An instance of AvroAttrsBridge
         event_data: Event data to be sent via an OpenEdxPublicSignal's send_event method
+        serializer: An instance of AvroSignalSerializer
     Returns:
         bytes: Byte representation of the event_data, to be sent over the wire
     """
-    # Try to serialize using the generated schema.
+    schema_dict = serializer.schema()
     out = io.BytesIO()
-    data_dict = bridge.to_dict(event_data)
-    fastavro.schemaless_writer(out, bridge.schema_dict, data_dict)
+    data_dict = serializer.to_dict(event_data)
+    fastavro.schemaless_writer(out, schema_dict, data_dict)
     out.seek(0)
     return out.read()
 
 
-def deserialize_bytes_to_event_data(bridge, bytes_from_wire):
+def deserialize_bytes_to_event_data(bytes_from_wire, deserializer):
     """
-    Utility method to make sure an Avro deserializer can actually deserialize given a bridge and Avro-serialized
+    Utility method to make sure an Avro deserializer can actually deserialize given a event_bus and Avro-serialized
     data
 
     Arguments:
-        bridge: an instance of AvroAttrsBridge
         bytes_from_wire: data that was serialized by an Avro serializer
+        deserializer: An instance of AvroSignalDeserializer
     """
+    schema_dict = deserializer.schema()
     data_file = io.BytesIO(bytes_from_wire)
-    as_dict = fastavro.schemaless_reader(data_file, bridge.schema_dict)
-    return bridge.from_dict(as_dict)
+    as_dict = fastavro.schemaless_reader(data_file, schema_dict)
+    return deserializer.from_dict(as_dict)
 
 
 # Useful simple attr classes
@@ -83,7 +87,7 @@ class SubTestData1:
 
 
 @attr.s(auto_attribs=True)
-class TestData:
+class EventData:
     """More complex class for testing nested attrs"""
     sub_name: str
     course_id: str
@@ -99,16 +103,17 @@ class SimpleAttrsWithDefaults:
     float_field = attr.ib(type=float, default=None)
     bytes_field = attr.ib(type=bytes, default=None)
     string_field = attr.ib(type=str, default=None)
+    attrs_field = attr.ib(type=SimpleAttrs, default=None)
 
 
 @attr.s(frozen=True)
 class NestedAttrsWithDefaults:
     """Test attrs with nullable values"""
-    field_0 = attr.ib(type=SimpleAttrsWithDefaults, default=None)
+    field_0 = attr.ib(type=SimpleAttrsWithDefaults)
 
 
 class NonAttrs:
-    """Data class not decorated with @attr. For testing bridge extension"""
+    """Data class not decorated with @attr. For testing event_bus extension"""
     def __init__(self, val0, val1):
         self.val0 = val0
         self.val1 = val1
@@ -118,22 +123,33 @@ class NonAttrs:
         return self.val0 == other.val0 and self.val1 == other.val1
 
 
-class SimpleBridgeExtension(AvroAttrsBridgeExtention):
-    """
-    Simple Bridge Extension for de/serializing
-    """
+@attr.s(frozen=True)
+class NestedNonAttrs:
+    """Test attrs with nullable values"""
+    field_0 = attr.ib(type=NonAttrs)
+
+
+class NonAttrsAvroSerializer(BaseCustomTypeAvroSerializer):
+    """Custom serializer for Non-Attrs class"""
 
     cls = NonAttrs
+    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[str]
 
-    def serialize(self, obj) -> str:
-        """Serialize obj into string."""
+    @staticmethod
+    def serialize(obj) -> str:
         return f"{obj.val0}:{obj.val1}"
 
-    def deserialize(self, data: str):
-        """Deserialize string into obj."""
+    @staticmethod
+    def deserialize(data: str) -> object:
         bits = re.split(":", data)
         return NonAttrs(bits[0], bits[1])
 
-    def record_fields(self):
-        """Define Avro schema for self.cls."""
-        return "string"
+
+class SpecialSerializer(AvroSignalSerializer):
+    def custom_type_serializers(self):
+        return [NonAttrsAvroSerializer]
+
+
+class SpecialDeserializer(AvroSignalDeserializer):
+    def custom_type_serializers(self):
+        return [NonAttrsAvroSerializer]
