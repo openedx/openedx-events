@@ -1,6 +1,3 @@
-event-bus.avro module
-=====================
-
 Purpose
 -------
 Used to automate the following conversions:
@@ -9,6 +6,15 @@ event data => Avro record (dict) => bytes
 bytes => Avro record (dict) => event data
 
 Essentially, helps serialize and deserialize events data specified in openedx-events repository.
+
+Glossary
+--------
+
+Signal - An instance of OpenEdxPublicSignal
+Event data - A dictionary whose structure is determined by the init_data attribute of an instance of OpenEdxPublicSignal. Event data is sent via a call to MY_SIGNAL.send_event(**event_data).
+Avro schema - A specification describing the expected field names and types in an Avro record dictionary
+Avro record dictionary - A dictionary whose structure is determined by an Avro schema. These dictionaries are the entities that are actually serialized to bytes and sent over the wire to the event bus.
+
 
 How To Use
 ----------
@@ -24,9 +30,8 @@ To create an event serializer for a signal:
     )
     event_serializer = AvroSignalSerializer(USER_SIGNAL)
 
-_OEP 41: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#fields
 
-You can then use the ``to_dict`` method on the bridge to convert events to avro records,
+You can then use the ``to_dict`` method on the serializer to convert events to avro records,
 as well as the ``schema_dict`` property to configure an Avro-based serializer
 for use with an event bus.
 
@@ -38,8 +43,8 @@ be published to the event bus)
    enrollment_serializer = AvroSignalSerializer(COURSE_ENROLLMENT_CREATED)
    enrollment_object = CourseEnrollmentData(...enrollment_data)
    out = io.BytesIO()
-   data_dict = enrollment_bridge.to_dict({"enrollment": enrollment_object})
-   fastavro.schemaless_writer(out, bridge.schema_dict, data_dict)
+   data_dict = enrollment_serializer.to_dict({"enrollment": enrollment_object})
+   fastavro.schemaless_writer(out, enrollment_serializer.schema_dict, data_dict)
    out.seek(0)
    return out.read()
 
@@ -56,7 +61,7 @@ topic or other metadata, depending on the bus implementation.
    my_signal = OpenEdxPublicSignal.get_signal_by_type(get_event_type())
    deserializer = AvroSignalDeserializer(my_signal)
    data_file = io.BytesIO(bytes_from_wire)
-   as_dict = fastavro.schemaless_reader(data_file, bridge.schema_dict)
+   as_dict = fastavro.schemaless_reader(data_file, deserializer.schema_dict)
    my_signal.send_event(**deserializer.from_dict(as_dict))
 
 Custom types

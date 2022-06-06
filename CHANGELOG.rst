@@ -17,7 +17,7 @@ Changed
 ~~~~~~~
 
 [0.10.0] - 2022-05-20
---------------------
+---------------------
 Changed
 ~~~~~~~
 * Split AvroAttrsBridge into schema, serialization, and deserialization phases

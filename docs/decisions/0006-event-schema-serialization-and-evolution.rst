@@ -64,9 +64,9 @@ Deferred/Rejected Decisions
 
 We could add the ability to add optional fields to an event, possibly into the attr Data classes and/or possibly into the top-level data dict in the OpenEdxPublicSignal.
 
-- Optional fields would allow for "Full / Full Transitive" schema evolution. This option provides more flexibility around deployment of upgraded producers and consumers indepently, which is useful when each is owned by different teams.
+- Optional fields would allow for "Full / Full Transitive" schema evolution. This option provides more flexibility around deployment of upgraded producers and consumers independently, which is useful when each is owned by different teams.
 
-- Optional fields would add additional complexity to the definitions, as well as to the bridge code that serializes these definitions for external events.
+- Optional fields would add additional complexity to the definitions, as well as to the code that serializes these definitions for external events.
 
 - Optional fields may enable cleaner event definitions in the case that new data would make more sense in the attr Data class than in the top-level data dict for all events that share the same Data class.
 

@@ -33,11 +33,6 @@ Contents:
    decisions/0006-event-schema-serialization-and-evolution
    decisions/0007-optional-fields
 
-.. toctree::
-   :maxdepth: 2
-   :caption: How-Tos
-
-   how_tos/avro_module
 
 Indices and tables
 ==================

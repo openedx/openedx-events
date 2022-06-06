@@ -1,5 +1,5 @@
 """
-Utility methods and classes for testing AvroSchemaGenerator.
+Utility methods and classes for testing various modules in event_bus.avro.
 """
 import io
 import re

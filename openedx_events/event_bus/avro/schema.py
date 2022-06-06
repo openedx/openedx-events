@@ -16,9 +16,15 @@ DEFAULT_FIELD_TYPES = {
 }
 
 
-def schema_from_signal(signal, custom_field_types=None):
-    """Create an Avro schema for events sent by an instance of OpenEdxPublicSignal."""
-    field_types = custom_field_types or {}
+def schema_from_signal(signal, custom_type_to_avro_type=None):
+    """
+    Create an Avro schema for events sent by an instance of OpenEdxPublicSignal.
+
+    Arguments:
+        signal: An instance of OpenEdxPublicSignal
+        custom_type_to_avro_type: A map of Python class to Avro type
+    """
+    field_types = custom_type_to_avro_type or {}
     all_custom_field_types = {**DEFAULT_FIELD_TYPES, **field_types}
     schema_record_names = set()
 
@@ -32,25 +38,24 @@ def schema_from_signal(signal, custom_field_types=None):
     for data_key, data_type in signal.init_data.items():
         base_schema["fields"].append(_create_avro_field_definition(data_key, data_type,
                                                                    schema_record_names,
-                                                                   custom_field_types=all_custom_field_types))
-    print(f"base_schema: {base_schema}")
+                                                                   custom_type_to_avro_type=all_custom_field_types))
     return base_schema
 
 
-def _create_avro_field_definition(data_key, data_type, schema_record_names,
-                                  custom_field_types=None, default_is_none=False):
+def _create_avro_field_definition(data_key, data_type, previously_seen_types,
+                                  custom_type_to_avro_type=None, default_is_none=False):
     """
     Create an Avro schema field definition from an OpenEdxPublicSignal data definition.
 
     Arguments:
-        data_key: Field name
+        data_key: Field name, eg `lms_user_id`, `course_id`, `enrollment_status`
         data_type: Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`
-        schema_record_names: list of previously-encountered data types
-        custom_field_types: map of data type to pre-determined avro field type
+        previously_seen_types: list of previously-encountered data types
+        custom_type_to_avro_type: map of custom data types to a pre-determined avro field type
         default_is_none: boolean indicating whether this field has 'None' as a default
     """
     field = {"name": data_key}
-    all_field_type_overrides = custom_field_types or {}
+    all_field_type_overrides = custom_type_to_avro_type or {}
 
     # Case 1: data_type has a predetermined avro field representation
     if field_type := all_field_type_overrides.get(data_type, None):
@@ -69,25 +74,25 @@ def _create_avro_field_definition(data_key, data_type, schema_record_names,
 
         # fastavro does not allow you to redefine the same record type more than once,
         # so only define an attr record once
-        if data_type.__name__ in schema_record_names:
+        if data_type.__name__ in previously_seen_types:
             field["type"] = data_type.__name__
         else:
-            schema_record_names.add(data_type.__name__)
+            previously_seen_types.add(data_type.__name__)
             record_type = dict(name=data_type.__name__, type="record", fields=[])
 
             for attribute in data_type.__attrs_attrs__:
                 record_type["fields"].append(
                     _create_avro_field_definition(attribute.name, attribute.type,
-                                                  schema_record_names,
-                                                  custom_field_types=all_field_type_overrides,
+                                                  previously_seen_types,
+                                                  custom_type_to_avro_type=all_field_type_overrides,
                                                   default_is_none=attribute.default is None)
                 )
             field["type"] = record_type
     else:
         raise TypeError(
-            f"Data type {data_type} is not supported by AvroAttrsBridge. The data type needs to either"
+            f"Data type {data_type} is not supported. The data type needs to either"
             " be one of the types in PYTHON_TYPE_TO_AVRO_MAPPING, an attrs decorated class, or one of the types"
-            " defined in self.extensions."
+            " defined in custom_type_to_avro_type."
         )
     if default_is_none:
         field["default"] = "null"

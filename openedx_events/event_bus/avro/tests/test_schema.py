@@ -1,5 +1,5 @@
 """
-Tests for AvroSchemaGenerator.
+Tests for event_bus.avro.schema module
 """
 from unittest import TestCase
 
@@ -131,7 +131,7 @@ class TestSchemaGeneration(TestCase):
                 {"name": "test_data", "type": "string"}
             ],
         }
-        schema = schema_from_signal(SIGNAL, custom_field_types={NonAttrs: "string"})
+        schema = schema_from_signal(SIGNAL, custom_type_to_avro_type={NonAttrs: "string"})
         self.assertDictEqual(schema, expected_dict)
 
     def test_schema_for_nested_custom_type(self):
@@ -150,7 +150,7 @@ class TestSchemaGeneration(TestCase):
                 }}
             ],
         }
-        schema = schema_from_signal(SIGNAL, custom_field_types={NonAttrs: "string"})
+        schema = schema_from_signal(SIGNAL, custom_type_to_avro_type={NonAttrs: "string"})
         self.assertDictEqual(schema, expected_dict)
 
     def test_schema_for_types_with_defaults(self):
@@ -224,7 +224,7 @@ class TestSchemaGeneration(TestCase):
                 }
             }]
         }
-        schema = schema_from_signal(SIGNAL, custom_field_types={NonAttrs: "string"})
+        schema = schema_from_signal(SIGNAL, custom_type_to_avro_type={NonAttrs: "string"})
         self.assertDictEqual(schema, expected_dict)
 
     def test_throw_exception_on_unextended_custom_type(self):

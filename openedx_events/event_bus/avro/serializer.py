@@ -32,7 +32,7 @@ def _get_non_attrs_serializer(serializers=None):
     return _serialize_non_attrs_values
 
 
-def _event_data_to_record_dict(event_data, serializers=None):
+def _event_data_to_avro_record_dict(event_data, serializers=None):
     """Create a pure dict (no compound objects) from an event data dict."""
 
     def value_to_dict(value):
@@ -50,29 +50,41 @@ def _event_data_to_record_dict(event_data, serializers=None):
 
 class AvroSignalSerializer:
     """
-    Class to serialize events into Avro records that can be sent via an event bus.
+    Class to serialize event data dictionaries into Avro record dictionaries that can be sent by an event bus.
 
-    The schema_string and to_dict methods can be used by the confluent_kafka.AvroSerializer class when creating
-    an event producer.
-    To serialize events with non-attrs, non-primitive data types, override this class by including the appropriate
-    BaseCustomTypeAvroSerializer subclasses.
+    The ``schema_string`` and ``to_dict`` methods are the API for this deserializer. This API is derived from the
+    confluent_kafka.AvroSerializer class, which is part of the Kafka event bus ecosystem. The AvroDeserializer takes a
+    schema (as string) and a to_dict method as initialization parameters. These methods could also potentially be used
+    by other event bus implementations.
+
+    To serialize events with non-attrs, non-primitive data types, create a subclass and override custom_type_serializers
     """
 
     def __init__(self, signal):
-        """Create Avro schema using signal."""
+        """
+        Initialize serializer, creating an Avro schema from signal.
+
+        Arguments:
+            signal: An instance of OpenEdxPublicSignal
+        """
         self.signal = signal
         self.serializers = {ext.cls: ext.serialize for ext in self.custom_type_serializers()}
         self.custom_types = {ext.cls: ext.field_type for ext in self.custom_type_serializers()}
-        self.schema = schema_from_signal(self.signal, custom_field_types=self.custom_types)
+        self.schema = schema_from_signal(self.signal, custom_type_to_avro_type=self.custom_types)
 
     def schema_string(self):
         """Get Avro schema as JSON string."""
         return json.dumps(self.schema, sort_keys=True)
 
     def to_dict(self, event_data):
-        """Convert event data to an Avro record (dictionary)."""
-        return _event_data_to_record_dict(event_data, serializers=self.serializers)
+        """Convert event data to an Avro record dictionary."""
+        return _event_data_to_avro_record_dict(event_data, serializers=self.serializers)
 
     def custom_type_serializers(self):
-        """Override this method to add custom serializers for non-attrs, non-primitive classes."""
+        """
+        Override this method to add custom serializers for non-attrs, non-primitive classes.
+
+        Returns:
+            A list of subclasses of BaseCustomTypeAvroSerializer
+        """
         return []
