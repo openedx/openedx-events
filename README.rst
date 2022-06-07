@@ -27,7 +27,7 @@ One Time Setup
 .. code-block::
 
   # Clone the repository
-  git clone git@github.com:edxuNEXT/openedx-events.git
+  git clone git@github.com:openedx/openedx-events.git
   cd openedx-events
 
   # Set up a virtualenv using virtualenvwrapper with the same name as the repo and activate it
