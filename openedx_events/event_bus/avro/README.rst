@@ -59,8 +59,7 @@ Deserializer
 ~~~~~~~~~~~~
 To deserialize bytes that have come over the wire on the event bus, and then
 emit the event to the relevant listeners, you will need to know the event_type
-of the original signal. This can be sent over as a message header or event
-topic or other metadata, depending on the bus implementation.
+of the original signal. This can be sent over as a message header or as other event metadata, depending on the bus implementation.
 
 
 .. code-block:: python
