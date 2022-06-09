@@ -21,29 +21,23 @@ Avro record dictionary
     A dictionary whose structure is determined by an Avro schema. These dictionaries are the entities that are actually serialized to bytes and sent over the wire to the event bus.
 
 
-How To Use
-----------
+Serialization
+~~~~~~~~~~~~~
+The ``to_dict`` method on the AvroSignalSerializer is used to convert
+events to Avro records.
 
-Serializer
-~~~~~~~~~~
-To create an event serializer for a signal:
-
-.. code-block:: python
-
-    USER_SIGNAL = OpenEdxPublicSignal(
-        event_type="simple.signal",
-        data={"user": UserData}
-    )
-    event_serializer = AvroSignalSerializer(USER_SIGNAL)
-
-
-You can then use the ``to_dict`` method on the serializer to convert events to Avro records,
-as well as the ``schema_dict`` property to configure an Avro-based serializer
+The ``schema_dict`` property can be used to configure an Avro-based serializer
 for use with an event bus.
 
 
-Deserializer
-~~~~~~~~~~~~
+Deserialization
+~~~~~~~~~~~~~~~
+The ``from_dict`` method on the AvroSignalDeserializer is used to convert
+Avro records to event data dictionaries.
+
+Similar to AvroSignalSerializer, the``schema_dict`` property can be used to
+configure an Avro-based deserializer for use with an event bus.
+
 To deserialize bytes that have come over the wire on the event bus, and then
 emit the event to the relevant listeners, you will need to know the event_type
 of the original signal. This can be sent over as a message header or as other
