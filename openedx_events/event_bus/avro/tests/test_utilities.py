@@ -27,18 +27,19 @@ def create_simple_signal(data_dict):
     )
 
 
-def serialize_event_data_to_bytes(event_data, serializer):
+def serialize_event_data_to_bytes(event_data, signal):
     """
     Utility method to make sure an Avro serializer can actually serialize given a schema and data
     to serialize
 
     Arguments:
         event_data: Event data to be sent via an OpenEdxPublicSignal's send_event method
-        serializer: An instance of AvroSignalSerializer
+        signal: An instance of OpenEdxPublicSignal
     Returns:
         bytes: Byte representation of the event_data, to be sent over the wire
     """
-    schema_dict = serializer.schema()
+    serializer = AvroSignalSerializer(signal)
+    schema_dict = serializer.schema
     out = io.BytesIO()
     data_dict = serializer.to_dict(event_data)
     fastavro.schemaless_writer(out, schema_dict, data_dict)
@@ -46,16 +47,17 @@ def serialize_event_data_to_bytes(event_data, serializer):
     return out.read()
 
 
-def deserialize_bytes_to_event_data(bytes_from_wire, deserializer):
+def deserialize_bytes_to_event_data(bytes_from_wire, signal):
     """
     Utility method to make sure an Avro deserializer can actually deserialize given a event_bus and Avro-serialized
     data
 
     Arguments:
         bytes_from_wire: data that was serialized by an Avro serializer
-        deserializer: An instance of AvroSignalDeserializer
+        signal: An instance of OpenEdxPublicSignal
     """
-    schema_dict = deserializer.schema()
+    deserializer = AvroSignalDeserializer(signal)
+    schema_dict = deserializer.schema
     data_file = io.BytesIO(bytes_from_wire)
     as_dict = fastavro.schemaless_reader(data_file, schema_dict)
     return deserializer.from_dict(as_dict)

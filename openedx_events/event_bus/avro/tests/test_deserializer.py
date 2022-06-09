@@ -21,6 +21,10 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
 class TestAvroSignalDeserializer(TestCase):
     """Test AvroSignalDeserializer"""
 
+    def setUp(self) -> None:
+        super().setUp()
+        self.maxDiff = None
+
     def test_convert_dict_to_event_data(self):
         SIGNAL = create_simple_signal({"test_data": EventData})
         initial_dict = {
@@ -35,23 +39,14 @@ class TestAvroSignalDeserializer(TestCase):
             }
         }
         deserializer = AvroSignalDeserializer(SIGNAL)
-
         event_data = deserializer.from_dict(initial_dict)
-
+        expected_event_data = EventData("foo", "bar.course",
+                                        SubTestData0("a.sub.name", "a.nother.course"),
+                                        SubTestData1("b.uber.sub.name", "b.uber.another.course")
+                                        )
         test_data = event_data["test_data"]
         self.assertIsInstance(test_data, EventData)
-        self.assertEqual(test_data.course_id, "bar.course")
-        self.assertEqual(test_data.sub_name, "foo")
-
-        sub_0 = test_data.sub_test_0
-        self.assertIsInstance(sub_0, SubTestData0)
-        self.assertEqual(sub_0.course_id, "a.nother.course")
-        self.assertEqual(sub_0.sub_name, "a.sub.name")
-
-        sub_1 = test_data.sub_test_1
-        self.assertIsInstance(sub_1, SubTestData1)
-        self.assertEqual(sub_1.course_id, "b.uber.another.course")
-        self.assertEqual(sub_1.sub_name, "b.uber.sub.name")
+        self.assertEqual(test_data, expected_event_data)
 
     def test_default_datetime_deserialization(self):
         SIGNAL = create_simple_signal({"birthday": datetime})
@@ -61,9 +56,7 @@ class TestAvroSignalDeserializer(TestCase):
         event_data = deserializer.from_dict(as_dict)
         birthday_deserialized = event_data["birthday"]
         self.assertIsInstance(birthday_deserialized, datetime)
-        self.assertEqual(birthday_deserialized.year, 1989)
-        self.assertEqual(birthday_deserialized.month, 9)
-        self.assertEqual(birthday_deserialized.day, 6)
+        self.assertEqual(birthday_deserialized, birthday)
 
     def test_default_coursekey_deserialization(self):
         SIGNAL = create_simple_signal({"course": CourseKey})
@@ -121,11 +114,7 @@ class TestAvroSignalDeserializer(TestCase):
         as_dict = {"data": {}}
         data_dict = deserializer.from_dict(as_dict)
         self.assertIsInstance(data_dict["data"], SimpleAttrsWithDefaults)
-        self.assertIsNone(data_dict["data"].boolean_field)
-        self.assertIsNone(data_dict["data"].bytes_field)
-        self.assertIsNone(data_dict["data"].float_field)
-        self.assertIsNone(data_dict["data"].int_field)
-        self.assertIsNone(data_dict["data"].string_field)
+        self.assertEqual(data_dict["data"], SimpleAttrsWithDefaults())
 
     def test_deserialization_of_nested_optional_fields(self):
         SIGNAL = create_simple_signal({
@@ -136,8 +125,4 @@ class TestAvroSignalDeserializer(TestCase):
         data_dict = deserializer.from_dict(as_dict)
         nested_field = data_dict["data"].field_0
         self.assertIsInstance(nested_field, SimpleAttrsWithDefaults)
-        self.assertIsNone(nested_field.boolean_field)
-        self.assertIsNone(nested_field.bytes_field)
-        self.assertIsNone(nested_field.float_field)
-        self.assertIsNone(nested_field.int_field)
-        self.assertIsNone(nested_field.string_field)
+        self.assertEqual(nested_field, SimpleAttrsWithDefaults())

@@ -2,22 +2,25 @@
 Serialize events to Avro records.
 """
 import json
-from datetime import datetime
 
 import attr
-from opaque_keys.edx.keys import CourseKey
 
-from .custom_serializers import CourseKeyAvroSerializer, DatetimeAvroSerializer
+from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
 from .schema import schema_from_signal
 
-DEFAULT_SERIALIZERS = {
-    datetime: DatetimeAvroSerializer.serialize,
-    CourseKey: CourseKeyAvroSerializer.serialize,
-}
+DEFAULT_SERIALIZERS = {serializer.cls: serializer.serialize for serializer in DEFAULT_CUSTOM_SERIALIZERS}
 
 
 def _get_non_attrs_serializer(serializers=None):
-    """Create a method to pass to attr.as_dict that will serialize using custom serializers."""
+    """
+    Create a method to pass to attr.as_dict that will serialize using custom serializers.
+
+    Arguments:
+        serializers: A map of Python type to serialization method
+
+    Returns:
+        A method for serializing non_attrs values
+    """
     param_serializers = serializers or {}
     all_serializers = {**DEFAULT_SERIALIZERS, **param_serializers}
 
@@ -33,7 +36,16 @@ def _get_non_attrs_serializer(serializers=None):
 
 
 def _event_data_to_avro_record_dict(event_data, serializers=None):
-    """Create a pure dict (no compound objects) from an event data dict."""
+    """
+    Create an Avro record dictionary from an event data dict.
+
+    Arguments:
+        event_data: A dictionary representing an event sent by an instance of OpenEdxPublicSignal
+        serializers: A map of Python type to serialization method
+
+    Returns:
+        An Avro record dictionary representation of the event data
+    """
 
     def value_to_dict(value):
         # Case 1: Value is an instance of an attrs-decorated class

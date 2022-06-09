@@ -41,41 +41,25 @@ You can then use the ``to_dict`` method on the serializer to convert events to A
 as well as the ``schema_dict`` property to configure an Avro-based serializer
 for use with an event bus.
 
-For example, to serialize a COURSE_ENROLLMENT_CREATED event to bytes (eventually to
-be published to the event bus)
-
-.. code-block:: python
-
-   enrollment_serializer = AvroSignalSerializer(COURSE_ENROLLMENT_CREATED)
-   enrollment_object = CourseEnrollmentData(...enrollment_data)
-   out = io.BytesIO()
-   data_dict = enrollment_serializer.to_dict({"enrollment": enrollment_object})
-   fastavro.schemaless_writer(out, enrollment_serializer.schema_dict, data_dict)
-   out.seek(0)
-   return out.read()
 
 Deserializer
 ~~~~~~~~~~~~
 To deserialize bytes that have come over the wire on the event bus, and then
 emit the event to the relevant listeners, you will need to know the event_type
-of the original signal. This can be sent over as a message header or as other event metadata, depending on the bus implementation.
-
-
-.. code-block:: python
-
-   my_signal = OpenEdxPublicSignal.get_signal_by_type(get_event_type())
-   deserializer = AvroSignalDeserializer(my_signal)
-   data_file = io.BytesIO(bytes_from_wire)
-   as_dict = fastavro.schemaless_reader(data_file, deserializer.schema_dict)
-   my_signal.send_event(**deserializer.from_dict(as_dict))
+of the original signal. This can be sent over as a message header or as other
+event metadata, depending on the bus implementation.
 
 Custom types
 ~~~~~~~~~~~~
-If your event data contains field types that are not attrs-decorated classes,
-Avro-primitive equivalents (see types.py), CourseKeys, or datetimes, you will
-need to create custom de/serializers. To do this, you will need to extend the
+
+By default, this module supports de/serialization of attrs-decorated classes,
+Avro-primitive equivalents (see types.py), and some other classes specified in
+``custom_serializers.DEFAULT_CUSTOM_SERIALIZERS``
+
+If your event uses other data types, you will need to create custom de/serializers. To do this, you will need to extend the
 BaseCustomTypeAvroSerializer with a class that handles your particular data type.
-You will then need to extend the AvroSignalSerializer and AvroSignalDeserializer classes,
+If the new type is cross-platform, it may make sense to add it to ``DEFAULT_CUSTOM_SERIALIZERS``.
+Otherwise, you will need to extend the AvroSignalSerializer and AvroSignalDeserializer classes,
 in particular overriding the custom_type_serializers method to return your custom
 serializer.
 

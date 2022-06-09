@@ -2,19 +2,14 @@
 Deserialize Avro record dictionaries to events that can be sent with OpenEdxPublicSignals.
 """
 import json
-from datetime import datetime
 
 import attr
-from opaque_keys.edx.keys import CourseKey
 
-from .custom_serializers import CourseKeyAvroSerializer, DatetimeAvroSerializer
+from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
 from .schema import schema_from_signal
 from .types import PYTHON_TYPE_TO_AVRO_MAPPING
 
-DEFAULT_DESERIALIZERS = {
-    datetime: DatetimeAvroSerializer.deserialize,
-    CourseKey: CourseKeyAvroSerializer.deserialize,
-}
+DEFAULT_DESERIALIZERS = {serializer.cls: serializer.deserialize for serializer in DEFAULT_CUSTOM_SERIALIZERS}
 
 
 def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializers=None):
@@ -25,9 +20,9 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
     appropriate signal instance
 
     Arguments:
-        data: Dictionary returned from AvroDeserializer
+        data: Dictionary representation of an Avro record
         data_type: Desired Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`
-
+        deserializers: Map of Python data type to deserializer method
     Returns:
         An instance of data_type
     """
@@ -54,8 +49,18 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
     )
 
 
-def _avro_record_dict_to_event_data(signal, avro_record, deserializers=None):
-    return {data_key: _deserialized_avro_record_dict_to_object(avro_record[data_key], data_type, deserializers)
+def _avro_record_dict_to_event_data(signal, avro_record_dict, deserializers=None):
+    """
+    Convert an Avro record dictionary into event data that can be sent by the given signal.
+
+    Arguments:
+        signal: An instance of OpenEdxPublicSignal
+        avro_record_dict: Dictionary representation of an Avro record
+        deserializers: Map of Python data type to deserializer method
+    Returns:
+         An event data dictionary that can be sent by the given signal
+    """
+    return {data_key: _deserialized_avro_record_dict_to_object(avro_record_dict[data_key], data_type, deserializers)
             for data_key, data_type in signal.init_data.items()}
 
 

@@ -18,10 +18,6 @@ class BaseCustomTypeAvroSerializer(ABC):
     cls: type
     field_type: str
 
-    def type(self):
-        """Get type of class this extension serializer and deserializes."""
-        return type(self.cls)
-
     @staticmethod
     @abstractmethod
     def serialize(obj) -> str:
@@ -75,3 +71,6 @@ class DatetimeAvroSerializer(BaseCustomTypeAvroSerializer):
     def deserialize(data: str):
         """Deserialize string into obj."""
         return datetime.fromisoformat(data)
+
+
+DEFAULT_CUSTOM_SERIALIZERS = [CourseKeyAvroSerializer, DatetimeAvroSerializer]

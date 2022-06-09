@@ -3,17 +3,12 @@ Code to convert attr classes to Avro specification.
 
 TODO (EventBus): handle optional parameters and allow for schema evolution (ARCHBOM-2013)
 """
-from datetime import datetime
 
-from opaque_keys.edx.keys import CourseKey
 
-from .custom_serializers import CourseKeyAvroSerializer, DatetimeAvroSerializer
+from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
 from .types import PYTHON_TYPE_TO_AVRO_MAPPING
 
-DEFAULT_FIELD_TYPES = {
-    datetime: DatetimeAvroSerializer.field_type,
-    CourseKey: CourseKeyAvroSerializer.field_type,
-}
+DEFAULT_FIELD_TYPES = {serializer.cls: serializer.field_type for serializer in DEFAULT_CUSTOM_SERIALIZERS}
 
 
 def schema_from_signal(signal, custom_type_to_avro_type=None):
