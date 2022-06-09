@@ -2,16 +2,14 @@ Purpose
 -------
 Used to automate the following conversions:
 
-:term:`Event data` => :term:`Avro record dictionary` => bytes
+event data => Avro record dictionary => bytes
 
-bytes => :term:`Avro record dictionary` => :term:`Event data`
+bytes => Avro record dictionary => Event data
 
 Essentially, helps serialize and deserialize events data specified in openedx-events repository.
 
 Glossary
 --------
-
-.. glossary::
 
 Signal
     An instance of OpenEdxPublicSignal.
@@ -25,6 +23,7 @@ Avro record dictionary
 
 How To Use
 ----------
+
 Serializer
 ~~~~~~~~~~
 To create an event serializer for a signal:
@@ -38,7 +37,7 @@ To create an event serializer for a signal:
     event_serializer = AvroSignalSerializer(USER_SIGNAL)
 
 
-You can then use the ``to_dict`` method on the serializer to convert events to avro records,
+You can then use the ``to_dict`` method on the serializer to convert events to Avro records,
 as well as the ``schema_dict`` property to configure an Avro-based serializer
 for use with an event bus.
 
