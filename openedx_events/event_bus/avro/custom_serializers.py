@@ -31,7 +31,7 @@ class BaseCustomTypeAvroSerializer(ABC):
     @staticmethod
     @abstractmethod
     def deserialize(data: str) -> object:
-        """Abstract method to deserialize string array into obj."""
+        """Abstract method to deserialize string into obj."""
         ...
 
 
@@ -50,7 +50,7 @@ class CourseKeyAvroSerializer(BaseCustomTypeAvroSerializer):
 
     @staticmethod
     def deserialize(data: str):
-        """Deserialize string array into obj."""
+        """Deserialize string into obj."""
         return CourseKey.from_string(data)
 
 
@@ -73,5 +73,5 @@ class DatetimeAvroSerializer(BaseCustomTypeAvroSerializer):
 
     @staticmethod
     def deserialize(data: str):
-        """Deserialize string array into obj."""
+        """Deserialize string into obj."""
         return datetime.fromisoformat(data)

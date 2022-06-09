@@ -53,7 +53,7 @@ class TestAvroSignalDeserializer(TestCase):
         self.assertEqual(sub_1.course_id, "b.uber.another.course")
         self.assertEqual(sub_1.sub_name, "b.uber.sub.name")
 
-    def test_default_datetime_extension_deserialization(self):
+    def test_default_datetime_deserialization(self):
         SIGNAL = create_simple_signal({"birthday": datetime})
         deserializer = AvroSignalDeserializer(SIGNAL)
         birthday = datetime(year=1989, month=9, day=6)
@@ -65,7 +65,7 @@ class TestAvroSignalDeserializer(TestCase):
         self.assertEqual(birthday_deserialized.month, 9)
         self.assertEqual(birthday_deserialized.day, 6)
 
-    def test_default_coursekey_extension_deserialization(self):
+    def test_default_coursekey_deserialization(self):
         SIGNAL = create_simple_signal({"course": CourseKey})
         deserializer = AvroSignalDeserializer(SIGNAL)
         course_key = CourseKey.from_string("course-v1:edX+DemoX.1+2014")

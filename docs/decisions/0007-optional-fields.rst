@@ -25,7 +25,7 @@ in contrast to that of ``attrs``, uses the default parameter to define optionali
 Decision
 --------
 
-- The Avro schema generation code will convert ``attrs`` fields with a default value of None to Avro fields with type = ["null",<type>] and default = "null".
+- The Avro schema generation code will convert ``attrs`` fields with a default value of None to Avro fields with ``type = ["null",<type>]`` and ``default = "null"``.
 
 Consequences
 ------------

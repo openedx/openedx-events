@@ -113,7 +113,7 @@ class NestedAttrsWithDefaults:
 
 
 class NonAttrs:
-    """Data class not decorated with @attr. For testing event_bus extension"""
+    """Test data class not decorated with @attr."""
     def __init__(self, val0, val1):
         self.val0 = val0
         self.val1 = val1

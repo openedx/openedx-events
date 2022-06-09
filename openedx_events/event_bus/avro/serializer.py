@@ -53,7 +53,7 @@ class AvroSignalSerializer:
     Class to serialize event data dictionaries into Avro record dictionaries that can be sent by an event bus.
 
     The ``schema_string`` and ``to_dict`` methods are the API for this deserializer. This API is derived from the
-    confluent_kafka.AvroSerializer class, which is part of the Kafka event bus ecosystem. The AvroDeserializer takes a
+    confluent_kafka.AvroSerializer class, which is part of the Kafka event bus ecosystem. The AvroSerializer takes a
     schema (as string) and a to_dict method as initialization parameters. These methods could also potentially be used
     by other event bus implementations.
 
@@ -82,7 +82,7 @@ class AvroSignalSerializer:
 
     def custom_type_serializers(self):
         """
-        Override this method to add custom serializers for non-attrs, non-primitive classes.
+        Override this method to add custom serializers for unhandled classes.
 
         Returns:
             A list of subclasses of BaseCustomTypeAvroSerializer

@@ -19,7 +19,7 @@ DEFAULT_DESERIALIZERS = {
 
 def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializers=None):
     """
-    Convert dictionary entry into an instance of data_type.
+    Convert Avro record dictionary into an instance of data_type.
 
     Used to convert messages from an AvroDeserializer into events that can be sent by the
     appropriate signal instance
@@ -50,7 +50,7 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
 
         return data_type(**transformed)
     raise TypeError(
-        f"Unable to deserialize {data_type} data, please add extension for custom data type"
+        f"Unable to deserialize {data_type} data, please add CustomTypeAvroSerializer for custom data type"
     )
 
 
@@ -94,7 +94,7 @@ class AvroSignalDeserializer:
 
     def custom_type_serializers(self):
         """
-        Override this method to add custom serializers for non-attrs, non-primitive classes.
+        Override this method to add custom serializers for unhandled classes.
 
         Returns:
             A list of subclasses of BaseCustomTypeAvroSerializer

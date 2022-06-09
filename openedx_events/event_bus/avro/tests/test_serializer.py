@@ -52,7 +52,7 @@ class TestAvroSignalSerializer(TestCase):
         }
         self.assertDictEqual(data_dict, expected_dict)
 
-    def test_default_datetime_extension_serialization(self):
+    def test_default_datetime_serialization(self):
         SIGNAL = create_simple_signal({"birthday": datetime})
         serializer = AvroSignalSerializer(SIGNAL)
         birthday = datetime(year=1989, month=9, day=6)
@@ -60,7 +60,7 @@ class TestAvroSignalSerializer(TestCase):
         data_dict = serializer.to_dict(test_data)
         self.assertDictEqual(data_dict, {"birthday": birthday.isoformat()})
 
-    def test_default_coursekey_extension_serialization(self):
+    def test_default_coursekey_serialization(self):
         SIGNAL = create_simple_signal({"course": CourseKey})
         serializer = AvroSignalSerializer(SIGNAL)
         course_key = CourseKey.from_string("course-v1:edX+DemoX.1+2014")
