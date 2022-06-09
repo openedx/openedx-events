@@ -38,6 +38,7 @@ upgrade: ## update the requirements/*.txt files with the latest packages satisfy
 	# Make sure to compile files after any other files they include!
 	$(PIP_COMPILE) --allow-unsafe --rebuild -o requirements/pip.txt requirements/pip.in
 	$(PIP_COMPILE) -o requirements/pip-tools.txt requirements/pip-tools.in
+	pip install -r requirements/pip.txt
 	pip install -r requirements/pip-tools.txt
 	$(PIP_COMPILE) -o requirements/base.txt requirements/base.in
 	$(PIP_COMPILE) -o requirements/test.txt requirements/test.in
