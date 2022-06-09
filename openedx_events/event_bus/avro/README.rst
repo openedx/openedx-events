@@ -2,18 +2,25 @@ Purpose
 -------
 Used to automate the following conversions:
 
-event data => Avro record (dict) => bytes
-bytes => Avro record (dict) => event data
+:term:`Event data` => :term:`Avro record dictionary` => bytes
+
+bytes => :term:`Avro record dictionary` => :term:`Event data`
 
 Essentially, helps serialize and deserialize events data specified in openedx-events repository.
 
 Glossary
 --------
 
-Signal - An instance of OpenEdxPublicSignal.
-Event data - A dictionary whose structure is determined by the init_data attribute of an instance of OpenEdxPublicSignal. Event data is sent via a call to MY_SIGNAL.send_event(**event_data).
-Avro schema - A specification describing the expected field names and types in an Avro record dictionary
-Avro record dictionary - A dictionary whose structure is determined by an Avro schema. These dictionaries are the entities that are actually serialized to bytes and sent over the wire to the event bus.
+.. glossary::
+
+Signal
+    An instance of OpenEdxPublicSignal.
+Event data
+    A dictionary whose structure is determined by the init_data attribute of an instance of OpenEdxPublicSignal. Event data is sent via a call to ``MY_SIGNAL.send_event(**event_data)``.
+Avro schema
+    A specification describing the expected field names and types in an Avro record dictionary. See https://avro.apache.org/docs/current/spec.html
+Avro record dictionary
+    A dictionary whose structure is determined by an Avro schema. These dictionaries are the entities that are actually serialized to bytes and sent over the wire to the event bus.
 
 
 How To Use
