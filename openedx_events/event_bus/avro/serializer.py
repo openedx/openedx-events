@@ -13,7 +13,7 @@ DEFAULT_SERIALIZERS = {serializer.cls: serializer.serialize for serializer in DE
 
 def _get_non_attrs_serializer(serializers=None):
     """
-    Create a method to pass to attr.as_dict that will serialize using custom serializers.
+    Create a method to pass as the value_serializer argument to attr.as_dict that will serialize using custom serializers.
 
     Arguments:
         serializers: A map of Python type to serialization method
