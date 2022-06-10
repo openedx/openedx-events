@@ -69,7 +69,7 @@ class AvroSignalSerializer:
     schema (as string) and a to_dict method as initialization parameters. These methods could also potentially be used
     by other event bus implementations.
 
-    To serialize events with non-attrs, non-primitive data types, create a subclass and override custom_type_serializers
+    To serialize events that include data types that are not yet supported, see README.
     """
 
     def __init__(self, signal):
