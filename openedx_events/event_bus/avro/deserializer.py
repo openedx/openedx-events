@@ -73,8 +73,7 @@ class AvroSignalDeserializer:
     schema (as string) and a from_dict method as initialization parameters. These methods could also potentially be used
     by other event bus implementations.
 
-    To deserialize events with non-attrs, non-primitive data types, create a subclass and override
-    custom_type_serializers
+    To deserialize events that include data types that are not yet supported, see README.
     """
 
     def __init__(self, signal):
