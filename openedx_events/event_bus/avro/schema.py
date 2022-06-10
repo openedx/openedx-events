@@ -21,7 +21,7 @@ def schema_from_signal(signal, custom_type_to_avro_type=None):
     """
     field_types = custom_type_to_avro_type or {}
     all_custom_field_types = {**DEFAULT_FIELD_TYPES, **field_types}
-    schema_record_names = set()
+    previously_seen_types = set()
 
     base_schema = {
         "name": "CloudEvent",
@@ -32,7 +32,7 @@ def schema_from_signal(signal, custom_type_to_avro_type=None):
 
     for data_key, data_type in signal.init_data.items():
         base_schema["fields"].append(_create_avro_field_definition(data_key, data_type,
-                                                                   schema_record_names,
+                                                                   previously_seen_types,
                                                                    custom_type_to_avro_type=all_custom_field_types))
     return base_schema
 
