@@ -1,6 +1,6 @@
 
 """
-Classes to serialize and deserialize custom types used by openedx events.
+Classes to serialize and deserialize custom types used by openedx events. See README for usage.
 """
 from abc import ABC, abstractmethod
 from datetime import datetime
