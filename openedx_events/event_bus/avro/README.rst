@@ -1,12 +1,9 @@
 Purpose
 -------
-Used to automate the following conversions:
+Used to automate the conversion from event data dictionaries to Avro record dictionaries and back.
 
-event data => Avro record dictionary => bytes
+Note: This library does not handle serialization of Avro records down to byte representation and back. To do that we are relying on the event bus technology itself. It is however possible to use this library in conjunction with fastavro to do the full de/serialization to bytes and back if the event bus implementation does not do that for you (an example of this is provided in the test_utilities module).
 
-bytes => Avro record dictionary => Event data
-
-Essentially, helps serialize and deserialize events data specified in openedx-events repository.
 
 Glossary
 --------
