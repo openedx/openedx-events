@@ -9,6 +9,7 @@ from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
 from .schema import schema_from_signal
 from .types import PYTHON_TYPE_TO_AVRO_MAPPING
 
+# Dict of class to deserialize methods (e.g. datetime => DatetimeAvroSerializer.deserialize)
 DEFAULT_DESERIALIZERS = {serializer.cls: serializer.deserialize for serializer in DEFAULT_CUSTOM_SERIALIZERS}
 
 
