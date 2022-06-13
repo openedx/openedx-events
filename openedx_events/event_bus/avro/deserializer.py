@@ -58,6 +58,7 @@ def _avro_record_dict_to_event_data(signal, avro_record_dict, deserializers=None
         signal: An instance of OpenEdxPublicSignal
         avro_record_dict: Dictionary representation of an Avro record
         deserializers: Map of Python data type to deserializer method
+
     Returns:
          An event data dictionary that can be sent by the given signal
     """
