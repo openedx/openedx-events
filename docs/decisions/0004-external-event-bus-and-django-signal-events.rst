@@ -32,7 +32,7 @@ Consequences
 
 - An external event will never be sent without a corresponding internal event (at this time, based on the current design).
 
-- The external event bus handler will listen for Django signals (``OpenEdxPublicSignals``) that have been configured to be sent as external events. These external events will be serialized using the AvroAttrsBridge, as decided in ADR ":doc:`0005-external-event-schema-format`", before sending the messages over the wire.
+- The external event bus handler will listen for Django signals (``OpenEdxPublicSignals``) that have been configured to be sent as external events. These external events will be serialized using utilities in this library, as decided in ADR ":doc:`0005-external-event-schema-format`", before sending the messages over the wire.
 
 - The use of the ``OpenEdxPublicSignal`` on both the event producing and event consuming sides for external events should hopefully provide a consistent mechanism to plug in for events.
 
