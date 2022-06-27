@@ -22,13 +22,11 @@ class BaseCustomTypeAvroSerializer(ABC):
     @abstractmethod
     def serialize(obj) -> str:
         """Abstract method to serialize obj into string."""
-        ...
 
     @staticmethod
     @abstractmethod
     def deserialize(data: str) -> object:
         """Abstract method to deserialize string into obj."""
-        ...
 
 
 class CourseKeyAvroSerializer(BaseCustomTypeAvroSerializer):
