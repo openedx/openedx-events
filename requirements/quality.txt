@@ -12,7 +12,7 @@ attrs==21.4.0
     # via
     #   -r requirements/test.txt
     #   pytest
-bleach==5.0.0
+bleach==5.0.1
     # via readme-renderer
 certifi==2022.6.15
     # via requests
@@ -51,7 +51,7 @@ edx-lint==5.2.4
     # via -r requirements/quality.in
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/test.txt
-fastavro==1.5.1
+fastavro==1.5.2
     # via -r requirements/test.txt
 idna==3.3
     # via requests

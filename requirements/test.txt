@@ -23,7 +23,7 @@ django==2.2.28
     #   -r requirements/base.txt
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/base.txt
-fastavro==1.5.1
+fastavro==1.5.2
     # via -r requirements/base.txt
 iniconfig==1.1.1
     # via pytest
