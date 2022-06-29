@@ -10,11 +10,12 @@ import ddt
 from django.test import TestCase, override_settings
 
 from openedx_events.exceptions import SenderValidationError
+from openedx_events.tests.utils import FreezeSignalCacheMixin
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
 @ddt.ddt
-class OpenEdxPublicSignalTest(TestCase):
+class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
     """
     Test cases for Open edX events base class.
     """

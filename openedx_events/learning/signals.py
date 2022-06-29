@@ -128,6 +128,7 @@ COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.discussions.configuration.changed.v1
 # .. event_name: COURSE_DISCUSSIONS_CHANGED
 # .. event_description: emitted when the configuration for a course's discussions changes in the course
+#       Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_data: CourseDiscussionConfigurationData
 COURSE_DISCUSSIONS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.discussions.configuration.changed.v1",
