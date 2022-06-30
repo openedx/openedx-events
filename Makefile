@@ -48,7 +48,7 @@ upgrade: $(COMMON_CONSTRAINTS_TXT)
 	pip install -r requirements/pip.txt
 	pip install -r requirements/pip-tools.txt
 	$(PIP_COMPILE) -o requirements/base.txt requirements/base.in
-#	$(PIP_COMPILE) -o requirements/test.txt requirements/test.in
+	$(PIP_COMPILE) -o requirements/test.txt requirements/test.in
 #	$(PIP_COMPILE) -o requirements/doc.txt requirements/doc.in
 #	$(PIP_COMPILE) -o requirements/quality.txt requirements/quality.in
 #	$(PIP_COMPILE) -o requirements/ci.txt requirements/ci.in
