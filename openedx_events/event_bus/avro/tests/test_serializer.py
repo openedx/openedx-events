@@ -1,8 +1,8 @@
 """Tests for avro.serializer module."""
 
 from datetime import datetime
-from unittest import TestCase
 
+from django.test import TestCase
 from opaque_keys.edx.keys import CourseKey
 
 from openedx_events.event_bus.avro.serializer import AvroSignalSerializer
@@ -17,9 +17,10 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     SubTestData1,
     create_simple_signal,
 )
+from openedx_events.tests.utils import FreezeSignalCacheMixin
 
 
-class TestAvroSignalSerializer(TestCase):
+class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
     """Tests for AvroSignalSerializer."""
 
     def test_convert_event_data_to_dict(self):

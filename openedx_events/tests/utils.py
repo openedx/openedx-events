@@ -1,7 +1,31 @@
 """
-Utils used by Open edX events.
+Utils used by Open edX event tests.
 """
 from openedx_events.tooling import OpenEdxPublicSignal
+
+
+class FreezeSignalCacheMixin:
+    """
+    A mixin to be used by TestCases to avoid new signals persisting in the OpenEdxPublicSignal cache of instances.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        """
+        Save current signal instances.
+        """
+        super().setUpClass()
+        cls.pre_run_instances = list(OpenEdxPublicSignal.instances)
+        cls.pre_run_mapping = dict(OpenEdxPublicSignal._mapping)  # pylint: disable=protected-access
+
+    @classmethod
+    def tearDownClass(cls):
+        """
+        Restore instance cache to pre-test state.
+        """
+        super().tearDownClass()
+        OpenEdxPublicSignal.instances = cls.pre_run_instances
+        OpenEdxPublicSignal._mapping = cls.pre_run_mapping  # pylint: disable=protected-access
 
 
 class EventsIsolationMixin:
