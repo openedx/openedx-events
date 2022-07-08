@@ -32,6 +32,7 @@ Contents:
    decisions/0005-external-event-schema-format
    decisions/0006-event-schema-serialization-and-evolution
    decisions/0007-optional-fields
+   decisions/0008-signals-with-pii
 
 
 Indices and tables
