@@ -27,7 +27,7 @@ class MediaData:
 @attr.s(frozen=True)
 class ImageData:
     """
-    Data for a display image.
+    Data for a display image at multiple sizes.
 
     Arguments:
         raw (str): uri of the raw image (required)
