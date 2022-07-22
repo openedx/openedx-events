@@ -21,7 +21,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     deserialize_bytes_to_event_data,
     serialize_event_data_to_bytes,
 )
-from openedx_events.learning import signals  # pylint: disable=reimported
+from openedx_events.learning import signals  # See note above; pylint: disable=reimported
 from openedx_events.tests.utils import FreezeSignalCacheMixin
 from openedx_events.tooling import OpenEdxPublicSignal
 

@@ -18,7 +18,7 @@ Changed
 
 [0.11.0] - 2022-07-21
 ---------------------
-Changed
+Added
 ~~~~~~~
 * Added new content_authoring module with new COURSE_CATALOG_INFO_CHANGED signal
 
