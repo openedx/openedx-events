@@ -3,6 +3,9 @@ Data attributes for events within the architecture subdomain ``content_authoring
 
 These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
+
+The attributes for the events come from the CourseDetailView in the LMS, with some unused fields removed
+(see deprecation proposal at https://github.com/openedx/public-engineering/issues/160)
 """
 from datetime import datetime
 
@@ -41,7 +44,6 @@ class CourseCatalogData:
         org (str): course organization identifier
         number (str): course number
         short_description (str): one- or two-sentence course description (optional)
-        display_name (str): display name associated with the course.
         effort (str): estimated level of effort in hours per week (optional). Kept as a str to align with the lms model.
         schedule_data (CourseScheduleData): scheduling information for the course
         hidden (bool): whether the course is hidden from search
@@ -49,8 +51,7 @@ class CourseCatalogData:
     """
 
     # basic identifiers
-    id = attr.ib(type=CourseKey)
-    course_id = attr.ib(type=CourseKey)
+    course_key = attr.ib(type=CourseKey)
     name = attr.ib(type=str)
     number = attr.ib(type=str)
     org = attr.ib(type=str)
@@ -58,7 +59,6 @@ class CourseCatalogData:
     # additional marketing information
     short_description = attr.ib(type=str, default=None)
     effort = attr.ib(type=str, default=None)
-    display_name = attr.ib(type=str, default=None)
     schedule_data = attr.ib(type=CourseScheduleData, default=None)
     hidden = attr.ib(type=bool, default=False)
     invitation_only = attr.ib(type=bool, default=False)
