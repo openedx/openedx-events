@@ -20,15 +20,15 @@ class CourseScheduleData:
 
     Arguments:
         start (datetime): course start date
-        end (datetime): course end date
         pacing (str): 'instructor' or 'self'
+        end (datetime): course end date (optional)
         enrollment_start (datetime): start of course enrollment (optional)
         enrollment_end (datetime): end of course enrollment (optional)
     """
 
     start = attr.ib(type=datetime)
-    end = attr.ib(type=datetime)
     pacing = attr.ib(type=str)
+    end = attr.ib(type=datetime, default=None)
     enrollment_start = attr.ib(type=datetime, default=None)
     enrollment_end = attr.ib(type=datetime, default=None)
 
@@ -43,10 +43,10 @@ class CourseCatalogData:
         name (str): course name
         org (str): course organization identifier
         number (str): course number
+        schedule_data (CourseScheduleData): scheduling information for the course
         short_description (str): one- or two-sentence course description (optional)
         effort (str): estimated level of effort in hours per week (optional). Kept as a str to align with the lms model.
-        schedule_data (CourseScheduleData): scheduling information for the course
-        hidden (bool): whether the course is hidden from search
+        hidden (bool): whether the course is hidden from search (optional)
         invitation_only (bool): whether the course requires an invitation to enroll
     """
 
@@ -57,8 +57,8 @@ class CourseCatalogData:
     org = attr.ib(type=str)
 
     # additional marketing information
+    schedule_data = attr.ib(type=CourseScheduleData)
     short_description = attr.ib(type=str, default=None)
     effort = attr.ib(type=str, default=None)
-    schedule_data = attr.ib(type=CourseScheduleData, default=None)
     hidden = attr.ib(type=bool, default=False)
     invitation_only = attr.ib(type=bool, default=False)
