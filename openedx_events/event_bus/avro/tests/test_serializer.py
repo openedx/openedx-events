@@ -2,11 +2,14 @@
 
 from datetime import datetime
 
+import pytest
 from django.test import TestCase
 from opaque_keys.edx.keys import CourseKey
 
 from openedx_events.event_bus.avro.serializer import AvroSignalSerializer
 from openedx_events.event_bus.avro.tests.test_utilities import (
+    CustomAttrsWithDefaults,
+    CustomAttrsWithoutDefaults,
     EventData,
     NestedAttrsWithDefaults,
     NestedNonAttrs,
@@ -91,7 +94,7 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
             "field_0": "a.val:a.nother.val"
         }})
 
-    def test_serialization_of_optional_fields(self):
+    def test_serialization_of_optional_simple_fields(self):
         SIGNAL = create_simple_signal({
             "data": SimpleAttrsWithDefaults
         })
@@ -104,6 +107,23 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
                                                   'int_field': None,
                                                   'string_field': None,
                                                   'attrs_field': None}})
+
+    def test_serialization_of_optional_custom_fields(self):
+        SIGNAL = create_simple_signal({"data": CustomAttrsWithDefaults})
+        serializer = AvroSignalSerializer(SIGNAL)
+        event_data = {"data": CustomAttrsWithDefaults(coursekey_field=None, datetime_field=None)}
+        data_dict = serializer.to_dict(event_data)
+        self.assertDictEqual(data_dict, {"data": {'coursekey_field': None,
+                                                  'datetime_field': None}})
+
+    def test_serialization_of_none_mandatory_custom_fields(self):
+        """Check that None isn't accepted if field not optional."""
+        SIGNAL = create_simple_signal({"data": CustomAttrsWithoutDefaults})
+        serializer = AvroSignalSerializer(SIGNAL)
+        event_data = {"data": CustomAttrsWithoutDefaults(coursekey_field=None, datetime_field=None)}
+        with pytest.raises(Exception) as excinfo:
+            serializer.to_dict(event_data)
+        assert excinfo.value.args[0] == "None cannot be handled by custom serializers (and default=None was not set)"
 
     def test_serialization_of_nested_optional_fields(self):
         SIGNAL = create_simple_signal({

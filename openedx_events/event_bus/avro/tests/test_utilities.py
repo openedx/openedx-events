@@ -3,9 +3,11 @@ Utility methods and classes for testing various modules in event_bus.avro.
 """
 import io
 import re
+from datetime import datetime
 
 import attr
 import fastavro
+from opaque_keys.edx.keys import CourseKey
 
 from openedx_events.event_bus.avro.custom_serializers import BaseCustomTypeAvroSerializer
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer
@@ -106,6 +108,20 @@ class SimpleAttrsWithDefaults:
     bytes_field = attr.ib(type=bytes, default=None)
     string_field = attr.ib(type=str, default=None)
     attrs_field = attr.ib(type=SimpleAttrs, default=None)
+
+
+@attr.s(frozen=True)
+class CustomAttrsWithDefaults:
+    """Test attrs with nullable values"""
+    coursekey_field = attr.ib(type=CourseKey, default=None)
+    datetime_field = attr.ib(type=datetime, default=None)
+
+
+@attr.s(frozen=True)
+class CustomAttrsWithoutDefaults:
+    """Test attrs without nullable values"""
+    coursekey_field = attr.ib(type=CourseKey)
+    datetime_field = attr.ib(type=datetime)
 
 
 @attr.s(frozen=True)

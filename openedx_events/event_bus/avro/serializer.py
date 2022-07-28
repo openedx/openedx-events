@@ -25,6 +25,21 @@ def _get_non_attrs_serializer(serializers=None):
     all_serializers = {**DEFAULT_SERIALIZERS, **param_serializers}
 
     def _serialize_non_attrs_values(inst, field, value):  # pylint: disable=unused-argument
+        if value is None:
+            # All default=None fields are implicit union types of NoneType
+            # and something else. (See ADR 7.) Note that if there isn't a
+            # default at all, field.default will be attrs.NOTHING, not None.
+            if field.default is None:
+                return None
+            else:
+                # Bail out early with an informative message rather
+                # than ending up with an inscrutable error from inside
+                # a custom serializer.
+                #
+                # If we ever make a custom serializer that can handle
+                # None as an input, we can remove this check.
+                raise Exception("None cannot be handled by custom serializers (and default=None was not set)")
+
         for extended_class, serializer in all_serializers.items():
             if field:
                 if issubclass(field.type, extended_class):
