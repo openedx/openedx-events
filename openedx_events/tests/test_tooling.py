@@ -1,4 +1,5 @@
-"""This file contains all test for the tooling.py file.
+"""
+This file contains all test for the tooling.py file.
 
 Classes:
     EventsToolingTest: Test events tooling.
@@ -7,6 +8,7 @@ from unittest.mock import Mock, patch
 
 import attr
 import ddt
+import pytest
 from django.test import TestCase, override_settings
 
 from openedx_events.exceptions import SenderValidationError
@@ -43,6 +45,18 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
             The representation contains the event_type.
         """
         self.assertIn(self.event_type, str(self.public_signal))
+
+    def test_get_signal_by_type(self):
+        """
+        Test found and not-found behavior.
+        """
+        assert isinstance(
+            OpenEdxPublicSignal.get_signal_by_type('org.openedx.learning.session.login.completed.v1'),
+            OpenEdxPublicSignal
+        )
+
+        with pytest.raises(KeyError):
+            OpenEdxPublicSignal.get_signal_by_type('xxx')
 
     @override_settings(SERVICE_VARIANT="lms")
     @patch("openedx_events.data.openedx_events")

@@ -57,6 +57,8 @@ class OpenEdxPublicSignal(Signal):
     def get_signal_by_type(cls, event_type):
         """
         Get event identified by type.
+
+        Raises KeyError if not found.
         """
         return cls._mapping[event_type]
 
