@@ -16,6 +16,12 @@ Unreleased
 Changed
 ~~~~~~~
 
+[0.11.1] - 2022-07-28
+---------------------
+Fixed
+~~~~~
+* Handle optional (None) values for custom serializers
+
 [0.11.0] - 2022-07-21
 ---------------------
 Added
