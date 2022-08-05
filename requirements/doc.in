@@ -3,7 +3,7 @@
 
 -r test.txt               # Core and testing dependencies for this package
 
-doc8                      # reStructuredText style checker
-edx_sphinx_theme          # edX theme for Sphinx output
-readme_renderer           # Validates README.rst for usage on PyPI
-Sphinx                    # Documentation builder
+doc8==0.10.1                      # reStructuredText style checker
+edx_sphinx_theme==3.0.0          # edX theme for Sphinx output
+readme_renderer==30.0           # Validates README.rst for usage on PyPI
+Sphinx==4.5.0                    # Documentation builder
