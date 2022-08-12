@@ -59,44 +59,44 @@ with:
 Consider the user data representation as an example:
 
 .. code-block:: python
-  @attr.s(frozen=True)
-  class CourseData:
-      """
-      Attributes defined for Open edX Course Overview object.
+    @attr.s(frozen=True)
+    class CourseData:
+        """
+        Attributes defined for Open edX Course Overview object.
 
-      Arguments:
-          course_key (str): identifier of the Course object.
-          display_name (str): display name associated with the course.
-          start (datetime): start date for the course.
-          end (datetime): end date for the course.
-      """
+        Arguments:
+            course_key (str): identifier of the Course object.
+            display_name (str): display name associated with the course.
+            start (datetime): start date for the course.
+            end (datetime): end date for the course.
+        """
 
-      course_key = attr.ib(type=CourseKey)
-      display_name = attr.ib(type=str, factory=str)
-      start = attr.ib(type=datetime, default=None)
-      end = attr.ib(type=datetime, default=None)
+        course_key = attr.ib(type=CourseKey)
+        display_name = attr.ib(type=str, factory=str)
+        start = attr.ib(type=datetime, default=None)
+        end = attr.ib(type=datetime, default=None)
 
 
-  @attr.s(frozen=True)
-  class CourseEnrollmentData:
-      """
-      Attributes defined for Open edX Course Enrollment object.
+    @attr.s(frozen=True)
+    class CourseEnrollmentData:
+        """
+        Attributes defined for Open edX Course Enrollment object.
 
-      Arguments:
-          user (UserData): user associated with the Course Enrollment.
-          course (CourseData): course where the user is enrolled in.
-          mode (str): course mode associated with the course.
-          is_active (bool): whether the enrollment is active.
-          creation_date (datetime): creation date of the enrollment.
-          created_by (UserData): if available, who created the enrollment.
-      """
+        Arguments:
+            user (UserData): user associated with the Course Enrollment.
+            course (CourseData): course where the user is enrolled in.
+            mode (str): course mode associated with the course.
+            is_active (bool): whether the enrollment is active.
+            creation_date (datetime): creation date of the enrollment.
+            created_by (UserData): if available, who created the enrollment.
+        """
 
-      user = attr.ib(type=UserData)
-      course = attr.ib(type=CourseData)
-      mode = attr.ib(type=str)
-      is_active = attr.ib(type=bool)
-      creation_date = attr.ib(type=datetime)
-      created_by = attr.ib(type=UserData, default=None)
+        user = attr.ib(type=UserData)
+        course = attr.ib(type=CourseData)
+        mode = attr.ib(type=str)
+        is_active = attr.ib(type=bool)
+        creation_date = attr.ib(type=datetime)
+        created_by = attr.ib(type=UserData, default=None)
 
 4. Create the event definition
 ------------------------------
@@ -118,17 +118,17 @@ The definition created in this step must comply with:
 Consider the following example:
 
 .. code-block:: python
-  # Location openedx_events/learning/signals.py
-  # .. event_type: org.openedx.learning.course.enrollment.created.v1
-  # .. event_name: COURSE_ENROLLMENT_CREATED
-  # .. event_description: emitted when the user's enrollment process is completed.
-  # .. event_data: CourseEnrollmentData
-  COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
-      event_type="org.openedx.learning.course.enrollment.created.v1",
-      data={
-          "enrollment": CourseEnrollmentData,
-      }
-  )
+    # Location openedx_events/learning/signals.py
+    # .. event_type: org.openedx.learning.course.enrollment.created.v1
+    # .. event_name: COURSE_ENROLLMENT_CREATED
+    # .. event_description: emitted when the user's enrollment process is completed.
+    # .. event_data: CourseEnrollmentData
+    COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
+        event_type="org.openedx.learning.course.enrollment.created.v1",
+        data={
+            "enrollment": CourseEnrollmentData,
+        }
+    )
 
 5. Integrate into service
 -------------------------
@@ -145,22 +145,22 @@ Before opening a PR in the service project, refer to its contribution guidelines
 Consider the integration of the event ``STUDENT_REGISTRATION_COMPLETED`` as an example:
 
 .. code-block:: python
-  # Location openedx/core/djangoapps/user_authn/views/register.py
-  # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
-  COURSE_ENROLLMENT_CREATED.send_event(
-      enrollment=CourseEnrollmentData(
-          user=UserData(
-              pii=UserPersonalData(
-                  username=user.username,
-                  email=user.email,
-                  name=user.profile.name,
-              ),
-              id=user.id,
-              is_active=user.is_active,
-          ),
-          course=course_data,
-          mode=enrollment.mode,
-          is_active=enrollment.is_active,
-          creation_date=enrollment.created,
-      )
-  )
+    # Location openedx/core/djangoapps/user_authn/views/register.py
+    # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
+    COURSE_ENROLLMENT_CREATED.send_event(
+        enrollment=CourseEnrollmentData(
+            user=UserData(
+                pii=UserPersonalData(
+                    username=user.username,
+                    email=user.email,
+                    name=user.profile.name,
+                ),
+                id=user.id,
+                is_active=user.is_active,
+            ),
+            course=course_data,
+            mode=enrollment.mode,
+            is_active=enrollment.is_active,
+            creation_date=enrollment.created,
+        )
+    )
