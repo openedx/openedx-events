@@ -12,13 +12,38 @@ When creating a new event, you must justify its implementation. For example, you
 send a message through slack or open a new issue in the library repository listing your use cases for it. Or even,
 if you have time, you could accompany your proposal with the implementation of the event to illustrate its behavior.
 
+2. Place your event in an architecture subdomain
+-------------------------------------------------
 
-2. Create the data attributes for the event (OEP-49)
+As specified in the Architectural Decisions Record (ADR) events naming and versioning, the event definition needs an Open edX Architecture
+Subdomain for:
+
+- The name of the event: ``{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}``
+- The package name where the definition will live, eg. ``learning/signals.py`` or ``
+
+For those reasons, after studying your new event purpose, you must place it in one of the subdomains supported by the project:
+
++----------------+----------------------------------------------------------------------------------------------------+
+| Subdomain name | Description                                                                                        |
++================+====================================================================================================+
+| Authoring      | Allows educators to create, modify, discover, package, annotate (tag), and share learning content. |
++----------------+----------------------------------------------------------------------------------------------------+
+| Learning       | Allows learners to consume content and perform actions in a learning activity on the platform.     |
++----------------+----------------------------------------------------------------------------------------------------+
+| Discovery      | Allows learners to find the right content at the right time to help achieve their learning goals.  |
++----------------+----------------------------------------------------------------------------------------------------+
+| Enterprise     | ???                                                                                                |
++----------------+----------------------------------------------------------------------------------------------------+
+| Programs       | Allows educators and learners to manage and engage in bundled packages (programs) of learning.     |
++----------------+----------------------------------------------------------------------------------------------------+
+
+Refer to `edX DDD Bounded Contexts <https://openedx.atlassian.net/l/cp/vf8XjRiX>`_ confluence page for more documentation on domain-driven design in the Open edX project.
+
+3. Create the data attributes for the event (OEP-49)
 ----------------------------------------------------
 
-Events send data attribute instances when triggered. Therefore, when designing your new event definition you must
-decided if an existent data attribute class works for your use case or you must create a new one. If the answer is
-the latter, then try to answer:
+Events send `data attributes <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0049-django-app-patterns.html#data-py>`_ when triggered. Therefore, when designing your new event definition you must
+decide if an existent data class works for your use case or you must create a new one. If the answer is the latter, then try to answer:
 
 - Which attributes of the object are the most relevant?
 - Which type are they?
@@ -27,11 +52,53 @@ the latter, then try to answer:
 And with that information, create the new class justifying each decision. The class created in this step must comply
 with:
 
-- It should be created in the `data.py` file in the corresponding subdomain. Refer to Naming Conventions ADR for more
+- It should be created in the `data.py` file, as described in the OEP-49, in the corresponding architectural subdomain. Refer to Naming Conventions ADR for more
   on events subdomains.
-- It should follow the naming conventions specified in...
+- It should follow the naming conventions used across the other events definitions.
 
-3. Create the event definition
+Consider the user data representation as an example:
+
+.. code-block:: python
+  @attr.s(frozen=True)
+  class CourseData:
+      """
+      Attributes defined for Open edX Course Overview object.
+
+      Arguments:
+          course_key (str): identifier of the Course object.
+          display_name (str): display name associated with the course.
+          start (datetime): start date for the course.
+          end (datetime): end date for the course.
+      """
+
+      course_key = attr.ib(type=CourseKey)
+      display_name = attr.ib(type=str, factory=str)
+      start = attr.ib(type=datetime, default=None)
+      end = attr.ib(type=datetime, default=None)
+
+
+  @attr.s(frozen=True)
+  class CourseEnrollmentData:
+      """
+      Attributes defined for Open edX Course Enrollment object.
+
+      Arguments:
+          user (UserData): user associated with the Course Enrollment.
+          course (CourseData): course where the user is enrolled in.
+          mode (str): course mode associated with the course.
+          is_active (bool): whether the enrollment is active.
+          creation_date (datetime): creation date of the enrollment.
+          created_by (UserData): if available, who created the enrollment.
+      """
+
+      user = attr.ib(type=UserData)
+      course = attr.ib(type=CourseData)
+      mode = attr.ib(type=str)
+      is_active = attr.ib(type=bool)
+      creation_date = attr.ib(type=datetime)
+      created_by = attr.ib(type=UserData, default=None)
+
+4. Create the event definition
 ------------------------------
 
 Open edX Events are instances of the class OpenEdxPublicSignal, this instance represents the event definition that
@@ -48,13 +115,52 @@ The definition created in this step must comply with:
 - It must be documented using in-line documentation with at least: `event_type`, `event_name`, `event_description` and
   `event_data`.
 
-4. Integrate into service
+Consider the following example:
+
+.. code-block:: python
+  # Location openedx_events/learning/signals.py
+  # .. event_type: org.openedx.learning.course.enrollment.created.v1
+  # .. event_name: COURSE_ENROLLMENT_CREATED
+  # .. event_description: emitted when the user's enrollment process is completed.
+  # .. event_data: CourseEnrollmentData
+  COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
+      event_type="org.openedx.learning.course.enrollment.created.v1",
+      data={
+          "enrollment": CourseEnrollmentData,
+      }
+  )
+
+5. Integrate into service
 -------------------------
 
 After or during the events definition implementation, you now must trigger the event in the service you intentioned. Meaning:
 
 - Add the openedx-events library to the service project.
 - Import the events' data and definition into the place where will be triggered. Remember the Open edX Events purpose when
-  choosing a place to send the new event
+  choosing a place to send the new event.
+- Add inline documentation with the event implemented name.
 
 Before opening a PR in the service project, refer to its contribution guidelines.
+
+Consider the integration of the event ``STUDENT_REGISTRATION_COMPLETED`` as an example:
+
+.. code-block:: python
+  # Location openedx/core/djangoapps/user_authn/views/register.py
+  # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
+  COURSE_ENROLLMENT_CREATED.send_event(
+      enrollment=CourseEnrollmentData(
+          user=UserData(
+              pii=UserPersonalData(
+                  username=user.username,
+                  email=user.email,
+                  name=user.profile.name,
+              ),
+              id=user.id,
+              is_active=user.is_active,
+          ),
+          course=course_data,
+          mode=enrollment.mode,
+          is_active=enrollment.is_active,
+          creation_date=enrollment.created,
+      )
+  )
