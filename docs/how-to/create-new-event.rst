@@ -19,7 +19,7 @@ As specified in the Architectural Decisions Record (ADR) events naming and versi
 Subdomain for:
 
 - The name of the event: ``{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}``
-- The package name where the definition will live, eg. ``learning/signals.py`` or ``
+- The package name where the definition will live, eg. ``learning/`` or ``content_authoring/``.
 
 For those reasons, after studying your new event purpose, you must place it in one of the subdomains supported by the project:
 
