@@ -57,6 +57,7 @@ with:
 Consider the user data representation as an example:
 
 .. code-block:: python
+
     @attr.s(frozen=True)
     class CourseData:
         """
@@ -116,6 +117,7 @@ The definition created in this step must comply with:
 Consider the following example:
 
 .. code-block:: python
+
     # Location openedx_events/learning/signals.py
     # .. event_type: org.openedx.learning.course.enrollment.created.v1
     # .. event_name: COURSE_ENROLLMENT_CREATED
@@ -143,6 +145,7 @@ Before opening a PR in the service project, refer to its contribution guidelines
 Consider the integration of the event ``STUDENT_REGISTRATION_COMPLETED`` as an example:
 
 .. code-block:: python
+
     # Location openedx/core/djangoapps/user_authn/views/register.py
     # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
     COURSE_ENROLLMENT_CREATED.send_event(
