@@ -32,8 +32,6 @@ For those reasons, after studying your new event purpose, you must place it in o
 +----------------+----------------------------------------------------------------------------------------------------+
 | Discovery      | Allows learners to find the right content at the right time to help achieve their learning goals.  |
 +----------------+----------------------------------------------------------------------------------------------------+
-| Enterprise     | ???                                                                                                |
-+----------------+----------------------------------------------------------------------------------------------------+
 | Programs       | Allows educators and learners to manage and engage in bundled packages (programs) of learning.     |
 +----------------+----------------------------------------------------------------------------------------------------+
 
