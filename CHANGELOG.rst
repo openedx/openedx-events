@@ -13,8 +13,13 @@ Change Log
 
 Unreleased
 ----------
+
+[0.12.0] - 2022-08-16
+---------------------
 Changed
 ~~~~~~~
+* **Breaking change**: Removed ``org`` and ``number`` fields from ``CourseCatalogData``
+  (should only affect unreleased event-bus code, though)
 
 [0.11.1] - 2022-07-28
 ---------------------

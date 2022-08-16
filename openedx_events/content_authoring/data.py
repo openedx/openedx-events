@@ -41,8 +41,6 @@ class CourseCatalogData:
     Arguments:
         course_key (CourseKey): identifier of the Course object.
         name (str): course name
-        org (str): course organization identifier
-        number (str): course number
         schedule_data (CourseScheduleData): scheduling information for the course
         short_description (str): one- or two-sentence course description (optional)
         effort (str): estimated level of effort in hours per week (optional). Kept as a str to align with the lms model.
@@ -53,8 +51,6 @@ class CourseCatalogData:
     # basic identifiers
     course_key = attr.ib(type=CourseKey)
     name = attr.ib(type=str)
-    number = attr.ib(type=str)
-    org = attr.ib(type=str)
 
     # additional marketing information
     schedule_data = attr.ib(type=CourseScheduleData)
