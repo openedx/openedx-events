@@ -34,7 +34,7 @@ def generate_test_event_data_for_data_type(data_type):
     """
     Generates test data for use in the event bus test cases.
 
-    Builds data by filling in dummy data for basic data types (int/bool/str)
+    Builds data by filling in dummy data for basic data types (int/float/bool/str)
     and recursively breaks down the classes for nested classes into basic data types.
 
     Arguments:
@@ -48,6 +48,7 @@ def generate_test_event_data_for_data_type(data_type):
         int: 1,
         bool: True,
         str: "default",
+        float: 1.0,
         CourseKey: CourseKey.from_string("course-v1:edX+DemoX.1+2014"),
         datetime: datetime.now(),
     }

@@ -191,3 +191,29 @@ class CourseDiscussionConfigurationData:
     unit_level_visibility = attr.ib(type=bool, default=False)
     plugin_configuration = attr.ib(type=dict, default={})
     contexts = attr.ib(type=List[DiscussionTopicContext], factory=list)
+
+
+@attr.s(frozen=True)
+class PersistentCourseGradeData:
+    """
+    Attributes defined for Open edX PersistentCourseGrade data object.
+
+    Arguments:
+        user_id (int): identifier of the grade to which the grade belongs.
+        course (CourseData): Identifier of the course to which the grade belongs.
+        course_edited_timestamp (datetime): date the course was edited.
+        course_version (str): version of the course.
+        grading_policy_hash (str): grading policy hash of the course.
+        percent_grade (float): percentage of the grade.
+        letter_grade (str): grade in letter
+        passed_timestamp (datetime): date the course was passed.
+    """
+
+    user_id = attr.ib(type=int)
+    course = attr.ib(type=CourseData)
+    course_edited_timestamp = attr.ib(type=datetime)
+    course_version = attr.ib(type=str)
+    grading_policy_hash = attr.ib(type=str)
+    percent_grade = attr.ib(type=float)
+    letter_grade = attr.ib(type=str)
+    passed_timestamp = attr.ib(type=datetime)
