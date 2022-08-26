@@ -70,11 +70,11 @@ with open(os.path.join(os.path.dirname(__file__), 'CHANGELOG.rst')) as changelog
 setup(
     name='openedx-events',
     version=VERSION,
-    description="""What is this project?""",
+    description="""Open edX events from the Hooks Extensions Framework""",
     long_description=README + '\n\n' + CHANGELOG,
     author='edX',
     author_email='oscm@edx.org',
-    url='https://github.com/edx/openedx-events',
+    url='https://github.com/openedx/openedx-events',
     packages=[
         'openedx_events',
     ],
