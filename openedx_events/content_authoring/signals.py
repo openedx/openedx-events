@@ -1,5 +1,5 @@
 """
-Signal definitions for events within the architecture subdomain ``content_authoring``.
+Standardized signals definitions for events within the architecture subdomain ``content_authoring``.
 
 All signals defined in this module must follow the name and versioning
 conventions specified in OEP-41.

@@ -1,5 +1,5 @@
 """
-Custom signals definitions that representing the Open edX platform events.
+Standardized signals definitions for events within the architecture subdomain ``enterprise``.
 
 All signals defined in this module must follow the name and versioning
 conventions specified in docs/decisions/0002-events-naming-and-versioning.rst

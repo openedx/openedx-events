@@ -16,7 +16,7 @@ log = getLogger(__name__)
 
 class OpenEdxPublicSignal(Signal):
     """
-    Custom class used to create Open edX events.
+    Standardized Django Signals used to create Open edX events.
     """
 
     _mapping = {}
@@ -58,7 +58,11 @@ class OpenEdxPublicSignal(Signal):
         """
         Get event identified by type.
 
-        Raises KeyError if not found.
+        Arguments:
+            event_type (str): name of the event.
+
+        Exceptions raised:
+            Raises KeyError if not found.
         """
         return cls._mapping[event_type]
 
@@ -93,9 +97,10 @@ class OpenEdxPublicSignal(Signal):
         Send events to all connected receivers.
 
         Used to send events just like Django signals are sent. In addition,
-        some validations are run on the arguments, and then relevant metadata
-        that can be used for logging or debugging purposes is generated.
-        Besides this behavior, send_event behaves just like the send method.
+        some validations are executed on the arguments, and then generates relevant
+        metadata that can be used for logging or debugging purposes. Besides this behavior,
+        send_event behaves just like the send method.
+
         If the event is disabled (i.e _allow_events is False), then this method
         won't have any effect. Meaning, the Django Signal won't be sent.
 
