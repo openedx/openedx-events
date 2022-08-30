@@ -33,7 +33,7 @@ class UserPersonalData:
     Arguments:
         username (str): username associated with the Open edX user.
         email (str): email associated with the Open edX user.
-        name (str): email associated with the Open edX user's profile.
+        name (str): name associated with the Open edX user's profile.
     """
 
     username = attr.ib(type=str)
@@ -82,7 +82,7 @@ class CourseEnrollmentData:
     Arguments:
         user (UserData): user associated with the Course Enrollment.
         course (CourseData): course where the user is enrolled in.
-        mode (str): course mode associated with the course.
+        mode (str): course mode associated with the course enrollment.
         is_active (bool): whether the enrollment is active.
         creation_date (datetime): creation date of the enrollment.
         created_by (UserData): if available, who created the enrollment.
@@ -104,12 +104,12 @@ class CertificateData:
     Arguments:
         user (UserData): user associated with the Certificate.
         course (CourseData): course where the user obtained the certificate.
-        mode (str): course mode associated with the course.
+        mode (str): course mode associated with the course enrollment.
         grade (str): user's grade in this course run.
-        current_status (str): current certificate status.
-        previous_status (str): if available, pre-event certificate status.
         download_url (str): URL where the PDF version of the certificate.
         name (str): user's name.
+        current_status (str): current certificate status.
+        previous_status (str): if available, pre-event certificate status.
     """
 
     user = attr.ib(type=UserData)
@@ -178,6 +178,7 @@ class CourseDiscussionConfigurationData:
         provider_type (str): provider type from discussion settings.
         enable_in_context (bool): indicates whether in-context discussion is enabled for the course
         enable_graded_units (bool): If enabled, discussion topics will be created for graded units as well.
+        unit_level_visibility (bool): visibility for unit level.
         plugin_configuration (dict): The plugin configuration data for this context/provider.
         contexts (List[DiscussionTopicContext]): contains all the contexts for which discussion
         is to be enabled.
