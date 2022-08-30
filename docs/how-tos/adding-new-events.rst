@@ -112,7 +112,19 @@ The definition created in this step must comply with:
   on events subdomains.
 - It should follow the naming conventions specified in Naming Conventions ADR.
 - It must be documented using in-line documentation with at least: `event_type`, `event_name`, `event_description` and
-  `event_data`.
+  `event_data`:
+
++-------------------+----------------------------------------------------------------------------------------------------+
+| Annotation        | Description                                                                                        |
++===================+====================================================================================================+
+| event_type        | Allows educators to create, modify, discover, package, annotate (tag), and share learning content. |
++-------------------+----------------------------------------------------------------------------------------------------+
+| event_name        | Allows learners to consume content and perform actions in a learning activity on the platform.     |
++-------------------+----------------------------------------------------------------------------------------------------+
+| event_description | Allows learners to find the right content at the right time to help achieve their learning goals.  |
++-------------------+----------------------------------------------------------------------------------------------------+
+| event_data        | Allows educators and learners to manage and engage in bundled packages (programs) of learning.     |
++-------------------+----------------------------------------------------------------------------------------------------+
 
 Consider the following example:
 
@@ -128,40 +140,4 @@ Consider the following example:
         data={
             "enrollment": CourseEnrollmentData,
         }
-    )
-
-5. Integrate into service
--------------------------
-
-After or during the events definition implementation, you now must trigger the event in the service you intentioned. Meaning:
-
-- Add the openedx-events library to the service project.
-- Import the events' data and definition into the place where will be triggered. Remember the Open edX Events purpose when
-  choosing a place to send the new event.
-- Add inline documentation with the event implemented name.
-
-Before opening a PR in the service project, refer to its contribution guidelines.
-
-Consider the integration of the event ``STUDENT_REGISTRATION_COMPLETED`` as an example:
-
-.. code-block:: python
-
-    # Location openedx/core/djangoapps/user_authn/views/register.py
-    # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
-    COURSE_ENROLLMENT_CREATED.send_event(
-        enrollment=CourseEnrollmentData(
-            user=UserData(
-                pii=UserPersonalData(
-                    username=user.username,
-                    email=user.email,
-                    name=user.profile.name,
-                ),
-                id=user.id,
-                is_active=user.is_active,
-            ),
-            course=course_data,
-            mode=enrollment.mode,
-            is_active=enrollment.is_active,
-            creation_date=enrollment.created,
-        )
     )
