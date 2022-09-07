@@ -18,6 +18,7 @@ ddt==1.6.0
     # via -r requirements/test.in
 django==2.2.28
     # via
+    #   -c requirements/common_constraints.txt
     #   -c requirements/constraints.txt
     #   -r requirements/base.txt
 edx-opaque-keys[django]==2.3.0
