@@ -33,6 +33,7 @@ Contents:
    decisions/0006-event-schema-serialization-and-evolution
    decisions/0007-optional-fields
    decisions/0008-signals-with-pii
+   decisions/0009-course-catalog-info-changed-design
 
 
 Indices and tables
