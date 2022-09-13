@@ -143,6 +143,11 @@ file in this repo.
 
 .. _Backstage: https://backstage.openedx.org/catalog/default/component/openedx-events
 
+Reporting Security Issues
+*************************
+
+Please do not report security issues in public. Please email security@tcril.org.
+
 .. |pypi-badge| image:: https://img.shields.io/pypi/v/openedx-events.svg
     :target: https://pypi.python.org/pypi/openedx-events/
     :alt: PyPI
