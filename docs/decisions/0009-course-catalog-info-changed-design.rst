@@ -23,7 +23,9 @@ In Discovery, if Publisher is not enabled, the consumer will log a warning and n
 Rationale
 ---------
 
-The way we update media information in refresh-course-metadata is quite haphazard, with no real standard way of sending over the information or of storing it on the Discovery end. Replicating these structures in the COURSE_CATALOG_INFO_CHANGED signal would make the data definition confusing. Moreover, edx.org has Publisher enabled and would thus ignore these fields anyway.
+The way we update media information in refresh-course-metadata is quite haphazard, with no real standard way of sending over the information or of storing it on the Discovery end. Replicating these structures in the COURSE_CATALOG_INFO_CHANGED signal would make the data definition confusing.
+
+Until these fields are needed by a consumer in a non-Publisher environment (if ever), it makes sense to defer trying to find a good solution to this problem.
 
 Deferred work
 -------------
