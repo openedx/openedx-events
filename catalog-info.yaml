@@ -7,6 +7,9 @@ metadata:
     - url: "http://github.com/openedx/openedx-events"
       title: "Source Code"
       icon: "Code"
+    - url: "https://openedx-events.readthedocs.io"
+      title: "Read the Docs documentation"
+      icon: "Docs"
   annotations:
     openedx.org/arch-interest-groups: "mariajgrimaldi,felipemontoya"
 spec:
