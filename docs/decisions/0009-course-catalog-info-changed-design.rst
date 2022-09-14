@@ -18,7 +18,7 @@ Decision
 
 The COURSE_CATALOG_INFO_CHANGED will only contain the information necessary to work in a Publisher-enabled environment. In particular, this means it will not contain the ``media`` field usually present in the Studio ``/courses`` API endpoint.
 
-In Discovery, if Publisher is not enabled, the consumer will simply ignore the event and not try to update anything.
+In Discovery, if Publisher is not enabled, the consumer will log a warning and not try to update anything.
 
 Rationale
 ---------
