@@ -14,7 +14,7 @@ babel==2.10.3
     # via sphinx
 bleach==5.0.1
     # via readme-renderer
-certifi==2022.6.15.1
+certifi==2022.9.14
     # via requests
 cffi==1.15.1
     # via cryptography
@@ -55,7 +55,7 @@ edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
 fastavro==1.6.1
     # via -r requirements/test.txt
-idna==3.3
+idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
@@ -79,7 +79,7 @@ jinja2==3.1.2
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinx
-keyring==23.9.1
+keyring==23.9.3
     # via twine
 markupsafe==2.1.1
     # via
