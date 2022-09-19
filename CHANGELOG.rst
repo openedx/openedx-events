@@ -15,6 +15,10 @@ Unreleased
 ----------
 * **Breaking Change**: Updated from ``Django 2.0`` to ``Django 3.0``.
 
+* Improvements in make upgrade command and requirements files.
+* Manually update requirements files to fix requirements bot issue with pip/setup tools.
+* Change GitHub workflow to community maintained repository health file.
+
 [0.12.0] - 2022-08-16
 ---------------------
 Changed
