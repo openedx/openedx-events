@@ -13,6 +13,11 @@ Change Log
 
 Unreleased
 ----------
+[0.13.0] - 2022-09-16
+---------------------
+Added
+~~~~~
+* Added new event PERSISTENT_GRADE_SUMMARY_CHANGED.
 
 * Improvements in make upgrade command and requirements files.
 * Manually update requirements files to fix requirements bot issue with pip/setup tools.
