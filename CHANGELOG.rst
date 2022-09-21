@@ -13,6 +13,13 @@ Change Log
 
 Unreleased
 ----------
+
+[0.14.0] - 2022-09-21
+---------------------
+Changed
+~~~~~~~
+* **Breaking change**: Removed ``short_description`` from ``CourseCatalogData``
+
 [0.13.0] - 2022-09-16
 ---------------------
 Added
