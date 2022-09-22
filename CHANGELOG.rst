@@ -13,7 +13,11 @@ Change Log
 
 Unreleased
 ----------
+
+[1.0.0] - 2022-09-27
+--------------------
 * **Breaking Change**: Updated from ``Django 2.0`` to ``Django 3.0``.
+* Bump version to 1.x to acknowledge that this is in use in production
 
 [0.14.0] - 2022-09-21
 ---------------------
