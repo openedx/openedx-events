@@ -8,7 +8,7 @@ asgiref==3.5.2
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.12.9
+astroid==2.12.10
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -25,7 +25,7 @@ build==0.8.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-certifi==2022.6.15.1
+certifi==2022.9.24
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -75,7 +75,7 @@ cryptography==38.0.1
     #   secretstorage
 ddt==1.6.0
     # via -r requirements/quality.txt
-diff-cover==6.5.1
+diff-cover==7.0.1
     # via -r requirements/dev.in
 dill==0.3.5.1
     # via
@@ -93,7 +93,7 @@ docutils==0.19
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-edx-lint==5.2.5
+edx-lint==5.3.0
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/quality.txt
@@ -104,7 +104,7 @@ filelock==3.8.0
     #   -r requirements/ci.txt
     #   tox
     #   virtualenv
-idna==3.3
+idna==3.4
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -136,7 +136,7 @@ jinja2==3.1.2
     #   -r requirements/quality.txt
     #   code-annotations
     #   diff-cover
-keyring==23.9.1
+keyring==23.9.3
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -211,7 +211,7 @@ pygments==2.13.0
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.15.2
+pylint==2.15.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -262,7 +262,7 @@ pyyaml==6.0
     # via
     #   -r requirements/quality.txt
     #   code-annotations
-readme-renderer==37.1
+readme-renderer==37.2
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -300,7 +300,7 @@ snowballstemmer==2.2.0
     # via
     #   -r requirements/quality.txt
     #   pydocstyle
-sqlparse==0.4.2
+sqlparse==0.4.3
     # via
     #   -r requirements/quality.txt
     #   django
