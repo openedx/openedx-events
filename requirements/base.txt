@@ -4,12 +4,13 @@
 #
 #    make upgrade
 #
+asgiref==3.5.2
+    # via django
 attrs==22.1.0
     # via -r requirements/base.in
-django==2.2.28
+django==3.2.15
     # via
     #   -c requirements/common_constraints.txt
-    #   -c requirements/constraints.txt
     #   -r requirements/base.in
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/base.in

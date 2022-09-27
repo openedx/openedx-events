@@ -6,6 +6,10 @@
 #
 alabaster==0.7.12
     # via sphinx
+asgiref==3.5.2
+    # via
+    #   -r requirements/test.txt
+    #   django
 attrs==22.1.0
     # via
     #   -r requirements/test.txt
@@ -36,10 +40,9 @@ cryptography==38.0.1
     # via secretstorage
 ddt==1.6.0
     # via -r requirements/test.txt
-django==2.2.28
+django==3.2.15
     # via
     #   -c requirements/common_constraints.txt
-    #   -c requirements/constraints.txt
     #   -r requirements/test.txt
 doc8==1.0.0
     # via -r requirements/doc.in

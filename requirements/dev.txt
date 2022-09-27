@@ -4,6 +4,10 @@
 #
 #    make upgrade
 #
+asgiref==3.5.2
+    # via
+    #   -r requirements/quality.txt
+    #   django
 astroid==2.12.9
     # via
     #   -r requirements/quality.txt
@@ -81,10 +85,9 @@ distlib==0.3.6
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==2.2.28
+django==3.2.15
     # via
     #   -c requirements/common_constraints.txt
-    #   -c requirements/constraints.txt
     #   -r requirements/quality.txt
 docutils==0.19
     # via
