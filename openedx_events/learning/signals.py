@@ -13,6 +13,7 @@ from openedx_events.learning.data import (
     CohortData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
+    PersistentCourseGradeData,
     UserData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -134,5 +135,16 @@ COURSE_DISCUSSIONS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.discussions.configuration.changed.v1",
     data={
         "configuration": CourseDiscussionConfigurationData
+    }
+)
+
+# .. event_type: org.openedx.learning.course.persistent_grade.summary.v1
+# .. event_name: PERSISTENT_GRADE_SUMMARY_CHANGED
+# .. event_description: emitted when a grade changes in the course
+# .. event_data: PersistentCourseGradeData
+PERSISTENT_GRADE_SUMMARY_CHANGED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.persistent_grade_summary.changed.v1",
+    data={
+        "grade": PersistentCourseGradeData,
     }
 )

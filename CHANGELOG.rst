@@ -15,6 +15,18 @@ Unreleased
 ----------
 * **Breaking Change**: Updated from ``Django 2.0`` to ``Django 3.0``.
 
+[0.14.0] - 2022-09-21
+---------------------
+Changed
+~~~~~~~
+* **Breaking change**: Removed ``short_description`` from ``CourseCatalogData``
+
+[0.13.0] - 2022-09-16
+---------------------
+Added
+~~~~~
+* Added new event PERSISTENT_GRADE_SUMMARY_CHANGED.
+
 * Improvements in make upgrade command and requirements files.
 * Manually update requirements files to fix requirements bot issue with pip/setup tools.
 * Change GitHub workflow to community maintained repository health file.

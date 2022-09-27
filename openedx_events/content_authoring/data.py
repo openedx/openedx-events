@@ -42,7 +42,6 @@ class CourseCatalogData:
         course_key (CourseKey): identifier of the Course object.
         name (str): course name
         schedule_data (CourseScheduleData): scheduling information for the course
-        short_description (str): one- or two-sentence course description (optional)
         effort (str): estimated level of effort in hours per week (optional). Kept as a str to align with the lms model.
         hidden (bool): whether the course is hidden from search (optional)
         invitation_only (bool): whether the course requires an invitation to enroll
@@ -54,7 +53,6 @@ class CourseCatalogData:
 
     # additional marketing information
     schedule_data = attr.ib(type=CourseScheduleData)
-    short_description = attr.ib(type=str, default=None)
     effort = attr.ib(type=str, default=None)
     hidden = attr.ib(type=bool, default=False)
     invitation_only = attr.ib(type=bool, default=False)
