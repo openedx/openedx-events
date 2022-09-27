@@ -22,7 +22,7 @@ pymongo==3.12.3
     # via edx-opaque-keys
 pytz==2022.2.1
     # via django
-sqlparse==0.4.2
+sqlparse==0.4.3
     # via django
 stevedore==4.0.0
     # via edx-opaque-keys
