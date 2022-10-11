@@ -20,7 +20,7 @@ coverage[toml]==6.5.0
     # via pytest-cov
 ddt==1.6.0
     # via -r requirements/test.in
-django==3.2.15
+django==3.2.16
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/base.txt
