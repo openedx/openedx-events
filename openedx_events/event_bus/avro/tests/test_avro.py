@@ -8,7 +8,6 @@ from opaque_keys.edx.keys import CourseKey
 #   and used in the unit tests. Using 'disable=reimported' with pylint will work,
 #   because we just use the cached signal list.
 from openedx_events.content_authoring import signals  # pylint: disable=unused-import
-from openedx_events.enterprise import signals  # pylint: disable=reimported
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer
 from openedx_events.event_bus.avro.serializer import AvroSignalSerializer
 from openedx_events.event_bus.avro.tests.test_utilities import (

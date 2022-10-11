@@ -14,6 +14,10 @@ Change Log
 Unreleased
 ----------
 
+[2.0.0] - 2022-10-13
+--------------------
+* **Breaking change**: Removed signal ``SUBSCRIPTION_LICENSE_MODIFIED`` and corresponding data class ``SubscriptionLicenseData``. This should only affect experimental event-bus code (which should also have been deleted by now).
+
 [1.0.0] - 2022-09-27
 --------------------
 * **Breaking Change**: Updated from ``Django 2.0`` to ``Django 3.0``.
