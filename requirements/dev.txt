@@ -8,7 +8,7 @@ asgiref==3.5.2
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.12.10
+astroid==2.12.11
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -211,7 +211,7 @@ pygments==2.13.0
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.15.3
+pylint==2.15.4
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -304,7 +304,7 @@ sqlparse==0.4.3
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==4.0.0
+stevedore==4.0.1
     # via
     #   -r requirements/quality.txt
     #   code-annotations
