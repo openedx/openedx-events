@@ -14,7 +14,7 @@ Change Log
 Unreleased
 ----------
 
-[2.0.0] - 2022-10-13
+[2.0.0] - 2022-10-18
 --------------------
 * **Breaking change**: Removed signal ``SUBSCRIPTION_LICENSE_MODIFIED`` and corresponding data class ``SubscriptionLicenseData``. This should only affect experimental event-bus code (which should also have been deleted by now).
 
