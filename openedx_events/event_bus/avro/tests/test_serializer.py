@@ -1,5 +1,6 @@
 """Tests for avro.serializer module."""
 
+import json
 from datetime import datetime
 
 import pytest
@@ -14,6 +15,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     NestedAttrsWithDefaults,
     NestedNonAttrs,
     NonAttrs,
+    SimpleAttrs,
     SimpleAttrsWithDefaults,
     SpecialSerializer,
     SubTestData0,
@@ -25,6 +27,37 @@ from openedx_events.tests.utils import FreezeSignalCacheMixin
 
 class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
     """Tests for AvroSignalSerializer."""
+
+    def test_schema_string(self):
+        """
+        Test JSON round-trip; schema creation is tested more fully in test_schema.py.
+        """
+        SIGNAL = create_simple_signal({
+            "data": SimpleAttrs
+        })
+        actual_schema = json.loads(AvroSignalSerializer(SIGNAL).schema_string())
+        expected_schema = {
+            'name': 'CloudEvent',
+            'type': 'record',
+            'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
+            'fields': [
+                {
+                    'name': 'data',
+                    'type': {
+                        'name': 'SimpleAttrs',
+                        'type': 'record',
+                        'fields': [
+                            {'name': 'boolean_field', 'type': 'boolean'},
+                            {'name': 'int_field', 'type': 'long'},
+                            {'name': 'float_field', 'type': 'double'},
+                            {'name': 'bytes_field', 'type': 'bytes'},
+                            {'name': 'string_field', 'type': 'string'},
+                        ]
+                    }
+                }
+            ]
+        }
+        assert actual_schema == expected_schema
 
     def test_convert_event_data_to_dict(self):
         """

@@ -4,6 +4,7 @@ This file contains all test for the tooling.py file.
 Classes:
     EventsToolingTest: Test events tooling.
 """
+from contextlib import contextmanager
 from unittest.mock import Mock, patch
 
 import attr
@@ -14,6 +15,21 @@ from django.test import TestCase, override_settings
 from openedx_events.exceptions import SenderValidationError
 from openedx_events.tests.utils import FreezeSignalCacheMixin
 from openedx_events.tooling import OpenEdxPublicSignal
+
+
+@contextmanager
+def receivers_attached(signal, receivers):
+    """
+    Attach the receivers to the signal for the duration of the context.
+    """
+    try:
+        for receiver in receivers:
+            signal.connect(receiver)
+
+        yield
+    finally:
+        for receiver in receivers:
+            signal.disconnect(receiver)
 
 
 @ddt.ddt
@@ -36,6 +52,14 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
             event_type=self.event_type,
             data=self.data_attr,
         )
+
+        self.receiver_error = Exception("fake error")
+
+        def error_receiver(*args, **kwargs):
+            raise self.receiver_error
+
+        self.ok_receiver = Mock(return_value="success")
+        self.error_receiver = error_receiver
 
     def test_string_representation(self):
         """
@@ -104,8 +128,9 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         )
 
     @patch("openedx_events.tooling.OpenEdxPublicSignal.generate_signal_metadata")
-    @patch("openedx_events.tooling.Signal.send_robust")
-    def test_send_robust_event_successfully(self, send_robust_mock, fake_metadata):
+    @patch("openedx_events.tooling.log", autospec=True)
+    @patch("openedx_events.tooling.format_responses", autospec=True, return_value="fake-output")
+    def test_send_robust_event_successfully(self, format_responses_mock, log_mock, fake_metadata):
         """
         This method tests the process of sending an event that won't crash.
 
@@ -114,14 +139,20 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         """
         expected_metadata = Mock(some_data="some_data")
         fake_metadata.return_value = expected_metadata
-        send_robust_mock.return_value.__name__ = "func_name"
 
-        self.public_signal.send_event(user=self.user_mock)
+        with receivers_attached(self.public_signal, [self.ok_receiver, self.error_receiver]):
+            self.public_signal.send_event(user=self.user_mock)
 
-        send_robust_mock.assert_called_once_with(
-            sender=None,
-            user=self.user_mock,
-            metadata=expected_metadata,
+        self.ok_receiver.assert_called_once_with(
+            signal=self.public_signal, sender=None, user=self.user_mock, metadata=expected_metadata
+        )
+        # format_responses is mocked out because its output is
+        # complicated enough to warrant its own set of tests.
+        format_responses_mock.assert_called_once_with(
+            [(self.ok_receiver, "success"), (self.error_receiver, self.receiver_error)], depth=2
+        )
+        log_mock.info.assert_called_once_with(
+            "Responses of the Open edX Event <org.openedx.learning.session.login.completed.v1>: \nfake-output"
         )
 
     @ddt.data(

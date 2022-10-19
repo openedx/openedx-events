@@ -165,9 +165,7 @@ class OpenEdxPublicSignal(Signal):
 
         responses = super().send_robust(sender=None, **kwargs)
         log.info(
-            "Responses of the Open edX Event <%s>: \n%s",
-            self.event_type,
-            format_responses(responses, depth=2),
+            f"Responses of the Open edX Event <{self.event_type}>: \n{format_responses(responses, depth=2)}",
         )
 
         return responses
