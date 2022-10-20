@@ -14,6 +14,10 @@ Change Log
 Unreleased
 ----------
 
+[3.0.0] - 2022-10-19
+--------------------
+* **Breaking change**: Removed (optional) field ``effort`` from ``CourseCatalogData.`` Nothing should be relying on this field as it is not used by Course Discovery in Publisher-enabled setups.
+
 [2.0.0] - 2022-10-18
 --------------------
 * **Breaking change**: Removed signal ``SUBSCRIPTION_LICENSE_MODIFIED`` and corresponding data class ``SubscriptionLicenseData``. This should only affect experimental event-bus code (which should also have been deleted by now).
