@@ -1,7 +1,7 @@
 """
 Code to convert attr classes to Avro specification.
 
-TODO (EventBus): handle optional parameters and allow for schema evolution (ARCHBOM-2013)
+TODO: Handle optional parameters and allow for schema evolution. https://github.com/edx/edx-arch-experiments/issues/53
 """
 
 
@@ -58,7 +58,7 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
     # Case 2: data_type is a simple type that can be converted directly to an Avro type
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         if PYTHON_TYPE_TO_AVRO_MAPPING[data_type] in ["record", "array"]:
-            # TODO (EventBus): figure out how to handle container types (dicts and arrays). (ARCHBOM-2095)
+            # Can implement if needed, but for now it doesn't seem to be necessary.
             raise Exception("Unable to generate Avro schema for dict or array fields")
         avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[data_type]
         field["type"] = avro_type
