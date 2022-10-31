@@ -8,3 +8,8 @@
 # pin when possible.  Writing an issue against the offending project and
 # linking to it here is good.
 -c common_constraints.txt
+
+# Keep fastavro constrained to ensure that unit tests pass before dependent services
+#  try to update fastavro. Upgrade at any time by adjusting to the latest version,
+#  ensuring tests continue to pass, and publishing a patch release.
+fastavro==1.6.1
