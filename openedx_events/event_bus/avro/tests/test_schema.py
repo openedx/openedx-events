@@ -162,12 +162,12 @@ class TestSchemaGeneration(TestCase):
             "fields": [
                 {"name": "test_data", "type":
                     {"name": "SimpleAttrsWithDefaults", "type": "record", "fields": [
-                        {"name": "boolean_field", "type": ["null", "boolean"], "default": "null"},
-                        {"name": "int_field", "type": ["null", "long"], "default": "null"},
-                        {"name": "float_field", "type": ["null", "double"], "default": "null"},
-                        {"name": "bytes_field", "type": ["null", "bytes"], "default": "null"},
-                        {"name": "string_field", "type": ["null", "string"], "default": "null"},
-                        {"name": "attrs_field", "default": "null",
+                        {"name": "boolean_field", "type": ["null", "boolean"], "default": None},
+                        {"name": "int_field", "type": ["null", "long"], "default": None},
+                        {"name": "float_field", "type": ["null", "double"], "default": None},
+                        {"name": "bytes_field", "type": ["null", "bytes"], "default": None},
+                        {"name": "string_field", "type": ["null", "string"], "default": None},
+                        {"name": "attrs_field", "default": None,
                          "type": ["null",
                                   {"name": "SimpleAttrs", "type": "record", "fields": [
                                       {"name": "boolean_field", "type": "boolean"},
@@ -201,12 +201,12 @@ class TestSchemaGeneration(TestCase):
                             'name': 'SimpleAttrsWithDefaults',
                             'type': 'record',
                             'fields': [
-                                {'name': 'boolean_field', 'type': ['null', 'boolean'], 'default': 'null'},
-                                {'name': 'int_field', 'type': ['null', 'long'], 'default': 'null'},
-                                {'name': 'float_field', 'type': ['null', 'double'], 'default': 'null'},
-                                {'name': 'bytes_field', 'type': ['null', 'bytes'], 'default': 'null'},
-                                {'name': 'string_field', 'type': ['null', 'string'], 'default': 'null'},
-                                {'name': 'attrs_field', 'default': 'null',
+                                {'name': 'boolean_field', 'type': ['null', 'boolean'], 'default': None},
+                                {'name': 'int_field', 'type': ['null', 'long'], 'default': None},
+                                {'name': 'float_field', 'type': ['null', 'double'], 'default': None},
+                                {'name': 'bytes_field', 'type': ['null', 'bytes'], 'default': None},
+                                {'name': 'string_field', 'type': ['null', 'string'], 'default': None},
+                                {'name': 'attrs_field', 'default': None,
                                  'type': ['null', {
                                      'name': 'SimpleAttrs',
                                      'type': 'record',

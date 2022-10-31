@@ -90,7 +90,7 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
             " defined in custom_type_to_avro_type."
         )
     if default_is_none:
-        field["default"] = "null"
+        field["default"] = None
         single_type = field["type"]
         field["type"] = ["null", single_type]
     return field
