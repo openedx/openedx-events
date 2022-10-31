@@ -56,7 +56,7 @@ edx-opaque-keys[django]==2.3.0
     # via -r requirements/test.txt
 edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
-fastavro==1.6.1
+fastavro==1.7.0
     # via -r requirements/test.txt
 idna==3.4
     # via requests

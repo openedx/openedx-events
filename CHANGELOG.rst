@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[3.0.1] - 2022-10-31
+--------------------
+Fixed
+~~~~~
+* Fix default value for optional fields from "null" to None
+
 [3.0.0] - 2022-10-19
 --------------------
 * **Breaking change**: Removed (optional) field ``effort`` from ``CourseCatalogData.`` Nothing should be relying on this field as it is not used by Course Discovery in Publisher-enabled setups.
