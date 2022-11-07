@@ -14,7 +14,7 @@ attrs==22.1.0
     # via
     #   -r requirements/test.txt
     #   pytest
-babel==2.10.3
+babel==2.11.0
     # via sphinx
 bleach==5.0.1
     # via readme-renderer
@@ -36,7 +36,7 @@ coverage[toml]==6.5.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==38.0.1
+cryptography==38.0.3
     # via secretstorage
 ddt==1.6.0
     # via -r requirements/test.txt
@@ -56,7 +56,7 @@ edx-opaque-keys[django]==2.3.0
     # via -r requirements/test.txt
 edx-sphinx-theme==3.0.0
     # via -r requirements/doc.in
-exceptiongroup==1.0.0
+exceptiongroup==1.0.1
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -86,7 +86,7 @@ jinja2==3.1.2
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinx
-keyring==23.9.3
+keyring==23.11.0
     # via twine
 markupsafe==2.1.1
     # via
@@ -117,7 +117,7 @@ pygments==2.13.0
     #   readme-renderer
     #   rich
     #   sphinx
-pymongo==3.12.3
+pymongo==3.13.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -138,7 +138,7 @@ python-slugify==6.1.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2022.5
+pytz==2022.6
     # via
     #   -r requirements/test.txt
     #   babel
