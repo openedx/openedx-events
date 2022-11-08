@@ -3,7 +3,7 @@ import json
 from datetime import datetime
 from unittest import TestCase
 
-from opaque_keys.edx.keys import CourseKey
+from opaque_keys.edx.keys import CourseKey, UsageKey
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer
 from openedx_events.event_bus.avro.tests.test_utilities import (
@@ -101,6 +101,21 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         course_deserialized = event_data["course"]
         self.assertIsInstance(course_deserialized, CourseKey)
         self.assertEqual(course_deserialized, course_key)
+
+    def test_default_usagekey_deserialization(self):
+        """
+        Test deserialization of UsageKey
+        """
+        SIGNAL = create_simple_signal({"usage_key": UsageKey})
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        usage_key = UsageKey.from_string(
+            "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
+        )
+        as_dict = {"usage_key": str(usage_key)}
+        event_data = deserializer.from_dict(as_dict)
+        usage_key_deserialized = event_data["usage_key"]
+        self.assertIsInstance(usage_key_deserialized, UsageKey)
+        self.assertEqual(usage_key_deserialized, usage_key)
 
     def test_deserialization_with_custom_serializer(self):
         SIGNAL = create_simple_signal({"test_data": NonAttrs})

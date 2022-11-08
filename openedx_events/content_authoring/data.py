@@ -10,7 +10,7 @@ The attributes for the events come from the CourseDetailView in the LMS, with so
 from datetime import datetime
 
 import attr
-from opaque_keys.edx.keys import CourseKey
+from opaque_keys.edx.keys import CourseKey, UsageKey
 
 
 @attr.s(frozen=True)
@@ -54,3 +54,31 @@ class CourseCatalogData:
     schedule_data = attr.ib(type=CourseScheduleData)
     hidden = attr.ib(type=bool, default=False)
     invitation_only = attr.ib(type=bool, default=False)
+
+
+@attr.s(frozen=True)
+class XBlockData:
+    """
+    Data about changed XBlock.
+
+    Arguments:
+        usage_key (UsageKey): identifier of the XBlock object.
+        block_type (str): type of block.
+    """
+
+    usage_key = attr.ib(type=UsageKey)
+    block_type = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class DuplicatedXBlockData(XBlockData):
+    """
+    Data about duplicated XBlock.
+
+    This class extends XBlockData to include source_usage_key.
+
+    Arguments:
+        source_usage_key (UsageKey): identifier of the source XBlock object.
+    """
+
+    source_usage_key = attr.ib(type=UsageKey)

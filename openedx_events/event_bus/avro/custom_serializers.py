@@ -5,7 +5,7 @@ Classes to serialize and deserialize custom types used by openedx events. See RE
 from abc import ABC, abstractmethod
 from datetime import datetime
 
-from opaque_keys.edx.keys import CourseKey
+from opaque_keys.edx.keys import CourseKey, UsageKey
 
 from openedx_events.event_bus.avro.types import PYTHON_TYPE_TO_AVRO_MAPPING
 
@@ -71,4 +71,23 @@ class DatetimeAvroSerializer(BaseCustomTypeAvroSerializer):
         return datetime.fromisoformat(data)
 
 
-DEFAULT_CUSTOM_SERIALIZERS = [CourseKeyAvroSerializer, DatetimeAvroSerializer]
+class UsageKeyAvroSerializer(BaseCustomTypeAvroSerializer):
+    """
+    CustomTypeAvroSerializer for UsageKey class.
+    """
+
+    cls = UsageKey
+    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[str]
+
+    @staticmethod
+    def serialize(obj) -> str:
+        """Serialize obj into string."""
+        return str(obj)
+
+    @staticmethod
+    def deserialize(data: str):
+        """Deserialize string into obj."""
+        return UsageKey.from_string(data)
+
+
+DEFAULT_CUSTOM_SERIALIZERS = [CourseKeyAvroSerializer, DatetimeAvroSerializer, UsageKeyAvroSerializer]
