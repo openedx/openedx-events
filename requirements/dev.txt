@@ -69,7 +69,7 @@ coverage[toml]==6.5.0
     #   -r requirements/quality.txt
     #   codecov
     #   pytest-cov
-cryptography==38.0.1
+cryptography==38.0.3
     # via
     #   -r requirements/quality.txt
     #   secretstorage
@@ -97,7 +97,7 @@ edx-lint==5.3.0
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/quality.txt
-exceptiongroup==1.0.0
+exceptiongroup==1.0.1
     # via
     #   -r requirements/quality.txt
     #   pytest
@@ -140,7 +140,7 @@ jinja2==3.1.2
     #   -r requirements/quality.txt
     #   code-annotations
     #   diff-cover
-keyring==23.9.3
+keyring==23.11.0
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -182,7 +182,7 @@ pkginfo==1.8.3
     # via
     #   -r requirements/quality.txt
     #   twine
-platformdirs==2.5.2
+platformdirs==2.5.3
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -233,7 +233,7 @@ pylint-plugin-utils==0.7
     #   -r requirements/quality.txt
     #   pylint-celery
     #   pylint-django
-pymongo==3.12.3
+pymongo==3.13.0
     # via
     #   -r requirements/quality.txt
     #   edx-opaque-keys
@@ -256,7 +256,7 @@ python-slugify==6.1.2
     # via
     #   -r requirements/quality.txt
     #   code-annotations
-pytz==2022.5
+pytz==2022.6
     # via
     #   -r requirements/quality.txt
     #   django
@@ -358,7 +358,7 @@ webencodings==0.5.1
     # via
     #   -r requirements/quality.txt
     #   bleach
-wheel==0.37.1
+wheel==0.38.2
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
