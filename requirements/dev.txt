@@ -75,7 +75,7 @@ cryptography==38.0.3
     #   secretstorage
 ddt==1.6.0
     # via -r requirements/quality.txt
-diff-cover==7.0.1
+diff-cover==7.0.2
     # via -r requirements/dev.in
 dill==0.3.6
     # via
@@ -97,7 +97,7 @@ edx-lint==5.3.0
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/quality.txt
-exceptiongroup==1.0.1
+exceptiongroup==1.0.2
     # via
     #   -r requirements/quality.txt
     #   pytest
@@ -182,7 +182,7 @@ pkginfo==1.8.3
     # via
     #   -r requirements/quality.txt
     #   twine
-platformdirs==2.5.3
+platformdirs==2.5.4
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -306,7 +306,7 @@ sqlparse==0.4.3
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==4.1.0
+stevedore==4.1.1
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -350,7 +350,7 @@ urllib3==1.26.12
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.16.6
+virtualenv==20.16.7
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -358,7 +358,7 @@ webencodings==0.5.1
     # via
     #   -r requirements/quality.txt
     #   bleach
-wheel==0.38.2
+wheel==0.38.4
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
