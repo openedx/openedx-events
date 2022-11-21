@@ -38,7 +38,7 @@ def _try_load(*, setting_name: str, expected_class: type, default):
     """
     constructor_path = getattr(settings, setting_name, None)
     if constructor_path is None:
-        warnings.warn(f"Event Bus setting {setting_name} is missing; component will be inactive.", UserWarning)
+        warnings.warn(f"Event Bus setting {setting_name} is missing; component will be inactive")
         return default
 
     try:
@@ -48,12 +48,15 @@ def _try_load(*, setting_name: str, expected_class: type, default):
             return instance
         else:
             warnings.warn(
-                f"{constructor_path} from {setting_name} returned unexpected type {type(instance)}",
-                UserWarning
+                f"{constructor_path} from {setting_name} returned unexpected type {type(instance)}; "
+                "component will be inactive"
             )
             return default
     except BaseException as e:
-        warnings.warn(f"Failed to load {expected_class} from setting {setting_name}: {e!r}", UserWarning)
+        warnings.warn(
+            f"Failed to load {expected_class} from setting {setting_name}: {e!r}; "
+            "component will be inactive"
+        )
         return default
 
 

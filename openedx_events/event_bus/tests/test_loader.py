@@ -27,7 +27,7 @@ class TestLoader(TestCase):
     # using built-in functions instead.
 
     def test_unconfigured(self):
-        with assert_warnings(["Event Bus setting DOES_NOT_EXIST is missing; component will be inactive."]):
+        with assert_warnings(["Event Bus setting DOES_NOT_EXIST is missing; component will be inactive"]):
             loaded = _try_load(
                 setting_name="DOES_NOT_EXIST",
                 expected_class=dict, default={'def': 'ault'},
@@ -45,7 +45,10 @@ class TestLoader(TestCase):
 
     @override_settings(EB_LOAD_PATH='builtins.list')
     def test_wrong_type(self):
-        with assert_warnings(["builtins.list from EB_LOAD_PATH returned unexpected type <class 'list'>"]):
+        with assert_warnings([
+                "builtins.list from EB_LOAD_PATH returned unexpected type <class 'list'>; "
+                "component will be inactive"
+        ]):
             loaded = _try_load(
                 setting_name="EB_LOAD_PATH",
                 expected_class=dict, default={'def': 'ault'},
@@ -56,7 +59,8 @@ class TestLoader(TestCase):
     def test_missing_module(self):
         with assert_warnings([
                 "Failed to load <class 'dict'> from setting EB_LOAD_PATH: "
-                "ModuleNotFoundError(\"No module named 'no_module_here'\")"
+                "ModuleNotFoundError(\"No module named 'no_module_here'\"); "
+                "component will be inactive"
         ]):
             loaded = _try_load(
                 setting_name="EB_LOAD_PATH",
@@ -68,7 +72,8 @@ class TestLoader(TestCase):
     def test_missing_attribute(self):
         with assert_warnings([
                 "Failed to load <class 'dict'> from setting EB_LOAD_PATH: "
-                "ImportError('Module \"builtins\" does not define a \"does_not_exist\" attribute/class')"
+                "ImportError('Module \"builtins\" does not define a \"does_not_exist\" attribute/class'); "
+                "component will be inactive"
         ]):
             loaded = _try_load(
                 setting_name="EB_LOAD_PATH",
@@ -80,7 +85,8 @@ class TestLoader(TestCase):
     def test_bad_args_for_callable(self):
         with assert_warnings([
                 "Failed to load <class 'dict'> from setting EB_LOAD_PATH: "
-                "TypeError('len() takes exactly one argument (0 given)')"
+                "TypeError('len() takes exactly one argument (0 given)'); "
+                "component will be inactive"
         ]):
             loaded = _try_load(
                 setting_name="EB_LOAD_PATH",
