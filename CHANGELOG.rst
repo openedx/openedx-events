@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[3.1.0] - 2022-11-22
+--------------------
+Added
+~~~~~
+* Configurable loader for producer side of Event Bus in ``openedx_events.event_bus``.
+
 [3.0.1] - 2022-10-31
 --------------------
 Fixed
@@ -65,7 +71,7 @@ Fixed
 [0.11.0] - 2022-07-21
 ---------------------
 Added
-~~~~~~~
+~~~~~
 * Added new content_authoring module with new COURSE_CATALOG_INFO_CHANGED signal
 
 [0.10.0] - 2022-05-20
