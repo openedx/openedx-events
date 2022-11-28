@@ -7,6 +7,8 @@ API:
 
 - ``get_producer`` returns an ``EventBusProducer`` singleton that should be used for sending all events
   to the Event Bus. The backing implementation is chosen via the Django setting ``EVENT_BUS_PRODUCER``.
+  See for example the Kafka implementation's ``KafkaEventProducer``, with the ``create_producer`` function
+  serving as the loader: https://github.com/openedx/event-bus-kafka/blob/main/edx_event_bus_kafka/internal/producer.py
 """
 
 import warnings
