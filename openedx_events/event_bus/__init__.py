@@ -97,7 +97,7 @@ class NoEventBusProducer(EventBusProducer):
 # .. setting_description: String naming a callable (function or class) that can be called to create
 #   or retrieve an instance of EventBusProducer when ``openedx_events.event_bus.get_producer`` is
 #   called. The format of the string is a dotted path to an attribute in a module, e.g.
-#   ``some.module.path.EventBusImplementation``. This producer will be managed as a singleton
+#   ``edx_event_bus_kafka.create_producer``. This producer will be managed as a singleton
 #   by openedx_events. If setting is not supplied or the callable raises an exception or does not return
 #   an instance of EventBusProducer, calls to the producer will be ignored with a warning at startup.
 
