@@ -43,7 +43,8 @@ def _get_non_attrs_serializer(serializers=None):
 
         for extended_class, serializer in all_serializers.items():
             if field:
-                if issubclass(field.type, extended_class):
+                # Make sure that field.type is a class first.
+                if isinstance(field.type, type) and issubclass(field.type, extended_class):
                     return serializer(value)
             if issubclass(type(value), extended_class):
                 return serializer(value)

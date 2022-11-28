@@ -45,6 +45,14 @@ Changed
 ~~~~~~~
 * Use collections.abc import to use with python 3.8 and 3.10.
 
+[4.2.0] - 2023-01-04
+---------------------
+Added
+~~~~~~~
+* Added support for array type.
+* Added new XBLOCK_SKILL_VERIFIED event.
+* Added XBlockSkillVerificationData classes.
+
 [4.1.0] - 2023-01-03
 ---------------------
 Added

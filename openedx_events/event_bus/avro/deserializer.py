@@ -2,6 +2,7 @@
 Deserialize Avro record dictionaries to events that can be sent with OpenEdxPublicSignals.
 """
 import json
+from typing import get_args, get_origin
 
 import attr
 
@@ -29,11 +30,20 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
     """
     param_deserializers = deserializers or {}
     all_deserializers = {**DEFAULT_DESERIALIZERS, **param_deserializers}
+    data_type_origin = get_origin(data_type)
 
     if deserializer := all_deserializers.get(data_type, None):
         return deserializer(data)
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         return data
+    elif PYTHON_TYPE_TO_AVRO_MAPPING.get(data_type_origin) == "array":
+        arg_data_type = get_args(data_type)
+        if not arg_data_type:
+            raise TypeError(
+                "List without annotation type is not supported. The argument should be a type, for eg., List[int]"
+            )
+        if arg_data_type[0] in PYTHON_TYPE_TO_AVRO_MAPPING:
+            return data
     elif hasattr(data_type, "__attrs_attrs__"):
         transformed = {}
         for attribute in data_type.__attrs_attrs__:

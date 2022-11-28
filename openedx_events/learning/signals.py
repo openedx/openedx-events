@@ -15,6 +15,7 @@ from openedx_events.learning.data import (
     CourseEnrollmentData,
     PersistentCourseGradeData,
     UserData,
+    XBlockSkillVerificationData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
 
@@ -146,5 +147,17 @@ PERSISTENT_GRADE_SUMMARY_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.persistent_grade_summary.changed.v1",
     data={
         "grade": PersistentCourseGradeData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.xblock.skill.verified.v1
+# .. event_name: XBLOCK_SKILL_VERIFIED
+# .. event_description: Fired when an XBlock skill is verified.
+# .. event_data: XBlockSkillVerificationData
+XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.xblock.skill.verified.v1",
+    data={
+        "xblock_info": XBlockSkillVerificationData,
     }
 )
