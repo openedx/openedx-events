@@ -20,6 +20,7 @@ from django.test.signals import setting_changed
 from django.utils.module_loading import import_string
 
 from openedx_events.tooling import OpenEdxPublicSignal
+from openedx_events.data import EventsMetadata
 
 
 def _try_load(*, setting_name: str, expected_class: type, default):
@@ -68,6 +69,7 @@ class EventBusProducer(ABC):
     @abstractmethod
     def send(
             self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
+            event_metadata: EventsMetadata
     ) -> None:
         """
         Send a signal event to the event bus under the specified topic.
@@ -78,6 +80,7 @@ class EventBusProducer(ABC):
             event_key_field: Path to the event data field to use as the event key (period-delimited
               string naming the dictionary keys to descend)
             event_data: The event data (kwargs) sent to the signal
+            event_metadata: The CloudEvent metadata
         """
 
 
@@ -87,7 +90,7 @@ class NoEventBusProducer(EventBusProducer):
     """
 
     def send(
-            self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
+            self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict, event_metadata: EventsMetadata,
     ) -> None:
         """Do nothing."""
 
