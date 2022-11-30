@@ -69,7 +69,7 @@ class EventBusProducer(ABC):
     @abstractmethod
     def send(
             self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
-            event_metadata: EventsMetadata
+            event_metadata: EventsMetadata=None
     ) -> None:
         """
         Send a signal event to the event bus under the specified topic.
