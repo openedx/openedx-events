@@ -69,13 +69,13 @@ coverage[toml]==6.5.0
     #   -r requirements/quality.txt
     #   codecov
     #   pytest-cov
-cryptography==38.0.3
+cryptography==38.0.4
     # via
     #   -r requirements/quality.txt
     #   secretstorage
 ddt==1.6.0
     # via -r requirements/quality.txt
-diff-cover==7.0.2
+diff-cover==7.1.0
     # via -r requirements/dev.in
 dill==0.3.6
     # via
@@ -113,7 +113,7 @@ idna==3.4
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==5.0.0
+importlib-metadata==5.1.0
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -199,7 +199,7 @@ py==1.11.0
     # via
     #   -r requirements/ci.txt
     #   tox
-pycodestyle==2.9.1
+pycodestyle==2.10.0
     # via -r requirements/quality.txt
 pycparser==2.21
     # via
@@ -344,7 +344,7 @@ typing-extensions==4.4.0
     #   astroid
     #   pylint
     #   rich
-urllib3==1.26.12
+urllib3==1.26.13
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -366,7 +366,7 @@ wrapt==1.14.1
     # via
     #   -r requirements/quality.txt
     #   astroid
-zipp==3.10.0
+zipp==3.11.0
     # via
     #   -r requirements/quality.txt
     #   importlib-metadata
