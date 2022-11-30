@@ -18,7 +18,7 @@ Unreleased
 --------------------
 Changed
 ~~~~~~~
-* **Breaking change**: add mandatory event_metadata parameter to EventBusProducer send API
+* Add event_metadata parameter to EventBusProducer send API
 
 [3.1.0] - 2022-11-22
 --------------------
