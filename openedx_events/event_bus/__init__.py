@@ -21,6 +21,7 @@ from django.dispatch import receiver
 from django.test.signals import setting_changed
 from django.utils.module_loading import import_string
 
+from openedx_events.data import EventsMetadata
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
@@ -67,9 +68,11 @@ class EventBusProducer(ABC):
     Parent class for event bus producer implementations.
     """
 
+    # TODO: Make event_metadata required (https://github.com/openedx/openedx-events/issues/153)
     @abstractmethod
     def send(
             self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
+            event_metadata: EventsMetadata = None
     ) -> None:
         """
         Send a signal event to the event bus under the specified topic.
@@ -80,6 +83,7 @@ class EventBusProducer(ABC):
             event_key_field: Path to the event data field to use as the event key (period-delimited
               string naming the dictionary keys to descend)
             event_data: The event data (kwargs) sent to the signal
+            event_metadata: (optional) The CloudEvent metadata
         """
 
 
@@ -90,6 +94,7 @@ class NoEventBusProducer(EventBusProducer):
 
     def send(
             self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
+            event_metadata: EventsMetadata = None,
     ) -> None:
         """Do nothing."""
 

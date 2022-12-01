@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[3.2.0] - 2022-11-30
+--------------------
+Changed
+~~~~~~~
+* Add event_metadata parameter to EventBusProducer send API.  **Note:** Calling this method with the new argument will throw an exception with older versions of this library that don't yet support the parameter.
+
 [3.1.0] - 2022-11-22
 --------------------
 Added
