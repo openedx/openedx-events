@@ -10,7 +10,6 @@ from unittest.mock import Mock, patch
 import attr
 import ddt
 import pytest
-import re
 from django.test import TestCase, override_settings
 
 from openedx_events.exceptions import SenderValidationError

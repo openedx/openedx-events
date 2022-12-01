@@ -1,7 +1,6 @@
 """
 Tooling necessary to use Open edX events.
 """
-import re
 import warnings
 from logging import getLogger
 
