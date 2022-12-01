@@ -18,7 +18,7 @@ Unreleased
 --------------------
 Changed
 ~~~~~~~
-* Add event_metadata parameter to EventBusProducer send API.  **Note:** Calling this method with the new argument will throw an exception unless the EventBusProducer implementation used also upgraded to support the argument.
+* Add event_metadata parameter to EventBusProducer send API.  **Note:** Calling this method with the new argument will throw an exception with older versions of this library that don't yet support the parameter.
 
 [3.1.0] - 2022-11-22
 --------------------
