@@ -21,8 +21,8 @@ from django.dispatch import receiver
 from django.test.signals import setting_changed
 from django.utils.module_loading import import_string
 
-from openedx_events.tooling import OpenEdxPublicSignal
 from openedx_events.data import EventsMetadata
+from openedx_events.tooling import OpenEdxPublicSignal
 
 
 def _try_load(*, setting_name: str, expected_class: type, default):
