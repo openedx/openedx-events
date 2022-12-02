@@ -94,7 +94,7 @@ class NoEventBusProducer(EventBusProducer):
 
     def send(
             self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
-            event_metadata: EventsMetadata = None,
+            event_metadata: EventsMetadata,
     ) -> None:
         """Do nothing."""
 
