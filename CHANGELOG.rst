@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[4.0.0] - 2022-12-01
+--------------------
+Changed
+~~~~~~~
+* **Breaking change** Make event_metadata parameter in EventBusProducer send API required
+
 [3.2.0] - 2022-11-30
 --------------------
 Changed

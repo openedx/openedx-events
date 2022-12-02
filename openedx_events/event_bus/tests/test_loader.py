@@ -8,6 +8,7 @@ from unittest import TestCase
 
 from django.test import override_settings
 
+from openedx_events.data import EventsMetadata
 from openedx_events.event_bus import _try_load, get_producer
 from openedx_events.learning.signals import SESSION_LOGIN_COMPLETED
 
@@ -108,5 +109,5 @@ class TestProducer(TestCase):
             # Nothing thrown, no warnings.
             assert producer.send(
                 signal=SESSION_LOGIN_COMPLETED, topic='user-logins',
-                event_key_field='user.id', event_data={},
+                event_key_field='user.id', event_data={}, event_metadata=EventsMetadata(event_type='eh', minorversion=0)
             ) is None
