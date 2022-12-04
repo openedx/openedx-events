@@ -8,6 +8,7 @@ The attributes for the events come from the CourseDetailView in the LMS, with so
 (see deprecation proposal at https://github.com/openedx/public-engineering/issues/160)
 """
 from datetime import datetime
+from typing import BinaryIO, List
 
 import attr
 from opaque_keys.edx.keys import CourseKey, UsageKey
@@ -82,3 +83,56 @@ class DuplicatedXBlockData(XBlockData):
     """
 
     source_usage_key = attr.ib(type=UsageKey)
+
+
+@attr.s(frozen=True)
+class CertificateSignatoryData:
+    """
+    Attributes defined for Open edX CertificateSignatory data object.
+
+    Arguments:
+        image (BinaryIO): certificate signature image.
+        name (str): name of signatory.
+        organization (str): organization that signatory belongs to.
+        title (int): signatory title.
+    """
+
+    # Note: Please take care that the image field is BinaryIO, which means
+    # that a file can be passed as an array of bytes. Watch the size of this file.
+    # It can potentially be large, making it difficult to pass this data structure through the Event Bus
+    # (CloudEvent messages, which should be 64K or less) and store it on disk space.
+    # We suggest referring to MAX_ASSET_UPLOAD_FILE_SIZE_IN_MB, i.e. restriction in the Studio for such cases.
+    image = attr.ib(type=BinaryIO)
+    # end Note
+    name = attr.ib(type=str)
+    organization = attr.ib(type=str)
+    title = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class CertificateConfigData:
+    """
+    Attributes defined for Open edX CertificateConfig data object.
+
+    Arguments:
+        certificate_type (str): certificate type. Possible types are certificate relevant course modes:
+         - credit,
+         - verified,
+         - professional,
+         - no-id-professional,
+         - executive-education,
+         - paid-executive-education,
+         - paid-bootcamp,
+         - masters.
+        course_key (CourseKey): identifier of the Course object.
+        title (str): certificate title.
+        signatories (List[CertificateSignatoryData]): contains a collection of signatures
+        that belong to the certificate configuration.
+        is_active (bool): indicates whether the certifivate configuration is active.
+    """
+
+    certificate_type = attr.ib(type=str)
+    course_key = attr.ib(type=CourseKey)
+    title = attr.ib(type=str)
+    signatories = attr.ib(type=List[CertificateSignatoryData], factory=list)
+    is_active = attr.ib(type=bool, default=False)
