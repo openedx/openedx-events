@@ -25,7 +25,7 @@ build==0.9.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-certifi==2022.9.24
+certifi==2022.12.7
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -75,7 +75,7 @@ cryptography==38.0.4
     #   secretstorage
 ddt==1.6.0
     # via -r requirements/quality.txt
-diff-cover==7.2.0
+diff-cover==7.3.0
     # via -r requirements/dev.in
 dill==0.3.6
     # via
@@ -103,7 +103,7 @@ exceptiongroup==1.0.4
     #   pytest
 fastavro==1.7.0
     # via -r requirements/quality.txt
-filelock==3.8.0
+filelock==3.8.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -160,7 +160,7 @@ more-itertools==9.0.0
     # via
     #   -r requirements/quality.txt
     #   jaraco-classes
-packaging==21.3
+packaging==22.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -182,7 +182,7 @@ pkginfo==1.9.2
     # via
     #   -r requirements/quality.txt
     #   twine
-platformdirs==2.5.4
+platformdirs==2.6.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -213,7 +213,7 @@ pygments==2.13.0
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.15.7
+pylint==2.15.8
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -237,12 +237,6 @@ pymongo==3.13.0
     # via
     #   -r requirements/quality.txt
     #   edx-opaque-keys
-pyparsing==3.0.9
-    # via
-    #   -r requirements/ci.txt
-    #   -r requirements/pip-tools.txt
-    #   -r requirements/quality.txt
-    #   packaging
 pytest==7.2.0
     # via
     #   -r requirements/quality.txt
@@ -332,6 +326,7 @@ tomlkit==0.11.6
     #   pylint
 tox==3.27.1
     # via
+    #   -c requirements/common_constraints.txt
     #   -r requirements/ci.txt
     #   tox-battery
 tox-battery==0.6.1
@@ -350,7 +345,7 @@ urllib3==1.26.13
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.17.0
+virtualenv==20.17.1
     # via
     #   -r requirements/ci.txt
     #   tox

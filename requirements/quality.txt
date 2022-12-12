@@ -18,7 +18,7 @@ attrs==22.1.0
     #   pytest
 bleach==5.0.1
     # via readme-renderer
-certifi==2022.9.24
+certifi==2022.12.7
     # via requests
 cffi==1.15.1
     # via cryptography
@@ -100,7 +100,7 @@ mccabe==0.7.0
     # via pylint
 more-itertools==9.0.0
     # via jaraco-classes
-packaging==21.3
+packaging==22.0
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -110,7 +110,7 @@ pbr==5.11.0
     #   stevedore
 pkginfo==1.9.2
     # via twine
-platformdirs==2.5.4
+platformdirs==2.6.0
     # via pylint
 pluggy==1.0.0
     # via
@@ -126,7 +126,7 @@ pygments==2.13.0
     # via
     #   readme-renderer
     #   rich
-pylint==2.15.7
+pylint==2.15.8
     # via
     #   edx-lint
     #   pylint-celery
@@ -144,10 +144,6 @@ pymongo==3.13.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-pyparsing==3.0.9
-    # via
-    #   -r requirements/test.txt
-    #   packaging
 pytest==7.2.0
     # via
     #   -r requirements/test.txt
