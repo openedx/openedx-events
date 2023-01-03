@@ -5,7 +5,7 @@ from datetime import datetime
 
 import pytest
 from django.test import TestCase
-from opaque_keys.edx.keys import CourseKey
+from opaque_keys.edx.keys import CourseKey, UsageKey
 
 from openedx_events.event_bus.avro.serializer import AvroSignalSerializer
 from openedx_events.event_bus.avro.tests.test_utilities import (
@@ -104,6 +104,19 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
         test_data = {"course": course_key}
         data_dict = serializer.to_dict(test_data)
         self.assertDictEqual(data_dict, {"course": str(course_key)})
+
+    def test_default_usagekey_serialization(self):
+        """
+        Test serialization of UsageKey
+        """
+        SIGNAL = create_simple_signal({"usage_key": UsageKey})
+        serializer = AvroSignalSerializer(SIGNAL)
+        usage_key = UsageKey.from_string(
+            "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
+        )
+        test_data = {"usage_key": usage_key}
+        data_dict = serializer.to_dict(test_data)
+        self.assertDictEqual(data_dict, {"usage_key": str(usage_key)})
 
     def test_serialization_with_custom_serializer(self):
         SIGNAL = create_simple_signal({"test_data": NonAttrs})

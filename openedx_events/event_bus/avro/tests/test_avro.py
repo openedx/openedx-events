@@ -2,7 +2,7 @@
 from datetime import datetime
 from unittest import TestCase
 
-from opaque_keys.edx.keys import CourseKey
+from opaque_keys.edx.keys import CourseKey, UsageKey
 
 # Each new folder with signals must be manually imported in order for the signals to be cached
 #   and used in the unit tests. Using 'disable=reimported' with pylint will work,
@@ -49,6 +49,9 @@ def generate_test_event_data_for_data_type(data_type):
         str: "default",
         float: 1.0,
         CourseKey: CourseKey.from_string("course-v1:edX+DemoX.1+2014"),
+        UsageKey: UsageKey.from_string(
+            "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
+        ),
         datetime: datetime.now(),
     }
     for attribute in data_type.__attrs_attrs__:

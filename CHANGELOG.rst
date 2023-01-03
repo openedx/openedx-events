@@ -14,6 +14,14 @@ Change Log
 Unreleased
 ----------
 
+[4.1.0] - 2023-01-03
+---------------------
+Added
+~~~~~~~
+* Added new XBLOCK_PUBLISHED, XBLOCK_DUPLICATED and XBLOCK_DELETED signals in content_authoring.
+* Added XBlockData and DuplicatedXBlockData classes
+* Added custom UsageKeyAvroSerializer for opaque_keys UsageKey.
+
 [4.0.0] - 2022-12-01
 --------------------
 Changed

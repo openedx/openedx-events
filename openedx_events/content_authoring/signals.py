@@ -8,7 +8,7 @@ They also must comply with the payload definition specified in
 docs/decisions/0003-events-payload.rst
 """
 
-from openedx_events.content_authoring.data import CourseCatalogData
+from openedx_events.content_authoring.data import CourseCatalogData, DuplicatedXBlockData, XBlockData
 from openedx_events.tooling import OpenEdxPublicSignal
 
 # .. event_type: org.openedx.content_authoring.course.catalog_info.changed.v1
@@ -19,5 +19,46 @@ COURSE_CATALOG_INFO_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.course.catalog_info.changed.v1",
     data={
         "catalog_info": CourseCatalogData,
+    }
+)
+
+
+# .. event_type: org.openedx.content_authoring.xblock.published.v1
+# .. event_name: XBLOCK_PUBLISHED
+# .. event_description: Fired when an XBlock is published. If a parent block
+#       with changes in one or more child blocks is published, only a single
+#       XBLOCK_PUBLISHED event is fired with parent block details.
+#       For example: If a section is published with changes in multiple units,
+#       only a single event is fired with section details like :
+#       `XBlockData(usage_key="section-usage-key", block_type="chapter")`
+# .. event_data: XBlockData
+XBLOCK_PUBLISHED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.xblock.published.v1",
+    data={
+        "xblock_info": XBlockData,
+    }
+)
+
+
+# .. event_type: org.openedx.content_authoring.xblock.deleted.v1
+# .. event_name: XBLOCK_DELETED
+# .. event_description: Fired when an XBlock is deleted.
+# .. event_data: XBlockData
+XBLOCK_DELETED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.xblock.deleted.v1",
+    data={
+        "xblock_info": XBlockData,
+    }
+)
+
+
+# .. event_type: org.openedx.content_authoring.xblock.duplicated.v1
+# .. event_name: XBLOCK_DUPLICATED
+# .. event_description: Fired when an XBlock is duplicated in Studio.
+# .. event_data: DuplicatedXBlockData
+XBLOCK_DUPLICATED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.xblock.duplicated.v1",
+    data={
+        "xblock_info": DuplicatedXBlockData,
     }
 )
