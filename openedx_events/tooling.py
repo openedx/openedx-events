@@ -66,12 +66,17 @@ class OpenEdxPublicSignal(Signal):
         """
         return cls._mapping[event_type]
 
-    def generate_signal_metadata(self):
+    def generate_signal_metadata(self, time=None):
         """
         Generate signal metadata when an event is sent.
 
         These fields are generated on the fly and are a subset of the Event
         Message defined in the OEP-41.
+
+        Arguments:
+            time (datetime): (Optional) Timestamp when the event was sent with
+                UTC timezone. Defaults to current time in UTC. See OEP-41 for
+                details.
 
         Example usage:
             >>> metadata = \
@@ -90,11 +95,21 @@ class OpenEdxPublicSignal(Signal):
         return EventsMetadata(
             event_type=self.event_type,
             minorversion=self.minor_version,
+            time=time,
         )
 
-    def send_event(self, send_robust=True, **kwargs):
+    def send_event(self, send_robust=True, time=None, **kwargs):
         """
         Send events to all connected receivers.
+
+        Arguments:
+            send_robust (bool): Defaults to True. See Django signal docs.
+            time (datetime): (Optional - see note) Timestamp when the event was
+                sent with UTC timezone. For events requiring a DB create or
+                update, use the timestamp from the DB record. Defaults to
+                current time in UTC. This argument is optional for backward
+                compatability, but ideally would be explicitly set. See OEP-41
+                for details.
 
         Used to send events just like Django signals are sent. In addition,
         some validations are executed on the arguments, and then generates relevant
@@ -158,7 +173,7 @@ class OpenEdxPublicSignal(Signal):
 
         validate_sender()
 
-        kwargs["metadata"] = self.generate_signal_metadata()
+        kwargs["metadata"] = self.generate_signal_metadata(time=time)
 
         if self._allow_send_event_failure or settings.DEBUG or not send_robust:
             return super().send(sender=None, **kwargs)
