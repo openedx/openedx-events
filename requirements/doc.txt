@@ -6,14 +6,6 @@
 #
 alabaster==0.7.13
     # via sphinx
-asgiref==3.6.0
-    # via
-    #   -r requirements/test.txt
-    #   django
-attrs==22.2.0
-    # via
-    #   -r requirements/test.txt
-    #   pytest
 babel==2.11.0
     # via sphinx
 bleach==6.0.0
@@ -46,9 +38,7 @@ doc8==1.1.1
     # via -r requirements/doc.in
 docutils==0.19
     # via
-    #   doc8
-    #   readme-renderer
-    #   restructuredtext-lint
+    #   pydata-sphinx-theme
     #   sphinx
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/test.txt
@@ -100,8 +90,7 @@ more-itertools==9.0.0
     # via jaraco-classes
 packaging==23.0
     # via
-    #   -r requirements/test.txt
-    #   pytest
+    #   pydata-sphinx-theme
     #   sphinx
 pbr==5.11.1
     # via
@@ -167,24 +156,28 @@ rich==13.3.1
 secretstorage==3.3.3
     # via keyring
 six==1.16.0
-    # via
-    #   bleach
-    #   edx-sphinx-theme
+    # via livereload
 snowballstemmer==2.2.0
     # via sphinx
-sphinx==5.3.0
+soupsieve==2.3.2.post1
+    # via beautifulsoup4
+sphinx==4.5.0
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/doc.in
     #   edx-sphinx-theme
 sphinxcontrib-applehelp==1.0.4
     # via sphinx
+sphinxcontrib-contentui==0.2.5
+    # via -r requirements/doc.in
 sphinxcontrib-devhelp==1.0.2
     # via sphinx
 sphinxcontrib-htmlhelp==2.0.1
     # via sphinx
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
+sphinxcontrib-mermaid==0.7.1
+    # via -r requirements/doc.in
 sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.5
