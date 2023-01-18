@@ -1,8 +1,13 @@
 # Requirements to build the documentation.
 -c constraints.txt
 
+-r test.txt               # Core and testing dependencies for this package
+
+doc8                      # reStructuredText style checker
+edx_sphinx_theme          # edX theme for Sphinx output
+build                     # Needed for twine command
+twine                     # Utility for publishing Python packages on PyPI.
 sphinx
-sphinx-book-theme
 sphinx-copybutton
 sphinx-autobuild
 sphinxcontrib-mermaid

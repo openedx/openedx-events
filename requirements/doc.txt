@@ -6,6 +6,14 @@
 #
 alabaster==0.7.13
     # via sphinx
+asgiref==3.6.0
+    # via
+    #   -r requirements/test.txt
+    #   django
+attrs==22.2.0
+    # via
+    #   -r requirements/test.txt
+    #   pytest
 babel==2.11.0
     # via sphinx
 bleach==6.0.0
@@ -38,7 +46,15 @@ doc8==1.1.1
     # via -r requirements/doc.in
 docutils==0.19
     # via
-    #   pydata-sphinx-theme
+    #   -c requirements/common_constraints.txt
+    #   -r requirements/test.txt
+doc8==1.1.1
+    # via -r requirements/doc.in
+docutils==0.19
+    # via
+    #   doc8
+    #   readme-renderer
+    #   restructuredtext-lint
     #   sphinx
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/test.txt
@@ -90,7 +106,9 @@ more-itertools==9.0.0
     # via jaraco-classes
 packaging==23.0
     # via
-    #   pydata-sphinx-theme
+    #   -r requirements/test.txt
+    #   build
+    #   pytest
     #   sphinx
 pbr==5.11.1
     # via
@@ -156,12 +174,13 @@ rich==13.3.1
 secretstorage==3.3.3
     # via keyring
 six==1.16.0
-    # via livereload
+    # via
+    #   bleach
+    #   edx-sphinx-theme
+    #   livereload
 snowballstemmer==2.2.0
     # via sphinx
-soupsieve==2.3.2.post1
-    # via beautifulsoup4
-sphinx==4.5.0
+sphinx==5.3.0
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/doc.in
