@@ -1,4 +1,4 @@
-8. Event design of the COURSE_CATALOG_INFO_CHANGED signal
+9. Event design of the COURSE_CATALOG_INFO_CHANGED signal
 =========================================================
 
 Status

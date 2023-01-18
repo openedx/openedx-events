@@ -97,8 +97,8 @@ html_theme_options = {
 # bug in the theme that needs to be fixed first.
 # If you'd like you can temporarily copy the logo file to your `_static`
 # directory.
-html_logo = "https://logos.openedx.org/open-edx-logo-color.png"
-html_favicon = "https://logos.openedx.org/openedx-favicon.ico"
+html_logo = "_static/open-edx-logo-color.png"
+html_favicon = "_static/open-edx-favicon.ico"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,

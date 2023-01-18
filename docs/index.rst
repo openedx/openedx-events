@@ -3,23 +3,15 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Open edX Events's documentation!
+Welcome to Open edX Events' documentation!
 ===========================================
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   concepts
-   decisions
-   how-tos
-   quickstarts
-   reference
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   concepts/index
+   decisions/index
+   how-tos/index
+   quickstarts/index
+   reference/index
