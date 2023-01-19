@@ -28,7 +28,7 @@ class ResponsePrettyPrinter(PrettyPrinter):
                 exc_type, exc_value, exc_traceback
             )
             obj = "".join(exc_traceback_formatted)
-        if isinstance(obj, collections.Callable):
+        if isinstance(obj, collections.abc.Callable):
             obj = "{func_module}.{func_name}".format(
                 func_module=obj.__module__,
                 func_name=obj.__name__,
