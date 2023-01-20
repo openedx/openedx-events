@@ -42,7 +42,9 @@ class EventsMetadata:
         time (datetime): (optional) timestamp when the event was sent with
             UTC timezone. Defaults to current time in UTC. See OEP-41 for
             details.
-        sourcelib (str): Open edX Events library version.
+        sourcelib (tuple of ints): Open edX Events library version. A tuple was
+            selected so that version comparisons don't have to worry about
+            lexical ordering of strings (e.g. '0.9.0' vs. '0.10.0').
     """
 
     id = attr.ib(type=UUID, init=False)
