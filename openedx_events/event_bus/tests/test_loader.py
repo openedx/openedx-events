@@ -109,5 +109,6 @@ class TestProducer(TestCase):
             # Nothing thrown, no warnings.
             assert producer.send(
                 signal=SESSION_LOGIN_COMPLETED, topic='user-logins',
-                event_key_field='user.id', event_data={}, event_metadata=EventsMetadata(event_type='eh', minorversion=0)
+                event_key_field='user.id', event_data={},
+                event_metadata=EventsMetadata(event_type='eh', minorversion=0)
             ) is None

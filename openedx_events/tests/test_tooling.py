@@ -4,8 +4,10 @@ This file contains all test for the tooling.py file.
 Classes:
     EventsToolingTest: Test events tooling.
 """
+import datetime
 from contextlib import contextmanager
 from unittest.mock import Mock, patch
+from uuid import UUID
 
 import attr
 import ddt
@@ -85,7 +87,8 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
     @override_settings(SERVICE_VARIANT="lms")
     @patch("openedx_events.data.openedx_events")
     @patch("openedx_events.data.socket")
-    def test_get_signal_metadata(self, socket_mock, events_package_mock):
+    @patch("openedx_events.data.datetime")
+    def test_generate_signal_metadata(self, datetime_mock, socket_mock, events_package_mock):
         """
         This methods tests getting the generated metadata for an event.
 
@@ -94,23 +97,72 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         """
         events_package_mock.__version__ = "0.1.0"
         socket_mock.gethostname.return_value = "edx.devstack.lms"
+        expected_time = datetime.datetime.now(datetime.timezone.utc)
+        datetime_mock.now.return_value = expected_time
         expected_metadata = {
             "event_type": self.event_type,
             "minorversion": 0,
             "source": "openedx/lms/web",
             "sourcehost": "edx.devstack.lms",
             "sourcelib": [0, 1, 0],
+            "time": expected_time,
         }
 
         metadata = self.public_signal.generate_signal_metadata()
 
         self.assertDictContainsSubset(expected_metadata, attr.asdict(metadata))
+        self.assertIsInstance(metadata.id, UUID)
+
+    @override_settings(SERVICE_VARIANT="lms")
+    @patch("openedx_events.data.openedx_events")
+    @patch("openedx_events.data.socket")
+    def test_generate_signal_metadata_with_valid_time(self, socket_mock, events_package_mock):
+        """
+        Tests getting the generated metadata for an event, providing a valid time in UTC.
+
+        Expected behavior:
+            Returns the metadata containing information about the event.
+        """
+        events_package_mock.__version__ = "0.1.0"
+        socket_mock.gethostname.return_value = "edx.devstack.lms"
+        expected_time = datetime.datetime.now(datetime.timezone.utc)
+        expected_metadata = {
+            "event_type": self.event_type,
+            "minorversion": 0,
+            "source": "openedx/lms/web",
+            "sourcehost": "edx.devstack.lms",
+            "sourcelib": [0, 1, 0],
+            "time": expected_time,
+        }
+
+        metadata = self.public_signal.generate_signal_metadata(time=expected_time)
+
+        self.assertDictContainsSubset(expected_metadata, attr.asdict(metadata))
+        self.assertIsInstance(metadata.id, UUID)
+
+    @ddt.data(
+        (1, TypeError, "'time' must be <class 'datetime.datetime'",),
+        # WARNING: utcnow() has no timezone, and could be misinterpreted in local time
+        (datetime.datetime.utcnow(), ValueError, "'time' must have timezone.utc",),
+    )
+    @ddt.unpack
+    def test_generate_signal_metadata_fails_with_invalid_time(
+        self, invalid_time, error_class, error_message
+    ):
+        """
+        Tests getting generated metadata for an event fails with a non-UTC time.
+
+        Expected behavior:
+            Raises an exception
+        """
+        with self.assertRaisesMessage(error_class, error_message):
+            self.public_signal.generate_signal_metadata(time=invalid_time)
 
     @patch("openedx_events.tooling.OpenEdxPublicSignal.generate_signal_metadata")
     @patch("openedx_events.tooling.Signal.send")
     def test_send_event_successfully(self, send_mock, fake_metadata):
         """
-        This method tests the process of sending an event that's allow to fail.
+        This method tests the process of sending an event that's allowed to fail.
 
         Expected behavior:
             The event is sent as a django signal with send method.
@@ -155,6 +207,23 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
             "Responses of the Open edX Event <org.openedx.learning.session.login.completed.v1>: \nfake-output"
         )
 
+    @patch("openedx_events.tooling.OpenEdxPublicSignal.generate_signal_metadata")
+    def test_send_event_with_time(self, fake_metadata):
+        """
+        This method tests the process of sending an event with a time argument.
+
+        Expected behavior:
+            The generate_signal_metadata is called using the passed time.
+        """
+        expected_metadata = Mock(some_data="some_data")
+        expected_time = datetime.datetime.now(datetime.timezone.utc)
+        fake_metadata.return_value = expected_metadata
+
+        self.public_signal.send_event(user=self.user_mock, time=expected_time)
+
+        # generate_signal_metadata is fully tested elsewhere
+        fake_metadata.assert_called_once_with(time=expected_time)
+
     @ddt.data(
         (
             {"student": Mock()},
@@ -190,7 +259,7 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         method.
 
         Expected behavior:
-            A warning is showed advicing to use Open edX events custom
+            A warning is showed advising to use Open edX events custom
             send_signal method.
         """
         message = "Please, use 'send_event' when triggering an Open edX event."
