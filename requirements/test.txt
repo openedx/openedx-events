@@ -34,7 +34,7 @@ iniconfig==2.0.0
     # via pytest
 jinja2==3.1.2
     # via code-annotations
-markupsafe==2.1.1
+markupsafe==2.1.2
     # via jinja2
 packaging==23.0
     # via pytest
