@@ -36,7 +36,7 @@ class EventsMetadata:
     Arguments:
         id (UUID): event identifier.
         event_type (str): name of the event.
-        minorversion (int): version of the event type.
+        minorversion (int): (optional) version of the event type. Defaults to 0.
         source (str): logical source of an event.
         sourcehost (str): physical source of the event.
         time (datetime): (optional) timestamp when the event was sent with
@@ -49,7 +49,7 @@ class EventsMetadata:
 
     id = attr.ib(type=UUID, init=False)
     event_type = attr.ib(type=str)
-    minorversion = attr.ib(type=int, converter=attr.converters.default_if_none(0))
+    minorversion = attr.ib(type=int, default=None, converter=attr.converters.default_if_none(0))
     source = attr.ib(type=str, init=False)
     sourcehost = attr.ib(type=str, init=False)
     current_utc_time = datetime.now(timezone.utc)

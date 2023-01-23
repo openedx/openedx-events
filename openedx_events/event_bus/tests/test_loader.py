@@ -110,5 +110,5 @@ class TestProducer(TestCase):
             assert producer.send(
                 signal=SESSION_LOGIN_COMPLETED, topic='user-logins',
                 event_key_field='user.id', event_data={},
-                event_metadata=EventsMetadata(event_type='eh', minorversion=0)
+                event_metadata=EventsMetadata(event_type='eh')
             ) is None

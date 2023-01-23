@@ -16,6 +16,7 @@ Unreleased
 Fixed
 ~~~~~
 * Updated time metadata to include UTC timezone. The original implementation used utcnow(), which could give different results if the time were ever interpreted to be local time. See https://docs.python.org/3/library/datetime.html#datetime.datetime.utcnow
+* EventsMetadata minorversion is now fully optional, and doesn't need to be supplied when initializing to get the default of 0.
 
 Changed
 ~~~~~~~
