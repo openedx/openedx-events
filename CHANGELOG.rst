@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[4.1.1] - 2023-01-23
+---------------------
+Changed
+~~~~~~~
+* Use collections.abc import to use with python 3.8 and 3.10.
+
 [4.1.0] - 2023-01-03
 ---------------------
 Added
