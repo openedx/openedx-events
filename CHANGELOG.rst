@@ -13,6 +13,13 @@ Change Log
 
 Unreleased
 ----------
+
+[4.2.0] - 2023-01-24
+---------------------
+Added
+~~~~~~
+* Added ``send_event_with_custom_metadata``. This will enable event bus consumers to send the event signal with the same metadata fields that were used when the event was produced.
+
 Fixed
 ~~~~~
 * Updated time metadata to include UTC timezone. The original implementation used utcnow(), which could give different results if the time were ever interpreted to be local time. See https://docs.python.org/3/library/datetime.html#datetime.datetime.utcnow
