@@ -98,6 +98,65 @@ class OpenEdxPublicSignal(Signal):
             time=time,
         )
 
+    def _send_event_with_metadata(self, metadata, send_robust=True, **kwargs):
+        """
+        Send events to all connected receivers with the provided metadata.
+
+        This method is for internal use only.
+
+        Arguments:
+            metadata (EventsMetadata): The metadata to be sent with the signal.
+            send_robust (bool): Defaults to True. See Django signal docs.
+
+        See ``send_event`` docstring for more details on its usage and behavior.
+        """
+
+        def validate_sender():
+            """
+            Run validations over the send arguments.
+
+            The validation checks whether the send arguments match the
+            arguments used when instantiating the event. If they don't a
+            validation error is raised.
+            """
+            if len(kwargs) != len(self.init_data):
+                raise SenderValidationError(
+                    event_type=self.event_type,
+                    message="There's a mismatch between initialization data and send_event arguments",
+                )
+
+            for key, value in self.init_data.items():
+                argument = kwargs.get(key)
+                if not argument:
+                    raise SenderValidationError(
+                        event_type=self.event_type,
+                        message="Missing required argument '{key}'".format(key=key),
+                    )
+                if not isinstance(argument, value):
+                    raise SenderValidationError(
+                        event_type=self.event_type,
+                        message="The argument '{key}' is not instance of the Class Attribute '{attr}'".format(
+                            key=key, attr=value.__class__.__name__
+                        ),
+                    )
+
+        if not self._allow_events:
+            return []
+
+        validate_sender()
+
+        kwargs["metadata"] = metadata
+
+        if self._allow_send_event_failure or settings.DEBUG or not send_robust:
+            return super().send(sender=None, **kwargs)
+
+        responses = super().send_robust(sender=None, **kwargs)
+        log.info(
+            f"Responses of the Open edX Event <{self.event_type}>: \n{format_responses(responses, depth=2)}",
+        )
+
+        return responses
+
     def send_event(self, send_robust=True, time=None, **kwargs):
         """
         Send events to all connected receivers.
@@ -138,52 +197,45 @@ class OpenEdxPublicSignal(Signal):
             arguments passed to this method and arguments used to initialize
             the event.
         """
+        metadata = self.generate_signal_metadata(time=time)
+        return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)
 
-        def validate_sender():
-            """
-            Run validations over the send arguments.
+    def send_event_with_custom_metadata(
+        self, *, id, minorversion, source, sourcehost, time, sourcelib,  # pylint: disable=redefined-builtin
+        send_robust=True, **kwargs
+    ):
+        """
+        Send events to all connected receivers using the provided metadata.
 
-            The validation checks whether the send arguments match the
-            arguments used when instantiating the event. If they don't a
-            validation error is raised.
-            """
-            if len(kwargs) != len(self.init_data):
-                raise SenderValidationError(
-                    event_type=self.event_type,
-                    message="There's a mismatch between initialization data and send_event arguments",
-                )
+        This method works exactly like ``send_event``, except it takes most of
+            the event metadata fields as arguments. This could be used for an
+            event bus consumer, where we want to recreate the metadata used
+            in the producer when resending the same signal on the consuming
+            side.
 
-            for key, value in self.init_data.items():
-                argument = kwargs.get(key)
-                if not argument:
-                    raise SenderValidationError(
-                        event_type=self.event_type,
-                        message="Missing required argument '{key}'".format(key=key),
-                    )
-                if not isinstance(argument, value):
-                    raise SenderValidationError(
-                        event_type=self.event_type,
-                        message="The argument '{key}' is not instance of the Class Attribute '{attr}'".format(
-                            key=key, attr=value.__class__.__name__
-                        ),
-                    )
+        Arguments:
+            id (UUID): from event production metadata.
+            event_type (str): from event production metadata.
+            minorversion (int): from event production metadata.
+            source (str): from event production metadata.
+            sourcehost (str): from event production metadata.
+            time (datetime): from event production metadata.
+            sourcelib (tuple of ints): from event production metadata.
+            send_robust (bool): Defaults to True. See Django signal docs.
 
-        if not self._allow_events:
-            return []
+        See ``send_event`` docstring for more details.
 
-        validate_sender()
-
-        kwargs["metadata"] = self.generate_signal_metadata(time=time)
-
-        if self._allow_send_event_failure or settings.DEBUG or not send_robust:
-            return super().send(sender=None, **kwargs)
-
-        responses = super().send_robust(sender=None, **kwargs)
-        log.info(
-            f"Responses of the Open edX Event <{self.event_type}>: \n{format_responses(responses, depth=2)}",
+        """
+        metadata = EventsMetadata(
+            id=id,
+            event_type=self.event_type,
+            minorversion=minorversion,
+            source=source,
+            sourcehost=sourcehost,
+            time=time,
+            sourcelib=sourcelib,
         )
-
-        return responses
+        return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)
 
     def send(self, sender, **kwargs):  # pylint: disable=unused-argument
         """

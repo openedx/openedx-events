@@ -47,36 +47,39 @@ class EventsMetadata:
             lexical ordering of strings (e.g. '0.9.0' vs. '0.10.0').
     """
 
-    id = attr.ib(type=UUID, init=False)
-    event_type = attr.ib(type=str)
-    minorversion = attr.ib(type=int, default=None, converter=attr.converters.default_if_none(0))
-    source = attr.ib(type=str, init=False)
-    sourcehost = attr.ib(type=str, init=False)
-    current_utc_time = datetime.now(timezone.utc)
-    time = attr.ib(
-        type=datetime,
-        default=None,
-        converter=attr.converters.default_if_none(attr.Factory(lambda: datetime.now(timezone.utc))),
-        validator=attr.validators.optional([attr.validators.instance_of(datetime), _ensure_utc_time]),
+    event_type = attr.ib(type=str, validator=attr.validators.instance_of(str))
+    id = attr.ib(
+        type=UUID, default=None,
+        converter=attr.converters.default_if_none(attr.Factory(lambda: uuid1())),  # pylint: disable=unnecessary-lambda
+        validator=attr.validators.instance_of(UUID),
     )
-    sourcelib = attr.ib(type=tuple, init=False)
-
-    def __attrs_post_init__(self):
-        """
-        Post-init hook that generates metadata for the Open edX Event.
-        """
-        # Have to use this to get around the fact that the class is frozen
-        # (which we almost always want, but not while we're initializing it).
-        # Taken from edX Learning Sequences data file.
-        object.__setattr__(self, "id", uuid1())
-        object.__setattr__(
-            self,
-            "source",
-            "openedx/{service}/web".format(
-                service=getattr(settings, "SERVICE_VARIANT", "")
-            ),
-        )
-        object.__setattr__(self, "sourcehost", socket.gethostname())
-        object.__setattr__(
-            self, "sourcelib", tuple(map(int, openedx_events.__version__.split(".")))
-        )
+    minorversion = attr.ib(
+        type=int, default=None,
+        converter=attr.converters.default_if_none(0), validator=attr.validators.instance_of(int)
+    )
+    source = attr.ib(
+        type=str, default=None,
+        converter=attr.converters.default_if_none(
+            attr.Factory(lambda: "openedx/{service}/web".format(service=getattr(settings, "SERVICE_VARIANT", "")))
+        ),
+        validator=attr.validators.instance_of(str),
+    )
+    sourcehost = attr.ib(
+        type=str, default=None,
+        converter=attr.converters.default_if_none(
+            attr.Factory(lambda: socket.gethostname())  # pylint: disable=unnecessary-lambda
+        ),
+        validator=attr.validators.instance_of(str),
+    )
+    time = attr.ib(
+        type=datetime, default=None,
+        converter=attr.converters.default_if_none(attr.Factory(lambda: datetime.now(timezone.utc))),
+        validator=[attr.validators.instance_of(datetime), _ensure_utc_time],
+    )
+    sourcelib = attr.ib(
+        type=tuple, default=None,
+        converter=attr.converters.default_if_none(
+            attr.Factory(lambda: tuple(map(int, openedx_events.__version__.split("."))))
+        ),
+        validator=attr.validators.instance_of(tuple),
+    )

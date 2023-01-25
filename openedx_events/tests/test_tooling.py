@@ -7,7 +7,7 @@ Classes:
 import datetime
 from contextlib import contextmanager
 from unittest.mock import Mock, patch
-from uuid import UUID
+from uuid import UUID, uuid1
 
 import attr
 import ddt
@@ -160,7 +160,7 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
 
     @patch("openedx_events.tooling.OpenEdxPublicSignal.generate_signal_metadata")
     @patch("openedx_events.tooling.Signal.send")
-    def test_send_event_successfully(self, send_mock, fake_metadata):
+    def test_send_event_allow_failure_successfully(self, send_mock, fake_metadata):
         """
         This method tests the process of sending an event that's allowed to fail.
 
@@ -223,6 +223,39 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
 
         # generate_signal_metadata is fully tested elsewhere
         fake_metadata.assert_called_once_with(time=expected_time)
+
+    @patch("openedx_events.tooling.OpenEdxPublicSignal._send_event_with_metadata")
+    def test_send_event_with_custom_metadata(self, mock_send_event_with_metadata):
+        """
+        This method tests the process of sending an event with custom metadata.
+
+        Expected behavior:
+            The _send_event_with_metadata call is passed the appropriate metadata.
+
+        Note:
+            The _send_event_with_metadata is fully tested with the various send_event tests.
+        """
+        expected_metadata = {
+            "id": uuid1(),
+            "event_type": self.event_type,
+            "minorversion": 99,
+            "source": "mock-source",
+            "sourcehost": "mock-sourcehost",
+            "time": datetime.datetime.now(datetime.timezone.utc),
+            "sourcelib": [6, 1, 7],
+        }
+        expected_response = "mock-response"
+        mock_send_event_with_metadata.return_value = expected_response
+
+        response = self.public_signal.send_event_with_custom_metadata(
+            user=self.user_mock, id=expected_metadata['id'], minorversion=expected_metadata['minorversion'],
+            source=expected_metadata['source'], sourcehost=expected_metadata['sourcehost'],
+            time=expected_metadata['time'], sourcelib=tuple(expected_metadata['sourcelib']),
+        )
+
+        assert response == expected_response
+        metadata = mock_send_event_with_metadata.call_args.kwargs['metadata']
+        self.assertDictContainsSubset(expected_metadata, attr.asdict(metadata))
 
     @ddt.data(
         (
