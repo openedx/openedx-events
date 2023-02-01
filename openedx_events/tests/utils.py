@@ -1,6 +1,10 @@
 """
 Utils used by Open edX event tests.
 """
+import pkgutil
+import re
+from importlib import import_module
+
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
@@ -124,3 +128,25 @@ class OpenEdxEventsTestMixin(EventsIsolationMixin):
         cls().disable_all_events()
         cls().enable_events_by_type(*cls.ENABLED_OPENEDX_EVENTS)
         cls().allow_send_events_failure(*cls.ENABLED_OPENEDX_EVENTS)
+
+
+def load_all_signals():
+    """
+    Ensure OpenEdxPublicSignal.all_events() cache is fully populated.
+
+    Loads all non-test signals.py modules.
+    """
+    found = []
+
+    root = import_module('openedx_events')
+    for m in pkgutil.walk_packages(root.__path__, root.__name__ + '.'):
+        if 'tests' in m.name.split('.') or '.test_' in m.name:
+            continue
+        if re.search(r'\.signals$', m.name):
+            found.append(import_module(m.name))
+
+    # This can be raised as the number of known signals.py files increases,
+    # but doesn't strictly have to be. It's just here to check that
+    # the loader is basically working.
+    if len(found) < 2:
+        raise Exception("Failed to find expected signals.py modules")
