@@ -4,10 +4,6 @@ from unittest import TestCase
 
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
-# Each new folder with signals must be manually imported in order for the signals to be cached
-#   and used in the unit tests. Using 'disable=reimported' with pylint will work,
-#   because we just use the cached signal list.
-from openedx_events.content_authoring import signals  # pylint: disable=unused-import
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer
 from openedx_events.event_bus.avro.serializer import AvroSignalSerializer
 from openedx_events.event_bus.avro.tests.test_utilities import (
@@ -20,8 +16,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     deserialize_bytes_to_event_data,
     serialize_event_data_to_bytes,
 )
-from openedx_events.learning import signals  # See note above; pylint: disable=reimported
-from openedx_events.tests.utils import FreezeSignalCacheMixin
+from openedx_events.tests.utils import FreezeSignalCacheMixin, load_all_signals
 from openedx_events.tooling import OpenEdxPublicSignal
 
 # If a signal is explicitly not for use with the event bus, add it to this list
@@ -71,6 +66,13 @@ def generate_test_event_data_for_data_type(data_type):
 
 class TestAvro(FreezeSignalCacheMixin, TestCase):
     """Tests for end-to-end serialization and deserialization of events"""
+
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        # Ensure we can usefully call all_events()
+        load_all_signals()
+
     def test_all_events(self):
         for signal in OpenEdxPublicSignal.all_events():
             if signal.event_type in KNOWN_UNSERIALIZABLE_SIGNALS:
