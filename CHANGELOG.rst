@@ -14,10 +14,16 @@ Change Log
 Unreleased
 ----------
 
+[5.0.0] - 2023-02-02
+--------------------
+Changed
+~~~~~~~
+* **Breaking change**: ``send_event_with_custom_metadata`` changes to accept a single EventsMetadata object rather than all of the fields that go into one. This only directly affects event bus consumer libraries.
+
 [4.2.0] - 2023-01-24
----------------------
+--------------------
 Added
-~~~~~~
+~~~~~
 * Added ``send_event_with_custom_metadata``. This will enable event bus consumers to send the event signal with the same metadata fields that were used when the event was produced.
 
 Fixed
@@ -38,7 +44,7 @@ Changed
 [4.1.0] - 2023-01-03
 ---------------------
 Added
-~~~~~~~
+~~~~~
 * Added new XBLOCK_PUBLISHED, XBLOCK_DUPLICATED and XBLOCK_DELETED signals in content_authoring.
 * Added XBlockData and DuplicatedXBlockData classes
 * Added custom UsageKeyAvroSerializer for opaque_keys UsageKey.

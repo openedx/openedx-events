@@ -14,6 +14,7 @@ import ddt
 import pytest
 from django.test import TestCase, override_settings
 
+from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import SenderValidationError
 from openedx_events.tests.utils import FreezeSignalCacheMixin
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -235,27 +236,24 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         Note:
             The _send_event_with_metadata is fully tested with the various send_event tests.
         """
-        expected_metadata = {
-            "id": uuid1(),
-            "event_type": self.event_type,
-            "minorversion": 99,
-            "source": "mock-source",
-            "sourcehost": "mock-sourcehost",
-            "time": datetime.datetime.now(datetime.timezone.utc),
-            "sourcelib": [6, 1, 7],
-        }
+        metadata = EventsMetadata(
+            id=uuid1(),
+            event_type=self.event_type,
+            minorversion=99,
+            source="mock-source",
+            sourcehost="mock-sourcehost",
+            time=datetime.datetime.now(datetime.timezone.utc),
+            sourcelib=(6, 1, 7),
+        )
         expected_response = "mock-response"
         mock_send_event_with_metadata.return_value = expected_response
 
-        response = self.public_signal.send_event_with_custom_metadata(
-            user=self.user_mock, id=expected_metadata['id'], minorversion=expected_metadata['minorversion'],
-            source=expected_metadata['source'], sourcehost=expected_metadata['sourcehost'],
-            time=expected_metadata['time'], sourcelib=tuple(expected_metadata['sourcelib']),
-        )
+        response = self.public_signal.send_event_with_custom_metadata(metadata, foo="bar")
 
         assert response == expected_response
-        metadata = mock_send_event_with_metadata.call_args.kwargs['metadata']
-        self.assertDictContainsSubset(expected_metadata, attr.asdict(metadata))
+        mock_send_event_with_metadata.assert_called_once_with(
+            metadata=metadata, send_robust=True, foo="bar",
+        )
 
     @ddt.data(
         (

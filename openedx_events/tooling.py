@@ -185,8 +185,7 @@ class OpenEdxPublicSignal(Signal):
             [(<function callback at 0x7f2ce638ef70>, 'callback response')]
 
         Keyword arguments:
-            send_robust (bool): determines whether the Django signal will be
-            sent using the method `send` or `send_robust`.
+            kwargs: Data to be sent to the signal's receivers.
 
         Returns:
             list: response of each receiver following the format
@@ -201,40 +200,27 @@ class OpenEdxPublicSignal(Signal):
         return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)
 
     def send_event_with_custom_metadata(
-        self, *, id, minorversion, source, sourcehost, time, sourcelib,  # pylint: disable=redefined-builtin
-        send_robust=True, **kwargs
+            self, metadata, /, *, send_robust=True, **kwargs
     ):
         """
         Send events to all connected receivers using the provided metadata.
 
-        This method works exactly like ``send_event``, except it takes most of
-            the event metadata fields as arguments. This could be used for an
+        This method works exactly like ``send_event``, except it uses the given
+            event metadata rather than generating it. This is used by the
             event bus consumer, where we want to recreate the metadata used
             in the producer when resending the same signal on the consuming
             side.
 
         Arguments:
-            id (UUID): from event production metadata.
-            event_type (str): from event production metadata.
-            minorversion (int): from event production metadata.
-            source (str): from event production metadata.
-            sourcehost (str): from event production metadata.
-            time (datetime): from event production metadata.
-            sourcelib (tuple of ints): from event production metadata.
+            metadata (EventsMetadata): The metadata to be sent with the signal.
+
+        Keyword arguments:
             send_robust (bool): Defaults to True. See Django signal docs.
+            kwargs: Data to be sent to the signal's receivers.
 
         See ``send_event`` docstring for more details.
 
         """
-        metadata = EventsMetadata(
-            id=id,
-            event_type=self.event_type,
-            minorversion=minorversion,
-            source=source,
-            sourcehost=sourcehost,
-            time=time,
-            sourcelib=sourcelib,
-        )
         return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)
 
     def send(self, sender, **kwargs):  # pylint: disable=unused-argument
