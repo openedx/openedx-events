@@ -169,6 +169,7 @@ class OpenEdxPublicSignal(Signal):
                 current time in UTC. This argument is optional for backward
                 compatability, but ideally would be explicitly set. See OEP-41
                 for details.
+            kwargs: Data to be sent to the signal's receivers.
 
         Used to send events just like Django signals are sent. In addition,
         some validations are executed on the arguments, and then generates relevant
@@ -183,9 +184,6 @@ class OpenEdxPublicSignal(Signal):
                 user=user_data, registration=registration_data,
             )
             [(<function callback at 0x7f2ce638ef70>, 'callback response')]
-
-        Keyword arguments:
-            kwargs: Data to be sent to the signal's receivers.
 
         Returns:
             list: response of each receiver following the format
@@ -213,8 +211,6 @@ class OpenEdxPublicSignal(Signal):
 
         Arguments:
             metadata (EventsMetadata): The metadata to be sent with the signal.
-
-        Keyword arguments:
             send_robust (bool): Defaults to True. See Django signal docs.
             kwargs: Data to be sent to the signal's receivers.
 
