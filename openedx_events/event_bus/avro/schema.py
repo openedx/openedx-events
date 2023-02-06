@@ -59,6 +59,7 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         if PYTHON_TYPE_TO_AVRO_MAPPING[data_type] in ["record", "array"]:
             # Can implement if needed, but for now it doesn't seem to be necessary.
+            # pylint: disable-next=broad-exception-raised
             raise Exception("Unable to generate Avro schema for dict or array fields")
         avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[data_type]
         field["type"] = avro_type
@@ -73,7 +74,7 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
             field["type"] = data_type.__name__
         else:
             previously_seen_types.add(data_type.__name__)
-            record_type = dict(name=data_type.__name__, type="record", fields=[])
+            record_type = {"name": data_type.__name__, "type": 'record', "fields": []}
 
             for attribute in data_type.__attrs_attrs__:
                 record_type["fields"].append(

@@ -58,6 +58,7 @@ def generate_test_event_data_for_data_type(data_type):
         if result is not None:
             data_dict.update({attribute.name: result})
         elif attribute.type in [dict, list]:
+            # pylint: disable-next=broad-exception-raised
             raise Exception("Unable to generate Avro schema for dict or array fields")
         else:
             data_dict.update({attribute.name: attribute.type(**generate_test_event_data_for_data_type(attribute.type))})
