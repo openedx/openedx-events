@@ -8,7 +8,7 @@ TODO: Handle optional parameters and allow for schema evolution. https://github.
 from typing import get_args, get_origin
 
 from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
-from .types import PYTHON_TYPE_TO_AVRO_MAPPING
+from .types import PYTHON_TYPE_TO_AVRO_MAPPING, SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING
 
 DEFAULT_FIELD_TYPES = {serializer.cls: serializer.field_type for serializer in DEFAULT_CUSTOM_SERIALIZERS}
 
@@ -71,7 +71,12 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
             raise TypeError(
                 "List without annotation type is not supported. The argument should be a type, for eg., List[int]"
             )
-        avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[arg_data_type[0]]
+        avro_type = SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING.get(arg_data_type[0])
+        if avro_type is None:
+            raise TypeError(
+                "Only following types are supported for list arguments:"
+                f" {set(SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING.keys())}"
+            )
         field["type"] = {"type": PYTHON_TYPE_TO_AVRO_MAPPING[data_type_origin], "items": avro_type}
     # Case 3: data_type is an attrs class
     elif hasattr(data_type, "__attrs_attrs__"):

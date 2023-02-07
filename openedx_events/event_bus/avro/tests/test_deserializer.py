@@ -194,6 +194,7 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         """
         Check that deserialization raises error when list data is not annotated.
         """
+        # create dummy signal to test deserializer
         SIGNAL = create_simple_signal({"list_input": List[int]})
         LIST_SIGNAL = create_simple_signal({"list_input": List})
         initial_dict = {"list_input": [1, 3]}
@@ -206,10 +207,23 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         """
         Check that deserialization raises error when nested list data is passed.
         """
+        # create dummy signal to test deserializer
         SIGNAL = create_simple_signal({"list_input": List[int]})
         LIST_SIGNAL = create_simple_signal({"list_input": List[List[int]]})
         initial_dict = {"list_input": [[1, 3], [4, 5]]}
         deserializer = AvroSignalDeserializer(SIGNAL)
         deserializer.signal = LIST_SIGNAL
+        with self.assertRaises(TypeError):
+            deserializer.from_dict(initial_dict)
+
+    def test_deserialization_of_nested_list_with_complex_types_fails(self):
+        SIGNAL = create_simple_signal({"list_input": List[list]})
+        with self.assertRaises(TypeError):
+            AvroSignalDeserializer(SIGNAL)
+        initial_dict = {"list_input": [[1, 3], [4, 5]]}
+        # create dummy signal to test deserializer
+        DUMMY_SIGNAL = create_simple_signal({"list_input": List[int]})
+        deserializer = AvroSignalDeserializer(DUMMY_SIGNAL)
+        deserializer.signal = SIGNAL
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
