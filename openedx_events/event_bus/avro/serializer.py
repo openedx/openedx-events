@@ -38,6 +38,7 @@ def _get_non_attrs_serializer(serializers=None):
                 #
                 # If we ever make a custom serializer that can handle
                 # None as an input, we can remove this check.
+                # pylint: disable-next=broad-exception-raised
                 raise Exception("None cannot be handled by custom serializers (and default=None was not set)")
 
         for extended_class, serializer in all_serializers.items():
