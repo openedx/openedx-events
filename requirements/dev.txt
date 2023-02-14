@@ -8,7 +8,7 @@ asgiref==3.6.0
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.14.1
+astroid==2.14.2
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -65,7 +65,7 @@ coverage[toml]==7.1.0
     #   -r requirements/quality.txt
     #   codecov
     #   pytest-cov
-cryptography==39.0.0
+cryptography==39.0.1
     # via
     #   -r requirements/quality.txt
     #   secretstorage
@@ -186,7 +186,7 @@ pkginfo==1.9.6
     # via
     #   -r requirements/quality.txt
     #   twine
-platformdirs==2.6.2
+platformdirs==3.0.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -308,7 +308,7 @@ sqlparse==0.4.3
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==4.1.1
+stevedore==5.0.0
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -353,7 +353,7 @@ urllib3==1.26.14
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.17.1
+virtualenv==20.19.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -369,7 +369,7 @@ wrapt==1.14.1
     # via
     #   -r requirements/quality.txt
     #   astroid
-zipp==3.12.1
+zipp==3.13.0
     # via
     #   -r requirements/quality.txt
     #   importlib-metadata
