@@ -7,7 +7,6 @@ How to use
 Using openedx-events in your code is very straight forward. We can consider the
 two possible cases, sending or receiving an event.
 
-
 Receiving events
 ^^^^^^^^^^^^^^^^
 
@@ -80,7 +79,6 @@ attr data classes that encapsulate the event data.
 You can do this both from the edx-platform code as well as from an openedx
 plugin.
 
-
 Testing events
 ^^^^^^^^^^^^^^
 
@@ -109,7 +107,6 @@ testing dependencies and make the signal connection in your test case.
         )
 
         # run your assertions
-
 
 Changes in the openedx-events library that are not compatible with your code
 should break this kind of test in CI and let you know you need to upgrade your
