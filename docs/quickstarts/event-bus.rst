@@ -1,0 +1,1 @@
+whole process of adding an event to a service and adding it to event bus
