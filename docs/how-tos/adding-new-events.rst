@@ -2,7 +2,7 @@ How to create a new Open edX Event
 ==================================
 
 The mechanisms implemented by the Open edX Events library are supported and maintained by the Open edX community.
-Therefore, we've put together a guide on how to add a new event to have an effective contribution process.
+Therefore, we've put together a guide on how to add a new event the library so future contributions are effective.
 
 
 1. Propose the new event to the community

@@ -4,7 +4,7 @@ How to add an Open edX Event to a service
 After or during the events definition implementation, you now must trigger the event in the service you intentioned. Meaning:
 
 - Add the openedx-events library to the service project.
-- Import the events' data and definition into the place where will be triggered. Remember the Open edX Events purpose when
+- Import the events' data and definition into the place where the event be triggered. Remember the Open edX Events purpose when
   choosing a place to send the new event.
 - Add inline documentation with the event implemented name.
 
