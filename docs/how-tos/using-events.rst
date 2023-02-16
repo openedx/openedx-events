@@ -1,5 +1,5 @@
-Using Open edX Events within edx-platform
-=========================================
+Using Open edX Events
+=====================
 
 How to use
 ----------
