@@ -20,6 +20,10 @@ Changed
 ~~~~~~~
 * **Breaking change**: ``send_event_with_custom_metadata`` changes to accept a single EventsMetadata object rather than all of the fields that go into one. This only directly affects event bus consumer libraries.
 
+Added
+~~~~~
+* Added ``COURSE_CERTIFICATE_CONFIG_CHANGED`` and ``COURSE_CERTIFICATE_CONFIG_DELETED`` signals for when a course's certificate configuration is updated or deleted
+
 [4.2.0] - 2023-01-24
 --------------------
 Added
