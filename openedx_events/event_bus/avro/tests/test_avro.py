@@ -1,5 +1,6 @@
 """Test interplay of the various Avro helper classes"""
 from datetime import datetime
+from typing import List
 from unittest import TestCase
 
 from opaque_keys.edx.keys import CourseKey, UsageKey
@@ -51,6 +52,7 @@ def generate_test_event_data_for_data_type(data_type):
         UsageKey: UsageKey.from_string(
             "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
         ),
+        List[int]: [1, 2, 3],
         datetime: datetime.now(),
     }
     for attribute in data_type.__attrs_attrs__:

@@ -2,12 +2,13 @@
 Deserialize Avro record dictionaries to events that can be sent with OpenEdxPublicSignals.
 """
 import json
+from typing import get_args, get_origin
 
 import attr
 
 from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
 from .schema import schema_from_signal
-from .types import PYTHON_TYPE_TO_AVRO_MAPPING
+from .types import PYTHON_TYPE_TO_AVRO_MAPPING, SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING
 
 # Dict of class to deserialize methods (e.g. datetime => DatetimeAvroSerializer.deserialize)
 DEFAULT_DESERIALIZERS = {serializer.cls: serializer.deserialize for serializer in DEFAULT_CUSTOM_SERIALIZERS}
@@ -29,11 +30,25 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
     """
     param_deserializers = deserializers or {}
     all_deserializers = {**DEFAULT_DESERIALIZERS, **param_deserializers}
+    # get generic type of data_type
+    # if data_type == List[int], data_type_origin = list
+    data_type_origin = get_origin(data_type)
 
     if deserializer := all_deserializers.get(data_type, None):
         return deserializer(data)
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         return data
+    elif data_type_origin == list:
+        # returns types of list contents
+        # if data_type == List[int], arg_data_type = (int,)
+        arg_data_type = get_args(data_type)
+        if not arg_data_type:
+            raise TypeError(
+                "List without annotation type is not supported. The argument should be a type, for eg., List[int]"
+            )
+        # check whether list items type is in basic types.
+        if arg_data_type[0] in SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING:
+            return data
     elif hasattr(data_type, "__attrs_attrs__"):
         transformed = {}
         for attribute in data_type.__attrs_attrs__:

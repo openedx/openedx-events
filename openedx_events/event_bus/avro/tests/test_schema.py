@@ -1,6 +1,7 @@
 """
 Tests for event_bus.avro.schema module
 """
+from typing import List
 from unittest import TestCase
 
 from openedx_events.event_bus.avro.schema import schema_from_signal
@@ -235,11 +236,29 @@ class TestSchemaGeneration(TestCase):
         with self.assertRaises(TypeError):
             schema_from_signal(SIGNAL)
 
-    def test_throw_exception_to_list_or_dict_types(self):
+    def test_throw_exception_to_list_or_dict_types_without_annotation(self):
         LIST_SIGNAL = create_simple_signal({"list_input": list})
         DICT_SIGNAL = create_simple_signal({"list_input": dict})
+        LIST_WITHOUT_ANNOTATION_SIGNAL = create_simple_signal({"list_input": List})
         with self.assertRaises(Exception):
             schema_from_signal(LIST_SIGNAL)
 
         with self.assertRaises(Exception):
             schema_from_signal(DICT_SIGNAL)
+
+        with self.assertRaises(TypeError):
+            schema_from_signal(LIST_WITHOUT_ANNOTATION_SIGNAL)
+
+    def test_list_with_annotation_works(self):
+        LIST_SIGNAL = create_simple_signal({"list_input": List[int]})
+        expected_dict = {
+            'name': 'CloudEvent',
+            'type': 'record',
+            'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
+            'fields': [{
+                'name': 'list_input',
+                'type': {'type': 'array', 'items': 'long'},
+            }],
+        }
+        schema = schema_from_signal(LIST_SIGNAL)
+        self.assertDictEqual(schema, expected_dict)

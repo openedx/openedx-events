@@ -14,6 +14,14 @@ Change Log
 Unreleased
 ----------
 
+[5.1.0] - 2023-02-07
+---------------------
+Added
+~~~~~~~
+* Added support for array type.
+* Added new XBLOCK_SKILL_VERIFIED event.
+* Added XBlockSkillVerificationData classes.
+
 [5.0.0] - 2023-02-03
 --------------------
 Changed

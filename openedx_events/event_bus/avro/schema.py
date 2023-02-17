@@ -5,8 +5,10 @@ TODO: Handle optional parameters and allow for schema evolution. https://github.
 """
 
 
+from typing import get_args, get_origin
+
 from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
-from .types import PYTHON_TYPE_TO_AVRO_MAPPING
+from .types import PYTHON_TYPE_TO_AVRO_MAPPING, SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING
 
 DEFAULT_FIELD_TYPES = {serializer.cls: serializer.field_type for serializer in DEFAULT_CUSTOM_SERIALIZERS}
 
@@ -51,6 +53,9 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
     """
     field = {"name": data_key}
     all_field_type_overrides = custom_type_to_avro_type or {}
+    # get generic type of data_type
+    # if data_type == List[int], data_type_origin = list
+    data_type_origin = get_origin(data_type)
 
     # Case 1: data_type has a predetermined avro field representation
     if field_type := all_field_type_overrides.get(data_type, None):
@@ -58,12 +63,25 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
     # Case 2: data_type is a simple type that can be converted directly to an Avro type
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         if PYTHON_TYPE_TO_AVRO_MAPPING[data_type] in ["record", "array"]:
-            # Can implement if needed, but for now it doesn't seem to be necessary.
             # pylint: disable-next=broad-exception-raised
-            raise Exception("Unable to generate Avro schema for dict or array fields")
+            raise Exception("Unable to generate Avro schema for dict or array fields without annotation types.")
         avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[data_type]
         field["type"] = avro_type
-
+    elif data_type_origin == list:
+        # returns types of list contents
+        # if data_type == List[int], arg_data_type = (int,)
+        arg_data_type = get_args(data_type)
+        if not arg_data_type:
+            raise TypeError(
+                "List without annotation type is not supported. The argument should be a type, for eg., List[int]"
+            )
+        avro_type = SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING.get(arg_data_type[0])
+        if avro_type is None:
+            raise TypeError(
+                "Only following types are supported for list arguments:"
+                f" {set(SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING.keys())}"
+            )
+        field["type"] = {"type": PYTHON_TYPE_TO_AVRO_MAPPING[data_type_origin], "items": avro_type}
     # Case 3: data_type is an attrs class
     elif hasattr(data_type, "__attrs_attrs__"):
         # Inner Attrs Class

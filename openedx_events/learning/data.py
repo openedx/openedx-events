@@ -217,3 +217,21 @@ class PersistentCourseGradeData:
     percent_grade = attr.ib(type=float)
     letter_grade = attr.ib(type=str)
     passed_timestamp = attr.ib(type=datetime)
+
+
+@attr.s(frozen=True)
+class XBlockSkillVerificationData:
+    """
+    Data needed to update verification count  of tags/skills for an XBlock.
+
+    User feedback on whether tags/skills related to an XBlock are valid.
+
+    Arguments:
+        usage_key (UsageKey): identifier of the XBlock object.
+        verified_skills (List[int]): list of verified skill ids.
+        ignored_skills (List[int]): list of ignored skill ids.
+    """
+
+    usage_key = attr.ib(type=UsageKey)
+    verified_skills = attr.ib(type=List[int], factory=list)
+    ignored_skills = attr.ib(type=List[int], factory=list)
