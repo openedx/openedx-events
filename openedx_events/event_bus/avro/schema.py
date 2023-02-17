@@ -53,6 +53,8 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
     """
     field = {"name": data_key}
     all_field_type_overrides = custom_type_to_avro_type or {}
+    # get generic type of data_type
+    # if data_type == List[int], data_type_origin = list
     data_type_origin = get_origin(data_type)
 
     # Case 1: data_type has a predetermined avro field representation
@@ -65,7 +67,9 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
             raise Exception("Unable to generate Avro schema for dict or array fields without annotation types.")
         avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[data_type]
         field["type"] = avro_type
-    elif PYTHON_TYPE_TO_AVRO_MAPPING.get(data_type_origin) == "array":
+    elif data_type_origin == list:
+        # returns types of list contents
+        # if data_type == List[int], arg_data_type = (int,)
         arg_data_type = get_args(data_type)
         if not arg_data_type:
             raise TypeError(

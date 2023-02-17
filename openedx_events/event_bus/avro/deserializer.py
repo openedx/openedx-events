@@ -38,7 +38,7 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
         return deserializer(data)
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         return data
-    elif PYTHON_TYPE_TO_AVRO_MAPPING.get(data_type_origin) == "array":
+    elif data_type_origin == list:
         # returns types of list contents
         # if data_type == List[int], arg_data_type = (int,)
         arg_data_type = get_args(data_type)

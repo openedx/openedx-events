@@ -194,11 +194,13 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         """
         Check that deserialization raises error when list data is not annotated.
         """
-        # create dummy signal to test deserializer
+        # create dummy signal to bypass schema check while initializing deserializer
+        # This allows us to test whether correct exceptions are raised while deserializing data
         SIGNAL = create_simple_signal({"list_input": List[int]})
         LIST_SIGNAL = create_simple_signal({"list_input": List})
         initial_dict = {"list_input": [1, 3]}
         deserializer = AvroSignalDeserializer(SIGNAL)
+        # Update signal with incomplete type info
         deserializer.signal = LIST_SIGNAL
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
@@ -207,11 +209,13 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         """
         Check that deserialization raises error when nested list data is passed.
         """
-        # create dummy signal to test deserializer
+        # create dummy signal to bypass schema check while initializing deserializer
+        # This allows us to test whether correct exceptions are raised while deserializing data
         SIGNAL = create_simple_signal({"list_input": List[int]})
         LIST_SIGNAL = create_simple_signal({"list_input": List[List[int]]})
         initial_dict = {"list_input": [[1, 3], [4, 5]]}
         deserializer = AvroSignalDeserializer(SIGNAL)
+        # Update signal with incomplete type info
         deserializer.signal = LIST_SIGNAL
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
@@ -221,9 +225,11 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         with self.assertRaises(TypeError):
             AvroSignalDeserializer(SIGNAL)
         initial_dict = {"list_input": [[1, 3], [4, 5]]}
-        # create dummy signal to test deserializer
+        # create dummy signal to bypass schema check while initializing deserializer
+        # This allows us to test whether correct exceptions are raised while deserializing data
         DUMMY_SIGNAL = create_simple_signal({"list_input": List[int]})
         deserializer = AvroSignalDeserializer(DUMMY_SIGNAL)
+        # Update signal with incorrect type info
         deserializer.signal = SIGNAL
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)

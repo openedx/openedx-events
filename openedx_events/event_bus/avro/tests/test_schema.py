@@ -1,7 +1,7 @@
 """
 Tests for event_bus.avro.schema module
 """
-from typing import Dict, List
+from typing import List
 from unittest import TestCase
 
 from openedx_events.event_bus.avro.schema import schema_from_signal
@@ -236,22 +236,13 @@ class TestSchemaGeneration(TestCase):
         with self.assertRaises(TypeError):
             schema_from_signal(SIGNAL)
 
-    def test_throw_exception_to_list_or_dict_types(self):
+    def test_throw_exception_to_list_or_dict_types_without_annotation(self):
         LIST_SIGNAL = create_simple_signal({"list_input": list})
         DICT_SIGNAL = create_simple_signal({"list_input": dict})
         with self.assertRaises(Exception):
             schema_from_signal(LIST_SIGNAL)
 
         with self.assertRaises(Exception):
-            schema_from_signal(DICT_SIGNAL)
-
-    def test_throw_exception_to_list_or_dict_types_without_annotation(self):
-        LIST_SIGNAL = create_simple_signal({"list_input": List})
-        DICT_SIGNAL = create_simple_signal({"list_input": Dict})
-        with self.assertRaises(TypeError):
-            schema_from_signal(LIST_SIGNAL)
-
-        with self.assertRaises(TypeError):
             schema_from_signal(DICT_SIGNAL)
 
     def test_list_with_annotation_works(self):
