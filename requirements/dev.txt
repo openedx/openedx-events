@@ -81,7 +81,7 @@ distlib==0.3.6
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==3.2.17
+django==3.2.18
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/quality.txt
@@ -89,7 +89,7 @@ docutils==0.19
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-edx-lint==5.3.0
+edx-lint==5.3.2
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/quality.txt
@@ -114,7 +114,7 @@ importlib-metadata==6.0.0
     #   -r requirements/quality.txt
     #   keyring
     #   twine
-importlib-resources==5.10.2
+importlib-resources==5.12.0
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -217,7 +217,7 @@ pygments==2.14.0
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.16.1
+pylint==2.16.2
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -341,7 +341,7 @@ tox-battery==0.6.1
     # via -r requirements/dev.in
 twine==4.0.2
     # via -r requirements/quality.txt
-typing-extensions==4.4.0
+typing-extensions==4.5.0
     # via
     #   -r requirements/quality.txt
     #   astroid
@@ -369,7 +369,7 @@ wrapt==1.14.1
     # via
     #   -r requirements/quality.txt
     #   astroid
-zipp==3.13.0
+zipp==3.14.0
     # via
     #   -r requirements/quality.txt
     #   importlib-metadata
