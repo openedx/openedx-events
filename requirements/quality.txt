@@ -46,13 +46,13 @@ ddt==1.6.0
     # via -r requirements/test.txt
 dill==0.3.6
     # via pylint
-django==3.2.17
+django==3.2.18
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/test.txt
 docutils==0.19
     # via readme-renderer
-edx-lint==5.3.0
+edx-lint==5.3.2
     # via -r requirements/quality.in
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/test.txt
@@ -68,7 +68,7 @@ importlib-metadata==6.0.0
     # via
     #   keyring
     #   twine
-importlib-resources==5.10.2
+importlib-resources==5.12.0
     # via keyring
 iniconfig==2.0.0
     # via
@@ -130,7 +130,7 @@ pygments==2.14.0
     # via
     #   readme-renderer
     #   rich
-pylint==2.16.1
+pylint==2.16.2
     # via
     #   edx-lint
     #   pylint-celery
@@ -212,7 +212,7 @@ tomlkit==0.11.6
     # via pylint
 twine==4.0.2
     # via -r requirements/quality.in
-typing-extensions==4.4.0
+typing-extensions==4.5.0
     # via
     #   astroid
     #   pylint
@@ -225,7 +225,7 @@ webencodings==0.5.1
     # via bleach
 wrapt==1.14.1
     # via astroid
-zipp==3.13.0
+zipp==3.14.0
     # via
     #   importlib-metadata
     #   importlib-resources
