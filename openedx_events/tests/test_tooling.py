@@ -330,18 +330,18 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         self.assertListEqual([], result)
 
 
-class TestLoadAllSignals(TestCase):
+class TestLoadAllSignals(FreezeSignalCacheMixin, TestCase):
     """ Tests for the load_all_signals method"""
     def setUp(self):
         # load_all_signals does spooky things with module loading,
         # so save the current state of any loaded signals modules to avoid disrupting other tests
         super().setUp()
         self.old_signal_modules = {}
+
         def save_module(module_name):
             if module_name in sys.modules:
                 self.old_signal_modules[module_name] = sys.modules[module_name]
         _process_all_signals_modules(save_module)
-
 
     def tearDown(self):
         for k, v in self.old_signal_modules.items():
