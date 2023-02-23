@@ -19,7 +19,7 @@ from django.test import TestCase, override_settings
 from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import SenderValidationError
 from openedx_events.tests.utils import FreezeSignalCacheMixin
-from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
+from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals, _process_all_signals_modules
 
 
 @contextmanager
@@ -337,13 +337,11 @@ class TestLoadAllSignals(TestCase):
         # so save the current state of any loaded signals modules to avoid disrupting other tests
         super().setUp()
         self.old_signal_modules = {}
-        root = sys.modules['openedx_events']
-        for m in pkgutil.walk_packages(root.__path__, root.__name__ + '.'):
-            module_name = m.name
-            if 'tests' in module_name.split('.') or '.test_' in module_name:
-                continue
-            if module_name.endswith('.signals') and module_name in sys.modules:
+        def save_module(module_name):
+            if module_name in sys.modules:
                 self.old_signal_modules[module_name] = sys.modules[module_name]
+        _process_all_signals_modules(save_module)
+
 
     def tearDown(self):
         for k, v in self.old_signal_modules.items():

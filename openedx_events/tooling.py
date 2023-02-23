@@ -255,22 +255,19 @@ class OpenEdxPublicSignal(Signal):
         """
         self._allow_send_event_failure = True
 
-
-def load_all_signals():
-    """
-    Ensure OpenEdxPublicSignal.all_events() cache is fully populated.
-    Loads all non-test signals.py modules.
-    """
-
-    found = set()
-
+def _process_all_signals_modules(func):
     root = import_module('openedx_events')
     for m in pkgutil.walk_packages(root.__path__, root.__name__ + '.'):
         module_name = m.name
         if 'tests' in module_name.split('.') or '.test_' in module_name:
             continue
         if module_name.endswith('.signals'):
-            print(f"{module_name=}")
-            import_module(module_name)
-            print(f"Current state of all events: {OpenEdxPublicSignal.all_events()}\n")
-            found.add(module_name)
+            func(module_name)
+
+def load_all_signals():
+    """
+    Ensure OpenEdxPublicSignal.all_events() cache is fully populated.
+    Loads all non-test signals.py modules.
+    """
+    _process_all_signals_modules(lambda module_name: import_module(module_name))
+
