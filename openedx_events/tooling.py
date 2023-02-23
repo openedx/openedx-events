@@ -257,7 +257,8 @@ class OpenEdxPublicSignal(Signal):
 
 
 def _process_all_signals_modules(func):
-    """Utility method to walk the package tree and do something to process all signals.py files
+    """Walk the package tree and do something to process all signals.py filess
+
     Parameters:
         func: A method that takes a module name as its parameter
     """
@@ -273,6 +274,7 @@ def _process_all_signals_modules(func):
 def load_all_signals():
     """
     Ensure OpenEdxPublicSignal.all_events() cache is fully populated.
+
     Loads all non-test signals.py modules.
     """
     _process_all_signals_modules(import_module)
