@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[6.0.0] - 2023-02-23
+---------------------
+Changed
+~~~~~~~
+* **Breaking change**: Moved load_all_events() from openedx_events.tests.utils to openedx_events.tooling
+
 [5.1.0] - 2023-02-07
 ---------------------
 Added
