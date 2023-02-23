@@ -5,6 +5,8 @@ Classes:
     EventsToolingTest: Test events tooling.
 """
 import datetime
+import pkgutil
+import sys
 from contextlib import contextmanager
 from unittest.mock import Mock, patch
 from uuid import UUID, uuid1
@@ -17,7 +19,7 @@ from django.test import TestCase, override_settings
 from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import SenderValidationError
 from openedx_events.tests.utils import FreezeSignalCacheMixin
-from openedx_events.tooling import OpenEdxPublicSignal
+from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
 
 
 @contextmanager
@@ -326,3 +328,54 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
 
         send_mock.assert_not_called()
         self.assertListEqual([], result)
+
+class TestLoadAllSignals(TestCase):
+    """ Tests for the load_all_signals method"""
+    def setUp(self):
+        # load_all_signals does spooky things with module loading,
+        # so save the current state of any loaded signals modules to avoid disrupting other tests
+        super().setUp()
+        self.old_signal_modules = {}
+        root = sys.modules['openedx_events']
+        for m in pkgutil.walk_packages(root.__path__, root.__name__ + '.'):
+            module_name = m.name
+            if 'tests' in module_name.split('.') or '.test_' in module_name:
+                continue
+            if module_name.endswith('.signals') and module_name in sys.modules:
+                self.old_signal_modules[module_name] = sys.modules[module_name]
+
+    def tearDown(self):
+        for k, v in self.old_signal_modules.items():
+            sys.modules[k] = v
+        super().tearDown()
+
+    def test_load_all_signals(self):
+        """
+        Tests load_all_signals loads all the signals in the entire library
+
+        It's not the most robust since it just tests a few arbitrary signals but actually testing all the signals
+        would require updating this test every time a new signal is added
+        """
+
+        # remove any existing imports of signals modules
+        for k in self.old_signal_modules:
+            sys.modules.pop(k)
+
+        # this class uses FreezeSignalCacheMixin so we can safely remove everything from the OpenEdxPublicSignal
+        # cache and it shouldn't affect any other tests
+        OpenEdxPublicSignal._mapping = {}  # pylint: disable=protected-access
+        OpenEdxPublicSignal.instances = []
+        with pytest.raises(KeyError):
+            OpenEdxPublicSignal.get_signal_by_type('org.openedx.content_authoring.course.catalog_info.changed.v1')
+        with pytest.raises(KeyError):
+            OpenEdxPublicSignal.get_signal_by_type('org.openedx.learning.course.enrollment.created.v1')
+
+        load_all_signals()
+        assert isinstance(
+            OpenEdxPublicSignal.get_signal_by_type('org.openedx.content_authoring.course.catalog_info.changed.v1'),
+            OpenEdxPublicSignal
+        )
+        assert isinstance(
+            OpenEdxPublicSignal.get_signal_by_type('org.openedx.learning.course.enrollment.created.v1'),
+            OpenEdxPublicSignal
+        )

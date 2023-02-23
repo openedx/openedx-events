@@ -261,6 +261,7 @@ def load_all_signals():
     Ensure OpenEdxPublicSignal.all_events() cache is fully populated.
     Loads all non-test signals.py modules.
     """
+
     found = set()
 
     root = import_module('openedx_events')
@@ -269,16 +270,7 @@ def load_all_signals():
         if 'tests' in module_name.split('.') or '.test_' in module_name:
             continue
         if module_name.endswith('.signals'):
+            print(f"{module_name=}")
             import_module(module_name)
+            print(f"Current state of all events: {OpenEdxPublicSignal.all_events()}\n")
             found.add(module_name)
-
-    # Check that the auto-discovered list matches the known modules.
-    # This is just here to ensure that the auto-discovery is working
-    # properly and doesn't start to silently fail.
-    #
-    # If this assertion fails because a module has been added, renamed,
-    # or deleted, please update the hardcoded list.
-    assert found == {
-        'openedx_events.content_authoring.signals',
-        'openedx_events.learning.signals',
-    }
