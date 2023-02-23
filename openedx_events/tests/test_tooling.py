@@ -329,6 +329,7 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         send_mock.assert_not_called()
         self.assertListEqual([], result)
 
+
 class TestLoadAllSignals(TestCase):
     """ Tests for the load_all_signals method"""
     def setUp(self):
