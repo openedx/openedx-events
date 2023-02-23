@@ -5,7 +5,6 @@ Classes:
     EventsToolingTest: Test events tooling.
 """
 import datetime
-import pkgutil
 import sys
 from contextlib import contextmanager
 from unittest.mock import Mock, patch
