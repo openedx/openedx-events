@@ -258,7 +258,7 @@ class OpenEdxPublicSignal(Signal):
 
 def _process_all_signals_modules(func):
     """
-    Walk the package tree and do something to process all signals.py files.
+    Walk the package tree and apply func on all signals.py files.
 
     Arguments:
         func: A method that takes a module name as its parameter
