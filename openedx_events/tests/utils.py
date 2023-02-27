@@ -1,8 +1,6 @@
 """
 Utils used by Open edX event tests.
 """
-import pkgutil
-from importlib import import_module
 
 from openedx_events.tooling import OpenEdxPublicSignal
 
@@ -127,32 +125,3 @@ class OpenEdxEventsTestMixin(EventsIsolationMixin):
         cls().disable_all_events()
         cls().enable_events_by_type(*cls.ENABLED_OPENEDX_EVENTS)
         cls().allow_send_events_failure(*cls.ENABLED_OPENEDX_EVENTS)
-
-
-def load_all_signals():
-    """
-    Ensure OpenEdxPublicSignal.all_events() cache is fully populated.
-
-    Loads all non-test signals.py modules.
-    """
-    found = set()
-
-    root = import_module('openedx_events')
-    for m in pkgutil.walk_packages(root.__path__, root.__name__ + '.'):
-        module_name = m.name
-        if 'tests' in module_name.split('.') or '.test_' in module_name:
-            continue
-        if module_name.endswith('.signals'):
-            import_module(module_name)
-            found.add(module_name)
-
-    # Check that the auto-discovered list matches the known modules.
-    # This is just here to ensure that the auto-discovery is working
-    # properly and doesn't start to silently fail.
-    #
-    # If this assertion fails because a module has been added, renamed,
-    # or deleted, please update the hardcoded list.
-    assert found == {
-        'openedx_events.content_authoring.signals',
-        'openedx_events.learning.signals',
-    }

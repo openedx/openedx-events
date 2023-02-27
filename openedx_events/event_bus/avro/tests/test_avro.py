@@ -17,8 +17,8 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     deserialize_bytes_to_event_data,
     serialize_event_data_to_bytes,
 )
-from openedx_events.tests.utils import FreezeSignalCacheMixin, load_all_signals
-from openedx_events.tooling import OpenEdxPublicSignal
+from openedx_events.tests.utils import FreezeSignalCacheMixin
+from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
 
 # If a signal is explicitly not for use with the event bus, add it to this list
 #  and document why in the event's annotations
