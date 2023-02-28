@@ -1,4 +1,4 @@
-6. Optional fields in events
+7. Optional fields in events
 ============================
 
 Status
