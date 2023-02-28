@@ -14,7 +14,7 @@ django==3.2.18
     #   -r requirements/base.in
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/base.in
-fastavro==1.7.1
+fastavro==1.7.2
     # via -r requirements/base.in
 pbr==5.11.1
     # via stevedore
