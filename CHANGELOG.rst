@@ -14,6 +14,13 @@ Change Log
 Unreleased
 ----------
 
+[6.0.1] - 2023-02-28
+---------------------
+Changed
+~~~~~~~
+* Moved serialize_event_data_to_bytes from openedx_events.event_bus.avro.tests.test_utilities to openedx_events.event_bus.avro.serializer
+* Moved deserialize_bytes_to_event_data from openedx_events.event_bus.avro.tests.test_utilities to openedx_events.event_bus.avro.deserializer
+
 [6.0.0] - 2023-02-23
 ---------------------
 Changed

@@ -1,9 +1,11 @@
 """
 Serialize events to Avro records.
 """
+import io
 import json
 
 import attr
+import fastavro
 
 from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
 from .schema import schema_from_signal
@@ -75,6 +77,25 @@ def _event_data_to_avro_record_dict(event_data, serializers=None):
             event_data, sort_keys=True, default=value_to_dict
         )
     )
+
+
+def serialize_event_data_to_bytes(event_data, signal):
+    """
+    Serialize event data to bytes.
+
+    Arguments:
+        event_data: Event data to be sent via an OpenEdxPublicSignal's send_event method
+        signal: An instance of OpenEdxPublicSignal
+    Returns:
+        bytes: Byte representation of the event_data, to be sent over the wire
+    """
+    serializer = AvroSignalSerializer(signal)
+    schema_dict = serializer.schema
+    out = io.BytesIO()
+    data_dict = serializer.to_dict(event_data)
+    fastavro.schemaless_writer(out, schema_dict, data_dict)
+    out.seek(0)
+    return out.read()
 
 
 class AvroSignalSerializer:

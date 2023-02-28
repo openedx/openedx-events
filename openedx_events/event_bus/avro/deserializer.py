@@ -1,10 +1,12 @@
 """
 Deserialize Avro record dictionaries to events that can be sent with OpenEdxPublicSignals.
 """
+import io
 import json
 from typing import get_args, get_origin
 
 import attr
+import fastavro
 
 from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
 from .schema import schema_from_signal
@@ -79,6 +81,21 @@ def _avro_record_dict_to_event_data(signal, avro_record_dict, deserializers=None
     """
     return {data_key: _deserialized_avro_record_dict_to_object(avro_record_dict[data_key], data_type, deserializers)
             for data_key, data_type in signal.init_data.items()}
+
+
+def deserialize_bytes_to_event_data(bytes_from_wire, signal):
+    """
+    Deserialize event_bus and Avro-serialized data.
+
+    Arguments:
+        bytes_from_wire: data that was serialized by an Avro serializer
+        signal: An instance of OpenEdxPublicSignal
+    """
+    deserializer = AvroSignalDeserializer(signal)
+    schema_dict = deserializer.schema
+    data_file = io.BytesIO(bytes_from_wire)
+    as_dict = fastavro.schemaless_reader(data_file, schema_dict)
+    return deserializer.from_dict(as_dict)
 
 
 class AvroSignalDeserializer:
