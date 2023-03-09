@@ -7,7 +7,7 @@ import pytest
 from django.test import TestCase
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
-from openedx_events.event_bus.avro.serializer import AvroSignalSerializer
+from openedx_events.event_bus.avro.serializer import AvroSignalSerializer, serialize_event_data_to_bytes
 from openedx_events.event_bus.avro.tests.test_utilities import (
     CustomAttrsWithDefaults,
     CustomAttrsWithoutDefaults,
@@ -186,3 +186,18 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
                                                               'string_field': None,
                                                               'attrs_field': None
                                                               }}})
+
+    def test_serialize_event_data_to_bytes(self):
+        """
+        Test serialize_event_data_to_bytes utility function.
+        """
+        SIGNAL = create_simple_signal({"test_data": EventData})
+        event_data = {"test_data": EventData(
+            "foo",
+            "bar.course",
+            SubTestData0("a.sub.name", "a.nother.course"),
+            SubTestData1("b.uber.sub.name", "b.uber.another.course"),
+        )}
+        serialized = serialize_event_data_to_bytes(event_data, SIGNAL)
+        expected = b'\x06foo\x14bar.course\x14a.sub.name\x1ea.nother.course\x1eb.uber.sub.name*b.uber.another.course'
+        self.assertEqual(serialized, expected)

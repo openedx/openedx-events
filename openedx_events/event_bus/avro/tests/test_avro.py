@@ -5,8 +5,8 @@ from unittest import TestCase
 
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
-from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer
-from openedx_events.event_bus.avro.serializer import AvroSignalSerializer
+from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
+from openedx_events.event_bus.avro.serializer import AvroSignalSerializer, serialize_event_data_to_bytes
 from openedx_events.event_bus.avro.tests.test_utilities import (
     EventData,
     NestedAttrsWithDefaults,
@@ -14,8 +14,6 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     SubTestData0,
     SubTestData1,
     create_simple_signal,
-    deserialize_bytes_to_event_data,
-    serialize_event_data_to_bytes,
 )
 from openedx_events.tests.utils import FreezeSignalCacheMixin
 from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals

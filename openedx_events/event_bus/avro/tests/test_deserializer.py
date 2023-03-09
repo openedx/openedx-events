@@ -6,7 +6,7 @@ from unittest import TestCase
 
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
-from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer
+from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
 from openedx_events.event_bus.avro.tests.test_utilities import (
     EventData,
     NestedAttrsWithDefaults,
@@ -233,3 +233,19 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         deserializer.signal = SIGNAL
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
+
+    def test_deserialize_bytes_to_event_data(self):
+        """
+        Test deserialize_bytes_to_event_data utility function.
+        """
+        SIGNAL = create_simple_signal({"test_data": EventData})
+        bytes_data = b'\x06foo\x14bar.course\x14a.sub.name\x1ea.nother.course\x1eb.uber.sub.name*b.uber.another.course'
+        expected = {"test_data": EventData(
+            "foo",
+            "bar.course",
+            SubTestData0("a.sub.name", "a.nother.course"),
+            SubTestData1("b.uber.sub.name", "b.uber.another.course"),
+        )}
+        deserialized = deserialize_bytes_to_event_data(bytes_data, SIGNAL)
+        self.assertIsInstance(deserialized["test_data"], EventData)
+        self.assertEqual(deserialized, expected)
