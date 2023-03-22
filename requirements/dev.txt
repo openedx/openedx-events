@@ -36,7 +36,7 @@ cffi==1.15.1
     #   cryptography
 chardet==5.1.0
     # via diff-cover
-charset-normalizer==3.0.1
+charset-normalizer==3.1.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -59,7 +59,7 @@ code-annotations==1.3.0
     #   edx-lint
 codecov==2.1.12
     # via -r requirements/ci.txt
-coverage[toml]==7.2.1
+coverage[toml]==7.2.2
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -89,17 +89,17 @@ docutils==0.19
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-edx-lint==5.3.2
+edx-lint==5.3.4
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/quality.txt
-exceptiongroup==1.1.0
+exceptiongroup==1.1.1
     # via
     #   -r requirements/quality.txt
     #   pytest
-fastavro==1.7.2
+fastavro==1.7.3
     # via -r requirements/quality.txt
-filelock==3.9.0
+filelock==3.10.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -109,7 +109,7 @@ idna==3.4
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==6.0.0
+importlib-metadata==6.1.0
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -186,7 +186,7 @@ pkginfo==1.9.6
     # via
     #   -r requirements/quality.txt
     #   twine
-platformdirs==3.1.0
+platformdirs==3.1.1
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -217,7 +217,7 @@ pygments==2.14.0
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.16.3
+pylint==2.17.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -347,13 +347,13 @@ typing-extensions==4.5.0
     #   astroid
     #   pylint
     #   rich
-urllib3==1.26.14
+urllib3==1.26.15
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.20.0
+virtualenv==20.21.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -361,7 +361,7 @@ webencodings==0.5.1
     # via
     #   -r requirements/quality.txt
     #   bleach
-wheel==0.38.4
+wheel==0.40.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
