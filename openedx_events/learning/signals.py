@@ -68,7 +68,7 @@ COURSE_ENROLLMENT_CHANGED = OpenEdxPublicSignal(
 
 
 # .. event_type: org.openedx.learning.course.unenrollment.completed.v1
-# .. event_name: COURSE_ENROLLMENT_CHANGED
+# .. event_name: COURSE_UNENROLLMENT_COMPLETED
 # .. event_description: emitted when the user's unenrollment process is completed.
 # .. event_data: CourseEnrollmentData
 COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
