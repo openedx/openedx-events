@@ -52,6 +52,9 @@ In case you are listening to an event in an Open edX platform repo, you can dire
 use the django syntax since the apps.py method will not be available without the
 plugin system.
 
+.. warning::
+    For non-trivial work, we encourage using asynchronous tasks in your receiver functions in order
+    to avoid affecting the performance of the service.
 
 Sending events
 ^^^^^^^^^^^^^^
