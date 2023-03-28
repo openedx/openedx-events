@@ -19,7 +19,7 @@ Decision
 --------
 
 In this repository will reside the signals that define the events used by the
-edx-platform repo. The same applies to the necessary tooling used by the Hooks
+Open edX project. The same applies to the necessary tooling used by the Hooks
 Extension Framework to manage the events execution and extra tools.
 
 Consequences

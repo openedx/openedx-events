@@ -10,8 +10,8 @@ two possible cases, sending or receiving an event.
 Receiving events
 ^^^^^^^^^^^^^^^^
 
-This is one of the most common use cases for plugins. The edx-platform will send
-and event and you want to react to it in your plugin.
+This is one of the most common use cases for plugins. The Open edX platform will send
+an event and you want to react to it in your plugin.
 
 For this you need to:
 
@@ -48,9 +48,9 @@ Or at the apps.py
     }
 
 
-In case you are listening to an event in the edx-platform repo, you can directly
+In case you are listening to an event in an Open edX platform repo, you can directly
 use the django syntax since the apps.py method will not be available without the
-plugin.
+plugin system.
 
 
 Sending events
@@ -76,14 +76,14 @@ attr data classes that encapsulate the event data.
         ),
     )
 
-You can do this both from the edx-platform code as well as from an openedx
+You can do this both from the Open edX platform code as well as from an openedx
 plugin.
 
 Testing events
 ^^^^^^^^^^^^^^
 
 Testing your code in CI, specially for plugins is now possible without having to
-import the complete edx-platform as a dependency.
+import the complete Open edX platform as a dependency.
 
 To test your functions you need to include the openedx-events library in your
 testing dependencies and make the signal connection in your test case.

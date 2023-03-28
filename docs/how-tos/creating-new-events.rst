@@ -2,7 +2,7 @@ How to create a new Open edX Event
 ==================================
 
 The mechanisms implemented by the Open edX Events library are supported and maintained by the Open edX community.
-Therefore, we've put together a guide on how to add a new event the library so future contributions are effective.
+Therefore, we've put together a guide on how to add a new event to the library so future contributions are effective.
 
 
 1. Propose the new event to the community
@@ -44,7 +44,7 @@ decide if an existent data class works for your use case or you must create a ne
 
 - Which attributes of the object are the most relevant?
 - Which type are they?
-- Is any of them optional/required?
+- Are any of them optional/required?
 
 And with that information, create the new class justifying each decision. The class created in this step must comply
 with:
@@ -116,13 +116,13 @@ The definition created in this step must comply with:
 +-------------------+----------------------------------------------------------------------------------------------------+
 | Annotation        | Description                                                                                        |
 +===================+====================================================================================================+
-| event_type        | Allows educators to create, modify, discover, package, annotate (tag), and share learning content. |
+| event_type        | Identifier across services of the event. Should follow the events naming conventions.              |
 +-------------------+----------------------------------------------------------------------------------------------------+
-| event_name        | Allows learners to consume content and perform actions in a learning activity on the platform.     |
+| event_name        | Name of the variable storing the event instance.                                                   |
 +-------------------+----------------------------------------------------------------------------------------------------+
-| event_description | Allows learners to find the right content at the right time to help achieve their learning goals.  |
+| event_description | General description which includes when the event should be emitted.                               |
 +-------------------+----------------------------------------------------------------------------------------------------+
-| event_data        | Allows educators and learners to manage and engage in bundled packages (programs) of learning.     |
+| event_data        | What type of class attribute the event sends.                                                      |
 +-------------------+----------------------------------------------------------------------------------------------------+
 
 Consider the following example:

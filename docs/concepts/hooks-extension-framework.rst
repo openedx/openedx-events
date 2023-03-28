@@ -4,20 +4,20 @@ Openedx Hooks Extension Framework
 To sustain the growth of the Open edX ecosystem, the business rules of the
 platform must be open for extension following the open-closed principle. This
 framework allows developers to do just that without needing to fork and modify
-the main edx-platform repository.
+the main Open edX platform.
 
 Context
 -------
 
-Hooks are predefined places in the edx-platform core where externally defined
+Hooks are predefined places in the Open edX project core where externally defined
 functions can take place. In some cases, those functions can alter what the user
 sees or experiences in the platform. Other cases are informative only. All cases
 are meant to be extended using Open edX plugins and configuration.
 
 Hooks can be of two types, events and filters. Events are in essence signals, in
 that they are sent in specific application places and whose listeners can extend
-functionality. On the other hand Filters are passed data and can act on it
-before this data is put back in the original application flow. In order to allow
+functionality. functionality. On the other hand Filters can be used to act on data before
+it is put back in the original application flow. In order to allow
 extension developers to use the Events and Filters definitions on their plugins,
 both kinds of hooks are defined in lightweight external libraries.
 
