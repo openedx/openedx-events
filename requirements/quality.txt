@@ -8,7 +8,7 @@ asgiref==3.6.0
     # via
     #   -r requirements/test.txt
     #   django
-astroid==2.15.0
+astroid==2.15.1
     # via
     #   pylint
     #   pylint-celery
@@ -40,7 +40,7 @@ coverage[toml]==7.2.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==39.0.2
+cryptography==40.0.1
     # via secretstorage
 ddt==1.6.0
     # via -r requirements/test.txt
@@ -114,7 +114,7 @@ pbr==5.11.1
     #   stevedore
 pkginfo==1.9.6
     # via twine
-platformdirs==3.1.1
+platformdirs==3.2.0
     # via pylint
 pluggy==1.0.0
     # via
@@ -130,7 +130,7 @@ pygments==2.14.0
     # via
     #   readme-renderer
     #   rich
-pylint==2.17.0
+pylint==2.17.1
     # via
     #   edx-lint
     #   pylint-celery
@@ -161,7 +161,7 @@ python-slugify==8.0.1
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2022.7.1
+pytz==2023.3
     # via
     #   -r requirements/test.txt
     #   django
@@ -179,7 +179,7 @@ requests-toolbelt==0.10.1
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.3.2
+rich==13.3.3
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -208,7 +208,7 @@ tomli==2.0.1
     #   coverage
     #   pylint
     #   pytest
-tomlkit==0.11.6
+tomlkit==0.11.7
     # via pylint
 twine==4.0.2
     # via -r requirements/quality.in

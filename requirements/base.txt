@@ -20,7 +20,7 @@ pbr==5.11.1
     # via stevedore
 pymongo==3.13.0
     # via edx-opaque-keys
-pytz==2022.7.1
+pytz==2023.3
     # via django
 sqlparse==0.4.3
     # via django
