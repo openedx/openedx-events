@@ -12,6 +12,10 @@ When creating a new event, you must justify its implementation. For example, you
 send a message through slack or open a new issue in the library repository listing your use cases for it. Or even,
 if you have time, you could accompany your proposal with the implementation of the event to illustrate its behavior.
 
+.. note::
+    There is an open discussion about whether organization scoped events would also exist in openedx-events,
+    in which case this step would be optional. See issue `Organization scoped events <https://github.com/openedx/openedx-events/issues/196>`_.
+
 2. Place your event in an architecture subdomain
 -------------------------------------------------
 
@@ -26,7 +30,7 @@ For those reasons, after studying your new event purpose, you must place it in o
 +-------------------+----------------------------------------------------------------------------------------------------+
 | Subdomain name    | Description                                                                                        |
 +===================+====================================================================================================+
-| Course Authoring  | Allows educators to create, modify, package, annotate (tag), and share learning content.           |
+| Content Authoring  | Allows educators to create, modify, package, annotate (tag), and share learning content.          |
 +-------------------+----------------------------------------------------------------------------------------------------+
 | Learning          | Allows learners to consume content and perform actions in a learning activity on the platform.     |
 +-------------------+----------------------------------------------------------------------------------------------------+

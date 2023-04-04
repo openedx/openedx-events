@@ -14,7 +14,7 @@ Given their public promise status, event hooks have maintainability as the main
 design goal. The contracts we are creating here should be stable enough to
 support the growth of the extensions community. That said, things should be
 allowed to evolve in a backwards compatible manner. When things inevitable break,
-they should break in CI. Which should not require the code of The Open edX platform to
+they should break in CI. Which should not require the code of the Open edX platform to
 test integrations.
 
 

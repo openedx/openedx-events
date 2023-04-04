@@ -89,6 +89,9 @@ The following is the implementation for the signal receiver listening for the ev
             "user": user_info,
             "event_metadata": event_metadata,
         }
+        # WARNING: The receiver function implemented in this tutorial was intended to be lightweight, just to
+        #  serve as an example for events' receivers. However, in production, you must use asynchronous tasks
+        #  to avoid creating bottlenecks if you wish for others to use your implementation.
         requests.post(
             settings.ZAPIER_REGISTRATION_WEBHOOK,
             flatten_dict(zapier_payload),

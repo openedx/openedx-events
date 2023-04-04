@@ -30,7 +30,7 @@ to migrate to newer open releases with very little to no development effort. In
 the case of the events, this is detailed in the `versioning ADR`_ and the
 `payload ADR`_.
 
-A longer description of the framework and it's history can be found in `OEP 50`_.
+A longer description of the framework and its history can be found in `OEP 50`_.
 
 .. _OEP 50: https://open-edx-proposals.readthedocs.io/en/latest/oep-0050-hooks-extension-framework.html
 .. _versioning ADR: https://github.com/eduNEXT/openedx-events/blob/main/docs/decisions/0002-events-naming-and-versioning.rst

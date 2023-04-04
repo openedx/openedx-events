@@ -6,4 +6,3 @@ Quickstarts
    :caption: Contents:
 
    use-events-to-call-webhook
-   event-bus
