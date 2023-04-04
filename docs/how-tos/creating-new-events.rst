@@ -23,13 +23,13 @@ Subdomain for:
 
 For those reasons, after studying your new event purpose, you must place it in one of the subdomains already in use, or introduce a new subdomain:
 
-+------------------+----------------------------------------------------------------------------------------------------+
-| Subdomain name   | Description                                                                                        |
-+==================+====================================================================================================+
-| Course Authoring | Allows educators to create, modify, package, annotate (tag), and share learning content.           |
-+----------------- +----------------------------------------------------------------------------------------------------+
-| Learning         | Allows learners to consume content and perform actions in a learning activity on the platform.     |
-+------------------+----------------------------------------------------------------------------------------------------+
++-------------------+----------------------------------------------------------------------------------------------------+
+| Subdomain name    | Description                                                                                        |
++===================+====================================================================================================+
+| Course Authoring  | Allows educators to create, modify, package, annotate (tag), and share learning content.           |
++-------------------+----------------------------------------------------------------------------------------------------+
+| Learning          | Allows learners to consume content and perform actions in a learning activity on the platform.     |
++-------------------+----------------------------------------------------------------------------------------------------+
 
 New subdomains may require some discussion, because there does not yet exist and agreed upon set on subdomains. So we encourage you to start the conversation
 as soon as possible through any of the communication channels available.
