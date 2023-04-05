@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to Open edX Events' documentation!
-===========================================
+============================================
 
 .. toctree::
    :maxdepth: 2

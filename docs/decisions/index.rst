@@ -1,5 +1,5 @@
-Decisions
-=========
+Architectural Decision Records (ADRs)
+#####################################
 
 .. toctree::
    :maxdepth: 1

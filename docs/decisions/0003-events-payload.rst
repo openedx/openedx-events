@@ -14,7 +14,7 @@ Given their public promise status, event hooks have maintainability as the main
 design goal. The contracts we are creating here should be stable enough to
 support the growth of the extensions community. That said, things should be
 allowed to evolve in a backwards compatible manner. When things inevitable break,
-they should break in CI. Which should not require the code of edx-platform to
+they should break in CI. Which should not require the code of the Open edX platform to
 test integrations.
 
 
@@ -46,7 +46,7 @@ Consequences
 ------------
 
 1. Extension developers will be able to test their event listeners without the
-need to import any edx-platform code.
+need to import any Open edX platform code.
 
 2. Consequence of the versioning ADR together with this one, extension developers
 will be able to test their code with different versions of the library and thus
@@ -55,5 +55,5 @@ guarantee that their code will not break when upgrading open releases.
 3. The events library will have a dependency on the OpaqueKeys library.
 
 4. Events defined by this library will not be drop-in replacement of current
-edx-platform signals. This means some refactoring will be needed when converting
+Open edX platform signals. This means some refactoring will be needed when converting
 the platform code over to openedx_events.

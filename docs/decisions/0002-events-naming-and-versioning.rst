@@ -80,8 +80,8 @@ Consequences
 major versions of this library. Also there will not be a need to make a major
 release if there is no breaking for consecutive Open edX releases.
 
-2. Open edX core and in particular edx-platform must emit the signals meant for
-public consumption as they are written in this library, changes in edx-platform
+2. The Open edX platform must emit the signals meant for
+public consumption as they are written in this library, changes in the platform
 that require changes in the public signal will require a backwards compatible
 addition to this library or an altogether new signal with support for the old
 signal until deprecated and removed.
