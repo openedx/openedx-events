@@ -30,7 +30,7 @@ For those reasons, after studying your new event purpose, you must place it in o
 +-------------------+----------------------------------------------------------------------------------------------------+
 | Subdomain name    | Description                                                                                        |
 +===================+====================================================================================================+
-| Content Authoring  | Allows educators to create, modify, package, annotate (tag), and share learning content.          |
+| Content Authoring | Allows educators to create, modify, package, annotate (tag), and share learning content.           |
 +-------------------+----------------------------------------------------------------------------------------------------+
 | Learning          | Allows learners to consume content and perform actions in a learning activity on the platform.     |
 +-------------------+----------------------------------------------------------------------------------------------------+
