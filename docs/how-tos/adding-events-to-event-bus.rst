@@ -7,7 +7,7 @@ to use the Open edX Event Bus. Here, we list useful information about
 adding a new event to the event bus:
 
 - `How to start using the Event Bus`_
-- `Sample pull request adding new Open edX Events to the Event Bus`
+- `Sample pull request adding new Open edX Events to the Event Bus`_
 
 
 .. _How to start using the Event Bus: https://openedx.atlassian.net/wiki/spaces/AC/pages/3508699151/How+to+start+using+the+Event+Bus
