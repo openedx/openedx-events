@@ -17,7 +17,6 @@ API:
 import warnings
 from abc import ABC, abstractmethod
 from functools import lru_cache
-from typing import NoReturn, Optional
 
 from django.conf import settings
 from django.dispatch import receiver
@@ -73,7 +72,6 @@ class EventBusProducer(ABC):
     Parent class for event bus producer implementations.
     """
 
-    # TODO: Make event_metadata required (https://github.com/openedx/openedx-events/issues/153)
     @abstractmethod
     def send(
             self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
@@ -132,7 +130,7 @@ class EventBusConsumer(ABC):
     """
 
     @abstractmethod
-    def consume_indefinitely(self) -> NoReturn:
+    def consume_indefinitely(self) -> None:
         """
         Consume events from a topic in an infinite loop.
 
@@ -145,7 +143,7 @@ class NoEventBusConsumer(EventBusConsumer):
     Stub implementation to "load" when no implementation is properly configured.
     """
 
-    def consume_indefinitely(self) -> NoReturn:
+    def consume_indefinitely(self) -> None:
         """Do nothing."""
 
 
