@@ -1,6 +1,7 @@
 """
 Makes ``consume_events`` management command available.
 """
+import json
 import logging
 from django.core.management.base import BaseCommand
 from openedx_events.event_bus import make_single_consumer
@@ -43,15 +44,24 @@ class Command(BaseCommand):
             required=True,
             help='Type of signal to emit from consumed messages.'
         )
+        parser.add_argument(
+            '--extra',
+            nargs='?',
+            type=str,
+            required=False,
+            help='JSON string to pass additional arguments to the consumer.'
+        )
 
     def handle(self, *args, **options):
         try:
+            extra = json.loads(options.get('extra') or '{}')
             load_all_signals()
             signal = OpenEdxPublicSignal.get_signal_by_type(options['signal'][0])
             event_consumer = make_single_consumer(
                 topic=options['topic'][0],
                 group_id=options['group_id'][0],
                 signal=signal,
+                **extra,
             )
             event_consumer.consume_indefinitely()
         except Exception:  # pylint: disable=broad-except
