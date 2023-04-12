@@ -112,3 +112,17 @@ class TestProducer(TestCase):
                 event_key_field='user.id', event_data={},
                 event_metadata=EventsMetadata(event_type='eh')
             ) is None
+
+
+class TestConsumer(TestCase):
+
+    @override_settings(EVENT_BUS_CONSUMER=None)
+    def test_default_does_nothing(self):
+        """
+        Test that the default is of the right class but does nothing.
+        """
+        consumer = make_single_consumer(topic="test", group_id="test", signal=SESSION_LOGIN_COMPLETED)
+
+        with assert_warnings([]):
+            # Nothing thrown, no warnings.
+            assert consumer.consume_indefinitely() is None
