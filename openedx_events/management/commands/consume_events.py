@@ -22,15 +22,15 @@ class Command(BaseCommand):
 
     Example::
 
-        python3 manage.py consume_events -t user-login -g user-activity-service \
+        python manage.py consume_events -t user-login -g user-activity-service \
             -s org.openedx.learning.auth.session.login.completed.v1
 
         # send extra args, for example pass check_backlog flag to redis consumer
-        python3 manage.py cms consume_events -t user-login -g user-activity-service \
+        python manage.py cms consume_events -t user-login -g user-activity-service \
             -s org.openedx.learning.auth.session.login.completed.v1 --extra '{"check_backlog": true}'
 
         # send extra args, for example replay events from specific redis msg id.
-        python3 manage.py cms consume_events -t user-login -g user-activity-service \
+        python manage.py cms consume_events -t user-login -g user-activity-service \
             -s org.openedx.learning.auth.session.login.completed.v1 \
             --extra '{"last_read_msg_id": "1679676448892-0"}'
     """
@@ -45,7 +45,6 @@ class Command(BaseCommand):
             required=True,
             help='Topic to consume (without environment prefix)'
         )
-
         parser.add_argument(
             '-g', '--group_id',
             nargs=1,
@@ -71,6 +70,7 @@ class Command(BaseCommand):
         Create consumer based on django settings and consume events.
         """
         try:
+            # load additional arguments specific for the underlying implementation of event_bus.
             extra = json.loads(options.get('extra') or '{}')
             load_all_signals()
             signal = OpenEdxPublicSignal.get_signal_by_type(options['signal'][0])

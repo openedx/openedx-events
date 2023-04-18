@@ -17,12 +17,24 @@ class TestCommand(TestCase):
     @patch('openedx_events.tooling.OpenEdxPublicSignal.get_signal_by_type', return_value="test-signal")
     @patch('openedx_events.management.commands.consume_events.make_single_consumer', autospec=True)
     def test_consumer_call_with_only_required_args(self, mock_make_consumer, _):
+        """
+        This methods checks the required args are correctly passed to consumer.
+
+        Expected behavior:
+            The required args are passed to consumer.
+        """
         call_command(Command(), topic=['test'], group_id=['test'], signal=['test-signal'])
         mock_make_consumer.assert_called_once_with(topic='test', group_id='test', signal='test-signal')
 
     @patch('openedx_events.tooling.OpenEdxPublicSignal.get_signal_by_type', return_value="test-signal")
     @patch('openedx_events.management.commands.consume_events.make_single_consumer', autospec=True)
     def test_consumer_call_with_extra_args(self, mock_make_consumer, _):
+        """
+        This methods checks the extra args are correctly parsed and passed to consumer.
+
+        Expected behavior:
+            The extra args are parsed and passed to consumer.
+        """
         call_command(
             Command(),
             topic=['test'],
@@ -40,6 +52,12 @@ class TestCommand(TestCase):
     @patch('openedx_events.management.commands.consume_events.logger', autospec=True)
     @patch('openedx_events.management.commands.consume_events.make_single_consumer', autospec=True)
     def test_consumer_call_with_incorrect_json_string(self, mock_make_consumer, mock_logger):
+        """
+        This methods checks that consumer is not called with incorrect args if extra args json is incorrectly formed.
+
+        Expected behavior:
+            The command logs and skips execution if extra args json is incorrectly formed.
+        """
         call_command(
             Command(),
             topic=['test'],
