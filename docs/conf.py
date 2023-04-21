@@ -61,7 +61,6 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 html_theme = 'sphinx_book_theme'
 
 html_theme_options = {
-
     "repository_url": "https://github.com/openedx/openedx-events",
     "repository_branch": "main",
     "path_to_docs": "docs/",
@@ -84,7 +83,7 @@ html_theme_options = {
                 href="https://openedx.org"
                 property="cc:attributionName"
                 rel="cc:attributionURL"
-            >The Center for Reimagining Learning</a>
+            >Axim Collaborative, Inc</a>
         are licensed under a
             <a
                 rel="license"
@@ -97,8 +96,8 @@ html_theme_options = {
 # bug in the theme that needs to be fixed first.
 # If you'd like you can temporarily copy the logo file to your `_static`
 # directory.
-html_logo = "_static/open-edx-logo-color.png"
-html_favicon = "_static/open-edx-favicon.ico"
+html_logo = "https://logos.openedx.org/open-edx-logo-color.png"
+html_favicon = "https://logos.openedx.org/open-edx-favicon.ico"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
