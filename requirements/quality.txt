@@ -8,11 +8,11 @@ asgiref==3.6.0
     # via
     #   -r requirements/test.txt
     #   django
-astroid==2.15.2
+astroid==2.15.3
     # via
     #   pylint
     #   pylint-celery
-attrs==22.2.0
+attrs==23.1.0
     # via -r requirements/test.txt
 bleach==6.0.0
     # via readme-renderer
@@ -38,7 +38,7 @@ coverage[toml]==7.2.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==40.0.1
+cryptography==40.0.2
     # via secretstorage
 ddt==1.6.0
     # via -r requirements/test.txt
@@ -62,7 +62,7 @@ fastavro==1.7.3
     # via -r requirements/test.txt
 idna==3.4
     # via requests
-importlib-metadata==6.2.1
+importlib-metadata==6.6.0
     # via
     #   keyring
     #   twine
@@ -102,7 +102,7 @@ mdurl==0.1.2
     # via markdown-it-py
 more-itertools==9.1.0
     # via jaraco-classes
-packaging==23.0
+packaging==23.1
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -124,7 +124,7 @@ pycparser==2.21
     # via cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.in
-pygments==2.14.0
+pygments==2.15.1
     # via
     #   readme-renderer
     #   rich
@@ -146,7 +146,7 @@ pymongo==3.13.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-pytest==7.3.0
+pytest==7.3.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -177,7 +177,7 @@ requests-toolbelt==0.10.1
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.3.3
+rich==13.3.4
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -187,7 +187,7 @@ six==1.16.0
     #   edx-lint
 snowballstemmer==2.2.0
     # via pydocstyle
-sqlparse==0.4.3
+sqlparse==0.4.4
     # via
     #   -r requirements/test.txt
     #   django
