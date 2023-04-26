@@ -26,7 +26,7 @@ def schema_from_signal(signal, custom_type_to_avro_type=None):
     previously_seen_types = set()
 
     base_schema = {
-        "name": "CloudEvent",
+        "name": signal.event_type,
         "type": "record",
         "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
         "fields": [],

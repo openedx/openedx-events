@@ -84,7 +84,6 @@ class DuplicatedXBlockData(XBlockData):
 
     source_usage_key = attr.ib(type=UsageKey)
 
-
 @attr.s(frozen=True)
 class CertificateSignatoryData:
     """
