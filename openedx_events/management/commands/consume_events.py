@@ -62,7 +62,7 @@ class Command(BaseCommand):
             nargs='?',
             type=str,
             required=False,
-            help='JSON string to pass additional arguments to the consumer.'
+            help='JSON object to pass additional arguments to the consumer.'
         )
 
     def handle(self, *args, **options):
