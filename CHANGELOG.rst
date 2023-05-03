@@ -14,9 +14,11 @@ Change Log
 Unreleased
 ----------
 
-* Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
-  deprecated.  See https://github.com/openedx/edx-sphinx-theme/issues/184 for
-  more details.
+[7.2.0] - 2023-05-03
+--------------------
+Changed
+~~~~~~~
+* Added event type as namespace to generated Avro schemas
 
 [7.1.0] - 2023-04-24
 --------------------
@@ -24,6 +26,9 @@ Added
 ~~~~~
 * Configurable loader for consumer side of Event Bus in ``openedx_events.event_bus``.
 * Added management command to load configured consumer and start worker.
+* Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
+  deprecated.  See https://github.com/openedx/edx-sphinx-theme/issues/184 for
+  more details.
 
 [7.0.0] - 2023-03-07
 ---------------------
