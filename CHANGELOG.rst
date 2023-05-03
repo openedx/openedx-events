@@ -18,6 +18,13 @@ Unreleased
   deprecated.  See https://github.com/openedx/edx-sphinx-theme/issues/184 for
   more details.
 
+[7.1.0] - 2023-04-24
+--------------------
+Added
+~~~~~
+* Configurable loader for consumer side of Event Bus in ``openedx_events.event_bus``.
+* Added management command to load configured consumer and start worker.
+
 [7.0.0] - 2023-03-07
 ---------------------
 Changed
