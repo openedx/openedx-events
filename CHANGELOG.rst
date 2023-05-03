@@ -18,7 +18,7 @@ Unreleased
   deprecated.  See https://github.com/openedx/edx-sphinx-theme/issues/184 for
   more details.
 
-[7.1.0] - 2023-04-24
+[7.1.0] - 2023-05-03
 --------------------
 Added
 ~~~~~
