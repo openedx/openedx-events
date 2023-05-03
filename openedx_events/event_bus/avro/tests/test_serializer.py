@@ -40,6 +40,7 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
             'name': 'CloudEvent',
             'type': 'record',
             'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
+            'namespace': 'simple.signal',
             'fields': [
                 {
                     'name': 'data',

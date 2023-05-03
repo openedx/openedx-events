@@ -34,6 +34,7 @@ class TestSchemaGeneration(TestCase):
             "type": "record",
             "name": "CloudEvent",
             "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            'namespace': 'simple.signal',
             "fields": [
                 {"name": "event_data", "type":
                     {"name": "SimpleAttrs", "type": "record", "fields": [
@@ -58,6 +59,7 @@ class TestSchemaGeneration(TestCase):
             "type": "record",
             "name": "CloudEvent",
             "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            'namespace': 'simple.signal',
             "fields": [
                 {"name": "test_data", "type":
                     {"name": "EventData", "type": "record", "fields": [
@@ -97,6 +99,7 @@ class TestSchemaGeneration(TestCase):
             "type": "record",
             "name": "CloudEvent",
             "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            'namespace': 'simple.signal',
             "fields": [
                 {"name": "top_level_key_0", "type":
                     {
@@ -128,6 +131,7 @@ class TestSchemaGeneration(TestCase):
             "type": "record",
             "name": "CloudEvent",
             "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            'namespace': 'simple.signal',
             "fields": [
                 {"name": "test_data", "type": "string"}
             ],
@@ -141,6 +145,7 @@ class TestSchemaGeneration(TestCase):
             "type": "record",
             "name": "CloudEvent",
             "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            'namespace': 'simple.signal',
             "fields": [
                 {"name": "test_data", "type": {
                     "name": "NestedNonAttrs",
@@ -160,6 +165,7 @@ class TestSchemaGeneration(TestCase):
             "type": "record",
             "name": "CloudEvent",
             "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            'namespace': 'simple.signal',
             "fields": [
                 {"name": "test_data", "type":
                     {"name": "SimpleAttrsWithDefaults", "type": "record", "fields": [
@@ -191,6 +197,7 @@ class TestSchemaGeneration(TestCase):
             'name': 'CloudEvent',
             'type': 'record',
             'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
+            'namespace': 'simple.signal',
             'fields': [{
                 'name': 'test_data',
                 'type': {
@@ -255,6 +262,7 @@ class TestSchemaGeneration(TestCase):
             'name': 'CloudEvent',
             'type': 'record',
             'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
+            'namespace': 'simple.signal',
             'fields': [{
                 'name': 'list_input',
                 'type': {'type': 'array', 'items': 'long'},
