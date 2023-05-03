@@ -14,9 +14,6 @@ Change Log
 Unreleased
 ----------
 
-* Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
-  deprecated.  See https://github.com/openedx/edx-sphinx-theme/issues/184 for
-  more details.
 
 [7.1.0] - 2023-05-03
 --------------------
@@ -24,6 +21,12 @@ Added
 ~~~~~
 * Configurable loader for consumer side of Event Bus in ``openedx_events.event_bus``.
 * Added management command to load configured consumer and start worker.
+
+Changed
+~~~~~~~
+* Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
+  deprecated.  See https://github.com/openedx/edx-sphinx-theme/issues/184 for
+  more details.
 
 [7.0.0] - 2023-03-07
 ---------------------
