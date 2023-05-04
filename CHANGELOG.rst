@@ -27,9 +27,6 @@ Added
 ~~~~~
 * Configurable loader for consumer side of Event Bus in ``openedx_events.event_bus``.
 * Added management command to load configured consumer and start worker.
-* Switch from ``edx-sphinx-theme`` to ``sphinx-book-theme`` since the former is
-  deprecated.  See https://github.com/openedx/edx-sphinx-theme/issues/184 for
-  more details.
 
 Changed
 ~~~~~~~
