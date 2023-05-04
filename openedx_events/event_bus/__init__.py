@@ -1,7 +1,7 @@
 """
 Classes and utility functions for the event bus.
 
-This module includes the entry point for the producer.
+This module includes the entry points for the producer and consumer.
 
 API:
 
@@ -9,12 +9,14 @@ API:
   to the Event Bus. The backing implementation is chosen via the Django setting ``EVENT_BUS_PRODUCER``.
   See for example the Kafka implementation's ``KafkaEventProducer``, with the ``create_producer`` function
   serving as the loader: https://github.com/openedx/event-bus-kafka/blob/main/edx_event_bus_kafka/internal/producer.py
+- ``make_single_consumer`` creates an ``EventBusConsumer`` instance for a particular combination of
+  topic, consumer group, and signal. The backing implementation is chosen via the Django setting
+  ``EVENT_BUS_CONSUMER``.
 """
 
 import warnings
 from abc import ABC, abstractmethod
 from functools import lru_cache
-from typing import NoReturn, Optional
 
 from django.conf import settings
 from django.dispatch import receiver
@@ -25,7 +27,7 @@ from openedx_events.data import EventsMetadata
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
-def _try_load(*, setting_name: str, expected_class: type, default):
+def _try_load(*, setting_name: str, args: tuple, kwargs: dict, expected_class: type, default):
     """
     Load an instance of ``expected_class`` as indicated by ``setting_name``.
 
@@ -36,6 +38,8 @@ def _try_load(*, setting_name: str, expected_class: type, default):
 
     Arguments:
         setting_name: Name of a Django setting containing a dotted module path, indicating a callable
+        args: Tuple of positional arguments to pass to the callable
+        kwargs: Dictionary of keyword arguments to pass to the callable
         expected_class: The callable must produce an instance of this class object (or a subclass)
         default: Object to return if any part of the lookup or loading fails
     """
@@ -46,7 +50,7 @@ def _try_load(*, setting_name: str, expected_class: type, default):
 
     try:
         constructor = import_string(constructor_path)
-        instance = constructor()
+        instance = constructor(*args, **kwargs)
         if isinstance(instance, expected_class):
             return instance
         else:
@@ -68,7 +72,6 @@ class EventBusProducer(ABC):
     Parent class for event bus producer implementations.
     """
 
-    # TODO: Make event_metadata required (https://github.com/openedx/openedx-events/issues/153)
     @abstractmethod
     def send(
             self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
@@ -116,8 +119,64 @@ def get_producer() -> EventBusProducer:
     If misconfigured, returns a fake implementation that can be called but does nothing.
     """
     return _try_load(
-        setting_name='EVENT_BUS_PRODUCER',
+        setting_name='EVENT_BUS_PRODUCER', args=(), kwargs={},
         expected_class=EventBusProducer, default=NoEventBusProducer(),
+    )
+
+
+class EventBusConsumer(ABC):
+    """
+    Parent class for event bus consumer implementations.
+    """
+
+    @abstractmethod
+    def consume_indefinitely(self) -> None:
+        """
+        Consume events from a topic in an infinite loop.
+
+        Events will be converted into calls to Django signals.
+        """
+
+
+class NoEventBusConsumer(EventBusConsumer):
+    """
+    Stub implementation to "load" when no implementation is properly configured.
+    """
+
+    def consume_indefinitely(self) -> None:
+        """Do nothing."""
+
+
+# .. setting_name: EVENT_BUS_CONSUMER
+# .. setting_default: None
+# .. setting_description: String naming a callable (function or class) that can be called to create
+#   or retrieve an instance of EventBusConsumer when ``openedx_events.event_bus.make_single_consumer`` is
+#   called. The format of the string is a dotted path to an attribute in a module, e.g.
+#   ``some.module.path.EventBusImplementation``. See docstring of ``make_single_consumer`` for
+#   parameters. If setting is not supplied or the callable raises an exception or does not return
+#   an instance of EventBusConsumer, calls to the consumer will be ignored with a warning at startup.
+
+
+def make_single_consumer(*, topic: str, group_id: str, signal: OpenEdxPublicSignal, **kwargs) -> EventBusConsumer:
+    """
+    Construct a consumer for a given topic, group, and signal.
+
+    If misconfigured, returns a fake implementation that does nothing.
+
+    Arguments:
+        topic: The event bus topic to consume from (without any environmental prefix)
+        group_id: The consumer group to participate in
+        signal: Send consumed, decoded events to the receivers of this signal
+    """
+    options = {
+        'topic': topic,
+        'group_id': group_id,
+        'signal': signal,
+        **kwargs,
+    }
+    return _try_load(
+        setting_name='EVENT_BUS_CONSUMER', args=(), kwargs=options,
+        expected_class=EventBusConsumer, default=NoEventBusConsumer(),
     )
 
 
