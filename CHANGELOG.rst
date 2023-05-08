@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[7.2.0] - 2023-05-03
+--------------------
+Changed
+~~~~~~~
+* Added event type as namespace to generated Avro schemas
+
 
 [7.1.0] - 2023-05-03
 --------------------
