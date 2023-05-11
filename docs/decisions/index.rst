@@ -14,3 +14,4 @@ Architectural Decision Records (ADRs)
    0007-optional-fields
    0008-signals-with-pii
    0009-course-catalog-info-changed-design
+   0010-multiple-event-types-per-topic
