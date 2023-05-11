@@ -4,7 +4,7 @@
 Status
 ******
 
-- **Accepted** DATE TO BE ADDED BEFORE MERGING
+**Accepted** 2023-05-11
 
 Context
 *******
@@ -32,3 +32,7 @@ Rejected Alternatives
 Require related event types to have the same schema
 ===================================================
 In theory we could avoid the issue of event types with different schemas on the same topic by simply not allowing them, requiring all event types that are intended to go on the same topic to have the same schema. This would require knowing in advance which event types will go to which topics and likely result in lots of extraneous fields which are only necessary for some of the event types and not others. This is very much an anti-pattern.
+
+Keeping one event type per topic
+================================
+An additional alternative would be to continue writing the events to separate topics and requiring consumers to manage the complexity of ordering across topics. This is possible, but quite complicated, so we plan to avoid it.
