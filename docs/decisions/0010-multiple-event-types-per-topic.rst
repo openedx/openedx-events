@@ -24,6 +24,7 @@ Note that here, "topic" refers to however the event bus implementation groups re
 Consequences
 ************
 * Event consumers will need to determine the signal from the message headers rather than taking a signal as a passed argument in the management command.
+* We will need to establish new conventions for naming topics, as they can no longer necessarily be named after a single event type.
 
 Rejected Alternatives
 *********************
