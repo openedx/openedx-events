@@ -7,7 +7,7 @@ import logging
 from django.core.management.base import BaseCommand
 
 from openedx_events.event_bus import make_single_consumer
-from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
+from openedx_events.tooling import load_all_signals
 
 logger = logging.getLogger(__name__)
 
@@ -22,16 +22,13 @@ class Command(BaseCommand):
 
     Example::
 
-        python manage.py consume_events -t user-login -g user-activity-service \
-            -s org.openedx.learning.auth.session.login.completed.v1
+        python manage.py consume_events -t user-login -g user-activity-service
 
         # send extra args, for example pass check_backlog flag to redis consumer
-        python manage.py cms consume_events -t user-login -g user-activity-service \
-            -s org.openedx.learning.auth.session.login.completed.v1 --extra '{"check_backlog": true}'
+        python manage.py cms consume_events -t user-login -g user-activity-service  --extra '{"check_backlog": true}'
 
         # send extra args, for example replay events from specific redis msg id.
         python manage.py cms consume_events -t user-login -g user-activity-service \
-            -s org.openedx.learning.auth.session.login.completed.v1 \
             --extra '{"last_read_msg_id": "1679676448892-0"}'
     """
 
@@ -54,8 +51,8 @@ class Command(BaseCommand):
         parser.add_argument(
             '-s', '--signal',
             nargs=1,
-            required=True,
-            help='Type of signal to emit from consumed messages.'
+            required=False,
+            help='DEPRECATED signal will be determined by message headers'
         )
         parser.add_argument(
             '--extra',
@@ -73,11 +70,9 @@ class Command(BaseCommand):
             # load additional arguments specific for the underlying implementation of event_bus.
             extra = json.loads(options.get('extra') or '{}')
             load_all_signals()
-            signal = OpenEdxPublicSignal.get_signal_by_type(options['signal'][0])
             event_consumer = make_single_consumer(
                 topic=options['topic'][0],
                 group_id=options['group_id'][0],
-                signal=signal,
                 **extra,
             )
             event_consumer.consume_indefinitely()

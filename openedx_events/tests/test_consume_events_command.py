@@ -23,12 +23,11 @@ class TestCommand(TestCase):
         Expected behavior:
             The required args are passed to consumer.
         """
-        call_command(Command(), topic=['test'], group_id=['test'], signal=['test-signal'])
-        mock_make_consumer.assert_called_once_with(topic='test', group_id='test', signal='test-signal')
+        call_command(Command(), topic=['test'], group_id=['test'])
+        mock_make_consumer.assert_called_once_with(topic='test', group_id='test')
 
-    @patch('openedx_events.tooling.OpenEdxPublicSignal.get_signal_by_type', return_value="test-signal")
     @patch('openedx_events.management.commands.consume_events.make_single_consumer', autospec=True)
-    def test_consumer_call_with_extra_args(self, mock_make_consumer, _):
+    def test_consumer_call_with_extra_args(self, mock_make_consumer):
         """
         This methods checks the extra args are correctly parsed and passed to consumer.
 
@@ -39,13 +38,11 @@ class TestCommand(TestCase):
             Command(),
             topic=['test'],
             group_id=['test'],
-            signal=['test-signal'],
             extra='{"check_backlog":true}'
         )
         mock_make_consumer.assert_called_once_with(
             topic='test',
             group_id='test',
-            signal='test-signal',
             check_backlog=True
         )
 
@@ -62,7 +59,6 @@ class TestCommand(TestCase):
             Command(),
             topic=['test'],
             group_id=['test'],
-            signal=['test-signal'],
             extra="{'check_backlog':true}"
         )
         mock_logger.exception.assert_called_once_with("Error consuming events")

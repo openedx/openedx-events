@@ -157,7 +157,8 @@ class NoEventBusConsumer(EventBusConsumer):
 #   an instance of EventBusConsumer, calls to the consumer will be ignored with a warning at startup.
 
 
-def make_single_consumer(*, topic: str, group_id: str, signal: OpenEdxPublicSignal, **kwargs) -> EventBusConsumer:
+def make_single_consumer(*, topic: str, group_id: str,
+                         signal: OpenEdxPublicSignal = None, **kwargs) -> EventBusConsumer:
     """
     Construct a consumer for a given topic, group, and signal.
 
@@ -166,7 +167,7 @@ def make_single_consumer(*, topic: str, group_id: str, signal: OpenEdxPublicSign
     Arguments:
         topic: The event bus topic to consume from (without any environmental prefix)
         group_id: The consumer group to participate in
-        signal: Send consumed, decoded events to the receivers of this signal
+        signal: DEPRECATED signal determined by message header
     """
     options = {
         'topic': topic,
