@@ -158,7 +158,8 @@ class NoEventBusConsumer(EventBusConsumer):
 
 
 def make_single_consumer(*, topic: str, group_id: str,
-                         signal: OpenEdxPublicSignal = None, **kwargs) -> EventBusConsumer:
+                         signal: OpenEdxPublicSignal = None,  # pylint: disable=unused-argument
+                         **kwargs) -> EventBusConsumer:
     """
     Construct a consumer for a given topic, group, and signal.
 
