@@ -167,12 +167,11 @@ def make_single_consumer(*, topic: str, group_id: str,
     Arguments:
         topic: The event bus topic to consume from (without any environmental prefix)
         group_id: The consumer group to participate in
-        signal: DEPRECATED signal determined by message header
+        signal: DEPRECATED signals determined by message headers
     """
     options = {
         'topic': topic,
         'group_id': group_id,
-        'signal': signal,
         **kwargs,
     }
     return _try_load(
