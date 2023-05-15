@@ -52,7 +52,7 @@ class Command(BaseCommand):
             '-s', '--signal',
             nargs=1,
             required=False,
-            help='DEPRECATED signal will be determined by message headers'
+            help='DEPRECATED This argument will be ignored. Signals will be determined by message headers'
         )
         parser.add_argument(
             '--extra',
