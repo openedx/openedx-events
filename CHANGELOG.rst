@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[7.3.0] - 2023-05-15
+--------------------
+Changed
+~~~~~~~
+* Made `signal` argument optional in consume_events in preparation for removal
+
 [7.2.0] - 2023-05-03
 --------------------
 Changed
