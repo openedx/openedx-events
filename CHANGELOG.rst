@@ -18,7 +18,7 @@ Unreleased
 --------------------
 Changed
 ~~~~~~~
-* **Breaking change**: Remove `signal` argument from consume_events and make_single_consumer
+* **Breaking change**: Remove ``signal`` argument from consume_events and make_single_consumer
 
 [7.3.0] - 2023-05-15
 --------------------
