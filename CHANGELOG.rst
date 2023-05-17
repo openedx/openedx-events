@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[8.0.0] - 2023-05-16
+--------------------
+Changed
+~~~~~~~
+* **Breaking change**: Remove ``signal`` argument from consume_events and make_single_consumer
+
 [7.3.0] - 2023-05-15
 --------------------
 Changed
