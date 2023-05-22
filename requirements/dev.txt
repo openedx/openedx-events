@@ -8,12 +8,12 @@ asgiref==3.6.0
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.15.2
+astroid==2.15.5
     # via
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-attrs==22.2.0
+attrs==23.1.0
     # via -r requirements/quality.txt
 bleach==6.0.0
     # via
@@ -23,7 +23,7 @@ build==0.10.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-certifi==2022.12.7
+certifi==2023.5.7
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -53,11 +53,11 @@ code-annotations==1.3.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-coverage[toml]==7.2.3
+coverage[toml]==7.2.5
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
-cryptography==40.0.1
+cryptography==40.0.2
     # via
     #   -r requirements/quality.txt
     #   secretstorage
@@ -73,11 +73,11 @@ distlib==0.3.6
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==3.2.18
+django==3.2.19
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/quality.txt
-docutils==0.19
+docutils==0.20.1
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
@@ -89,9 +89,9 @@ exceptiongroup==1.1.1
     # via
     #   -r requirements/quality.txt
     #   pytest
-fastavro==1.7.3
+fastavro==1.7.4
     # via -r requirements/quality.txt
-filelock==3.11.0
+filelock==3.12.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -100,7 +100,7 @@ idna==3.4
     # via
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==6.2.1
+importlib-metadata==6.6.0
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -159,7 +159,7 @@ more-itertools==9.1.0
     # via
     #   -r requirements/quality.txt
     #   jaraco-classes
-packaging==23.0
+packaging==23.1
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -177,7 +177,7 @@ pkginfo==1.9.6
     # via
     #   -r requirements/quality.txt
     #   twine
-platformdirs==3.2.0
+platformdirs==3.5.1
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -202,13 +202,13 @@ pycparser==2.21
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.txt
-pygments==2.14.0
+pygments==2.15.1
     # via
     #   -r requirements/quality.txt
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.17.2
+pylint==2.17.4
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -223,7 +223,7 @@ pylint-django==2.5.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-pylint-plugin-utils==0.7
+pylint-plugin-utils==0.8.2
     # via
     #   -r requirements/quality.txt
     #   pylint-celery
@@ -236,7 +236,7 @@ pyproject-hooks==1.0.0
     # via
     #   -r requirements/pip-tools.txt
     #   build
-pytest==7.3.0
+pytest==7.3.1
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -261,12 +261,12 @@ readme-renderer==37.3
     # via
     #   -r requirements/quality.txt
     #   twine
-requests==2.28.2
+requests==2.30.0
     # via
     #   -r requirements/quality.txt
     #   requests-toolbelt
     #   twine
-requests-toolbelt==0.10.1
+requests-toolbelt==1.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -274,7 +274,7 @@ rfc3986==2.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-rich==13.3.3
+rich==13.3.5
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -293,11 +293,11 @@ snowballstemmer==2.2.0
     # via
     #   -r requirements/quality.txt
     #   pydocstyle
-sqlparse==0.4.3
+sqlparse==0.4.4
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==5.0.0
+stevedore==5.1.0
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -317,7 +317,7 @@ tomli==2.0.1
     #   pyproject-hooks
     #   pytest
     #   tox
-tomlkit==0.11.7
+tomlkit==0.11.8
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -336,12 +336,12 @@ typing-extensions==4.5.0
     #   astroid
     #   pylint
     #   rich
-urllib3==1.26.15
+urllib3==2.0.2
     # via
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.21.0
+virtualenv==20.23.0
     # via
     #   -r requirements/ci.txt
     #   tox

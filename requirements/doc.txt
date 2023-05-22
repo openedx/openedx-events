@@ -10,7 +10,7 @@ asgiref==3.6.0
     # via
     #   -r requirements/test.txt
     #   django
-attrs==22.2.0
+attrs==23.1.0
     # via -r requirements/test.txt
 babel==2.12.1
     # via sphinx
@@ -20,7 +20,7 @@ bleach==6.0.0
     # via readme-renderer
 build==0.10.0
     # via -r requirements/doc.in
-certifi==2022.12.7
+certifi==2023.5.7
     # via requests
 cffi==1.15.1
     # via cryptography
@@ -34,15 +34,15 @@ code-annotations==1.3.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.2.3
+coverage[toml]==7.2.5
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==40.0.1
+cryptography==40.0.2
     # via secretstorage
 ddt==1.6.0
     # via -r requirements/test.txt
-django==3.2.18
+django==3.2.19
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/test.txt
@@ -61,13 +61,13 @@ exceptiongroup==1.1.1
     # via
     #   -r requirements/test.txt
     #   pytest
-fastavro==1.7.3
+fastavro==1.7.4
     # via -r requirements/test.txt
 idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==6.2.1
+importlib-metadata==6.6.0
     # via
     #   keyring
     #   sphinx
@@ -103,7 +103,7 @@ mdurl==0.1.2
     # via markdown-it-py
 more-itertools==9.1.0
     # via jaraco-classes
-packaging==23.0
+packaging==23.1
     # via
     #   -r requirements/test.txt
     #   build
@@ -124,7 +124,7 @@ pycparser==2.21
     # via cffi
 pydata-sphinx-theme==0.12.0
     # via sphinx-book-theme
-pygments==2.14.0
+pygments==2.15.1
     # via
     #   doc8
     #   pydata-sphinx-theme
@@ -137,7 +137,7 @@ pymongo==3.13.0
     #   edx-opaque-keys
 pyproject-hooks==1.0.0
     # via build
-pytest==7.3.0
+pytest==7.3.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -162,18 +162,18 @@ pyyaml==6.0
     #   sphinx-book-theme
 readme-renderer==37.3
     # via twine
-requests==2.28.2
+requests==2.30.0
     # via
     #   requests-toolbelt
     #   sphinx
     #   twine
-requests-toolbelt==0.10.1
+requests-toolbelt==1.0.0
     # via twine
 restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==13.3.3
+rich==13.3.5
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -183,7 +183,7 @@ six==1.16.0
     #   livereload
 snowballstemmer==2.2.0
     # via sphinx
-soupsieve==2.4
+soupsieve==2.4.1
     # via beautifulsoup4
 sphinx==5.3.0
     # via
@@ -200,7 +200,7 @@ sphinx-book-theme==0.4.0rc1
     # via
     #   -c requirements/constraints.txt
     #   -r requirements/doc.in
-sphinx-copybutton==0.5.1
+sphinx-copybutton==0.5.2
     # via -r requirements/doc.in
 sphinxcontrib-applehelp==1.0.4
     # via sphinx
@@ -218,11 +218,11 @@ sphinxcontrib-qthelp==1.0.3
     # via sphinx
 sphinxcontrib-serializinghtml==1.1.5
     # via sphinx
-sqlparse==0.4.3
+sqlparse==0.4.4
     # via
     #   -r requirements/test.txt
     #   django
-stevedore==5.0.0
+stevedore==5.1.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -240,13 +240,13 @@ tomli==2.0.1
     #   doc8
     #   pyproject-hooks
     #   pytest
-tornado==6.2
+tornado==6.3.2
     # via livereload
 twine==4.0.2
     # via -r requirements/doc.in
 typing-extensions==4.5.0
     # via rich
-urllib3==1.26.15
+urllib3==2.0.2
     # via
     #   requests
     #   twine
