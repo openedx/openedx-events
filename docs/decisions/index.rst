@@ -16,3 +16,4 @@ Architectural Decision Records (ADRs)
    0009-course-catalog-info-changed-design
    0010-multiple-event-types-per-topic
    0011-depending-on-multiple-event-bus-implementations
+   0012-producing-to-event-bus-via-settings
