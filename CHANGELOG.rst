@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[8.1.0] - 2023-06-06
+--------------------
+Added
+~~~~~
+* Store current versions of Avro schemas and add test to ensure valid evolution
+
 [8.0.1] - 2023-05-16
 --------------------
 Changed

@@ -1,8 +1,12 @@
 """Test interplay of the various Avro helper classes"""
+import io
+import os
 from datetime import datetime
 from typing import List
 from unittest import TestCase
 
+from fastavro import schemaless_reader, schemaless_writer
+from fastavro.schema import load_schema
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
@@ -16,15 +20,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     create_simple_signal,
 )
 from openedx_events.tests.utils import FreezeSignalCacheMixin
-from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
-
-# If a signal is explicitly not for use with the event bus, add it to this list
-#  and document why in the event's annotations
-KNOWN_UNSERIALIZABLE_SIGNALS = [
-    "org.openedx.learning.discussions.configuration.changed.v1",
-    "org.openedx.content_authoring.course.certificate_config.changed.v1",
-    "org.openedx.content_authoring.course.certificate_config.deleted.v1",
-]
+from openedx_events.tooling import KNOWN_UNSERIALIZABLE_SIGNALS, OpenEdxPublicSignal, load_all_signals
 
 
 def generate_test_event_data_for_data_type(data_type):
@@ -40,7 +36,6 @@ def generate_test_event_data_for_data_type(data_type):
     Returns:
         (dict): A data dictionary containing dummy data for all attributes of the class
     """
-    data_dict = {}
     defaults_per_type = {
         int: 1,
         bool: True,
@@ -53,6 +48,7 @@ def generate_test_event_data_for_data_type(data_type):
         List[int]: [1, 2, 3],
         datetime: datetime.now(),
     }
+    data_dict = {}
     for attribute in data_type.__attrs_attrs__:
         result = defaults_per_type.get(attribute.type, None)
         if result is not None:
@@ -65,8 +61,29 @@ def generate_test_event_data_for_data_type(data_type):
     return data_dict
 
 
+def generate_test_data_for_signal(signal: OpenEdxPublicSignal) -> dict:
+    """
+    Generates test data for use in the event bus test cases.
+
+    Builds data by filling in dummy data for basic data types (int/float/bool/str)
+    and recursively breaks down the classes for nested classes into basic data types.
+
+    Arguments:
+        data_type: The type of the data which we are generating data for
+
+    Returns:
+        (dict): A data dictionary containing dummy data for all attributes of the class
+    """
+    test_data = {}
+    for key, curr_class in signal.init_data.items():
+        example_data = generate_test_event_data_for_data_type(curr_class)
+        example_data_processed = curr_class(**example_data)
+        test_data.update({key: example_data_processed})
+    return test_data
+
+
 class TestAvro(FreezeSignalCacheMixin, TestCase):
-    """Tests for end-to-end serialization and deserialization of events"""
+    """Tests for end-to-end serialization and deserialization of events and schema evolution"""
 
     @classmethod
     def setUpClass(cls):
@@ -78,16 +95,79 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
         for signal in OpenEdxPublicSignal.all_events():
             if signal.event_type in KNOWN_UNSERIALIZABLE_SIGNALS:
                 continue
-            test_data = {}
+            test_data = generate_test_data_for_signal(signal)
             serializer = AvroSignalSerializer(signal)
-            for key, curr_class in signal.init_data.items():
-                example_data = generate_test_event_data_for_data_type(curr_class)
-                example_data_processed = curr_class(**example_data)
-                test_data.update({key: example_data_processed})
             serialized = serializer.to_dict(test_data)
             deserializer = AvroSignalDeserializer(signal)
             deserialized = deserializer.from_dict(serialized)
             self.assertDictEqual(deserialized, test_data)
+
+    def test_evolution_is_forward_compatible(self):
+        """
+        Test current version of events is forward compatible with stored schemas.
+
+        There's no assert because as long as the test doesn't raise an error, the new schema is
+        forward-compatible with the original.
+        """
+        for signal in OpenEdxPublicSignal.all_events():
+            if signal.event_type in KNOWN_UNSERIALIZABLE_SIGNALS:
+                continue
+            test_data = generate_test_data_for_signal(signal)
+            serializer = AvroSignalSerializer(signal)
+            schema_dict = serializer.schema
+
+            # write to bytes using current schema
+            current_out = io.BytesIO()
+            data_dict = serializer.to_dict(test_data)
+            schemaless_writer(current_out, schema_dict, data_dict)
+            current_out.seek(0)
+            current_event_bytes = current_out.read()
+
+            # get stored schema
+            stored_schema = load_schema(f"{os.path.dirname(os.path.abspath(__file__))}/schemas/"
+                                        f"{signal.event_type.replace('.','+')}_schema.avsc")
+
+            data_file_current = io.BytesIO(current_event_bytes)
+
+            # read bytes using stored schema
+            schemaless_reader(data_file_current, reader_schema=stored_schema, writer_schema=schema_dict)
+
+    def test_evolution_is_backward_compatible(self):
+        """
+        Test current version of events is backward compatible with stored schemas.
+
+        There's no assert because as long as the test doesn't raise an error, the new schema is
+        backward-compatible with the original.
+
+        Caveat: While we can go from an attrs class to a schema, we cannot go from a schema to an attrs class in the
+        same way because of custom serializers. Thus, when we are generating test data, we can only generate
+        it using the latest version of the attrs class, and not one derived from the stored schema. This means this
+        test does not perfectly reflect what would happen if the consumer was updated before the producer, but it still
+        fails if the latest attrs class is not backward compatible with the old schema. It will just fail on writing
+        instead of reading.
+        """
+        for signal in OpenEdxPublicSignal.all_events():
+            if signal.event_type in KNOWN_UNSERIALIZABLE_SIGNALS:
+                continue
+            test_data = generate_test_data_for_signal(signal)
+            serializer = AvroSignalSerializer(signal)
+            schema_dict = serializer.schema
+            data_dict = serializer.to_dict(test_data)
+
+            # get stored schema
+            old_schema = load_schema(f"{os.path.dirname(os.path.abspath(__file__))}/schemas/"
+                                     f"{signal.event_type.replace('.','+')}_schema.avsc")
+
+            # write to bytes using stored schema
+            stored_out = io.BytesIO()
+            schemaless_writer(stored_out, old_schema, data_dict)
+            stored_out.seek(0)
+            stored_event_bytes = stored_out.read()
+
+            data_file_stored = io.BytesIO(stored_event_bytes)
+
+            # read bytes using current schema
+            schemaless_reader(data_file_stored, reader_schema=schema_dict, writer_schema=old_schema)
 
     def test_full_serialize_deserialize(self):
         SIGNAL = create_simple_signal({"test_data": EventData})

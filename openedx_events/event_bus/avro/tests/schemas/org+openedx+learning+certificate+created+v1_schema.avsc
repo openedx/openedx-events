@@ -1,0 +1,112 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "certificate",
+      "type": {
+        "name": "CertificateData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "user",
+            "type": {
+              "name": "UserData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "long"
+                },
+                {
+                  "name": "is_active",
+                  "type": "boolean"
+                },
+                {
+                  "name": "pii",
+                  "type": {
+                    "name": "UserPersonalData",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "name": "username",
+                        "type": "string"
+                      },
+                      {
+                        "name": "email",
+                        "type": "string"
+                      },
+                      {
+                        "name": "name",
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "course",
+            "type": {
+              "name": "CourseData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "course_key",
+                  "type": "string"
+                },
+                {
+                  "name": "display_name",
+                  "type": "string"
+                },
+                {
+                  "name": "start",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                },
+                {
+                  "name": "end",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                }
+              ]
+            }
+          },
+          {
+            "name": "mode",
+            "type": "string"
+          },
+          {
+            "name": "grade",
+            "type": "string"
+          },
+          {
+            "name": "download_url",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "current_status",
+            "type": "string"
+          },
+          {
+            "name": "previous_status",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.certificate.created.v1"
+}
