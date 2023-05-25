@@ -23,7 +23,63 @@ from openedx_events.tests.utils import FreezeSignalCacheMixin
 from openedx_events.tooling import KNOWN_UNSERIALIZABLE_SIGNALS, OpenEdxPublicSignal, load_all_signals
 
 
-def generate_test_event_data_for_data_type(data_type):
+def generate_test_data_for_schema(schema):  # pragma: no cover
+    """
+    Generates a test data dict for the given schema.
+
+    Arguments:
+        schema: A JSON representation of an Avro schema
+
+    Returns:
+         A dictionary of test data parseable by the schema
+    """
+    defaults_per_type = {
+        'long': 1,
+        'boolean': True,
+        'string': "default",
+        'double': 1.0,
+        'null': None,
+    }
+
+    def get_default_value_or_raise(schema_field_type):
+        try:
+            return defaults_per_type[schema_field_type]
+        # 'None' is the default value for type=null so we can't just check if default_value is not None
+        except KeyError as exc:
+            raise Exception(f"Unsupported type {schema_field_type}") from exc  # pylint: disable=broad-exception-raised
+
+    data_dict = {}
+    top_level = schema['fields']
+    for field in top_level:
+        key = field['name']
+        field_type = field['type']
+
+        # some fields (like optional ones) accept multiple types. Choose the first one and run with it.
+        if isinstance(field_type, list):
+            field_type = field_type[0]
+
+        # if the field_type is a dict, we're either dealing with a list or a custom object
+        if isinstance(field_type, dict):
+            sub_field_type = field_type['type']
+            if sub_field_type == "array":
+                # if we're dealing with a list, "items" will be the type of items in the list
+                data_dict.update({key: [get_default_value_or_raise(field_type['items'])]})
+            elif sub_field_type == "record":
+                # if we're dealing with a record, recurse into the record
+                data_dict.update({key: generate_test_data_for_schema(field_type)})
+            else:
+                raise Exception(f"Unsupported type {field_type}")  # pylint: disable=broad-exception-raised
+
+        # a record is a collection of fields rather than a field itself, so recursively generate and add each field
+        elif field_type == "record":
+            data_dict.update([generate_test_data_for_schema(sub_field) for sub_field in field['fields']])
+        else:
+            data_dict.update({key: get_default_value_or_raise(field_type)})
+
+    return data_dict
+
+
+def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
     """
     Generates test data for use in the event bus test cases.
 
@@ -149,14 +205,13 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
         for signal in OpenEdxPublicSignal.all_events():
             if signal.event_type in KNOWN_UNSERIALIZABLE_SIGNALS:
                 continue
-            test_data = generate_test_data_for_signal(signal)
             serializer = AvroSignalSerializer(signal)
             schema_dict = serializer.schema
-            data_dict = serializer.to_dict(test_data)
 
             # get stored schema
             old_schema = load_schema(f"{os.path.dirname(os.path.abspath(__file__))}/schemas/"
                                      f"{signal.event_type.replace('.','+')}_schema.avsc")
+            data_dict = generate_test_data_for_schema(old_schema)
 
             # write to bytes using stored schema
             stored_out = io.BytesIO()

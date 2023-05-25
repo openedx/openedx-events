@@ -1,6 +1,6 @@
 """Tests for generate_avro_schemas."""
-from importlib import import_module
 import os
+from importlib import import_module
 from unittest.mock import call, mock_open, patch
 
 from django.core.management import call_command
