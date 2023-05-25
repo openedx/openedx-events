@@ -34,7 +34,7 @@ By keeping all implementations in the base requirements, we have the following b
 There are also some downsides:
 
 - The dependency tree is larger, and is more or less guaranteed to include at least one top-level dependency that each deployer is not using. Not only does each dependency take up bandwidth to download, space on disk, and time spent in upgrading packages, but it can also bring licensing and architecture incompatibilities.
-- More concretely, event-bus-kafka depends on confluent-kafka, but that package does not provide binaries compatible with Linux on Apple Silicon. This means that developers on Apple M1 laptops cannot install this package in devstack at all. So as a knock-on effect, event-bus-kafka has had to keep confluent-kafka out of its own in-tree dependencies; deployers wishing to use it have to install and version that package out-of-tree anyhow. This obviates a number of the stated benefits for development and version management, at least for the Kafka users.
+- More concretely, event-bus-kafka depends on confluent-kafka, but that package does not provide binaries compatible with Linux on Apple Silicon. This means that developers on Apple M1 laptops cannot install this package in devstack at all. So as a knock-on effect, event-bus-kafka has had to keep confluent-kafka out of its own in-tree dependencies; deployers wishing to use it have to install and version that package out-of-tree anyhow. While this may eventually be resolved, this does obviate a number of the stated benefits for development and version management for the Kafka users.
 
 We are not necessarily *satisfied* with this approach, but regard it as suitable for at least one release.
 
