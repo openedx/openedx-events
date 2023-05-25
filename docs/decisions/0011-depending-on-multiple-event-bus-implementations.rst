@@ -41,7 +41,7 @@ We are not necessarily *satisfied* with this approach, but regard it as suitable
 Rejected Alternatives
 *********************
 
-There are two main alternative approaches we have considered:
+There are several alternative approaches we have considered:
 
 - Single implementation
 - Require all implementations to be installed out-of-tree
@@ -50,14 +50,14 @@ There are two main alternative approaches we have considered:
 Single implementation
 =====================
 
-TODO
+It's very unlikely that one implementation would satisfy everyone. Any event store, queue, or message bus technology that is used is additional software that deployers must learn to install, manage, configure, and operate. The exceptions would be MySQL and Redis, which are already used in Open edX. However, neither of these was used for the first implementation. Therefore, even if Redis turns out to work very well, we'll still need the extension point.
 
 All out-of-tree
 ===============
 
-As discussed, this results in more development friction but has the benefit of reduced maintenance friction (until a version conflict arises).
+As discussed, this results in more development friction (although possibly lower maintenance burden). The package also would not participate in our usual ``make upgrade`` process. This leads to either A) more operational risk if deployers leave the implementation package version unpinned in their deployment pipeline, or B) more toil if the version is pinned but has to be manually bumped in every IDA every time a new package version is released.
 
-Not having *any* implementation provided in a standard devstack installation makes Event Bus work unnecessarily difficult.
+Not having *any* implementation provided in a standard devstack installation also makes Event Bus work unnecessarily difficult.
 
 One default
 ===========
