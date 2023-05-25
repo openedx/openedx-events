@@ -197,10 +197,7 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
 
         Caveat: While we can go from an attrs class to a schema, we cannot go from a schema to an attrs class in the
         same way because of custom serializers. Thus, when we are generating test data, we can only generate
-        it using the latest version of the attrs class, and not one derived from the stored schema. This means this
-        test does not perfectly reflect what would happen if the consumer was updated before the producer, but it still
-        fails if the latest attrs class is not backward compatible with the old schema. It will just fail on writing
-        instead of reading.
+        the dictionary we would get after calling schema.to_dict.
         """
         for signal in OpenEdxPublicSignal.all_events():
             if signal.event_type in KNOWN_UNSERIALIZABLE_SIGNALS:
