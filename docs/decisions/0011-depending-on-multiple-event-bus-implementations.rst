@@ -6,6 +6,8 @@ Status
 
 **Accepted** *2023-05-25*
 
+(This decision was actually made in November 2022, and retroactively documented in May 2023 but with additional, newer context such as the existence of event-bus-redis.)
+
 Context
 *******
 
@@ -43,9 +45,15 @@ Rejected Alternatives
 
 There are several alternative approaches we have considered:
 
-- Single implementation
+- Have the implementation be part of the openedx-events package
+- Just have one implementation
 - Require all implementations to be installed out-of-tree
 - Depend on one default implementation in-tree, and require that others be installed
+
+Implement inside openedx-events
+===============================
+
+We briefly discussed the idea of including all of the implementations *in* the openedx-events package, possibly as extras (e.g. ``openedx-events[kafka]``). However, this would have complicated the development of openedx-events; it would have become impossible to e.g. pin the version of the Redis implementation in a dependent IDA while continuing to receive updates to the Kafka implementation. (The use of extras also would not have helped our dependencies issue; we'd then need to decide which extras to depend upon from IDAs' base requirements files.)
 
 Single implementation
 =====================
