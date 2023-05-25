@@ -18,7 +18,7 @@ class Command(BaseCommand):
     """
 
     help = """
-    Consume messages of specified signal type from a topic and send their data to that signal.
+    Consume messages from a topic and emit their data with the correct signal.
 
     Example::
 
@@ -34,7 +34,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         """
-        Add arguments for parsing topic, group, signal and extra args.
+        Add arguments for parsing topic, group, and extra args.
         """
         parser.add_argument(
             '-t', '--topic',
@@ -47,12 +47,6 @@ class Command(BaseCommand):
             nargs=1,
             required=True,
             help='Consumer group id'
-        )
-        parser.add_argument(
-            '-s', '--signal',
-            nargs=1,
-            required=False,
-            help='DEPRECATED This argument will be ignored. Signals will be determined by message headers'
         )
         parser.add_argument(
             '--extra',
