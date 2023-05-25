@@ -45,7 +45,7 @@ There are two main alternative approaches we have considered:
 
 - Single implementation
 - Require all implementations to be installed out-of-tree
-- Depend on one default implementation in-tree, and require that others be installed 
+- Depend on one default implementation in-tree, and require that others be installed
 
 Single implementation
 =====================
