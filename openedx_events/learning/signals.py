@@ -156,7 +156,7 @@ PERSISTENT_GRADE_SUMMARY_CHANGED = OpenEdxPublicSignal(
 # .. event_description: Fired when an XBlock skill is verified.
 # .. event_data: XBlockSkillVerificationData
 XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
-    event_type="org.openedx.content_authoring.xblock.skill.verified.v1",
+    event_type="org.openedx.learning.xblock.skill.verified.v1",
     data={
         "xblock_info": XBlockSkillVerificationData,
     }

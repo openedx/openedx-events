@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[8.0.1] - 2023-05-16
+--------------------
+Changed
+~~~~~~~
+* Fixed event_type of XBLOCK_SKILL_VERIFIED signal
+
 [8.0.0] - 2023-05-16
 --------------------
 Changed
