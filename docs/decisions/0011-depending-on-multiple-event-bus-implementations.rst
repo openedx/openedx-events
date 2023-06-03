@@ -15,6 +15,8 @@ The Event Bus is an abstraction allowing events to be passed from one IDA to ano
 
 Any given deployer will likely only be using one of these implementations at most, and will need to install it one way or another. This can either be by explicit inclusion in the base requirements of each IDA ("in-tree") or by a separate installation process of one sort or another ("out-of-tree"). Each implementation package also has its own dependencies and dependency version constraints which may conflict with the other dependencies pulled in by any given IDA. Each package will need to be kept compatible with a significant number of IDAs.
 
+Currently, use of the event bus is optional, so choice of implementation is moot for most deployers. However, we expect that the event bus will later become a core part of the architecture, such that all deployments will need to use one implementation or another.
+
 Decision
 ********
 
@@ -40,8 +42,8 @@ There are also some downsides:
 
 We are not necessarily *satisfied* with this approach, but regard it as suitable for at least one release.
 
-Rejected Alternatives
-*********************
+Rejected or deferred alternatives
+*********************************
 
 There are several alternative approaches we have considered:
 
@@ -67,12 +69,16 @@ As discussed, this results in more development friction (although possibly lower
 
 Not having *any* implementation provided in a standard devstack installation also makes Event Bus work unnecessarily difficult.
 
+This decision is taking place against a backdrop of trying to use plugins and other extension mechanisms in more places, which would frequently require external dependencies. In the event bus work we have deferred figuring out how to reconcile out-of-tree dependency lists against our upgrade and pinning processes, but we'll need to figure it out sooner or later. Once we do, this option becomes more palatable (although likely not as appealing as the option in the next section, "one default").
+
 One default
 ===========
 
 Another option would be to select one implementation to always keep in the dependencies, and require that others be installed out-of-tree. If we went this route, we would likely choose event-bus-redis as the default, as it does not require the deployer to run additional services. (Redis is already used in Open edX deployments.)
 
 Given that event-bus-kafka already requires out-of-tree installation, this may be a path we take in the future. However, 2U is using event-bus-kafka and developed the initial version of the event bus, and the direct inclusion of the dependency made that work easier. As the event bus and its main implementations stabilize, this factor may no longer have much weight.
+
+As of May 2023, we are moving towards including event-bus-redis in *development* settings so that the event bus can be used in a standard devstack. It is possible that we will later choose to extend this to other environments, such that Redis will be the default for deployment as well. If so, we will likely reconsider our decision to include the Kafka implementation in our dependencies by default.
 
 References
 **********
