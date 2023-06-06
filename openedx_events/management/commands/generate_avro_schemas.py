@@ -36,7 +36,7 @@ class Command(BaseCommand):
             org.openedx.learning.course.unenrollment.completed.v1
 
         # all signals
-        python manage.py cms generate_avro_schemas -all
+        python manage.py cms generate_avro_schemas --all
 
     """
 

@@ -31,5 +31,5 @@
       }
     }
   ],
-  "namespace": "org.openedx.content_authoring.xblock.skill.verified.v1"
+  "namespace": "org.openedx.learning.xblock.skill.verified.v1"
 }
