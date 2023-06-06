@@ -23,7 +23,8 @@ class Command(BaseCommand):
     Generate and save the current Avro schemas of OpenEdxPublicSignals.
 
     Schemas will be saved in openedx_events/avro/tests/schemas. The folder will be created if it does not already exist.
-    Should only be used for new signals. Existing files will be overwritten, so use with caution.
+    Should only be used for new signals. Even if a schema is changing, it is recommended you leave the original
+    in place. Only overwrite the file for an exceptional case, like the schema still being under development.
 
     Example::
 
@@ -77,7 +78,8 @@ class Command(BaseCommand):
             folder_path = f"{root_path}/event_bus/avro/tests/schemas"
             full_file_name = f"{folder_path}/{filename}"
             if os.path.exists(full_file_name):
-                confirmation = input(f"Warning: overwriting schema for {signal.event_type}. Are you sure you want to "
+                confirmation = input(f"Warning: overwriting schema for {signal.event_type}. It is recommended to leave"
+                                     f" existing schemas unchanged. Are you sure you want to "
                                      f"continue [y/n]? ")
                 if confirmation.lower().strip() != 'y':
                     logger.info(f"Skipping generating schema for {signal.event_type}")
