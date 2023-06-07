@@ -13,6 +13,8 @@ from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 from openedx_events.event_bus.avro.types import PYTHON_TYPE_TO_AVRO_MAPPING
 
 
+import json
+
 class BaseCustomTypeAvroSerializer(ABC):
     """
     Used by openedx_events.avro_utilities class to serialize/deserialize custom types.
@@ -91,6 +93,26 @@ class DatetimeAvroSerializer(BaseCustomTypeAvroSerializer):
     def deserialize(data: str):
         """Deserialize string into obj."""
         return datetime.fromisoformat(data)
+
+
+class DictionaryAvroSerializer(BaseCustomTypeAvroSerializer):
+    """
+    CustomTypeAvroSerializer for dictionary class.
+    """
+
+    cls = dict
+    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[dict]
+
+    @staticmethod
+    def serialize(obj) -> str:
+        """Serialize obj into str."""
+        return obj
+
+    @staticmethod
+    def deserialize(data: str):
+        """Deserialize dict into obj."""
+        return json.loads(data)
+
 
 
 class UsageKeyAvroSerializer(BaseCustomTypeAvroSerializer):
@@ -179,4 +201,5 @@ DEFAULT_CUSTOM_SERIALIZERS = [
     LibraryUsageLocatorV2AvroSerializer,
     UsageKeyAvroSerializer,
     UuidAvroSerializer,
+    DictionaryAvroSerializer,
 ]
