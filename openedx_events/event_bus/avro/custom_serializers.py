@@ -10,6 +10,8 @@ from opaque_keys.edx.keys import CourseKey, UsageKey
 from openedx_events.event_bus.avro.types import PYTHON_TYPE_TO_AVRO_MAPPING
 
 
+import json
+
 class BaseCustomTypeAvroSerializer(ABC):
     """
     Used by openedx_events.avro_utilities class to serialize/deserialize custom types.
@@ -71,6 +73,26 @@ class DatetimeAvroSerializer(BaseCustomTypeAvroSerializer):
         return datetime.fromisoformat(data)
 
 
+class DictionaryAvroSerializer(BaseCustomTypeAvroSerializer):
+    """
+    CustomTypeAvroSerializer for dictionary class.
+    """
+
+    cls = dict
+    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[dict]
+
+    @staticmethod
+    def serialize(obj) -> str:
+        """Serialize obj into str."""
+        return obj
+
+    @staticmethod
+    def deserialize(data: str):
+        """Deserialize dict into obj."""
+        return json.loads(data)
+
+
+
 class UsageKeyAvroSerializer(BaseCustomTypeAvroSerializer):
     """
     CustomTypeAvroSerializer for UsageKey class.
@@ -90,4 +112,4 @@ class UsageKeyAvroSerializer(BaseCustomTypeAvroSerializer):
         return UsageKey.from_string(data)
 
 
-DEFAULT_CUSTOM_SERIALIZERS = [CourseKeyAvroSerializer, DatetimeAvroSerializer, UsageKeyAvroSerializer]
+DEFAULT_CUSTOM_SERIALIZERS = [CourseKeyAvroSerializer, DatetimeAvroSerializer, UsageKeyAvroSerializer, DictionaryAvroSerializer]

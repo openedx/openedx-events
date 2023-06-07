@@ -12,6 +12,8 @@ from datetime import datetime
 
 import attr
 
+from typing import Dict
+
 
 @attr.s(frozen=True)
 class TrackingLogData:
@@ -19,7 +21,7 @@ class TrackingLogData:
     Data describing tracking log data.
 
     Arguments:
-        name (str): course name
+        name (str): name
         timestamp (datetime): course start date
         data (dict): dictionary of extra data (optional), e.g. {"course_id": "course-v1:edX+DemoX+Demo_Course"}
         context (dict): dictionary of context data, defined in https://edx.readthedocs.io/projects/devdata/en/latest/internal_data_formats/tracking_logs/common_fields.html
@@ -27,5 +29,5 @@ class TrackingLogData:
 
     name = attr.ib(type=str)
     timestamp = attr.ib(type=datetime)
-    data = attr.ib(type=dict, default={})
+    data = attr.ib(type=str, default='')
     context = attr.ib(type=dict, factory=dict)
