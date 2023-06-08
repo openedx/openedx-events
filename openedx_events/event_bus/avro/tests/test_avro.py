@@ -7,6 +7,7 @@ from unittest import TestCase
 
 from fastavro import schemaless_reader, schemaless_writer
 from fastavro.schema import load_schema
+from fastavro.repository.base import SchemaRepositoryError
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
@@ -180,8 +181,13 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
             current_event_bytes = current_out.read()
 
             # get stored schema
-            stored_schema = load_schema(f"{os.path.dirname(os.path.abspath(__file__))}/schemas/"
-                                        f"{signal.event_type.replace('.','+')}_schema.avsc")
+            schema_filename = f"{os.path.dirname(os.path.abspath(__file__))}/schemas/" \
+                              f"{signal.event_type.replace('.','+')}_schema.avsc"
+            try:
+                stored_schema = load_schema(schema_filename)
+            except SchemaRepositoryError:
+                self.fail(f"Missing file {schema_filename}. If a new signal has been added, you may need to run the"
+                          f" generate_avro_schemas management command to save the signal schema.")
 
             data_file_current = io.BytesIO(current_event_bytes)
 
@@ -206,8 +212,13 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
             schema_dict = serializer.schema
 
             # get stored schema
-            old_schema = load_schema(f"{os.path.dirname(os.path.abspath(__file__))}/schemas/"
-                                     f"{signal.event_type.replace('.','+')}_schema.avsc")
+            schema_filename = f"{os.path.dirname(os.path.abspath(__file__))}/schemas/" \
+                              f"{signal.event_type.replace('.','+')}_schema.avsc"
+            try:
+                old_schema = load_schema(schema_filename)
+            except SchemaRepositoryError:
+                self.fail(f"Missing file {schema_filename}. If a new signal has been added, you may need to run the"
+                          f" generate_avro_schemas management command to save the signal schema.")
             data_dict = generate_test_data_for_schema(old_schema)
 
             # write to bytes using stored schema
