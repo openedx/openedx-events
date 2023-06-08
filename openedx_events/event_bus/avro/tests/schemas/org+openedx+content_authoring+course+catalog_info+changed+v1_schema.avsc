@@ -1,0 +1,74 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "catalog_info",
+      "type": {
+        "name": "CourseCatalogData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "course_key",
+            "type": "string"
+          },
+          {
+            "name": "name",
+            "type": "string"
+          },
+          {
+            "name": "schedule_data",
+            "type": {
+              "name": "CourseScheduleData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "start",
+                  "type": "string"
+                },
+                {
+                  "name": "pacing",
+                  "type": "string"
+                },
+                {
+                  "name": "end",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                },
+                {
+                  "name": "enrollment_start",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                },
+                {
+                  "name": "enrollment_end",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                }
+              ]
+            }
+          },
+          {
+            "name": "hidden",
+            "type": "boolean"
+          },
+          {
+            "name": "invitation_only",
+            "type": "boolean"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.content_authoring.course.catalog_info.changed.v1"
+}

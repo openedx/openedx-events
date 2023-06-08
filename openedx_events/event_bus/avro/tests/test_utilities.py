@@ -14,15 +14,16 @@ from openedx_events.event_bus.avro.types import PYTHON_TYPE_TO_AVRO_MAPPING
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
-def create_simple_signal(data_dict):
+def create_simple_signal(data_dict, event_type="simple.signal"):
     """
     Create a basic OpenEdxPublicSignal with init_data = data_dict.
 
     Arguments:
         data_dict: Description of attributes passed to the signal
+        event_type: A custom event type string. Defaults to 'simple.signal'
     """
     return OpenEdxPublicSignal(
-        event_type="simple.signal",
+        event_type=event_type,
         data=data_dict
     )
 

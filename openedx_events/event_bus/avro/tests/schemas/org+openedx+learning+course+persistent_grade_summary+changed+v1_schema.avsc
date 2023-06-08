@@ -1,0 +1,78 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "grade",
+      "type": {
+        "name": "PersistentCourseGradeData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "user_id",
+            "type": "long"
+          },
+          {
+            "name": "course",
+            "type": {
+              "name": "CourseData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "course_key",
+                  "type": "string"
+                },
+                {
+                  "name": "display_name",
+                  "type": "string"
+                },
+                {
+                  "name": "start",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                },
+                {
+                  "name": "end",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                }
+              ]
+            }
+          },
+          {
+            "name": "course_edited_timestamp",
+            "type": "string"
+          },
+          {
+            "name": "course_version",
+            "type": "string"
+          },
+          {
+            "name": "grading_policy_hash",
+            "type": "string"
+          },
+          {
+            "name": "percent_grade",
+            "type": "double"
+          },
+          {
+            "name": "letter_grade",
+            "type": "string"
+          },
+          {
+            "name": "passed_timestamp",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.course.persistent_grade_summary.changed.v1"
+}

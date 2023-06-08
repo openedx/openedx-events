@@ -1,0 +1,35 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "xblock_info",
+      "type": {
+        "name": "XBlockSkillVerificationData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "usage_key",
+            "type": "string"
+          },
+          {
+            "name": "verified_skills",
+            "type": {
+              "type": "array",
+              "items": "long"
+            }
+          },
+          {
+            "name": "ignored_skills",
+            "type": {
+              "type": "array",
+              "items": "long"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.xblock.skill.verified.v1"
+}
