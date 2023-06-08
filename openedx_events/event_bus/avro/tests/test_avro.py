@@ -185,7 +185,7 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
                               f"{signal.event_type.replace('.','+')}_schema.avsc"
             try:
                 stored_schema = load_schema(schema_filename)
-            except SchemaRepositoryError:
+            except SchemaRepositoryError:  # pragma: no cover
                 self.fail(f"Missing file {schema_filename}. If a new signal has been added, you may need to run the"
                           f" generate_avro_schemas management command to save the signal schema.")
 
@@ -216,7 +216,7 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
                               f"{signal.event_type.replace('.','+')}_schema.avsc"
             try:
                 old_schema = load_schema(schema_filename)
-            except SchemaRepositoryError:
+            except SchemaRepositoryError:  # pragma: no cover
                 self.fail(f"Missing file {schema_filename}. If a new signal has been added, you may need to run the"
                           f" generate_avro_schemas management command to save the signal schema.")
             data_dict = generate_test_data_for_schema(old_schema)
