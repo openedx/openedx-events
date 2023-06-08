@@ -6,8 +6,8 @@ from typing import List
 from unittest import TestCase
 
 from fastavro import schemaless_reader, schemaless_writer
-from fastavro.schema import load_schema
 from fastavro.repository.base import SchemaRepositoryError
+from fastavro.schema import load_schema
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
