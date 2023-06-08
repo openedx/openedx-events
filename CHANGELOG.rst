@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[8.2.0] - 2023-06-08
+--------------------
+Changed
+~~~~~~~
+* Added new USER_NOTIFICATION_REQUESTED event.
+
 [8.1.0] - 2023-06-06
 --------------------
 Added

@@ -235,3 +235,25 @@ class XBlockSkillVerificationData:
     usage_key = attr.ib(type=UsageKey)
     verified_skills = attr.ib(type=List[int], factory=list)
     ignored_skills = attr.ib(type=List[int], factory=list)
+
+
+@attr.s(frozen=True)
+class UserNotificationData:
+    """
+    Attributes defined for Open edX User Notification data object.
+
+    Arguments:
+        user_ids (List(int)): identifier of the user to which the notification belongs.
+        notification_type (str): type of the notification.
+        context (dict): additional structured information about the context in
+                        which this topic is used, such as the section, subsection etc.
+        content_url (str): url of the content.
+        app_name (str): name of the app.
+    """
+
+    user_ids = attr.ib(type=List[int])
+    notification_type = attr.ib(type=str)
+    content_url = attr.ib(type=str)
+    app_name = attr.ib(type=str)
+    course_key = attr.ib(type=CourseKey)
+    context = attr.ib(type=dict, factory=dict)
