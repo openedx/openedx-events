@@ -4,9 +4,9 @@
 Status
 ******
 
-**Accepted** *2023-05-25*
+**Accepted** *2023-06-09*
 
-(This decision was actually made in November 2022, and retroactively documented in May 2023 but with additional, newer context such as the existence of event-bus-redis.)
+(This decision was actually made in November 2022 during the development of event-bus-kafka, and retroactively documented in June 2023 but with additional, newer context such as the existence of event-bus-redis.)
 
 Context
 *******
@@ -16,6 +16,10 @@ The Event Bus is an abstraction allowing events to be passed from one IDA to ano
 Any given deployer will likely only be using one of these implementations at most, and will need to install it one way or another. This can either be by explicit inclusion in the base requirements of each IDA ("in-tree") or by a separate installation process of one sort or another ("out-of-tree"). Each implementation package also has its own dependencies and dependency version constraints which may conflict with the other dependencies pulled in by any given IDA. Each package will need to be kept compatible with a significant number of IDAs.
 
 Currently, use of the event bus is optional, so choice of implementation is moot for most deployers. However, we expect that the event bus will later become a core part of the architecture, such that all deployments will need to use one implementation or another.
+
+`OEP-52`_ contains links to additional context and ADRs, including the decisions to use Kafka and Redis.
+
+.. _OEP-52: https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0052-arch-event-bus-architecture.html
 
 Decision
 ********
