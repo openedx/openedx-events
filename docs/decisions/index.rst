@@ -15,3 +15,4 @@ Architectural Decision Records (ADRs)
    0008-signals-with-pii
    0009-course-catalog-info-changed-design
    0010-multiple-event-types-per-topic
+   0011-depending-on-multiple-event-bus-implementations
