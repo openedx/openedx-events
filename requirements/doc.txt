@@ -67,7 +67,7 @@ idna==3.4
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==6.6.0
+importlib-metadata==6.7.0
     # via
     #   keyring
     #   sphinx
@@ -93,7 +93,7 @@ keyring==23.13.1
     # via twine
 livereload==2.6.3
     # via sphinx-autobuild
-markdown-it-py==2.2.0
+markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.3
     # via
@@ -173,7 +173,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==13.4.1
+rich==13.4.2
     # via twine
 secretstorage==3.3.3
     # via keyring
