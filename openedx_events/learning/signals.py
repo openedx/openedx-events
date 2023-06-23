@@ -15,6 +15,7 @@ from openedx_events.learning.data import (
     CourseEnrollmentData,
     PersistentCourseGradeData,
     UserData,
+    UserNotificationData,
     XBlockSkillVerificationData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -159,5 +160,18 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.xblock.skill.verified.v1",
     data={
         "xblock_info": XBlockSkillVerificationData,
+    }
+)
+
+# .. event_type: org.openedx.learning.user.notification.requested.v1
+# .. event_name: USER_NOTIFICATION
+# .. event_description: Can be fired from apps to send user notifications.
+# .. event_data: UserNotificationSendListData
+# Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+#
+USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.notification.requested.v1",
+    data={
+        "notification_data": UserNotificationData,
     }
 )
