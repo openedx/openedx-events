@@ -1,0 +1,25 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "content_library",
+      "type": {
+        "name": "ContentLibraryData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "library_key",
+            "type": "string"
+          },
+          {
+            "name": "update_blocks",
+            "type": "boolean"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.content_authoring.content_library.deleted.v1"
+}

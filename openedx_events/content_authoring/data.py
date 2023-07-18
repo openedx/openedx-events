@@ -12,6 +12,19 @@ from typing import BinaryIO, List
 
 import attr
 from opaque_keys.edx.keys import CourseKey, UsageKey
+from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
+
+
+@attr.s(frozen=True)
+class CourseData:
+    """
+    Attributes defined for Open edX Course object.
+
+    Arguments:
+        course_key (CourseKey): identifier of the Course object.
+    """
+
+    course_key = attr.ib(type=CourseKey)
 
 
 @attr.s(frozen=True)
@@ -65,10 +78,13 @@ class XBlockData:
     Arguments:
         usage_key (UsageKey): identifier of the XBlock object.
         block_type (str): type of block.
+        version (UsageKey): identifier of the XBlock object with branch and version data (optional). This
+        could be used to get the exact version of the XBlock object.
     """
 
     usage_key = attr.ib(type=UsageKey)
     block_type = attr.ib(type=str)
+    version = attr.ib(type=UsageKey, default=None, kw_only=True)
 
 
 @attr.s(frozen=True)
@@ -136,3 +152,31 @@ class CertificateConfigData:
     title = attr.ib(type=str)
     signatories = attr.ib(type=List[CertificateSignatoryData], factory=list)
     is_active = attr.ib(type=bool, default=False)
+
+
+@attr.s(frozen=True)
+class ContentLibraryData:
+    """
+    Data about changed ContentLibrary.
+
+    Arguments:
+        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        update_blocks (bool): flag that indicates whether the content library blocks indexes should be updated
+    """
+
+    library_key = attr.ib(type=LibraryLocatorV2)
+    update_blocks = attr.ib(type=bool, default=False)
+
+
+@attr.s(frozen=True)
+class LibraryBlockData:
+    """
+    Data about changed LibraryBlock.
+
+    Arguments:
+        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        usage_key (LibraryUsageLocatorV2): a key that represents a XBlock in a Blockstore-based content library.
+    """
+
+    library_key = attr.ib(type=LibraryLocatorV2)
+    usage_key = attr.ib(type=LibraryUsageLocatorV2)

@@ -1,0 +1,25 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "xblock_info",
+      "type": {
+        "name": "XBlockData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "usage_key",
+            "type": "string"
+          },
+          {
+            "name": "block_type",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.content_authoring.xblock.created.v1"
+}

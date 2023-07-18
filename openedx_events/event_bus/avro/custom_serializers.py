@@ -6,6 +6,7 @@ from abc import ABC, abstractmethod
 from datetime import datetime
 
 from opaque_keys.edx.keys import CourseKey, UsageKey
+from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 
 from openedx_events.event_bus.avro.types import PYTHON_TYPE_TO_AVRO_MAPPING
 
@@ -90,4 +91,48 @@ class UsageKeyAvroSerializer(BaseCustomTypeAvroSerializer):
         return UsageKey.from_string(data)
 
 
-DEFAULT_CUSTOM_SERIALIZERS = [CourseKeyAvroSerializer, DatetimeAvroSerializer, UsageKeyAvroSerializer]
+class LibraryLocatorV2AvroSerializer(BaseCustomTypeAvroSerializer):
+    """
+    CustomTypeAvroSerializer for LibraryLocatorV2 class.
+    """
+
+    cls = LibraryLocatorV2
+    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[str]
+
+    @staticmethod
+    def serialize(obj) -> str:
+        """Serialize obj into string."""
+        return str(obj)
+
+    @staticmethod
+    def deserialize(data: str):
+        """Deserialize string into obj."""
+        return LibraryLocatorV2.from_string(data)
+
+
+class LibraryUsageLocatorV2AvroSerializer(BaseCustomTypeAvroSerializer):
+    """
+    CustomTypeAvroSerializer for LibraryUsageLocatorV2 class.
+    """
+
+    cls = LibraryUsageLocatorV2
+    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[str]
+
+    @staticmethod
+    def serialize(obj) -> str:
+        """Serialize obj into string."""
+        return str(obj)
+
+    @staticmethod
+    def deserialize(data: str):
+        """Deserialize string into obj."""
+        return LibraryUsageLocatorV2.from_string(data)
+
+
+DEFAULT_CUSTOM_SERIALIZERS = [
+    CourseKeyAvroSerializer,
+    DatetimeAvroSerializer,
+    LibraryLocatorV2AvroSerializer,
+    LibraryUsageLocatorV2AvroSerializer,
+    UsageKeyAvroSerializer,
+]

@@ -6,6 +6,7 @@ from datetime import datetime
 import pytest
 from django.test import TestCase
 from opaque_keys.edx.keys import CourseKey, UsageKey
+from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 
 from openedx_events.event_bus.avro.serializer import AvroSignalSerializer, serialize_event_data_to_bytes
 from openedx_events.event_bus.avro.tests.test_utilities import (
@@ -115,6 +116,28 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
         usage_key = UsageKey.from_string(
             "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
         )
+        test_data = {"usage_key": usage_key}
+        data_dict = serializer.to_dict(test_data)
+        self.assertDictEqual(data_dict, {"usage_key": str(usage_key)})
+
+    def test_default_librarylocatorv2_serialization(self):
+        """
+        Test serialization of LibraryLocatorV2
+        """
+        SIGNAL = create_simple_signal({"library_key": LibraryLocatorV2})
+        serializer = AvroSignalSerializer(SIGNAL)
+        library_key = LibraryLocatorV2.from_string("lib:MITx:reallyhardproblems")
+        test_data = {"library_key": library_key}
+        data_dict = serializer.to_dict(test_data)
+        self.assertDictEqual(data_dict, {"library_key": str(library_key)})
+
+    def test_default_libraryusagelocatorv2_serialization(self):
+        """
+        Test serialization of LibraryUsageLocatorV2
+        """
+        SIGNAL = create_simple_signal({"usage_key": LibraryUsageLocatorV2})
+        serializer = AvroSignalSerializer(SIGNAL)
+        usage_key = LibraryUsageLocatorV2.from_string("lb:MITx:reallyhardproblems:problem:problem1")
         test_data = {"usage_key": usage_key}
         data_dict = serializer.to_dict(test_data)
         self.assertDictEqual(data_dict, {"usage_key": str(usage_key)})

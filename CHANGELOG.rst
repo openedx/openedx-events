@@ -14,6 +14,15 @@ Change Log
 Unreleased
 ----------
 
+[8.3.0] - 2023-07-10
+--------------------
+Changed
+~~~~~~~
+* Added new XBLOCK_CREATED and XBLOCK_UPDATED events in content_authoring.
+* Added new COURSE_CREATED event in content_authoring.
+* Added new CONTENT_LIBRARY_CREATED, CONTENT_LIBRARY_UPDATED and CONTENT_LIBRARY_DELETED events in content_authoring.
+* Added new LIBRARY_BLOCK_CREATED, LIBRARY_BLOCK_UPDATED and LIBRARY_BLOCK_DELETED events in content_authoring.
+
 [8.2.0] - 2023-06-08
 --------------------
 Changed
