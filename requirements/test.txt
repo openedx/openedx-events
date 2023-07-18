@@ -10,7 +10,7 @@ asgiref==3.7.2
     #   django
 attrs==23.1.0
     # via -r requirements/base.txt
-click==8.1.3
+click==8.1.5
     # via code-annotations
 code-annotations==1.3.0
     # via -r requirements/test.in
@@ -18,15 +18,15 @@ coverage[toml]==7.2.7
     # via pytest-cov
 ddt==1.6.0
     # via -r requirements/test.in
-django==3.2.19
+django==3.2.20
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/base.txt
 edx-opaque-keys[django]==2.3.0
     # via -r requirements/base.txt
-exceptiongroup==1.1.1
+exceptiongroup==1.1.2
     # via pytest
-fastavro==1.7.4
+fastavro==1.8.0
     # via -r requirements/base.txt
 iniconfig==2.0.0
     # via pytest
@@ -40,13 +40,13 @@ pbr==5.11.1
     # via
     #   -r requirements/base.txt
     #   stevedore
-pluggy==1.0.0
+pluggy==1.2.0
     # via pytest
 pymongo==3.13.0
     # via
     #   -r requirements/base.txt
     #   edx-opaque-keys
-pytest==7.3.2
+pytest==7.4.0
     # via
     #   pytest-cov
     #   pytest-django
@@ -77,7 +77,7 @@ tomli==2.0.1
     # via
     #   coverage
     #   pytest
-typing-extensions==4.6.3
+typing-extensions==4.7.1
     # via
     #   -r requirements/base.txt
     #   asgiref
