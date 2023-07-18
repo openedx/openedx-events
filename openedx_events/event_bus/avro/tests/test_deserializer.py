@@ -5,6 +5,7 @@ from typing import List
 from unittest import TestCase
 
 from opaque_keys.edx.keys import CourseKey, UsageKey
+from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
 from openedx_events.event_bus.avro.tests.test_utilities import (
@@ -117,6 +118,32 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         event_data = deserializer.from_dict(as_dict)
         usage_key_deserialized = event_data["usage_key"]
         self.assertIsInstance(usage_key_deserialized, UsageKey)
+        self.assertEqual(usage_key_deserialized, usage_key)
+
+    def test_default_librarylocatorv2_deserialization(self):
+        """
+        Test deserialization of LibraryLocatorV2
+        """
+        SIGNAL = create_simple_signal({"library_key": LibraryLocatorV2})
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        library_key = LibraryLocatorV2.from_string("lib:MITx:reallyhardproblems")
+        as_dict = {"library_key": str(library_key)}
+        event_data = deserializer.from_dict(as_dict)
+        library_key_deserialized = event_data["library_key"]
+        self.assertIsInstance(library_key_deserialized, LibraryLocatorV2)
+        self.assertEqual(library_key_deserialized, library_key)
+
+    def test_default_libraryusagelocatorv2_deserialization(self):
+        """
+        Test deserialization of LibraryUsageLocatorV2
+        """
+        SIGNAL = create_simple_signal({"usage_key": LibraryUsageLocatorV2})
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        usage_key = LibraryUsageLocatorV2.from_string("lb:MITx:reallyhardproblems:problem:problem1")
+        as_dict = {"usage_key": str(usage_key)}
+        event_data = deserializer.from_dict(as_dict)
+        usage_key_deserialized = event_data["usage_key"]
+        self.assertIsInstance(usage_key_deserialized, LibraryUsageLocatorV2)
         self.assertEqual(usage_key_deserialized, usage_key)
 
     def test_deserialization_with_custom_serializer(self):

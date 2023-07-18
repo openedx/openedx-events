@@ -9,6 +9,7 @@ from fastavro import schemaless_reader, schemaless_writer
 from fastavro.repository.base import SchemaRepositoryError
 from fastavro.schema import load_schema
 from opaque_keys.edx.keys import CourseKey, UsageKey
+from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
 from openedx_events.event_bus.avro.serializer import AvroSignalSerializer, serialize_event_data_to_bytes
@@ -102,6 +103,8 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
         UsageKey: UsageKey.from_string(
             "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
         ),
+        LibraryLocatorV2: LibraryLocatorV2.from_string('lib:MITx:reallyhardproblems'),
+        LibraryUsageLocatorV2: LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1'),
         List[int]: [1, 2, 3],
         datetime: datetime.now(),
     }
