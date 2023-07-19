@@ -29,3 +29,29 @@ INSTALLED_APPS = (
 )
 
 SECRET_KEY = "not-so-secret-key"
+EVENT_BUS_PRODUCER_CONFIG = {
+    'org.openedx.content_authoring.xblock.published.v1': (
+        {
+            'topic': 'content-authoring-xblock-lifecycle',
+            'event_key_field': 'xblock_info.usage_key',
+            'enabled': True
+        },
+        {
+            'topic': 'content-authoring-all-status',
+            'event_key_field': 'xblock_info.usage_key',
+            'enabled': True
+        },
+        {
+            'topic': 'content-authoring-xblock-published',
+            'event_key_field': 'xblock_info.usage_key',
+            'enabled': False
+        },
+    ),
+    'org.openedx.content_authoring.xblock.deleted.v1': (
+        {
+            'topic': 'content-authoring-xblock-lifecycle',
+            'event_key_field': 'xblock_info.usage_key',
+            'enabled': True
+        },
+    ),
+}

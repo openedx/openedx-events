@@ -17,6 +17,12 @@ Changed
 ~~~~~~~
 * Re-licensed this repository from AGPL 3.0 to Apache 2.0
 
+[8.6.0] - 2023-08-28
+--------------------
+Added
+~~~~~
+* Added generic handler to allow producing to event bus via django settings.
+
 [8.5.0] - 2023-08-08
 --------------------
 Changed
