@@ -67,3 +67,23 @@ class SenderValidationError(OpenEdxEventException):
                 event_type=event_type, message=message
             )
         )
+
+
+class ProducerConfigurationError(OpenEdxEventException):
+    """
+    Describes errors that occurs while validating format of producer signal configuration.
+    """
+
+    def __init__(self, event_type="", message=""):
+        """
+        Init method for ProducerConfigurationError custom exception class.
+
+        Arguments:
+            event_type (str): name of the event raising the exception.
+            message (str): message describing why the exception was raised.
+        """
+        super().__init__(
+            message="ProducerConfigurationError {event_type}: {message}".format(
+                event_type=event_type, message=message
+            )
+        )
