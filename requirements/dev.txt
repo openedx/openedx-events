@@ -23,7 +23,7 @@ build==0.10.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-certifi==2023.5.7
+certifi==2023.7.22
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -37,7 +37,7 @@ charset-normalizer==3.2.0
     # via
     #   -r requirements/quality.txt
     #   requests
-click==8.1.5
+click==8.1.6
     # via
     #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
@@ -49,7 +49,7 @@ click-log==0.4.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-code-annotations==1.3.0
+code-annotations==1.5.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -65,11 +65,11 @@ ddt==1.6.0
     # via -r requirements/quality.txt
 diff-cover==7.7.0
     # via -r requirements/dev.in
-dill==0.3.6
+dill==0.3.7
     # via
     #   -r requirements/quality.txt
     #   pylint
-distlib==0.3.6
+distlib==0.3.7
     # via
     #   -r requirements/ci.txt
     #   virtualenv
@@ -89,7 +89,7 @@ exceptiongroup==1.1.2
     # via
     #   -r requirements/quality.txt
     #   pytest
-fastavro==1.8.0
+fastavro==1.8.2
     # via -r requirements/quality.txt
 filelock==3.12.2
     # via
@@ -171,7 +171,7 @@ pbr==5.11.1
     # via
     #   -r requirements/quality.txt
     #   stevedore
-pip-tools==7.0.0
+pip-tools==7.1.0
     # via -r requirements/pip-tools.txt
 pkginfo==1.9.6
     # via
@@ -253,7 +253,7 @@ pytz==2023.3
     # via
     #   -r requirements/quality.txt
     #   django
-pyyaml==6.0
+pyyaml==6.0.1
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -338,12 +338,12 @@ typing-extensions==4.7.1
     #   astroid
     #   pylint
     #   rich
-urllib3==2.0.3
+urllib3==2.0.4
     # via
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.24.0
+virtualenv==20.24.1
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -351,7 +351,7 @@ webencodings==0.5.1
     # via
     #   -r requirements/quality.txt
     #   bleach
-wheel==0.40.0
+wheel==0.41.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
