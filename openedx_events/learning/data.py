@@ -257,3 +257,42 @@ class UserNotificationData:
     app_name = attr.ib(type=str)
     course_key = attr.ib(type=CourseKey)
     context = attr.ib(type=dict, factory=dict)
+
+
+@attr.s(frozen=True)
+class ProgramData:
+    """
+    Attributes defined for the Open edX Program data object.
+
+    Arguments:
+        uuid (str): The UUID of the program (from Course-Discovery)
+        title (str): The title of the program
+        program_type (str): The type slug of the program (e.g. professional, microbachelors, micromasters, etc.)
+    """
+
+    uuid = attr.ib(type=str)
+    title = attr.ib(type=str)
+    program_type = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class ProgramCertificateData:
+    """
+    Attributes defined for the Open edX Program Certificate data object.
+
+    Arguments:
+        user (UserData): User associated with the Program Certificate
+        program (ProgramData): Program data associated with the Program Certificate
+        uuid (str): UUID of the UserCredential record in Credentials
+        certificate_available_date (datetime): Optional. A DateTime describing when a learner is allowed to view the
+                                                credential
+        status (str): The status of the credential (e.g. `awarded` or `revoked`)
+        url (str): A URL to the learner's credential
+    """
+
+    user = attr.ib(type=UserData)
+    program = attr.ib(type=ProgramData)
+    uuid = attr.ib(type=str)
+    status = attr.ib(type=str)
+    url = attr.ib(type=str)
+    certificate_available_date = attr.ib(type=datetime, default=None)

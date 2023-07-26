@@ -14,10 +14,17 @@ Change Log
 Unreleased
 ----------
 
+[8.4.0] - 2023-07-20
+--------------------
+Added
+~~~~~
+* Added new ``PROGRAM_CERTIFICATE_AWARDED`` and ``PROGRAM_CERTIFICATE_REVOKED`` events in learning subdomain
+* Added new ``ProgramCertificateData`` and ``ProgramData`` data classes supporting the new program certificate events
+
 [8.3.0] - 2023-07-10
 --------------------
-Changed
-~~~~~~~
+Added
+~~~~~
 * Added new XBLOCK_CREATED and XBLOCK_UPDATED events in content_authoring.
 * Added new COURSE_CREATED event in content_authoring.
 * Added new CONTENT_LIBRARY_CREATED, CONTENT_LIBRARY_UPDATED and CONTENT_LIBRARY_DELETED events in content_authoring.

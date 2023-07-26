@@ -29,14 +29,14 @@ class Command(BaseCommand):
     Example::
 
         # one signal
-        python manage.py cms generate_avro_schemas org.openedx.learning.course.enrollment.changed.v1
+        python manage.py generate_avro_schemas org.openedx.learning.course.enrollment.changed.v1
 
         # multiple signals
-        python manage.py cms generate_avro_schemas org.openedx.learning.course.enrollment.changed.v1 /
+        python manage.py generate_avro_schemas org.openedx.learning.course.enrollment.changed.v1 /
             org.openedx.learning.course.unenrollment.completed.v1
 
         # all signals
-        python manage.py cms generate_avro_schemas --all
+        python manage.py generate_avro_schemas --all
 
     """
 
