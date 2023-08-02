@@ -14,6 +14,7 @@ from openedx_events.learning.data import (
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
     PersistentCourseGradeData,
+    ProgramCertificateData,
     UserData,
     UserNotificationData,
     XBlockSkillVerificationData,
@@ -91,6 +92,16 @@ CERTIFICATE_CREATED = OpenEdxPublicSignal(
     }
 )
 
+# .. event_type: org.openedx.learning.program.certificate.awarded.v1
+# .. event_name: PROGRAM_CERTIFICATE_AWARDED
+# .. event_description: Emit when a program certificate is awarded to a learner
+# .. event_data: ProgramCertificateData
+PROGRAM_CERTIFICATE_AWARDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.program.certificate.awarded.v1",
+    data={
+        "program_certificate": ProgramCertificateData,
+    }
+)
 
 # .. event_type: org.openedx.learning.certificate.changed.v1
 # .. event_name: CERTIFICATE_CHANGED
@@ -115,6 +126,16 @@ CERTIFICATE_REVOKED = OpenEdxPublicSignal(
     }
 )
 
+# .. event_type: org.openedx.learning.program.certificate.revoked.v1
+# .. event_name: PROGRAM_CERTIFICATE_REVOKED
+# .. event_description: Emit when a program certificate is revoked from a learner
+# .. event_data: ProgramCertificateData
+PROGRAM_CERTIFICATE_REVOKED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.program.certificate.revoked.v1",
+    data={
+        "program_certificate": ProgramCertificateData,
+    }
+)
 
 # .. event_type: org.openedx.learning.cohort_membership.changed.v1
 # .. event_name: COHORT_MEMBERSHIP_CHANGED
