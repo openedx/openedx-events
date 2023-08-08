@@ -86,7 +86,7 @@ class EventsMetadata:
         validator=attr.validators.instance_of(tuple),
     )
 
-    def as_json_data(self):
+    def to_json_data(self):
         """
         Create a json-compatible dictionary of the instance.
         """
@@ -99,11 +99,11 @@ class EventsMetadata:
                 return value
         return attrs.asdict(self, value_serializer=value_serializer)
 
-    def as_json(self):
+    def to_json(self):
         """
         Serialize instance to json string.
         """
-        return json.dumps(self.as_json_data())
+        return json.dumps(self.to_json_data())
 
     @classmethod
     def from_json(cls, json_string):

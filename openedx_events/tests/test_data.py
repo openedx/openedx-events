@@ -23,6 +23,6 @@ class TestEventsMetadata(TestCase):
         )
 
     def test_events_metadata_to_and_from_json(self):
-        as_json = self.metadata.as_json()
+        as_json = self.metadata.to_json()
         from_json = EventsMetadata.from_json(as_json)
         self.assertEqual(self.metadata, from_json)
