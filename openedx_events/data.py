@@ -88,7 +88,7 @@ class EventsMetadata:
 
     def as_json_data(self):
         """
-        Returns a json-compatible dictionary of the instance.
+        Create a json-compatible dictionary of the instance.
         """
         def value_serializer(inst, field, value):  # pylint: disable="unused-argument"
             if isinstance(value, UUID):
