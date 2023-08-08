@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[8.5.0] - 2023-08-08
+--------------------
+Changed
+~~~~~~~
+* Added json de/serialization for EventsMetadata
+
 [8.4.0] - 2023-07-20
 --------------------
 Added

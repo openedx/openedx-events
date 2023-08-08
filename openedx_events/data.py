@@ -4,11 +4,13 @@ Data attributes for events within the architecture subdomain `learning`.
 These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
 """
+import json
 import socket
 from datetime import datetime, timezone
 from uuid import UUID, uuid1
 
 import attr
+import attrs
 from django.conf import settings
 
 import openedx_events
@@ -83,3 +85,38 @@ class EventsMetadata:
         ),
         validator=attr.validators.instance_of(tuple),
     )
+
+    def to_json_data(self):
+        """
+        Create a json-compatible dictionary of the instance.
+        """
+        def value_serializer(inst, field, value):  # pylint: disable="unused-argument"
+            if isinstance(value, UUID):
+                return str(value)
+            elif isinstance(value, datetime):
+                return value.isoformat()
+            else:
+                return value
+        return attrs.asdict(self, value_serializer=value_serializer)
+
+    def to_json(self):
+        """
+        Serialize instance to json string.
+        """
+        return json.dumps(self.to_json_data())
+
+    @classmethod
+    def from_json(cls, json_string):
+        """
+        Create an instance from a json string.
+
+        Arguments:
+            json_string (str): A json representation of an EventsMetadata object, created with as_json_string
+        Returns:
+            An EventsMetadata object
+        """
+        as_json = json.loads(json_string)
+        time = datetime.fromisoformat(as_json['time'])
+        sourcelib = tuple(as_json['sourcelib'])
+        return cls(event_type=as_json['event_type'], id=UUID(as_json['id']), source=as_json['source'],
+                   sourcehost=as_json['sourcehost'], time=time, sourcelib=sourcelib)
