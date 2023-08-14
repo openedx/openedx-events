@@ -12,9 +12,9 @@ django==3.2.20
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/base.in
-edx-opaque-keys[django]==2.3.0
+edx-opaque-keys[django]==2.4.0
     # via -r requirements/base.in
-fastavro==1.8.0
+fastavro==1.8.2
     # via -r requirements/base.in
 pbr==5.11.1
     # via stevedore
