@@ -13,6 +13,9 @@ Change Log
 
 Unreleased
 ----------
+Changed
+~~~~~~~
+* Re-licensed this repository from AGPL 3.0 to Apache 2.0
 
 [8.5.0] - 2023-08-08
 --------------------
