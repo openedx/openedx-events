@@ -46,7 +46,7 @@ pymongo==3.13.0
     # via
     #   -r requirements/base.txt
     #   edx-opaque-keys
-pytest==7.4.0
+pytest==7.4.1
     # via
     #   pytest-cov
     #   pytest-django

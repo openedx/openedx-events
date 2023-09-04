@@ -18,7 +18,7 @@ beautifulsoup4==4.12.2
     # via pydata-sphinx-theme
 bleach==6.0.0
     # via readme-renderer
-build==0.10.0
+build==1.0.0
     # via -r requirements/doc.in
 certifi==2023.7.22
     # via requests
@@ -69,6 +69,7 @@ imagesize==1.4.1
     # via sphinx
 importlib-metadata==6.8.0
     # via
+    #   build
     #   keyring
     #   sphinx
     #   twine
@@ -137,7 +138,7 @@ pymongo==3.13.0
     #   edx-opaque-keys
 pyproject-hooks==1.0.0
     # via build
-pytest==7.4.0
+pytest==7.4.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -183,7 +184,7 @@ six==1.16.0
     #   livereload
 snowballstemmer==2.2.0
     # via sphinx
-soupsieve==2.4.1
+soupsieve==2.5
     # via beautifulsoup4
 sphinx==5.3.0
     # via
