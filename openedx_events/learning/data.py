@@ -97,9 +97,10 @@ class CourseEnrollmentData:
 
 
 @attr.s(frozen=True)
-class CertificateData:
+class Invalidate:
     """
-    Attributes defined for Open edX Certificate data object.
+    Attributes dAttributes for
+    This is separate from ceritificate data because of how diff the params areefined for Open edX Certificate data object.
 
     Arguments:
         user (UserData): user associated with the Certificate.
@@ -310,3 +311,116 @@ class CourseStaffData:
 
     course_key = attr.ib(type=str)
     user = attr.ib(type=UserData)
+
+
+attr.s(frozen=True)
+class GradeOverrideData:
+    """
+    Attributes defined for the Open edX Grades Override data object.
+
+    user_id (int): identifier of the user to which the grade override belongs
+    course_key_or_id (str): identifier of the course to which the grade override belongs
+    usage_key_or_id (str): identifier of the content that will get a grade override 
+    earned_all (float): the value that the subsection grade will be changed to 
+    earned_graded (float): the value that the subsection grade will be changed to
+    overrider (str): the user creating the override
+    comment (str): reason for the override
+    """
+    used_id = attr.ib(type=int)
+    course_key_or_id = attr.ib(type=str)
+    usage_key_or_id = attr.ib(type=str)
+    earned_all = attr.ib(type=float, default=None)
+    earned_graded = attr.ib(type=float, default=None)
+    overrider = attr.ib(type=str, default=None)
+    comment = attr.ib(type=str, default=None)
+
+
+attr.s(frozen=True)
+class InstructorCompletionData:
+    # TODO: These docstrings!!!
+    """
+    Attributes defined for the
+    """
+    username = attr.ib(type=str)
+    content_id = attr.ib(type=str)
+    course_id = attr.ib(type=str, default=None)
+    requesting_user = attr.ib(type=UserData, default=None)
+
+
+attr.s(frozen=True)
+class CreditRequirementStatusData:
+    """
+    
+    """
+    user_id = attr.id(type=int)
+    course_key_or_id = attr.id(type=str)
+    req_namespace = attr.id(type=str)
+    req_name = attr.id(type=str)
+    status = attr.id(type=str, default=None)
+
+
+attr.s(frozen=True)
+class InvalidateCertificateData:
+    """
+    Attributes for
+    This is separate from ceritificate data because of how diff the params are
+    """
+    user_id = attr.id(type=int)
+    course_id = attr.ib(type=str)
+>>>>>>> 216b643 (feat: signals complete)
+
+
+attr.s(frozen=True)
+class GradeOverrideData:
+    """
+    Attributes defined for the Open edX Grades Override data object.
+
+    user_id (int): identifier of the user to which the grade override belongs
+    course_key_or_id (str): identifier of the course to which the grade override belongs
+    usage_key_or_id (str): identifier of the content that will get a grade override 
+    earned_all (float): the value that the subsection grade will be changed to 
+    earned_graded (float): the value that the subsection grade will be changed to
+    overrider (str): the user creating the override
+    comment (str): reason for the override
+    """
+    used_id = attr.ib(type=int)
+    course_key_or_id = attr.ib(type=str)
+    usage_key_or_id = attr.ib(type=str)
+    earned_all = attr.ib(type=float, default=None)
+    earned_graded = attr.ib(type=float, default=None)
+    overrider = attr.ib(type=str, default=None)
+    comment = attr.ib(type=str, default=None)
+
+
+attr.s(frozen=True)
+class InstructorCompletionData:
+    # TODO: These docstrings!!!
+    """
+    Attributes defined for the
+    """
+    username = attr.ib(type=str)
+    content_id = attr.ib(type=str)
+    course_id = attr.ib(type=str, default=None)
+    requesting_user = attr.ib(type=UserData, default=None)
+
+
+attr.s(frozen=True)
+class CreditRequirementStatusData:
+    """
+    
+    """
+    user_id = attr.id(type=int)
+    course_key_or_id = attr.id(type=str)
+    req_namespace = attr.id(type=str)
+    req_name = attr.id(type=str)
+    status = attr.id(type=str, default=None)
+
+
+attr.s(frozen=True)
+class InvalidateCertificateData:
+    """
+    Attributes for
+    This is separate from ceritificate data because of how diff the params are
+    """
+    user_id = attr.id(type=int)
+    course_id = attr.ib(type=str)
