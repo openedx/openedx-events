@@ -55,5 +55,5 @@
       }
     }
   ],
-  "namespace": "org.openedx.learning.user.remove.course.staff.role.v1"
+  "namespace": "org.openedx.learning.user.course.staff.role.removed.v1"
 }
