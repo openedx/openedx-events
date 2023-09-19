@@ -307,5 +307,6 @@ class CourseStaffData:
         course_key (Course ID): identifier of the course where the user will have staff role assigned/removed
         user (UserData): User who will have the "Course Staff" role assigned/removed
     """
+
     course_key = attr.ib(type=str)
     user = attr.ib(type=UserData)
