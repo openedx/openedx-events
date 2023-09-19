@@ -329,3 +329,16 @@ class ExamAttemptData:
     usage_key = attr.ib(type=UsageKey)
     exam_type = attr.ib(type=str)
     requesting_user = attr.ib(type=UserData, default=None)
+
+
+attr.s(frozen=True)
+class CourseStaffData:
+    """
+    Attributes defined for the Open edX Authentication function to Add Users to a role.
+
+    Arguments:
+        course_key (Course ID): identifier of the course where the user will have staff role assigned/removed
+        user (UserData): User who will have the "Course Staff" role assigned/removed
+    """
+    course_key = attr.ib(type=str)
+    user = attr.ib(UserData)
