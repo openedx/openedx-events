@@ -198,23 +198,23 @@ USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     }
 )
 
-# .. event_type: org.openedx.learning.user.add.course.staff.role.v1
-# .. event_name: ADD_COURSE_STAFF_ROLE
-# .. event_description: Assigns the "Course Staff" role to a user.
+# .. event_type: org.openedx.learning.user.course.staff.role.added.v1
+# .. event_name: COURSE_STAFF_ROLE_ADDED
+# .. event_description: Adds the "Course Staff" role to a user.
 # .. event_data: CourseStaffData
-ADD_COURSE_STAFF_ROLE = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.user.add.course.staff.role.v1",
+COURSE_STAFF_ROLE_ADDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.course.staff.role.added.v1",
     data={
         "course_staff_data": CourseStaffData,
     }
 )
 
-# .. event_type: org.openedx.learning.user.remove.course.staff.role.v1
-# .. event_name: REMOVE_COURSE_STAFF_ROLE
+# .. event_type: org.openedx.learning.user.course.staff.role.removed.v1
+# .. event_name: COURSE_STAFF_ROLE_REMOVED
 # .. event_description: Removes the "Course Staff" role from a user.
 # .. event_data: CourseStaffData
-REMOVE_COURSE_STAFF_ROLE = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.user.remove.course.staff.role.v1",
+COURSE_STAFF_ROLE_REMOVED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.course.staff.role.removed.v1",
     data={
         "course_staff_data": CourseStaffData,
     }
