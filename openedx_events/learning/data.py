@@ -298,7 +298,7 @@ class ProgramCertificateData:
     certificate_available_date = attr.ib(type=datetime, default=None)
 
 
-attr.s(frozen=True)
+@attr.s(frozen=True)
 class CourseStaffData:
     """
     Attributes defined for the Open edX Authentication function to Add Users to a role.
@@ -308,4 +308,4 @@ class CourseStaffData:
         user (UserData): User who will have the "Course Staff" role assigned/removed
     """
     course_key = attr.ib(type=str)
-    user = attr.ib(UserData)
+    user = attr.ib(type=UserData)
