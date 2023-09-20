@@ -267,7 +267,7 @@ COURSE_STAFF_ROLE_ADDED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.user.course.staff.role.removed.v1
 # .. event_name: COURSE_STAFF_ROLE_REMOVED
-# .. event_description: Removes the "Course Staff" role from a user.
+# .. event_description: Emitted when the "Course Staff" role is removed from a user.
 # .. event_data: CourseStaffData
 COURSE_STAFF_ROLE_REMOVED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.course.staff.role.removed.v1",
