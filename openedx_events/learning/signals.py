@@ -211,7 +211,7 @@ EXAM_ATTEMPT_SUBMITTED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.exam.attempt.rejected.v1
 # .. event_name: EXAM_ATTEMPT_REJECTED
-# .. event_description: Emitted when an exam attempt is marked rejected by an instructor or staff.
+# .. event_description: Emitted when an exam attempt is marked rejected.
 # .. event_data: ExamAttemptData
 EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.rejected.v1",
@@ -222,7 +222,7 @@ EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.exam.attempt.verified.v1
 # .. event_name: EXAM_ATTEMPT_VERIFIED
-# .. event_description: Emitted when an exam attempt is marked verified by an instructor or staff.
+# .. event_description: Emitted when an exam attempt is marked verified.
 # .. event_data: ExamAttemptData
 EXAM_ATTEMPT_VERIFIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.verified.v1",
@@ -244,7 +244,7 @@ EXAM_ATTEMPT_ERRORED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.exam.attempt.reset.v1
 # .. event_name: EXAM_ATTEMPT_RESET
-# .. event_description: Emitted when an exam attempt is reset by an instructor or staff.
+# .. event_description: Emitted when an exam attempt is reset.
 # .. event_data: ExamAttemptData
 EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.reset.v1",
