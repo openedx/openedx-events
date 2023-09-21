@@ -205,7 +205,7 @@ USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
 EXAM_ATTEMPT_SUBMITTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.submitted.v1",
     data={
-        "exam_attempt_data": ExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
 
@@ -216,7 +216,7 @@ EXAM_ATTEMPT_SUBMITTED = OpenEdxPublicSignal(
 EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.rejected.v1",
     data={
-        "exam_attempt_data": ExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
 
@@ -227,7 +227,7 @@ EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
 EXAM_ATTEMPT_VERIFIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.verified.v1",
     data={
-        "exam_attempt_data": ExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
 
@@ -238,7 +238,7 @@ EXAM_ATTEMPT_VERIFIED = OpenEdxPublicSignal(
 EXAM_ATTEMPT_ERRORED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.errored.v1",
     data={
-        "exam_attempt_data": ExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
 
@@ -249,6 +249,6 @@ EXAM_ATTEMPT_ERRORED = OpenEdxPublicSignal(
 EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.reset.v1",
     data={
-        "exam_attempt_data": ExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
