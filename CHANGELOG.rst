@@ -17,6 +17,12 @@ Changed
 ~~~~~~~
 * Re-licensed this repository from AGPL 3.0 to Apache 2.0
 
+[8.670] - 2023-09-21
+--------------------
+Added
+~~~~~
+* Added new ``EXAM_ATTEMPT_SUBMITTED``, ``EXAM_ATTEMPT_REJECTED``, ``EXAM_ATTEMPT_VERIFIED``, ``EXAM_ATTEMPT_RESET``, and ``EXAM_ATTEMPT_ERRORED`` in learning.
+
 [8.6.0] - 2023-08-28
 --------------------
 Added
