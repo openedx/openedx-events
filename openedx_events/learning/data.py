@@ -97,10 +97,9 @@ class CourseEnrollmentData:
 
 
 @attr.s(frozen=True)
-class Invalidate:
+class CertificateData:
     """
-    Attributes dAttributes for
-    This is separate from ceritificate data because of how diff the params areefined for Open edX Certificate data object.
+    Attributes defined for Open edX Certificate data object.
 
     Arguments:
         user (UserData): user associated with the Certificate.
@@ -313,64 +312,21 @@ class CourseStaffData:
     user = attr.ib(type=UserData)
 
 
-attr.s(frozen=True)
-class GradeOverrideData:
+@attr.s(frozen=True)
+class ExamAttemptData:
     """
-    Attributes defined for the Open edX Grades Override data object.
+    Attributes defined for the Open edX Exam downstream effects.
 
     Arguments:
         user_id (int): identifier of the user to which the grade override belongs
-        course_key_or_id (str): identifier of the course to which the grade override belongs
-        usage_key_or_id (str): identifier of the content that will get a grade override 
-        earned_all (float): the value that the subsection grade will be changed to 
-        earned_graded (float): the value that the subsection grade will be changed to
-        overrider (str): the user creating the override
-        comment (str): reason for the override
+        course_key (CourseKey): identifier of the course to which the grade override belongs
+        usage_key (UsageKey): identifier of the content that will get a grade override
+        requesting_user (UserData): user triggering event, sent only when instructor modifies an exam attempt
+        credit_requirement_status (str): status to change the student's CreditRequirement to
     """
-    used_id = attr.ib(type=int)
-    course_key_or_id = attr.ib(type=str)
-    usage_key_or_id = attr.ib(type=str)
-    earned_all = attr.ib(type=float, default=None)
-    earned_graded = attr.ib(type=float, default=None)
-    overrider = attr.ib(type=str, default=None)
-    comment = attr.ib(type=str, default=None)
 
-
-attr.s(frozen=True)
-class InstructorCompletionData:
-    # TODO: These docstrings!!!
-    """
-    Attributes defined for Open edX Instructor service functions
-    that handle the completion state of xblocks within a course.
-
-    Arguments:
-        username (str):
-        content_id (str):
-        course_id (str):
-    """
-    username = attr.ib(type=str)
-    content_id = attr.ib(type=str)
-    course_id = attr.ib(type=str, default=None)
+    user_id = attr.ib(type=int)
+    course_key = attr.ib(type=CourseKey)
+    usage_key = attr.ib(type=UsageKey)
     requesting_user = attr.ib(type=UserData, default=None)
-
-
-attr.s(frozen=True)
-class CreditRequirementStatusData:
-    """
-    
-    """
-    user_id = attr.id(type=int)
-    course_key_or_id = attr.id(type=str)
-    req_namespace = attr.id(type=str)
-    req_name = attr.id(type=str)
-    status = attr.id(type=str, default=None)
-
-
-attr.s(frozen=True)
-class InvalidateCertificateData:
-    """
-    Attributes for
-    This is separate from ceritificate data because of how diff the params are
-    """
-    user_id = attr.id(type=int)
-    course_id = attr.ib(type=str)
+    credit_requirement_status = attr.ib(type=str, default=None)

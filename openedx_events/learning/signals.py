@@ -14,10 +14,7 @@ from openedx_events.learning.data import (
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
     CourseStaffData,
-    CreditRequirementStatusData,
-    GradeOverrideData,
-    InstructorCompletionData,
-    InvalidateCertificateData,
+    ExamAttemptData,
     PersistentCourseGradeData,
     ProgramCertificateData,
     UserData,
@@ -224,68 +221,57 @@ COURSE_STAFF_ROLE_REMOVED = OpenEdxPublicSignal(
     }
 )
 
-# .. event_type: org.openedx.learning.grade.override.created.v1
-# .. event_name: GRADE_OVERRIDE_CREATED
-# .. event_description: Emitted when a user's grade for a subsection is overriden.
-# .. event_data: GradeOverrideData
-GRADE_OVERRIDE_CREATED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.grade.override.created.v1",
+# .. event_type: org.openedx.learning.exam.attempt.submitted.v1
+# .. event_name: EXAM_ATTEMPT_SUBMITTED
+# .. event_description: Emitted when an exam attempt is submitted by a learner.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_SUBMITTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.submitted.v1",
     data={
-        "grade_override_data": GradeOverrideData,
+        "exam_attempt_data": ExamAttemptData,
     }
 )
 
-# .. event_type: org.openedx.learning.grade.override.deleted.v1
-# .. event_name: GRADE_OVERRIDE_DELETED
-# .. event_description: Emitted to undo a grade override for a subsection.
-# .. event_data: GradeOverrideData
-GRADE_OVERRIDE_DELETED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.grade.override.deleted.v1",
+# .. event_type: org.openedx.learning.exam.attempt.rejected.v1
+# .. event_name: EXAM_ATTEMPT_REJECTED
+# .. event_description: Emitted when an exam attempt is marked rejected by an instructor or staff.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.rejected.v1",
     data={
-        "grade_override_data": GradeOverrideData,
+        "exam_attempt_data": ExamAttemptData,
     }
 )
 
-# .. event_type: org.openedx.learning.all.child.xblocks.completed.v1
-# .. event_name: ALL_CHILD_XBLOCKS_COMPLETED
-# .. event_description: Emitted to mark all the child xblocks of section/subsection/unit as completed.
-# .. event_data: InstructorCompletionData
-ALL_CHILD_XBLOCKS_COMPLETED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.all.child.xblocks.completed.v1",
+# .. event_type: org.openedx.learning.exam.attempt.verified.v1
+# .. event_name: EXAM_ATTEMPT_VERIFIED
+# .. event_description: Emitted when an exam attempt is marked verified by an instructor or staff.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_VERIFIED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.verified.v1",
     data={
-        "instructor_completed_data": InstructorCompletionData,
+        "exam_attempt_data": ExamAttemptData,
     }
 )
 
-# .. event_type: org.openedx.learning.all.child.xblocks.reset.v1
-# .. event_name: ALL_CHILD_XBLOCKS_RESET
-# .. event_description: Emitted to reset the state of all child xblocks in a section/subsection/unit.
-# .. event_data: InstructorCompletionData
-ALL_CHILD_XBLOCKS_RESET = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.all.child.xblocks.reset.v1",
+# .. event_type: org.openedx.learning.exam.attempt.errored.v1
+# .. event_name: EXAM_ATTEMPT_ERRORED
+# .. event_description: Emitted when a learner's exam attempt errors out.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_ERRORED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.errored.v1",
     data={
-        "instructor_completed_data": InstructorCompletionData,
+        "exam_attempt_data": ExamAttemptData,
     }
 )
 
-# .. event_type: org.openedx.learning.credit.requirement.status.set.v1
-# .. event_name: CREDIT_REQUIREMENT_STATUS_SET
-# .. event_description: Creates or modifies a user's credit requirement status for a course.
-# .. event_data: CreditRequirementStatusData
-CREDIT_REQUIREMENT_STATUS_SET = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.set.credit.requirement.status.set.v1",
+# .. event_type: org.openedx.learning.exam.attempt.reset.v1
+# .. event_name: EXAM_ATTEMPT_RESET
+# .. event_description: Emitted when an exam attempt is reset by an instructor or staff.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.reset.v1",
     data={
-        "credit_requirement_status_data": CreditRequirementStatusData,
-    }
-)
-
-# .. event_type: org.openedx.learning.credit.requirement.status.data.v1
-# .. event_name: CREDIT_REQUIREMENT_STATUS_REMOVED
-# .. event_description: Deletes a user's credit requirement status for a course.
-# .. event_data: CreditRequirementStatusData
-CREDIT_REQUIREMENT_STATUS_REMOVED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.remove.credit.requirement.status.v1",
-    data={
-        "credit_requirement_status_data": CreditRequirementStatusData,
+        "exam_attempt_data": ExamAttemptData,
     }
 )

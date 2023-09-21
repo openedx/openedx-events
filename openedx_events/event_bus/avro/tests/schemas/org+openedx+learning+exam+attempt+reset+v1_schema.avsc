@@ -1,0 +1,79 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "exam_attempt_data",
+      "type": {
+        "name": "ExamAttemptData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "user_id",
+            "type": "long"
+          },
+          {
+            "name": "course_key",
+            "type": "string"
+          },
+          {
+            "name": "usage_key",
+            "type": "string"
+          },
+          {
+            "name": "requesting_user",
+            "type": [
+              "null",
+              {
+                "name": "UserData",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "id",
+                    "type": "long"
+                  },
+                  {
+                    "name": "is_active",
+                    "type": "boolean"
+                  },
+                  {
+                    "name": "pii",
+                    "type": {
+                      "name": "UserPersonalData",
+                      "type": "record",
+                      "fields": [
+                        {
+                          "name": "username",
+                          "type": "string"
+                        },
+                        {
+                          "name": "email",
+                          "type": "string"
+                        },
+                        {
+                          "name": "name",
+                          "type": "string"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "credit_requirement_status",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.exam.attempt.reset.v1"
+}
