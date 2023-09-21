@@ -304,11 +304,10 @@ class ExamAttemptData:
     Attributes defined for the Open edX Exam downstream effects.
 
     Arguments:
-        student_user (UserData): User object for the student to whom the exam attempt belongs
+        student_user (UserData): user object for the student to whom the exam attempt belongs
         course_key (CourseKey): identifier of the course to which the exam attempt belongs
         usage_key (UsageKey): identifier of the content that will get a exam attempt
         requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
-        credit_requirement_status (str): what to change the student's CreditRequirement status to
     """
 
     student_user = attr.ib(type=UserData)
