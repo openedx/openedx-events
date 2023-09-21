@@ -13,7 +13,6 @@ from openedx_events.learning.data import (
     CohortData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
-    CourseStaffData,
     ExamAttemptData,
     PersistentCourseGradeData,
     ProgramCertificateData,
@@ -196,28 +195,6 @@ USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.notification.requested.v1",
     data={
         "notification_data": UserNotificationData,
-    }
-)
-
-# .. event_type: org.openedx.learning.user.course.staff.role.added.v1
-# .. event_name: COURSE_STAFF_ROLE_ADDED
-# .. event_description: Emitted when the "Course Staff" role is added to a user.
-# .. event_data: CourseStaffData
-COURSE_STAFF_ROLE_ADDED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.user.course.staff.role.added.v1",
-    data={
-        "course_staff_data": CourseStaffData,
-    }
-)
-
-# .. event_type: org.openedx.learning.user.course.staff.role.removed.v1
-# .. event_name: COURSE_STAFF_ROLE_REMOVED
-# .. event_description: Emitted when the "Course Staff" role is removed from a user.
-# .. event_data: CourseStaffData
-COURSE_STAFF_ROLE_REMOVED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.user.course.staff.role.removed.v1",
-    data={
-        "course_staff_data": CourseStaffData,
     }
 )
 
