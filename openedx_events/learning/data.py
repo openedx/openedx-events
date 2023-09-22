@@ -308,9 +308,11 @@ class ExamAttemptData:
         course_key (CourseKey): identifier of the course to which the exam attempt belongs
         usage_key (UsageKey): identifier of the content that will get a exam attempt
         requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
+        exam_type (str): type of exam that was taken (e.g. timed, proctored, etc.)
     """
 
     student_user = attr.ib(type=UserData)
     course_key = attr.ib(type=CourseKey)
     usage_key = attr.ib(type=UsageKey)
     requesting_user = attr.ib(type=UserData, default=None)
+    exam_type = attr.id(type=str)
