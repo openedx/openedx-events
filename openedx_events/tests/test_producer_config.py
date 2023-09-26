@@ -78,21 +78,23 @@ class ProducerConfiguratonTest(TestCase):
             with pytest.raises(ProducerConfigurationError, match="should be a dictionary"):
                 apps.get_app_config("openedx_events").ready()
 
-        with override_settings(EVENT_BUS_PRODUCER_CONFIG={"invalid.event.type": []}):
+        with override_settings(EVENT_BUS_PRODUCER_CONFIG={"invalid.event.type": {}}):
             with pytest.raises(ProducerConfigurationError, match="No OpenEdxPublicSignal of type"):
                 apps.get_app_config("openedx_events").ready()
 
         with override_settings(EVENT_BUS_PRODUCER_CONFIG={"org.openedx.content_authoring.xblock.deleted.v1": ""}):
-            with pytest.raises(ProducerConfigurationError, match="should be a list or a tuple"):
+            with pytest.raises(ProducerConfigurationError, match="should be a dict"):
                 apps.get_app_config("openedx_events").ready()
 
-        with override_settings(EVENT_BUS_PRODUCER_CONFIG={"org.openedx.content_authoring.xblock.deleted.v1": [""]}):
-            with pytest.raises(ProducerConfigurationError, match="object is not a dictionary"):
+        with override_settings(EVENT_BUS_PRODUCER_CONFIG={"org.openedx.content_authoring.xblock.deleted.v1":
+                                                              {"topic": ""}}):
+            with pytest.raises(ProducerConfigurationError, match="One of the configuration objects is not a"
+                                                                 " dictionary"):
                 apps.get_app_config("openedx_events").ready()
 
         with override_settings(
             EVENT_BUS_PRODUCER_CONFIG={
-                "org.openedx.content_authoring.xblock.deleted.v1": [{"topic": "some", "enabled": True}]
+                "org.openedx.content_authoring.xblock.deleted.v1": {"some": {"enabled": True}}
             }
         ):
             with pytest.raises(ProducerConfigurationError, match="missing 'event_key_field' key."):
@@ -100,9 +102,10 @@ class ProducerConfiguratonTest(TestCase):
 
         with override_settings(
             EVENT_BUS_PRODUCER_CONFIG={
-                "org.openedx.content_authoring.xblock.deleted.v1": [
-                    {"topic": "some", "enabled": 1, "event_key_field": "some"}
-                ]
+                "org.openedx.content_authoring.xblock.deleted.v1":
+                {
+                    "some": {"enabled": 1, "event_key_field": "some"}
+                }
             }
         ):
             with pytest.raises(
