@@ -56,6 +56,10 @@
             "type": "string"
           },
           {
+            "name": "exam_type",
+            "type": "string"
+          },
+          {
             "name": "requesting_user",
             "type": [
               "null",

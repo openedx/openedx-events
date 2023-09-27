@@ -314,5 +314,5 @@ class ExamAttemptData:
     student_user = attr.ib(type=UserData)
     course_key = attr.ib(type=CourseKey)
     usage_key = attr.ib(type=UsageKey)
+    exam_type = attr.ib(type=str)
     requesting_user = attr.ib(type=UserData, default=None)
-    exam_type = attr.id(type=str)
