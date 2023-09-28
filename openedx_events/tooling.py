@@ -21,7 +21,10 @@ KNOWN_UNSERIALIZABLE_SIGNALS = [
     "org.openedx.learning.discussions.configuration.changed.v1",
     "org.openedx.content_authoring.course.certificate_config.changed.v1",
     "org.openedx.content_authoring.course.certificate_config.deleted.v1",
-    "org.openedx.learning.user.notification.requested.v1"
+    "org.openedx.learning.user.notification.requested.v1",
+    "org.openedx.learning.thread.created.v1",
+    "org.openedx.learning.response.created.v1",
+    "org.openedx.learning.comment.created.v1",
 ]
 
 
