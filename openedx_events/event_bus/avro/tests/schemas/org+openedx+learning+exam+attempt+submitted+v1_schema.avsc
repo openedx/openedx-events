@@ -6,7 +6,7 @@
     {
       "name": "exam_attempt",
       "type": {
-        "name": "ExamAttemptData",
+        "name": "SpecialExamAttemptData",
         "type": "record",
         "fields": [
           {
