@@ -299,16 +299,22 @@ class ProgramCertificateData:
 
 
 @attr.s(frozen=True)
-class ExamAttemptData:
+class SpecialExamAttemptData:
     """
     Attributes defined for the Open edX Exam downstream effects.
+
+    Note that events that use this data type:
+        A. Pretain to "Special Exams", e.g. Timed or Proctored exams, and not non-timed course
+        subsections that are labelled as an exam.
+        B. Are only ever emitted from the newer exams backend, edx-exams, and never from the
+        legacy exams backend, edx-proctoring.
 
     Arguments:
         student_user (UserData): user object for the student to whom the exam attempt belongs
         course_key (CourseKey): identifier of the course to which the exam attempt belongs
         usage_key (UsageKey): identifier of the content that will get a exam attempt
-        requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
         exam_type (str): type of exam that was taken (e.g. timed, proctored, etc.)
+        requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
     """
 
     student_user = attr.ib(type=UserData)
