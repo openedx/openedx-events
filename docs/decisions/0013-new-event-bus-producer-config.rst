@@ -1,5 +1,5 @@
-11. Enable producing to event bus via settings
-##############################################
+13. Change event producer config settings
+#########################################
 
 Status
 ******
