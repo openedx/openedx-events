@@ -309,6 +309,10 @@ class SpecialExamAttemptData:
         B. Are only ever emitted from the newer exams backend, edx-exams, and never from the
         legacy exams backend, edx-proctoring.
 
+    The event signals that use this data have the prefix `EXAM_`, which is equivalent to "special exam".
+    We are using this as a shortened form of the prefix `SPECIAL_EXAM` to avoid confusion, as these are likely
+    the only type of exams that will be of concern in the context of events/the event bus.
+
     Arguments:
         student_user (UserData): user object for the student to whom the exam attempt belongs
         course_key (CourseKey): identifier of the course to which the exam attempt belongs
