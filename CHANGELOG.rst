@@ -17,7 +17,7 @@ Changed
 ~~~~~~~
 * Re-licensed this repository from AGPL 3.0 to Apache 2.0
 
-[8.670] - 2023-09-21
+[8.70] - 2023-09-29
 --------------------
 Added
 ~~~~~
