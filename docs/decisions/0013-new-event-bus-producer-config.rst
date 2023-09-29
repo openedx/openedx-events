@@ -33,7 +33,6 @@ the existing object, which is awkward.
 
 This ADR aims to propose a new structure that will provide greater flexibility in using this configuration.
 
-
 Decision
 ********
 
@@ -64,6 +63,5 @@ In edx-platform, it will be added to the KEYS_WITH_MERGED_VALUES list to allow p
 Consequences
 ************
 
-* As long as the implementing IDA has a concept of KEYS_WITH_MERGED_VALUES (more complex configurations that can be modified via code in settings),
-maintainers can add existing topics to new event_types without having to recreate the whole dictionary
+* As long as the implementing IDA has a concept of KEYS_WITH_MERGED_VALUES (more complex configurations that can be modified via code in settings), maintainers can add existing topics to new event_types without having to recreate the whole dictionary
 * There is no ambiguity about whether an event/topic pair is enabled or disabled

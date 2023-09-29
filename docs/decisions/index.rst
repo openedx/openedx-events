@@ -17,3 +17,4 @@ Architectural Decision Records (ADRs)
    0010-multiple-event-types-per-topic
    0011-depending-on-multiple-event-bus-implementations
    0012-producing-to-event-bus-via-settings
+   0013-new-event-bus-producer-config
