@@ -15,7 +15,7 @@ from openedx_events.learning.data import (
     CourseEnrollmentData,
     PersistentCourseGradeData,
     ProgramCertificateData,
-    SpecialExamAttemptData,
+    ExamAttemptData,
     UserData,
     UserNotificationData,
     XBlockSkillVerificationData,
@@ -201,54 +201,54 @@ USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.exam.attempt.submitted.v1
 # .. event_name: EXAM_ATTEMPT_SUBMITTED
 # .. event_description: Emitted when an exam attempt is submitted by a learner in edx-exams.
-# .. event_data: SpecialExamAttemptData
+# .. event_data: ExamAttemptData
 EXAM_ATTEMPT_SUBMITTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.submitted.v1",
     data={
-        "exam_attempt": SpecialExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.rejected.v1
 # .. event_name: EXAM_ATTEMPT_REJECTED
 # .. event_description: Emitted when an exam attempt is marked rejected in edx-exams.
-# .. event_data: SpecialExamAttemptData
+# .. event_data: ExamAttemptData
 EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.rejected.v1",
     data={
-        "exam_attempt": SpecialExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.verified.v1
 # .. event_name: EXAM_ATTEMPT_VERIFIED
 # .. event_description: Emitted when an exam attempt is marked verified in edx-exams.
-# .. event_data: SpecialExamAttemptData
+# .. event_data: ExamAttemptData
 EXAM_ATTEMPT_VERIFIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.verified.v1",
     data={
-        "exam_attempt": SpecialExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.errored.v1
 # .. event_name: EXAM_ATTEMPT_ERRORED
 # .. event_description: Emitted when a learner's exam attempt errors out in edx-exams.
-# .. event_data: SpecialExamAttemptData
+# .. event_data: ExamAttemptData
 EXAM_ATTEMPT_ERRORED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.errored.v1",
     data={
-        "exam_attempt": SpecialExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.reset.v1
 # .. event_name: EXAM_ATTEMPT_RESET
 # .. event_description: Emitted when an exam attempt is reset in edx-exams.
-# .. event_data: SpecialExamAttemptData
+# .. event_data: ExamAttemptData
 EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.reset.v1",
     data={
-        "exam_attempt": SpecialExamAttemptData,
+        "exam_attempt": ExamAttemptData,
     }
 )

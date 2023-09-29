@@ -299,7 +299,7 @@ class ProgramCertificateData:
 
 
 @attr.s(frozen=True)
-class SpecialExamAttemptData:
+class ExamAttemptData:
     """
     Attributes defined for the Open edX Exam downstream effects.
 
