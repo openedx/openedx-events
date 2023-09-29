@@ -41,4 +41,3 @@ EVENT_BUS_PRODUCER_CONFIG = {
             'content-authoring-xblock-lifecycle': {'event_key_field': 'xblock_info.usage_key', 'enabled': True},
         }
 }
-

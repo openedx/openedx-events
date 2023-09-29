@@ -57,7 +57,7 @@ class OpenedxEventsConfig(AppConfig):
             signal = OpenEdxPublicSignal.get_signal_by_type(event_type)
         except KeyError as exc:
             raise ProducerConfigurationError(message=f"No OpenEdxPublicSignal of type: '{event_type}'.") from exc
-        for topic, topic_configuration in configuration.items():
+        for _, topic_configuration in configuration.items():
             print(f"{topic_configuration=}")
             if not isinstance(topic_configuration, dict):
                 raise ProducerConfigurationError(
