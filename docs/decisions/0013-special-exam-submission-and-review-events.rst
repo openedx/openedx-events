@@ -16,7 +16,6 @@ Context
 Decision
 ********
 
-* Since `edx-exams` is independent, we will want to prevent circular dependencies between `edx-platform` and `edx-exams`.
 * We have defined the events that we plan to define in `this ADR <https://github.com/edx/edx-exams/blob/main/docs/decisions/0004-downstream-effect-events.rst>`_ in `edx-exams` to use the event bus, as the new exams backend is independent in this ADR
 * We plan for these events to be produced in `edx-exams`, and consumed in various `edx-platform` services (e.g. certificates, credit, instructor, grades).
 
