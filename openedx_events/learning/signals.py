@@ -13,8 +13,8 @@ from openedx_events.learning.data import (
     CohortData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
-    CourseStaffData,
     ExamAttemptData,
+    ManageStudentsPermissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
     UserData,
@@ -254,24 +254,24 @@ EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
     }
 )
 
-# .. event_type: org.openedx.learning.user.add.course.staff.role.v1
-# .. event_name: ADD_COURSE_STAFF_ROLE
-# .. event_description: Assigns the "Course Staff" role to a user.
-# .. event_data: CourseStaffData
-COURSE_STAFF_ROLE_ADDED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.user.course.staff.role.added.v1",
+# .. event_type: org.openedx.learning.user.manage.students.permission.added.v1
+# .. event_name: MANAGE_STUDENTS_PERMISSION_ADDED
+# .. event_description: Emitted when permission to manage students within a course is given to a user.
+# .. event_data: ManageStudentsPermissionData
+MANAGE_STUDENTS_PERMISSION_ADDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.manage.students.permission.added.v1",
     data={
-        "course_staff_data": CourseStaffData,
+        "course_staff_data": ManageStudentsPermissionData,
     }
 )
 
-# .. event_type: org.openedx.learning.user.course.staff.role.removed.v1
-# .. event_name: COURSE_STAFF_ROLE_REMOVED
-# .. event_description: Emitted when the "Course Staff" role is removed from a user.
-# .. event_data: CourseStaffData
-COURSE_STAFF_ROLE_REMOVED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.user.course.staff.role.removed.v1",
+# .. event_type: org.openedx.learning.user.manage.students.permission.removed.v1
+# .. event_name: MANAGE_STUDENTS_PERMISSION_REMOVED
+# .. event_description: Emitted when permission to manage students within a course is removed from a user.
+# .. event_data: ManageStudentsPermissionData
+MANAGE_STUDENTS_PERMISSION_REMOVED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.manage.students.permission.removed.v1",
     data={
-        "course_staff_data": CourseStaffData,
+        "course_staff_data": ManageStudentsPermissionData,
     }
 )

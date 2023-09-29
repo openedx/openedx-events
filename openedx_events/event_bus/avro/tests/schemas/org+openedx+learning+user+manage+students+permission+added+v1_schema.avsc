@@ -6,13 +6,9 @@
     {
       "name": "course_staff_data",
       "type": {
-        "name": "CourseStaffData",
+        "name": "ManageStudentsPermissionData",
         "type": "record",
         "fields": [
-          {
-            "name": "course_key",
-            "type": "string"
-          },
           {
             "name": "user",
             "type": {
@@ -50,10 +46,30 @@
                 }
               ]
             }
+          },
+          {
+            "name": "permission",
+            "type": "string"
+          },
+          {
+            "name": "course_key",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "org",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
           }
         ]
       }
     }
   ],
-  "namespace": "org.openedx.learning.user.course.staff.role.removed.v1"
+  "namespace": "org.openedx.learning.user.manage.students.permission.added.v1"
 }
