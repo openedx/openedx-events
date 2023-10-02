@@ -296,3 +296,36 @@ class ProgramCertificateData:
     status = attr.ib(type=str)
     url = attr.ib(type=str)
     certificate_available_date = attr.ib(type=datetime, default=None)
+
+
+@attr.s(frozen=True)
+class ExamAttemptData:
+    """
+    Attributes defined for the Open edX Exam downstream effects.
+
+    Note that events that use this data type:
+        A. Pretain to "Special Exams", e.g. Timed or Proctored exams, and not non-timed course
+        subsections that are labelled as an exam.
+        B. Are only ever emitted from the newer exams backend, edx-exams, and never from the
+        legacy exams backend, edx-proctoring.
+
+    The event signals that use this data have the prefix `EXAM_`, which is equivalent to "special exam".
+    We are using this as a shortened form of the prefix `SPECIAL_EXAM` to avoid confusion, as these are likely
+    the only type of exams that will be of concern in the context of events/the event bus.
+
+    For more information, please see the ADR relating to this event data:
+    https://github.com/openedx/openedx-events/blob/main/docs/decisions/0013-special-exam-submission-and-review-events.rst
+
+    Arguments:
+        student_user (UserData): user object for the student to whom the exam attempt belongs
+        course_key (CourseKey): identifier of the course to which the exam attempt belongs
+        usage_key (UsageKey): identifier of the content that will get a exam attempt
+        exam_type (str): type of exam that was taken (e.g. timed, proctored, etc.)
+        requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
+    """
+
+    student_user = attr.ib(type=UserData)
+    course_key = attr.ib(type=CourseKey)
+    usage_key = attr.ib(type=UsageKey)
+    exam_type = attr.ib(type=str)
+    requesting_user = attr.ib(type=UserData, default=None)
