@@ -17,6 +17,12 @@ Changed
 ~~~~~~~
 * Re-licensed this repository from AGPL 3.0 to Apache 2.0
 
+[8.8.0] - 2023-10-02
+--------------------
+Added
+~~~~~
+* Added new ``MANAGE_STUDENTS_PERMISSION_ADDED`` and ``MANAGE_STUDENTS_PERMISSION_REMOVED`` events in learning
+
 [8.7.0] - 2023-09-29
 --------------------
 Added
