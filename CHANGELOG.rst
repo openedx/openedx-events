@@ -27,7 +27,7 @@ Added
 --------------------
 Added
 ~~~~~
-* Added new ``EXAM_ATTEMPT_SUBMITTED``, ``EXAM_ATTEMPT_REJECTED``, ``EXAM_ATTEMPT_VERIFIED``, ``EXAM_ATTEMPT_RESET``, and ``EXAM_ATTEMPT_ERRORED`` in learning.
+* Added new ``EXAM_ATTEMPT_SUBMITTED``, ``EXAM_ATTEMPT_REJECTED``, ``EXAM_ATTEMPT_VERIFIED``, ``EXAM_ATTEMPT_RESET``, and ``EXAM_ATTEMPT_ERRORED`` events in learning.
 
 [8.6.0] - 2023-08-28
 --------------------
