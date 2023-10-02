@@ -313,6 +313,9 @@ class ExamAttemptData:
     We are using this as a shortened form of the prefix `SPECIAL_EXAM` to avoid confusion, as these are likely
     the only type of exams that will be of concern in the context of events/the event bus.
 
+    For more information, please see the ADR relating to this event data:
+    https://github.com/openedx/openedx-events/blob/main/docs/decisions/0013-special-exam-submission-and-review-events.rst
+
     Arguments:
         student_user (UserData): user object for the student to whom the exam attempt belongs
         course_key (CourseKey): identifier of the course to which the exam attempt belongs
