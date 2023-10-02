@@ -331,8 +331,8 @@ class ExamAttemptData:
     requesting_user = attr.ib(type=UserData, default=None)
 
 
-attr.s(frozen=True)
-class CourseStaffData:
+@attr.s(frozen=True)
+class ManageStudentsPermissionData:
     """
     Attributes defined for the Open edX to represent users that can manage students within a course/org.
 
