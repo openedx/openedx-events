@@ -4,27 +4,42 @@
 Status
 ******
 
-**Draft** 2023-09-29
+**Draft** 2023-10-02
 
 Context
 *******
 
+About Special Exams:
+====================
+* Course subsections that have an `exam_type` have additional logic that governs completion, grading, credit requirements, and more based on the `exam_type` value (e.g. timed, proctored, etc).
+* These subsections are also known as **Special Exams**.
+    * NOTE: The events described in this document will only be produced/consumed in the context of **Special Exams**.
+* Course subsections that do not have an `exam_type` configured may still have a grading policy named 'Exam'. This type of content does not have the exam user experience and is not governed by any exam specific logic.
+
+The New Exams IDA:
+==================
 * A new backend for exams called `edx-exams` is being developed (See the `exams IDA ADR <https://github.com/openedx/edx-proctoring/blob/master/docs/decisions/0004-exam-ida.rst>`_ for more info).
-* We are currently working to implement the downstream effects triggered whenever an exam attempt is submitted or reviewed. (For example, when an exam attempt is submitted, we will want to make sure `edx-platform` knows to mark the exam subsection as completed.)
+* We are currently working to use the event bus to trigger the downstream effects whenever an exam attempt is submitted or reviewed.
+    * For example, when an exam attempt is submitted, we will want to make sure `edx-platform` knows to mark the exam subsection as completed.
 
 
 Decision
 ********
 
-* We have defined the events that we plan to define in `this ADR <https://github.com/edx/edx-exams/blob/main/docs/decisions/0004-downstream-effect-events.rst>`_ in `edx-exams` to use the event bus, as the new exams backend is independent in this ADR
-* We plan for these events to be produced in `edx-exams`, and consumed in various `edx-platform` services (e.g. certificates, credit, instructor, grades).
+Where these events will be produced/consumed:
+=============================================
 
-* Note that events that use the newly defined data type:
-    A. Pretain to "Special Exams", e.g. Timed or Proctored exams, and not non-timed course subsections that are labelled as an exam.
+* `edx-exams` will produce these events.
+    * NOTE: There is no plan to have the legacy exams backend, `edx-proctoring`, produce these events.
+* `edx-platform` will consumed these events in order to handle all behavior as it pertains to the state of an exam subsection.
 
-    B. Are only ever emitted from the newer exams backend, `edx-exams`, and never from the legacy exams backend, edx-proctoring.
+Event Definitions:
+==================
+* We will define the events that as planned in `the ADR for events in edx-exams <https://github.com/edx/edx-exams/blob/main/docs/decisions/0004-downstream-effect-events.rst>`_.
 
-* For the event data and signal names, we are using the prefix "Exam" as opposed to the prefix `Special_Exam` because "special exams" will likely be the only type of exam that will be of concern to developers in the context of events/the event bus.
+Note on the Event Data/Signal Names:
+====================================
+We are using the prefix "Exam" as opposed to the prefix "Special_Exam" for these events because **Special Exams** will likely be the only type of exam that will be of concern to developers in the context of events for the forseeable future.
 
 
 Consequences
@@ -32,5 +47,5 @@ Consequences
 
 * `Edx-exams` will emit events via the event bus to send information without needing a response.
 * Since, `edx-exams` already recieves and responds to REST requests, we will avoid creating circular dependencies because `edx-exams` will not need to send REST requests itself.
-* These events are dynamic, in that they can also be consumed in other places as needed.
+* These events are dynamic, in that they can also be consumed by other services/applications as needed in the future.
 
