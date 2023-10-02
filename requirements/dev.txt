@@ -8,7 +8,7 @@ asgiref==3.7.2
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.15.7
+astroid==2.15.8
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -23,13 +23,13 @@ certifi==2023.7.22
     # via
     #   -r requirements/quality.txt
     #   requests
-cffi==1.15.1
+cffi==1.16.0
     # via
     #   -r requirements/quality.txt
     #   cryptography
 chardet==5.2.0
     # via diff-cover
-charset-normalizer==3.2.0
+charset-normalizer==3.3.0
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -161,7 +161,7 @@ nh3==0.2.14
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-packaging==23.1
+packaging==23.2
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -210,7 +210,7 @@ pygments==2.16.1
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.17.5
+pylint==2.17.7
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -276,7 +276,7 @@ rfc3986==2.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-rich==13.5.3
+rich==13.6.0
     # via
     #   -r requirements/quality.txt
     #   twine
