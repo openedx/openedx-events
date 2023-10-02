@@ -31,7 +31,7 @@ Where these events will be produced/consumed:
 
 * `edx-exams` will produce these events.
     * NOTE: There is no plan to have the legacy exams backend, `edx-proctoring`, produce these events.
-* `edx-platform` will consumed these events in order to handle all behavior as it pertains to the state of an exam subsection.
+* `edx-platform` will consume these events in order to handle all behavior as it pertains to the state of an exam subsection.
 
 Event Definitions:
 ==================
@@ -45,7 +45,7 @@ We are using the prefix "Exam" as opposed to the prefix "Special_Exam" for these
 Consequences
 ************
 
-* `Edx-exams` will emit events via the event bus to send information without needing a response.
+* `edx-exams` will emit events via the event bus to send information without needing a response.
 * Since, `edx-exams` already recieves and responds to REST requests, we will avoid creating circular dependencies because `edx-exams` will not need to send REST requests itself.
 * These events are dynamic, in that they can also be consumed by other services/applications as needed in the future.
 
