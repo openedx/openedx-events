@@ -329,3 +329,46 @@ class ExamAttemptData:
     usage_key = attr.ib(type=UsageKey)
     exam_type = attr.ib(type=str)
     requesting_user = attr.ib(type=UserData, default=None)
+
+
+@attr.s(frozen=True)
+class ManageStudentsPermissionData:
+    """
+    Attributes defined for the Open edX to represent users that can manage students within a course/org.
+
+    IMPORTANT:
+        edX currently uses roles, and only roles, to decide what kind of access a user has.
+
+        There is an ongoing project to replace this roles-only system with a system that uses roles that are
+        made up of permissions, which is being worked on in parallel with another project to emit events
+        whenever users are assigned any type of "Course Staff" role.
+
+        It's unclear what the state of this roles/permissions project will be the time the events project
+        is completed, so each project's respective teams will stay in touch with each other.
+
+        For now, we're making a best effort to publish this an event that will regard the permission(s)
+        we'd expect to "filter" for in the future (For more info, please check out this document:
+        https://docs.google.com/spreadsheets/d/1htsV0eWq5-y96DZ5A245ukfZ4_qeH0KjHVaOyfqD8OA/edit#gid=908503896)
+        and not for the roles we have now. Likely this/these permission(s) will be something like `manage_students`,
+        but we need to evaluate how this will align with some possible future roles such as `limited_staff` or `ccx`.
+
+        As such, the current plan is to do one of the following once the roles/permissions project's
+        feature branch is merged to master:
+            1. Modify this event to "filter" by the correct permissions once the
+            2. As a backup plan, make a new event if this proves too difficult.
+
+        Until either of these plans are executed, this comment under the IMPORTANT header should stay put.
+
+    Arguments:
+        user (UserData): User who will have a role/permission assigned/removed.
+        permission (str): The permission the user is being assigned.
+        course_key (Course ID): identifier of the course where the user will have staff role assigned/removed.
+            A blank course_id implies org wide role.
+        org (str): identifier of the org where the user will have staff role assigned/removed.
+            A blank org is for global group based roles such as course creator (may be deprecated).
+    """
+
+    user = attr.ib(type=UserData)
+    permission = attr.ib(type=str)
+    course_key = attr.ib(type=str, default=None)
+    org = attr.ib(type=str, default=None)

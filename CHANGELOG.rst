@@ -17,11 +17,17 @@ Changed
 ~~~~~~~
 * Re-licensed this repository from AGPL 3.0 to Apache 2.0
 
+[8.8.0] - 2023-10-02
+--------------------
+Added
+~~~~~
+* Added new ``MANAGE_STUDENTS_PERMISSION_ADDED`` and ``MANAGE_STUDENTS_PERMISSION_REMOVED`` events in learning
+
 [8.7.0] - 2023-09-29
 --------------------
 Added
 ~~~~~
-* Added new ``EXAM_ATTEMPT_SUBMITTED``, ``EXAM_ATTEMPT_REJECTED``, ``EXAM_ATTEMPT_VERIFIED``, ``EXAM_ATTEMPT_RESET``, and ``EXAM_ATTEMPT_ERRORED`` in learning.
+* Added new ``EXAM_ATTEMPT_SUBMITTED``, ``EXAM_ATTEMPT_REJECTED``, ``EXAM_ATTEMPT_VERIFIED``, ``EXAM_ATTEMPT_RESET``, and ``EXAM_ATTEMPT_ERRORED`` events in learning.
 
 [8.6.0] - 2023-08-28
 --------------------
