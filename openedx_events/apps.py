@@ -75,7 +75,7 @@ class OpenedxEventsConfig(AppConfig):
                     raise ProducerConfigurationError(
                         event_type=event_type,
                         message=(f"Expected type: {expected_type} for '{expected_key}', "
-                                    f"found: {type(topic_configuration[expected_key])}")
+                                 f"found: {type(topic_configuration[expected_key])}")
                     )
         return signal
 

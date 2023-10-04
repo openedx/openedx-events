@@ -87,7 +87,7 @@ class ProducerConfiguratonTest(TestCase):
                 apps.get_app_config("openedx_events").ready()
 
         with override_settings(EVENT_BUS_PRODUCER_CONFIG={"org.openedx.content_authoring.xblock.deleted.v1":
-                                                              {"topic": ""}}):
+                                                          {"topic": ""}}):
             with pytest.raises(ProducerConfigurationError, match="One of the configuration objects is not a"
                                                                  " dictionary"):
                 apps.get_app_config("openedx_events").ready()

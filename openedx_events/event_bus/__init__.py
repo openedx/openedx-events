@@ -187,7 +187,7 @@ def _reset_state(sender, **kwargs):  # pylint: disable=unused-argument
 
 def merge_publisher_configs(publisher_config_a, publisher_config_b):
     """
-    Merge two EVENT_BUS_PRODUCER_CONFIG maps
+    Merge two EVENT_BUS_PRODUCER_CONFIG maps.
 
     Arguments:
         publisher_config_a: An EVENT_BUS_PRODUCER_CONFIG-structured map

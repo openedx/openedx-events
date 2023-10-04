@@ -127,6 +127,7 @@ class TestConsumer(TestCase):
             # Nothing thrown, no warnings.
             assert consumer.consume_indefinitely() is None
 
+
 class TestSettings(TestCase):
     def test_merge_configs(self):
         dict_a = {
