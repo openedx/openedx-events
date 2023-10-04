@@ -183,3 +183,16 @@ def make_single_consumer(*, topic: str, group_id: str,
 def _reset_state(sender, **kwargs):  # pylint: disable=unused-argument
     """Reset caches when settings change during unit tests."""
     get_producer.cache_clear()
+
+
+def merge_publisher_configs(publisher_config_a, publisher_config_b):
+    combined = {**publisher_config_a}
+    for event_type, event_type_config_b in publisher_config_b.items():
+        event_type_config_combined = combined.get(event_type, {})
+        for topic, topic_config_b in event_type_config_b.items():
+            topic_config_combined = event_type_config_combined.get(topic, {})
+            topic_config_combined['enabled'] = topic_config_b['enabled']
+            topic_config_combined['event_key_field'] = topic_config_b['event_key_field']
+            event_type_config_combined[topic] = topic_config_combined
+        combined[event_type] = event_type_config_combined
+    return combined

@@ -26,9 +26,7 @@ While attempting to implement this for edx-platform, we came across some problem
 because maintainers can accidentally add something like
 ``{'topic': 'content-authoring-xblock-lifecycle', 'event_key_field': 'xblock_info.usage_key', 'enabled': True}`` and
 ``{'topic': 'content-authoring-xblock-lifecycle', 'event_key_field': 'xblock_info.usage_key', 'enabled': False}`` to the same event_type.
-Also, as written, this configuration requires maintainers to copy over the entire configuration to override it, which is non-obvious
-to people who may only be trying to enable/disable a single event while keeping everything else the same. Moreover, it's also non-obvious
-that enabling/disabling an existing event/topic pair requires reaching into the structure, searching for the dictionary with the correct topic, and modifying
+Moreover, enabling/disabling an existing event/topic pair requires reaching into the structure, searching for the dictionary with the correct topic, and modifying
 the existing object, which is awkward.
 
 This ADR aims to propose a new structure that will provide greater flexibility in using this configuration.
@@ -50,7 +48,7 @@ The new EVENT_BUS_PRODUCER_CONFIG will have the following configuration format:
    #    EVENT_BUS_TOPIC_PREFIX setting.
    EVENT_BUS_PRODUCER_CONFIG = {
        'org.openedx.content_authoring.xblock.published.v1': {
-           'content-authoring-xblock-lifecycle': {'event_key_field': 'xblock_info.usage_key', 'enabled': False}
+           'content-authoring-xblock-lifecycle': {'event_key_field': 'xblock_info.usage_key', 'enabled': False},
            'content-authoring-xblock-published': {'event_key_field': 'xblock_info.usage_key', 'enabled': True}
        },
        'org.openedx.content_authoring.xblock.deleted.v1': {
@@ -58,10 +56,10 @@ The new EVENT_BUS_PRODUCER_CONFIG will have the following configuration format:
        },
    }
 
-In edx-platform, it will be added to the KEYS_WITH_MERGED_VALUES list to allow partial additions/overrides.
+A new ``merge_configs`` method will be added to openedx-events.event_bus to make it easier to correctly determine the config map from multiple sources.
 
 Consequences
 ************
 
-* As long as the implementing IDA has a concept of KEYS_WITH_MERGED_VALUES (more complex configurations that can be modified via code in settings), maintainers can add existing topics to new event_types without having to recreate the whole dictionary
+* As long as the implementing IDA calls ``merge_configs``, maintainers can add existing topics to new event_types without having to recreate the whole dictionary
 * There is no ambiguity about whether an event/topic pair is enabled or disabled
