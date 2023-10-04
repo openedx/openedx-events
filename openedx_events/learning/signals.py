@@ -13,6 +13,7 @@ from openedx_events.learning.data import (
     CohortData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
+    DiscussionThreadData,
     ExamAttemptData,
     ManageStudentsPermissionData,
     PersistentCourseGradeData,
@@ -273,5 +274,41 @@ MANAGE_STUDENTS_PERMISSION_REMOVED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.manage.students.permission.removed.v1",
     data={
         "course_staff_data": ManageStudentsPermissionData,
+    }
+)
+
+# .. event_type: org.openedx.learning.forum.thread.created.v1
+# .. event_name: FORUM_THREAD_CREATED
+# .. event_description: Emitted when a new thread is created in a discussion
+# .. event_data: DiscussionThreadData
+#       Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+FORUM_THREAD_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.thread.created.v1",
+    data={
+        "thread": DiscussionThreadData,
+    }
+)
+
+# .. event_type: org.openedx.learning.forum.thread.response.created.v1
+# .. event_name: FORUM_THREAD_RESPONSE_CREATED
+# .. event_description: Emitted when a new response is added to a thread
+# .. event_data: DiscussionThreadData
+#        Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.response.created.v1",
+    data={
+        "thread": DiscussionThreadData,
+    }
+)
+
+# .. event_type: org.openedx.learning.forum.thread.response.comment.created.v1
+# .. event_name: FORUM_RESPONSE_COMMENT_CREATED
+# .. event_description: Emitted when a new comment is added to a response
+# .. event_data: DiscussionThreadData
+#       Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.response.created.v1",
+    data={
+        "thread": DiscussionThreadData,
     }
 )

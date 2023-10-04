@@ -19,6 +19,12 @@ Unreleased
 * Re-licensed this repository from AGPL 3.0 to Apache 2.0
 * **Breaking change**: Restructured EVENT_BUS_PRODUCER_CONFIG
 
+[8.9.0] - 2023-10-04
+--------------------
+Added
+~~~~~
+* Added new ``FORUM_THREAD_CREATED``, ``FORUM_THREAD_RESPONSE_CREATED``, ``FORUM_RESPONSE_COMMENT_CREATED`` events in learning subdomain
+
 [8.8.0] - 2023-10-02
 --------------------
 Added
