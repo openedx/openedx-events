@@ -56,10 +56,10 @@ The new EVENT_BUS_PRODUCER_CONFIG will have the following configuration format:
        },
    }
 
-A new ``merge_configs`` method will be added to openedx-events.event_bus to make it easier to correctly determine the config map from multiple sources.
+A new ``merge_publisher_configs`` method will be added to openedx-events.event_bus to make it easier to correctly determine the config map from multiple sources.
 
 Consequences
 ************
 
-* As long as the implementing IDA calls ``merge_configs``, maintainers can add existing topics to new event_types without having to recreate the whole dictionary
+* As long as the implementing IDA calls ``merge_publisher_configs``, maintainers can add existing topics to new event_types without having to recreate the whole dictionary
 * There is no ambiguity about whether an event/topic pair is enabled or disabled
