@@ -164,3 +164,17 @@ class TestSettings(TestCase):
                 'topic_e': {'event_key_field': 'field', 'enabled': True},
             }
         })
+
+        def test_merge_configs_with_empty(self):
+            dict_a = {
+                'event_type_0': {
+                    'topic_a': {'event_key_field': 'field', 'enabled': True},
+                    'topic_b': {'event_key_field': 'field', 'enabled': True}
+                },
+                'event_type_1': {
+                    'topic_c': {'event_key_field': 'field', 'enabled': True},
+                }
+            }
+            dict_b = {}
+            result = merge_publisher_configs(dict_a, dict_b)
+            self.assertDictEqual(result, dict_a)
