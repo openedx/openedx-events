@@ -13,6 +13,8 @@ from openedx_events.learning.data import (
     CohortData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
+    ExamAttemptData,
+    ManageStudentsPermissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
     UserData,
@@ -194,5 +196,82 @@ USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.notification.requested.v1",
     data={
         "notification_data": UserNotificationData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.submitted.v1
+# .. event_name: EXAM_ATTEMPT_SUBMITTED
+# .. event_description: Emitted when an exam attempt is submitted by a learner in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_SUBMITTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.submitted.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.rejected.v1
+# .. event_name: EXAM_ATTEMPT_REJECTED
+# .. event_description: Emitted when an exam attempt is marked rejected in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.rejected.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.verified.v1
+# .. event_name: EXAM_ATTEMPT_VERIFIED
+# .. event_description: Emitted when an exam attempt is marked verified in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_VERIFIED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.verified.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.errored.v1
+# .. event_name: EXAM_ATTEMPT_ERRORED
+# .. event_description: Emitted when a learner's exam attempt errors out in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_ERRORED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.errored.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.reset.v1
+# .. event_name: EXAM_ATTEMPT_RESET
+# .. event_description: Emitted when an exam attempt is reset in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.reset.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.user.manage.students.permission.added.v1
+# .. event_name: MANAGE_STUDENTS_PERMISSION_ADDED
+# .. event_description: Emitted when permission to manage students within a course is given to a user.
+# .. event_data: ManageStudentsPermissionData
+MANAGE_STUDENTS_PERMISSION_ADDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.manage.students.permission.added.v1",
+    data={
+        "course_staff_data": ManageStudentsPermissionData,
+    }
+)
+
+# .. event_type: org.openedx.learning.user.manage.students.permission.removed.v1
+# .. event_name: MANAGE_STUDENTS_PERMISSION_REMOVED
+# .. event_description: Emitted when permission to manage students within a course is removed from a user.
+# .. event_data: ManageStudentsPermissionData
+MANAGE_STUDENTS_PERMISSION_REMOVED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.manage.students.permission.removed.v1",
+    data={
+        "course_staff_data": ManageStudentsPermissionData,
     }
 )
