@@ -372,3 +372,56 @@ class ManageStudentsPermissionData:
     permission = attr.ib(type=str)
     course_key = attr.ib(type=str, default=None)
     org = attr.ib(type=str, default=None)
+
+
+@attr.s(frozen=True)
+class DiscussionThreadData:
+    """
+    Attributes defined for the Open edX to represent events in the Forum such as comments, responses, and threads.
+
+    For more details on the data attributes, please see the following documentation:
+    https://docs.openedx.org/en/latest/developers/references/internal_data_formats/tracking_logs/student_event_types.html#edx-forum-thread-created
+
+    Arguments:
+        anonymous (bool): indicates whether the user is anonymous.
+        anonymous_to_peers (bool): indicates whether the user is anonymous to peers.
+        body (str): body of the discussion thread.
+        category_id (int): identifier of the category.
+        category_name (str): name of the category.
+        commentable_id (str): identifier of the commentable.
+        group_id (int): identifier of the group.
+        id (int): identifier of the discussion thread.
+        team_id (int): identifier of the team.
+        thread_type (str): type of the thread.
+        title (str): title of the thread.
+        title_truncated (bool): indicates whether the title is truncated.
+        truncated (bool): indicates whether the thread is truncated.
+        url (str): url of the thread.
+        user (UserData): information of the user that authored the thread/comment/response.
+        course_id (CourseKey): identifier of the course.
+        discussion (dict): discussion data. (optional, specific to comments and responses)
+        user_course_roles (List[str]): user course roles.
+        user_forums_roles (List[str]): user forums roles.
+        options (dict): options for the thread.
+    """
+
+    anonymous = attr.ib(type=bool)
+    anonymous_to_peers = attr.ib(type=bool)
+    body = attr.ib(type=str)
+    category_id = attr.ib(type=int)
+    category_name = attr.ib(type=str)
+    commentable_id = attr.ib(type=str)
+    group_id = attr.ib(type=int)
+    id = attr.ib(type=int)
+    team_id = attr.ib(type=int)
+    thread_type = attr.ib(type=str)
+    title = attr.ib(type=str)
+    title_truncated = attr.ib(type=bool)
+    truncated = attr.ib(type=bool)
+    url = attr.ib(type=str)
+    user = attr.ib(type=UserData)
+    course_id = attr.ib(type=CourseKey)
+    discussion = attr.ib(type=dict, factory=dict)
+    user_course_roles = attr.ib(type=List[str], factory=list)
+    user_forums_roles = attr.ib(type=List[str], factory=list)
+    options = attr.ib(type=dict, factory=dict)
