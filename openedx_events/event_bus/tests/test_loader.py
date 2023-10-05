@@ -185,4 +185,3 @@ class TestSettings(TestCase):
         dict_b = {}
         result = merge_publisher_configs(dict_a, dict_b)
         self.assertDictEqual(result, dict_a)
-
