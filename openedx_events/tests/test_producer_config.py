@@ -31,7 +31,7 @@ class ProducerConfiguratonTest(TestCase):
     @patch('openedx_events.apps.get_producer')
     def test_enabled_disabled_events(self, mock_producer):
         """
-        Check whether XBLOCK_PUBLISHED is connected to the handler and the handler only publishes enabled events.
+        Check whether XBLOCK_PUBLISHED is connected to the handler and the handler only produces enabled events.
 
         Args:
             mock_producer: mock get_producer to inspect the arguments.
