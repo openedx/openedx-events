@@ -16,6 +16,8 @@ Unreleased
 
 [9.0.0] - 2023-10-04
 --------------------
+Changed
+~~~~~~~
 * Re-licensed this repository from AGPL 3.0 to Apache 2.0
 * **Breaking change**: Restructured EVENT_BUS_PRODUCER_CONFIG
 

@@ -14,15 +14,20 @@ def general_signal_handler(sender, signal, **kwargs):  # pylint: disable=unused-
     """
     Signal handler for publishing events to configured event bus.
     """
-    configurations = getattr(settings, "EVENT_BUS_PRODUCER_CONFIG", {}).get(signal.event_type, {})
+    event_type_publish_configs = getattr(settings, "EVENT_BUS_PRODUCER_CONFIG", {}).get(signal.event_type, {})
+    # event_type_publish_configs should look something like
+    # {
+    #        "topic_a": { "event_key_field": "my.key.field", "enabled": True },
+    #        "topic_b": { "event_key_field": "my.key.field", "enabled": False }
+    # }"
     event_data = {key: kwargs.get(key) for key in signal.init_data}
 
-    for topic in configurations.keys():
-        if configurations[topic]["enabled"]:
+    for topic in event_type_publish_configs.keys():
+        if event_type_publish_configs[topic]["enabled"] is True:
             get_producer().send(
                 signal=signal,
                 topic=topic,
-                event_key_field=configurations[topic]["event_key_field"],
+                event_key_field=event_type_publish_configs[topic]["event_key_field"],
                 event_data=event_data,
                 event_metadata=kwargs["metadata"],
             )
@@ -58,7 +63,6 @@ class OpenedxEventsConfig(AppConfig):
         except KeyError as exc:
             raise ProducerConfigurationError(message=f"No OpenEdxPublicSignal of type: '{event_type}'.") from exc
         for _, topic_configuration in configuration.items():
-            print(f"{topic_configuration=}")
             if not isinstance(topic_configuration, dict):
                 raise ProducerConfigurationError(
                     event_type=event_type,

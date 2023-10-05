@@ -46,12 +46,12 @@ class ProducerConfiguratonTest(TestCase):
         # check that call_args_list only consists of enabled topics.
         call_args = mock_send.send.call_args_list[0][1]
         self.assertDictContainsSubset(
-            {'topic': 'content-authoring-xblock-lifecycle', 'event_key_field': 'xblock_info.usage_key'},
+            {'topic': 'enabled_topic_a', 'event_key_field': 'xblock_info.usage_key'},
             call_args
         )
         call_args = mock_send.send.call_args_list[1][1]
         self.assertDictContainsSubset(
-            {'topic': 'content-authoring-all-status', 'event_key_field': 'xblock_info.usage_key'},
+            {'topic': 'enabled_topic_b', 'event_key_field': 'xblock_info.usage_key'},
             call_args
         )
 
@@ -94,7 +94,7 @@ class ProducerConfiguratonTest(TestCase):
 
         with override_settings(
             EVENT_BUS_PRODUCER_CONFIG={
-                "org.openedx.content_authoring.xblock.deleted.v1": {"some": {"enabled": True}}
+                "org.openedx.content_authoring.xblock.deleted.v1": {"topic": {"enabled": True}}
             }
         ):
             with pytest.raises(ProducerConfigurationError, match="missing 'event_key_field' key."):

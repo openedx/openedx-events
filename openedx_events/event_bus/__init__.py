@@ -14,6 +14,7 @@ API:
   ``EVENT_BUS_CONSUMER``.
 """
 
+import copy
 import warnings
 from abc import ABC, abstractmethod
 from functools import lru_cache
@@ -185,21 +186,21 @@ def _reset_state(sender, **kwargs):  # pylint: disable=unused-argument
     get_producer.cache_clear()
 
 
-def merge_publisher_configs(publisher_config_a, publisher_config_b):
+def merge_publisher_configs(publisher_config_original, publisher_config_overrides):
     """
     Merge two EVENT_BUS_PRODUCER_CONFIG maps.
 
     Arguments:
-        publisher_config_a: An EVENT_BUS_PRODUCER_CONFIG-structured map
-        publisher_config_b: An EVENT_BUS_PRODUCER_CONFIG-structured map
+        publisher_config_original: An EVENT_BUS_PRODUCER_CONFIG-structured map
+        publisher_config_overrides: An EVENT_BUS_PRODUCER_CONFIG-structured map
 
     Returns:
         A new EVENT_BUS_PRODUCER_CONFIG map created by combining the two maps. All event_type/topic pairs in
         publisher_config_b are added to the publisher_config_a. If there is a conflict on whether a particular
         event_type/topic pair is enabled, publisher_config_b wins out.
     """
-    combined = {**publisher_config_a}
-    for event_type, event_type_config_b in publisher_config_b.items():
+    combined = copy.deepcopy(publisher_config_original)
+    for event_type, event_type_config_b in publisher_config_overrides.items():
         event_type_config_combined = combined.get(event_type, {})
         for topic, topic_config_b in event_type_config_b.items():
             topic_config_combined = event_type_config_combined.get(topic, {})

@@ -2,6 +2,7 @@
 Tests for event bus implementation loader.
 """
 
+import copy
 import warnings
 from contextlib import contextmanager
 from unittest import TestCase
@@ -139,6 +140,8 @@ class TestSettings(TestCase):
                 'topic_c': {'event_key_field': 'field', 'enabled': True},
             }
         }
+        # for ensuring we didn't change the original dict
+        dict_a_copy = copy.deepcopy(dict_a)
         dict_b = {
             'event_type_0': {
                 # disable an existing event/topic pairing
@@ -151,6 +154,7 @@ class TestSettings(TestCase):
                 'topic_e': {'event_key_field': 'field', 'enabled': True},
             }
         }
+        dict_b_copy = copy.deepcopy(dict_b)
         result = merge_publisher_configs(dict_a, dict_b)
         self.assertDictEqual(result, {
             'event_type_0': {
@@ -165,6 +169,8 @@ class TestSettings(TestCase):
                 'topic_e': {'event_key_field': 'field', 'enabled': True},
             }
         })
+        self.assertDictEqual(dict_a, dict_a_copy)
+        self.assertDictEqual(dict_b, dict_b_copy)
 
     def test_merge_configs_with_empty(self):
         dict_a = {
@@ -179,3 +185,4 @@ class TestSettings(TestCase):
         dict_b = {}
         result = merge_publisher_configs(dict_a, dict_b)
         self.assertDictEqual(result, dict_a)
+
