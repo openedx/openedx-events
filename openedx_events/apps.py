@@ -12,7 +12,7 @@ from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
 
 def general_signal_handler(sender, signal, **kwargs):  # pylint: disable=unused-argument
     """
-    Signal handler for publishing events to configured event bus.
+    Signal handler for producing events to configured event bus.
     """
     event_type_producer_configs = getattr(settings, "EVENT_BUS_PRODUCER_CONFIG", {}).get(signal.event_type, {})
     # event_type_producer_configs should look something like

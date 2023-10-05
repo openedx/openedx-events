@@ -196,8 +196,8 @@ def merge_producer_configs(producer_config_original, producer_config_overrides):
 
     Returns:
         A new EVENT_BUS_PRODUCER_CONFIG map created by combining the two maps. All event_type/topic pairs in
-        publisher_config_overrides are added to the publisher_config_original. If there is a conflict on whether a
-        particular event_type/topic pair is enabled, publisher_config_overrides wins out.
+        producer_config_overrides are added to the producer_config_original. If there is a conflict on whether a
+        particular event_type/topic pair is enabled, producer_config_overrides wins out.
     """
     combined = copy.deepcopy(producer_config_original)
     for event_type, event_type_config_overrides in producer_config_overrides.items():
