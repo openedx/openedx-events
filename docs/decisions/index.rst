@@ -19,4 +19,3 @@ Architectural Decision Records (ADRs)
    0012-producing-to-event-bus-via-settings
    0013-special-exam-submission-and-review-events
    0014-new-event-bus-producer-config
-
