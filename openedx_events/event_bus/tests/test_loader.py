@@ -10,7 +10,7 @@ from unittest import TestCase
 from django.test import override_settings
 
 from openedx_events.data import EventsMetadata
-from openedx_events.event_bus import _try_load, get_producer, make_single_consumer, merge_publisher_configs
+from openedx_events.event_bus import _try_load, get_producer, make_single_consumer, merge_producer_configs
 from openedx_events.learning.signals import SESSION_LOGIN_COMPLETED
 
 
@@ -155,7 +155,7 @@ class TestSettings(TestCase):
             }
         }
         dict_b_copy = copy.deepcopy(dict_b)
-        result = merge_publisher_configs(dict_a, dict_b)
+        result = merge_producer_configs(dict_a, dict_b)
         self.assertDictEqual(result, {
             'event_type_0': {
                 'topic_a': {'event_key_field': 'field', 'enabled': False},
@@ -183,5 +183,5 @@ class TestSettings(TestCase):
             }
         }
         dict_b = {}
-        result = merge_publisher_configs(dict_a, dict_b)
+        result = merge_producer_configs(dict_a, dict_b)
         self.assertDictEqual(result, dict_a)
