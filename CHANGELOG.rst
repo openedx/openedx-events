@@ -13,6 +13,12 @@ Change Log
 
 Unreleased
 ----------
+[9.5.0] - 2024-02-07
+--------------------
+Added
+~~~~~
+* Adds utility function to reset application state similar to setup/teardown in Django request/response cycle.
+
 [9.4.0] - 2024-01-29
 --------------------
 Added
