@@ -8,7 +8,7 @@ asgiref==3.7.2
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.15.8
+astroid==3.0.1
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -29,7 +29,7 @@ cffi==1.16.0
     #   cryptography
 chardet==5.2.0
     # via diff-cover
-charset-normalizer==3.3.0
+charset-normalizer==3.3.1
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -49,9 +49,10 @@ code-annotations==1.5.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-coverage[toml]==7.3.1
+coverage[toml]==7.3.2
     # via
     #   -r requirements/quality.txt
+    #   coverage
     #   pytest-cov
 cryptography==41.0.4
     # via
@@ -59,7 +60,7 @@ cryptography==41.0.4
     #   secretstorage
 ddt==1.6.0
     # via -r requirements/quality.txt
-diff-cover==7.7.0
+diff-cover==8.0.0
     # via -r requirements/dev.in
 dill==0.3.7
     # via
@@ -69,7 +70,7 @@ distlib==0.3.7
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==3.2.21
+django==3.2.22
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/quality.txt
@@ -80,12 +81,14 @@ docutils==0.20.1
 edx-lint==5.3.4
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.5.1
-    # via -r requirements/quality.txt
+    # via
+    #   -r requirements/quality.txt
+    #   edx-opaque-keys
 exceptiongroup==1.1.3
     # via
     #   -r requirements/quality.txt
     #   pytest
-fastavro==1.8.3
+fastavro==1.8.4
     # via -r requirements/quality.txt
 filelock==3.12.4
     # via
@@ -133,10 +136,6 @@ keyring==24.2.0
     # via
     #   -r requirements/quality.txt
     #   twine
-lazy-object-proxy==1.9.0
-    # via
-    #   -r requirements/quality.txt
-    #   astroid
 markdown-it-py==3.0.0
     # via
     #   -r requirements/quality.txt
@@ -179,7 +178,7 @@ pkginfo==1.9.6
     # via
     #   -r requirements/quality.txt
     #   twine
-platformdirs==3.10.0
+platformdirs==3.11.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -196,7 +195,7 @@ py==1.11.0
     # via
     #   -r requirements/ci.txt
     #   tox
-pycodestyle==2.11.0
+pycodestyle==2.11.1
     # via -r requirements/quality.txt
 pycparser==2.21
     # via
@@ -210,7 +209,7 @@ pygments==2.16.1
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.17.7
+pylint==3.0.2
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -221,7 +220,7 @@ pylint-celery==0.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-pylint-django==2.5.3
+pylint-django==2.5.4
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -327,9 +326,6 @@ tox==3.28.0
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/ci.txt
-    #   tox-battery
-tox-battery==0.6.2
-    # via -r requirements/dev.in
 twine==4.0.2
     # via -r requirements/quality.txt
 typing-extensions==4.8.0
@@ -340,7 +336,7 @@ typing-extensions==4.8.0
     #   edx-opaque-keys
     #   pylint
     #   rich
-urllib3==2.0.5
+urllib3==2.0.7
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -353,10 +349,6 @@ wheel==0.41.2
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-wrapt==1.15.0
-    # via
-    #   -r requirements/quality.txt
-    #   astroid
 zipp==3.17.0
     # via
     #   -r requirements/pip-tools.txt
