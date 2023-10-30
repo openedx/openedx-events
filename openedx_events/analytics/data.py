@@ -16,8 +16,8 @@ class TrackingLogData:
     Data describing tracking log data.
 
     Arguments:
-        name (str): course name
-        timestamp (datetime): course start date
+        name (str): event name
+        timestamp (datetime): timestamp of the event
         data (str): json string representation of a dictionary with extra data (optional),
                     e.g. {"course_id": "course-v1:edX+DemoX+Demo_Course"}
         context (dict): json string representation of a dictionary of context data
