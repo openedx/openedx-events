@@ -29,5 +29,5 @@
       }
     }
   ],
-  "namespace": "org.openedx.analytics.event_tracking.emitted.v1"
+  "namespace": "org.openedx.analytics.tracking.event.emitted.v1"
 }
