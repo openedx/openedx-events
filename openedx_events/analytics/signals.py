@@ -12,10 +12,10 @@ from openedx_events.analytics.data import TrackingLogData
 from openedx_events.tooling import OpenEdxPublicSignal
 
 # .. event_type: org.openedx.analytics.tracking.event.emitted.v1
-# .. event_name: TRACKING_EVENT_EMITTED
+# .. event_name: TRACKING_LOG_EVENT_EMITTED
 # .. event_description: emitted when a tracking log is created.
 # .. event_data: TrackingLogData
-TRACKING_EVENT_EMITTED = OpenEdxPublicSignal(
+TRACKING_LOG_EVENT_EMITTED = OpenEdxPublicSignal(
     event_type="org.openedx.analytics.tracking.event.emitted.v1",
     data={
         "tracking_log": TrackingLogData,
