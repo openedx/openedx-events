@@ -142,6 +142,7 @@ class TestSettings(TestCase):
                 'topic_c': {'event_key_field': 'field', 'enabled': True},
             }
         }
+
     def test_merge_configs(self):
         # for ensuring we didn't change the original dict
         base_copy = copy.deepcopy(self.base_config)
