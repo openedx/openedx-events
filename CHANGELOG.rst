@@ -18,7 +18,7 @@ Unreleased
 --------------------
 Changed
 ~~~~~~~
-* Fixed key error in merging event producer configs
+* Fixed key error in merging event producer configs. Previously, setting only one of `enabled` or `event_key_field` would result in a KeyError being thrown
 
 [9.0.0] - 2023-10-04
 --------------------
