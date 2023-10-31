@@ -204,8 +204,12 @@ def merge_producer_configs(producer_config_original, producer_config_overrides):
         event_type_config_combined = combined.get(event_type, {})
         for topic, topic_config_overrides in event_type_config_overrides.items():
             topic_config_combined = event_type_config_combined.get(topic, {})
-            topic_config_combined['enabled'] = topic_config_overrides['enabled']
-            topic_config_combined['event_key_field'] = topic_config_overrides['event_key_field']
+            enabled_override = topic_config_overrides.get('enabled', None)
+            event_key_field_override = topic_config_overrides.get('event_key_field', None)
+            if enabled_override is not None:
+                topic_config_combined['enabled'] = enabled_override
+            if event_key_field_override is not None:
+                topic_config_combined['event_key_field'] = event_key_field_override
             event_type_config_combined[topic] = topic_config_combined
         combined[event_type] = event_type_config_combined
     return combined
