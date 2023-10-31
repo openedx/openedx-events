@@ -130,8 +130,10 @@ class TestConsumer(TestCase):
 
 
 class TestSettings(TestCase):
-    def test_merge_configs(self):
-        dict_a = {
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.base_config = {
             'event_type_0': {
                 'topic_a': {'event_key_field': 'field', 'enabled': True},
                 'topic_b': {'event_key_field': 'field', 'enabled': True}
@@ -140,13 +142,15 @@ class TestSettings(TestCase):
                 'topic_c': {'event_key_field': 'field', 'enabled': True},
             }
         }
+
+    def test_merge_configs(self):
         # for ensuring we didn't change the original dict
-        dict_a_copy = copy.deepcopy(dict_a)
-        dict_b = {
+        base_copy = copy.deepcopy(self.base_config)
+        overrides = {
             'event_type_0': {
-                # disable an existing event/topic pairing
-                'topic_a': {'event_key_field': 'field', 'enabled': False},
-                # add a new topic to an existing topic
+                # disable an existing event/topic pairing and change the key field
+                'topic_a': {'event_key_field': 'new_field', 'enabled': False},
+                # add a new topic to an existing event_type
                 'topic_d': {'event_key_field': 'field', 'enabled': True},
             },
             # add a new event_type
@@ -154,11 +158,11 @@ class TestSettings(TestCase):
                 'topic_e': {'event_key_field': 'field', 'enabled': True},
             }
         }
-        dict_b_copy = copy.deepcopy(dict_b)
-        result = merge_producer_configs(dict_a, dict_b)
+        overrides_copy = copy.deepcopy(overrides)
+        result = merge_producer_configs(self.base_config, overrides)
         self.assertDictEqual(result, {
             'event_type_0': {
-                'topic_a': {'event_key_field': 'field', 'enabled': False},
+                'topic_a': {'event_key_field': 'new_field', 'enabled': False},
                 'topic_b': {'event_key_field': 'field', 'enabled': True},
                 'topic_d': {'event_key_field': 'field', 'enabled': True},
             },
@@ -169,19 +173,30 @@ class TestSettings(TestCase):
                 'topic_e': {'event_key_field': 'field', 'enabled': True},
             }
         })
-        self.assertDictEqual(dict_a, dict_a_copy)
-        self.assertDictEqual(dict_b, dict_b_copy)
+        self.assertDictEqual(self.base_config, base_copy)
+        self.assertDictEqual(overrides, overrides_copy)
 
     def test_merge_configs_with_empty(self):
-        dict_a = {
+        overrides = {}
+        result = merge_producer_configs(self.base_config, overrides)
+        self.assertDictEqual(result, self.base_config)
+
+    def test_merge_configs_with_partial(self):
+        overrides = {
             'event_type_0': {
-                'topic_a': {'event_key_field': 'field', 'enabled': True},
-                'topic_b': {'event_key_field': 'field', 'enabled': True}
+                # no override for 'event_key_field'
+                'topic_a': {'enabled': False},
+                # no override for 'enabled'
+                'topic_b': {'event_key_field': 'new_field'}
+            }
+        }
+        result = merge_producer_configs(self.base_config, overrides)
+        self.assertDictEqual(result, {
+            'event_type_0': {
+                'topic_a': {'event_key_field': 'field', 'enabled': False},
+                'topic_b': {'event_key_field': 'new_field', 'enabled': True}
             },
             'event_type_1': {
                 'topic_c': {'event_key_field': 'field', 'enabled': True},
             }
-        }
-        dict_b = {}
-        result = merge_producer_configs(dict_a, dict_b)
-        self.assertDictEqual(result, dict_a)
+        })
