@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[9.0.1] - 2023-10-32
+--------------------
+Changed
+~~~~~~~
+* Fixed key error in merging event producer configs
+
 [9.0.0] - 2023-10-04
 --------------------
 Changed
