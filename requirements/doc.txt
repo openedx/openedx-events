@@ -20,6 +20,8 @@ build==1.0.3
     # via -r requirements/doc.in
 certifi==2023.7.22
     # via requests
+cffi==1.16.0
+    # via cryptography
 charset-normalizer==3.3.0
     # via requests
 click==8.1.7
@@ -34,6 +36,8 @@ coverage[toml]==7.3.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
+cryptography==41.0.4
+    # via secretstorage
 ddt==1.6.0
     # via -r requirements/test.txt
 django==3.2.21
@@ -75,6 +79,10 @@ iniconfig==2.0.0
     #   pytest
 jaraco-classes==3.3.0
     # via keyring
+jeepney==0.8.0
+    # via
+    #   keyring
+    #   secretstorage
 jinja2==3.1.2
     # via
     #   -r requirements/test.txt
@@ -113,6 +121,8 @@ pluggy==1.3.0
     # via
     #   -r requirements/test.txt
     #   pytest
+pycparser==2.21
+    # via cffi
 pydata-sphinx-theme==0.12.0
     # via sphinx-book-theme
 pygments==2.16.1
@@ -166,6 +176,8 @@ rfc3986==2.0.0
     # via twine
 rich==13.6.0
     # via twine
+secretstorage==3.3.3
+    # via keyring
 six==1.16.0
     # via livereload
 snowballstemmer==2.2.0
