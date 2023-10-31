@@ -147,8 +147,8 @@ class TestSettings(TestCase):
         base_copy = copy.deepcopy(self.base_config)
         overrides = {
             'event_type_0': {
-                # disable an existing event/topic pairing
-                'topic_a': {'event_key_field': 'field', 'enabled': False},
+                # disable an existing event/topic pairing and change the key field
+                'topic_a': {'event_key_field': 'new_field', 'enabled': False},
                 # add a new topic to an existing event_type
                 'topic_d': {'event_key_field': 'field', 'enabled': True},
             },
@@ -161,7 +161,7 @@ class TestSettings(TestCase):
         result = merge_producer_configs(self.base_config, overrides)
         self.assertDictEqual(result, {
             'event_type_0': {
-                'topic_a': {'event_key_field': 'field', 'enabled': False},
+                'topic_a': {'event_key_field': 'new_field', 'enabled': False},
                 'topic_b': {'event_key_field': 'field', 'enabled': True},
                 'topic_d': {'event_key_field': 'field', 'enabled': True},
             },
