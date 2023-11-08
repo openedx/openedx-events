@@ -13,7 +13,7 @@ import attr
 @attr.s(frozen=True)
 class TrackingLogData:
     """
-    Data describing tracking log data.
+    Data describing tracking events.
 
     Arguments:
         name (str): event name
