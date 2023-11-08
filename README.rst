@@ -14,60 +14,13 @@ Purpose
 This repository implements the necessary tooling and definitions used by the
 Hooks Extension Framework to manage the events execution and extra tools.
 
-Getting Started
-***************
+Getting Started with Development
+********************************
 
-Developing
-==========
-
-One Time Setup
---------------
-.. code-block::
-
-  # Clone the repository
-  git clone git@github.com:openedx/openedx-events.git
-  cd openedx-events
-
-  # Set up a virtualenv using virtualenvwrapper with the same name as the repo and activate it
-  mkvirtualenv -p python3.8 openedx-events
-
-Every time you develop something in this repo
----------------------------------------------
-.. code-block::
-
-  # Activate the virtualenv
-  workon openedx-events
-
-  # Grab the latest code
-  git checkout main
-  git pull
-
-  # Install/update the dev requirements
-  make requirements
-
-  # Run the tests and quality checks (to verify the status before you make any changes)
-  make validate
-
-  # Make a new branch for your changes
-  git checkout -b <your_github_username>/<short_description>
-
-  # Using your favorite editor, edit the code to make your change.
-  vim …
-
-  # Run your new tests
-  pytest ./path/to/new/tests
-
-  # Run all the tests and quality checks
-  make validate
-
-  # Commit all your changes
-  git commit …
-  git push
-
-  # Open a PR and ask for review.
+Please see the Open edX documentation for `guidance on Python development <https://docs.openedx.org/en/latest/developers/how-tos/get-ready-for-python-dev.html>`_ in this repo.
 
 Deploying
-=========
+*********
 
 The Open edX Events component is a Python library which doesn't need independent deployment. Therefore,
 its setup is reasonably straightforward. First, it needs to be added to your service requirements,
