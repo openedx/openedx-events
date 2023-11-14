@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[9.1.0] - 2023-11-07
+--------------------
+Added
+~~~~~~~
+* Added new event TRACKING_EVENT_EMITTED.
+
 [9.0.1] - 2023-10-31
 --------------------
 Changed
