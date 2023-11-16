@@ -25,6 +25,7 @@ KNOWN_UNSERIALIZABLE_SIGNALS = [
     "org.openedx.learning.thread.created.v1",
     "org.openedx.learning.response.created.v1",
     "org.openedx.learning.comment.created.v1",
+    "org.openedx.learning.course.notification.requested.v1",
 ]
 
 

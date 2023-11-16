@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[9.2.0] - 2023-11-16
+--------------------
+Added
+~~~~~~~
+* Added new COURSE_NOTIFICATION_REQUESTED event in learning
+
 [9.1.0] - 2023-11-07
 --------------------
 Added
