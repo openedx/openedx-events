@@ -243,12 +243,12 @@ class UserNotificationData:
     Attributes defined for Open edX User Notification data object.
 
     Arguments:
-        user_ids (List(int)): identifier of the user to which the notification belongs.
+        user_ids (List(int)): identifier of the users to which the notification belongs.
         notification_type (str): type of the notification.
-        context (dict): additional structured information about the context in
-                        which this topic is used, such as the section, subsection etc.
         content_url (str): url of the content.
         app_name (str): name of the app.
+        course_key (str): identifier of the Course object.
+        context (dict): additional structured information about the context of the notification.
     """
 
     user_ids = attr.ib(type=List[int])
@@ -425,3 +425,47 @@ class DiscussionThreadData:
     user_course_roles = attr.ib(type=List[str], factory=list)
     user_forums_roles = attr.ib(type=List[str], factory=list)
     options = attr.ib(type=dict, factory=dict)
+
+
+@attr.s(frozen=True)
+class CourseNotificationData:
+    """
+    Attributes defined for Open edX Course Notification data object.
+
+    Arguments:
+        course_key (str): identifier of the Course object.
+        app_name (str): name of the app requesting the course notification.
+        notification_type (str): type of the notification.
+        content_url (str): url of the content the notification will redirect to.
+        content_context (dict): additional information related to the content of the notification.
+            Notification content templates are defined in edx-platform here:
+                https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/base_notification.py#L10
+
+        Example of content_context for a discussion notification (new_comment_on_response):
+
+            {
+                ...,
+                "content_context": {
+                    "post_title": "Post Title",
+                    "replier_name": "test_user",
+            }
+
+        audience_filters (dict): additional information related to the audience of the notification.
+            We can have different filters on course level, such as roles, enrollments, cohorts etc.
+
+        Example of audience_filters for a discussion notification (new_discussion_post):
+
+            {
+                ...,
+                "audience_filters": {
+                    "enrollment": ["verified", "audit"],
+                    "role": ["discussion admin", "discussion moderator"],
+            }
+    """
+
+    course_key = attr.ib(type=CourseKey)
+    app_name = attr.ib(type=str)
+    notification_type = attr.ib(type=str)
+    content_url = attr.ib(type=str)
+    content_context = attr.ib(type=dict, factory=dict)
+    audience_filters = attr.ib(type=dict, factory=dict)

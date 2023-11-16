@@ -13,6 +13,7 @@ from openedx_events.learning.data import (
     CohortData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
+    CourseNotificationData,
     DiscussionThreadData,
     ExamAttemptData,
     ManageStudentsPermissionData,
@@ -188,7 +189,7 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
 )
 
 # .. event_type: org.openedx.learning.user.notification.requested.v1
-# .. event_name: USER_NOTIFICATION
+# .. event_name: USER_NOTIFICATION_REQUESTED
 # .. event_description: Can be fired from apps to send user notifications.
 # .. event_data: UserNotificationSendListData
 # Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
@@ -310,5 +311,19 @@ FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.response.created.v1",
     data={
         "thread": DiscussionThreadData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.course.notification.requested.v1
+# .. event_name: COURSE_NOTIFICATION_REQUESTED
+# .. event_description: Emitted when a notification is requested for a course
+# .. event_data: CourseNotificationData
+# Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+#
+COURSE_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.notification.requested.v1",
+    data={
+        "course_notification_data": CourseNotificationData,
     }
 )
