@@ -57,7 +57,6 @@ openedx-events will add a per event type configuration field specifying the even
 TBD: Observability of outbox size and event send errors.
 
 .. _django-jaiminho: https://github.com/loadsmart/django-jaiminho
-    
 
 Consequences
 ************
