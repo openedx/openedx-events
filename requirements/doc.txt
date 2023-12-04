@@ -12,17 +12,17 @@ asgiref==3.7.2
     #   django
 attrs==23.1.0
     # via -r requirements/test.txt
-babel==2.12.1
+babel==2.13.1
     # via sphinx
 beautifulsoup4==4.12.2
     # via pydata-sphinx-theme
 build==1.0.3
     # via -r requirements/doc.in
-certifi==2023.7.22
+certifi==2023.11.17
     # via requests
 cffi==1.16.0
     # via cryptography
-charset-normalizer==3.3.0
+charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via
@@ -32,15 +32,16 @@ code-annotations==1.5.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.3.1
+coverage[toml]==7.3.2
     # via
     #   -r requirements/test.txt
+    #   coverage
     #   pytest-cov
-cryptography==41.0.4
+cryptography==41.0.7
     # via secretstorage
-ddt==1.6.0
+ddt==1.7.0
     # via -r requirements/test.txt
-django==3.2.21
+django==3.2.23
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/test.txt
@@ -54,24 +55,26 @@ docutils==0.19
     #   restructuredtext-lint
     #   sphinx
 edx-opaque-keys[django]==2.5.1
-    # via -r requirements/test.txt
-exceptiongroup==1.1.3
+    # via
+    #   -r requirements/test.txt
+    #   edx-opaque-keys
+exceptiongroup==1.2.0
     # via
     #   -r requirements/test.txt
     #   pytest
-fastavro==1.8.3
+fastavro==1.9.0
     # via -r requirements/test.txt
-idna==3.4
+idna==3.6
     # via requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==6.8.0
+importlib-metadata==7.0.0
     # via
     #   build
     #   keyring
     #   sphinx
     #   twine
-importlib-resources==6.1.0
+importlib-resources==6.1.1
     # via keyring
 iniconfig==2.0.0
     # via
@@ -88,7 +91,7 @@ jinja2==3.1.2
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinx
-keyring==24.2.0
+keyring==24.3.0
     # via twine
 livereload==2.6.3
     # via sphinx-autobuild
@@ -111,7 +114,7 @@ packaging==23.2
     #   pydata-sphinx-theme
     #   pytest
     #   sphinx
-pbr==5.11.1
+pbr==6.0.0
     # via
     #   -r requirements/test.txt
     #   stevedore
@@ -125,7 +128,7 @@ pycparser==2.21
     # via cffi
 pydata-sphinx-theme==0.12.0
     # via sphinx-book-theme
-pygments==2.16.1
+pygments==2.17.2
     # via
     #   doc8
     #   pydata-sphinx-theme
@@ -138,14 +141,14 @@ pymongo==3.13.0
     #   edx-opaque-keys
 pyproject-hooks==1.0.0
     # via build
-pytest==7.4.2
+pytest==7.4.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
     #   pytest-django
 pytest-cov==4.1.0
     # via -r requirements/test.txt
-pytest-django==4.5.2
+pytest-django==4.7.0
     # via -r requirements/test.txt
 python-slugify==8.0.1
     # via
@@ -174,7 +177,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==13.6.0
+rich==13.7.0
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -238,7 +241,7 @@ tomli==2.0.1
     #   doc8
     #   pyproject-hooks
     #   pytest
-tornado==6.3.3
+tornado==6.4
     # via livereload
 twine==4.0.2
     # via -r requirements/doc.in
@@ -248,7 +251,7 @@ typing-extensions==4.8.0
     #   asgiref
     #   edx-opaque-keys
     #   rich
-urllib3==2.0.5
+urllib3==2.1.0
     # via
     #   requests
     #   twine
