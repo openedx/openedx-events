@@ -26,31 +26,31 @@ It's also worth noting a goal we don't have, that of avoiding duplication. At-le
 
 As of 2023-11-09 we produce events in two different ways relative to transactions:
 
-- **Pre-commit send**: The event is produced to the event bus immediately upon the signal being sent, which will generally occur inside Django's request-level transaction (if using ``ATOMIC_REQUESTS``). This preserves atomicity in the success case as long as the broker is reachable, even if the IDA crashes -- but it does not preserve atomicity when the transaction fails. There is also no ordering guarantee in the case of concurrent requests.
-- **Post-commit send**: The event is only sent from a ``django.db.transaction.on_commit`` callback. This preserves atomicity in the failure case, but the IDA could crash after transaction commit but before calling the broker -- or more commonly, the broker could be down or unreachable, and all of the post-commit-produced events would be lost during that interval. Ordering is also not preserved here.
+- **Immediate send**: The event is produced to the event bus immediately upon the signal being sent, which will generally occur inside Django's request-level transaction (if using ``ATOMIC_REQUESTS``). This preserves atomicity in the success case as long as the broker is reachable, even if the IDA crashes -- but it does not preserve atomicity when the transaction fails. There is also no ordering guarantee in the case of concurrent requests.
+- **On-commit send**: The event is only sent from a ``django.db.transaction.on_commit`` callback. This preserves atomicity in the failure case, but the IDA could crash after transaction commit but before calling the broker -- or more commonly, the broker could be down or unreachable, and all of the on-commit-produced events would be lost during that interval. Ordering is also not preserved here.
 
-We currently use an ad-hoc mix of pre-commit and post-commit send in edx-platform, depending on how particular OpenEdxPublicSignals are emitted. For example, the code path for ``COURSE_CATALOG_INFO_CHANGED`` involves an explicit call to ``django.db.transaction.on_commit`` in order to ensure a post-commit send is used. But most signals do not have any such call, and are likely sent pre-commit. This uncontrolled state reflects our iterative approach to the event bus as well as our choice to start with events that are backed by other synchronization measures which can correct for consistency issues. However, we'd like to start handling events that require stronger reliability guarantees, such as those in the ecommerce space.
+We currently use an ad-hoc mix of immediate and on-commit send in edx-platform, depending on how particular OpenEdxPublicSignals are emitted. For example, the code path for ``COURSE_CATALOG_INFO_CHANGED`` involves an explicit call to ``django.db.transaction.on_commit`` in order to ensure an on-commit send is used. But most signals do not have any such call, and are likely sent immediately. This uncontrolled state reflects our iterative approach to the event bus as well as our choice to start with events that are backed by other synchronization measures which can correct for consistency issues. However, we'd like to start handling events that require stronger reliability guarantees, such as those in the ecommerce space.
 
 Decision
 ********
 
-We will implement the transactional outbox pattern (or just "outbox pattern") in order to allow binding event production to database transactions. Events will default to post-commit send, but openedx-events configuration will be enhanced to allow configuing each event to a production mode: Immediate, on_commit, or outbox.
+We will implement the transactional outbox pattern (or just "outbox pattern") in order to allow binding event production to database transactions. Events will default to on-commit send, but openedx-events configuration will be enhanced to allow configuring each event to a production mode: Immediate, on-commit, or outbox.
 
 In the outbox pattern, events are not produced immediately, but are appended to an "outbox" database table within the transaction. A worker process operating in a separate transaction works through the list in order, producing them to the message broker and removing them once the broker has acknowledged them. This is the standard solution to the dual-write problem and is likely the only way to meet all of the criteria. Atomicity is ensured by bringing the *intent* to send an event into the transaction's ACID guarantees. Transaction commits also impose a meaningful ordering across all hosts using the same database.
 
 openedx-events will change to support three producer modes for sending events:
 
-- ``immediate``: Whether or not there's a transaction, just send to the event bus immediately. This is the "pre-commit send" described in the Context section and is the current behavior for ``send(...)``.
-- ``on_commit``: Delay sending to the event bus until after the current transaction commits, or immediately if there is no open transaction (as might occur in a worker process).
+- ``immediate``: Whether or not there's a transaction, just send to the event bus immediately. This is the current behavior for ``send(...)``.
+- ``on-commit``: Delay sending to the event bus until after the current transaction commits, or immediately if there is no open transaction (as might occur in a worker process).
 
-  This requires ensuring that any events that are currently being explicitly sent post-commit are changed to call ``get_producer().send(...)`` directly, after appropriate per-event configuration. ``emit_catalog_info_changed_signal`` is a known example of this.
+  This requires ensuring that any events that are currently being explicitly sent on-commit are changed to call ``get_producer().send(...)`` directly, after appropriate per-event configuration. ``emit_catalog_info_changed_signal`` is a known example of this.
 - ``outbox``: Prep the signal for sending, and save in an outbox table for sending as soon as possible. The outbox table will be managed by `django-jaiminho`_. Deployers using this mode will also need to run a jaiminho management command in a perpetual worker process in order to relay events from the outbox to the broker and mark them as successfully sent. Another management command would be needed to periodically purge old processed events.
 
   (TBD: Format for the event data in the outbox. No further event-specific DB queries should be required for producing the bytes for the wire format, but it should not be serialized in a way that is specific to Kafka, Redis, etc.)
 
   (TBD: Safeguards around inadvertently changing the save-to-outbox function's name and module, since those are included in jaiminho's outbox records.)
 
-openedx-events will add a per event type configuration field specifying the event’s producer mode in the form of a new key-topic field inside ``EVENT_BUS_PRODUCER_CONFIG``. It will also add a new Django setting ``EVENT_BUS_PRODUCER_MODE`` that names a mode to use when not otherwise specified (defaulting to ``on_commit``.)
+openedx-events will add a per event type configuration field specifying the event’s producer mode in the form of a new key-topic field inside ``EVENT_BUS_PRODUCER_CONFIG``. It will also add a new Django setting ``EVENT_BUS_PRODUCER_MODE`` that names a mode to use when not otherwise specified (defaulting to ``on-commit``.)
 
 ``django-jaiminho`` will be added as a dependency of openedx-events and to the ``INSTALLED_APPS`` of relying IDAs.
 
