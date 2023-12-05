@@ -62,7 +62,7 @@ Consequences
 ************
 
 - The event bus becomes far more reliable, and able to handle events that require at-least-once delivery. The need for manual re-producing of events should become very rare.
-- Open edX becomes more complicated to run. Adding a new worker process to every service that produces events will further increase the orchestration needs of Open edX. (See alternatives section for a possible workaround.)
+- The new outbox functionality, if used, comes with operational complexity. Adding a new worker process to every service that produces events will further increase the orchestration needs of Open edX. (See alternatives section for a possible workaround.)
 - Duplication becomes possible, so we would need a way to avoid sending the same event over and over again to the broker if the broker is failing to send acknowledgements. We may need to revisit existing events and improve documentation around ensuring that consumers can tolerate duplication, either by ensuring that events are idempotent or by keeping track of which event IDs have already been processed.
 - The database will be required to store an unbounded number of events during a broker outage, worker outage, or event bus misconfiguration.
 
