@@ -34,13 +34,12 @@ We currently use an ad-hoc mix of immediate and on-commit send in edx-platform, 
 Decision
 ********
 
-We will implement the transactional outbox pattern (or just "outbox pattern") in order to allow binding event production to database transactions. Events will default to on-commit send, but openedx-events configuration will be enhanced to allow configuring each event to a production mode: Immediate, on-commit, or outbox.
+We will implement the transactional outbox pattern (or just "outbox pattern") in order to allow binding event production to database transactions. Events will default to on-commit send, but openedx-events configuration will be enhanced to allow configuring each event to a choice of production mode (on-commit or outbox).
 
-In the outbox pattern, events are not produced immediately, but are appended to an "outbox" database table within the transaction. A worker process operating in a separate transaction works through the list in order, producing them to the message broker and removing them once the broker has acknowledged them. This is the standard solution to the dual-write problem and is likely the only way to meet all of the criteria. Atomicity is ensured by bringing the *intent* to send an event into the transaction's ACID guarantees. Transaction commits also impose a meaningful ordering across all hosts using the same database.
+In the outbox pattern, events are not produced as part of the request/response cycle, but are instead appended to an "outbox" database table within the transaction. A worker process operating in a separate transaction works through the list in order, producing them to the message broker and removing them once the broker has acknowledged them. This is the standard solution to the dual-write problem and is likely the only way to meet all of the criteria. Atomicity is ensured by bringing the *intent* to send an event into the transaction's ACID guarantees. Transaction commits also impose a meaningful ordering across all hosts using the same database.
 
-openedx-events will change to support three producer modes for sending events:
+openedx-events will change to support two producer modes for sending events when ``send(...)`` is called:
 
-- ``immediate``: Whether or not there's a transaction, just send to the event bus immediately. This is the current behavior for ``send(...)``.
 - ``on-commit``: Delay sending to the event bus until after the current transaction commits, or immediately if there is no open transaction (as might occur in a worker process).
 
   This requires ensuring that any events that are currently being explicitly sent on-commit are changed to call ``get_producer().send(...)`` directly, after appropriate per-event configuration. ``emit_catalog_info_changed_signal`` is a known example of this.
@@ -51,6 +50,8 @@ openedx-events will change to support three producer modes for sending events:
   (TBD: Safeguards around inadvertently changing the save-to-outbox function's name and module, since those are included in jaiminho's outbox records.)
 
 openedx-events will add a per event type configuration field specifying the event’s producer mode in the form of a new key-topic field inside ``EVENT_BUS_PRODUCER_CONFIG``. It will also add a new Django setting ``EVENT_BUS_PRODUCER_MODE`` that names a mode to use when not otherwise specified (defaulting to ``on-commit``.)
+
+This will remove the ability to send an event immediately, as none of the currently implemented events would benefit from it. If in the future there is an event type that requires it, perhaps because it represents a request or attempt or even a failure, an ``immediate`` mode can be added.
 
 ``django-jaiminho`` will be added as a dependency of openedx-events and to the ``INSTALLED_APPS`` of relying IDAs.
 
