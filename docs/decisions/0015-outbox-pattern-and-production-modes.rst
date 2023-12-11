@@ -20,9 +20,9 @@ These are the properties we wish to ensure in the general case:
 
 - **Ordering**: If multiple events are produced to the same topic, their ordering is preserved. This raises the question of "ordered according to what metric", as concurrency is in play, so the nature of this property may vary by event.
 
-This is only in the general case, as some events may not be connected to database transactions, some consumers might tolerate violations of either atomic success or failure, and not all events may have strict notions of ordering. Hoever, in the general case violations of any of these can result in consistency failures between services that might not be corrected over any time scale.
+This is only in the general case, as some events may not be connected to database transactions, some consumers might tolerate violations of either atomic success or failure, and not all events may have strict notions of ordering. However, in the general case violations of any of these can result in consistency failures between services that might not be corrected over any time scale.
 
-It's also worth noting a goal we don't have, that of avoiding duplication. At-least-once delivery is acceptible; exactly-once delivery is not required. Double-sends of events are permissible as long as this only happens occasionally (for performance reasons) and does not entail a violation of ordering.
+It's also worth noting a goal we don't have, that of avoiding duplication. At-least-once delivery is acceptable; exactly-once delivery is not required. Double-sends of events are permissible as long as this only happens occasionally (for performance reasons) and does not entail a violation of ordering.
 
 As of 2023-11-09 we produce events in two different ways relative to transactions:
 
@@ -64,7 +64,7 @@ Consequences
 
 - The event bus becomes far more reliable, and able to handle events that require at-least-once delivery. The need for manual re-producing of events should become very rare.
 - The new outbox functionality, if used, comes with operational complexity. Adding a new worker process to every service that produces events will further increase the orchestration needs of Open edX. (See alternatives section for a possible workaround.)
-- Duplication becomes possible, so we would need a way to avoid sending the same event over and over again to the broker if the broker is failing to send acknowledgements. We may need to revisit existing events and improve documentation around ensuring that consumers can tolerate duplication, either by ensuring that events are idempotent or by keeping track of which event IDs have already been processed.
+- Duplication becomes possible, so we would need a way to avoid sending the same event over and over again to the broker if the broker is failing to send acknowledgments. We may need to revisit existing events and improve documentation around ensuring that consumers can tolerate duplication, either by ensuring that events are idempotent or by keeping track of which event IDs have already been processed.
 - The database will be required to store an unbounded number of events during a broker outage, worker outage, or event bus misconfiguration.
 
 Rejected and Unplanned Alternatives
@@ -86,7 +86,7 @@ Web responses that produce events would have higher latency, as they would have 
 
 It's also conceivable that each Django server in the IDA could start a background process to act as an outbox-emptying worker.
 
-We're not planning on implementating either of these, but they should be drop-in replacements for the long-running management command, and could be developed in the future by deployers who need such an arrangement.
+We're not planning on implementing either of these, but they should be drop-in replacements for the long-running management command, and could be developed in the future by deployers who need such an arrangement.
 
 References
 **********
