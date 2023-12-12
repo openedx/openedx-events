@@ -43,19 +43,24 @@ openedx-events will change to support two producer modes for sending events when
 - ``on-commit``: Delay sending to the event bus until after the current transaction commits, or immediately if there is no open transaction (as might occur in a worker process).
 
   This requires ensuring that any events that are currently being explicitly sent on-commit are changed to call ``get_producer().send(...)`` directly, after appropriate per-event configuration. ``emit_catalog_info_changed_signal`` is a known example of this.
-- ``outbox``: Prep the signal for sending, and save in an outbox table for sending as soon as possible. The outbox table will be managed by `django-jaiminho`_. Deployers using this mode will also need to run a jaiminho management command in a perpetual worker process in order to relay events from the outbox to the broker and mark them as successfully sent. Another management command would be needed to periodically purge old processed events.
-
-  (TBD: Format for the event data in the outbox. No further event-specific DB queries should be required for producing the bytes for the wire format, but it should not be serialized in a way that is specific to Kafka, Redis, etc.)
-
-  (TBD: Safeguards around inadvertently changing the save-to-outbox function's name and module, since those are included in jaiminho's outbox records.)
+- ``outbox``: Prep the signal for sending, and save in an outbox table for sending as soon as possible. A worker process will then relay events from the outbox to the broker and mark them as successfully sent. Another management command will be needed to periodically purge old processed events.
 
 openedx-events will add a per event type configuration field specifying the event’s producer mode in the form of a new key-topic field inside ``EVENT_BUS_PRODUCER_CONFIG``. It will also add a new Django setting ``EVENT_BUS_PRODUCER_MODE`` that names a mode to use when not otherwise specified (defaulting to ``on-commit``.)
 
 This will remove the ability to send an event immediately, as none of the currently implemented events would benefit from it. If in the future there is an event type that requires it, perhaps because it represents a request or attempt or even a failure, an ``immediate`` mode can be added.
 
-``django-jaiminho`` will be added as a dependency of openedx-events and to the ``INSTALLED_APPS`` of relying IDAs.
+Implementation Plan
+===================
 
-TBD: Observability of outbox size and event send errors.
+(Details in this section are subject to change.)
+
+The most promising option for implementing the transactional outbox is `django-jaiminho`_, a Django app that manages adding to and emptying an outbox table. ``django-jaiminho`` would be added as a dependency of openedx-events and to the ``INSTALLED_APPS`` of event-producing IDAs, and several long-running workers running jaiminho management commands would be required for each event-producing IDA.
+
+Unknowns and future decisions:
+
+- Format for the event data in the outbox. No further event-specific DB queries should be required for producing the bytes for the wire format, but it should not be serialized in a way that is specific to Kafka, Redis, etc.
+- Safeguards around inadvertently changing the save-to-outbox function's name and module, since those are included in jaiminho's outbox records.
+- Observability of outbox size and event send errors.
 
 .. _django-jaiminho: https://github.com/loadsmart/django-jaiminho
 
