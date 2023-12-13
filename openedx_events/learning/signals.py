@@ -20,6 +20,7 @@ from openedx_events.learning.data import (
     ORASubmissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
+    UserCourseData,
     UserData,
     UserNotificationData,
     XBlockSkillVerificationData,
@@ -349,4 +350,26 @@ ORA_SUBMISSION_CREATED = OpenEdxPublicSignal(
     data={
         "submission": ORASubmissionData,
     },
+)
+
+# .. event_type: org.openedx.learning.course.grade.now.passed.v1
+# .. event_name: COURSE_GRADE_NOW_PASSED
+# .. event_description: Emmited when course grade is passed.
+# .. event_data: UserCourseData
+COURSE_GRADE_NOW_PASSED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.grade.now.passed.v1",
+    data={
+        "user_course_data": UserCourseData,
+    }
+)
+
+# .. event_type: org.openedx.learning.course.grade.now.failed.v1
+# .. event_name: COURSE_GRADE_NOW_FAILED
+# .. event_description: Emmited when course grade is failed.
+# .. event_data: UserCourseData
+COURSE_GRADE_NOW_FAILED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.grade.now.failed.v1",
+    data={
+        "user_course_data": UserCourseData,
+    }
 )

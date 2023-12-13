@@ -476,3 +476,17 @@ class ORASubmissionData:
 
     id = attr.ib(type=str)
     file_downloads = attr.ib(type=List[ORAFileDownloadsData], factory=list)
+
+
+@attr.s(frozen=True)
+class UserCourseData:
+    """
+    Attributes defined for Open edX user course data object.
+
+    Arguments:
+        user (UserData): user associated with the Course Enrollment.
+        course (CourseData): course where the user is enrolled in.
+    """
+
+    user = attr.ib(type=UserData)
+    course = attr.ib(type=CourseData)
