@@ -8,17 +8,17 @@ asgiref==3.7.2
     # via
     #   -r requirements/test.txt
     #   django
-astroid==2.15.8
+astroid==3.0.2
     # via
     #   pylint
     #   pylint-celery
 attrs==23.1.0
     # via -r requirements/test.txt
-certifi==2023.7.22
+certifi==2023.11.17
     # via requests
 cffi==1.16.0
     # via cryptography
-charset-normalizer==3.3.0
+charset-normalizer==3.3.2
     # via requests
 click==8.1.7
     # via
@@ -32,45 +32,48 @@ code-annotations==1.5.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.3.1
+coverage[toml]==7.3.3
     # via
     #   -r requirements/test.txt
+    #   coverage
     #   pytest-cov
-cryptography==41.0.4
+cryptography==41.0.7
     # via secretstorage
-ddt==1.6.0
+ddt==1.7.0
     # via -r requirements/test.txt
 dill==0.3.7
     # via pylint
-django==3.2.21
+django==3.2.23
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/test.txt
 docutils==0.20.1
     # via readme-renderer
-edx-lint==5.3.4
+edx-lint==5.3.6
     # via -r requirements/quality.in
 edx-opaque-keys[django]==2.5.1
-    # via -r requirements/test.txt
-exceptiongroup==1.1.3
+    # via
+    #   -r requirements/test.txt
+    #   edx-opaque-keys
+exceptiongroup==1.2.0
     # via
     #   -r requirements/test.txt
     #   pytest
-fastavro==1.8.3
+fastavro==1.9.1
     # via -r requirements/test.txt
-idna==3.4
+idna==3.6
     # via requests
-importlib-metadata==6.8.0
+importlib-metadata==7.0.0
     # via
     #   keyring
     #   twine
-importlib-resources==6.1.0
+importlib-resources==6.1.1
     # via keyring
 iniconfig==2.0.0
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==5.12.0
+isort==5.13.2
     # via
     #   -r requirements/quality.in
     #   pylint
@@ -84,10 +87,8 @@ jinja2==3.1.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
-keyring==24.2.0
+keyring==24.3.0
     # via twine
-lazy-object-proxy==1.9.0
-    # via astroid
 markdown-it-py==3.0.0
     # via rich
 markupsafe==2.1.3
@@ -100,35 +101,35 @@ mdurl==0.1.2
     # via markdown-it-py
 more-itertools==10.1.0
     # via jaraco-classes
-nh3==0.2.14
+nh3==0.2.15
     # via readme-renderer
 packaging==23.2
     # via
     #   -r requirements/test.txt
     #   pytest
-pbr==5.11.1
+pbr==6.0.0
     # via
     #   -r requirements/test.txt
     #   stevedore
 pkginfo==1.9.6
     # via twine
-platformdirs==3.10.0
+platformdirs==4.1.0
     # via pylint
 pluggy==1.3.0
     # via
     #   -r requirements/test.txt
     #   pytest
-pycodestyle==2.11.0
+pycodestyle==2.11.1
     # via -r requirements/quality.in
 pycparser==2.21
     # via cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.in
-pygments==2.16.1
+pygments==2.17.2
     # via
     #   readme-renderer
     #   rich
-pylint==2.17.7
+pylint==3.0.3
     # via
     #   edx-lint
     #   pylint-celery
@@ -136,7 +137,7 @@ pylint==2.17.7
     #   pylint-plugin-utils
 pylint-celery==0.3
     # via edx-lint
-pylint-django==2.5.3
+pylint-django==2.5.5
     # via edx-lint
 pylint-plugin-utils==0.8.2
     # via
@@ -146,14 +147,14 @@ pymongo==3.13.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-pytest==7.4.2
+pytest==7.4.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
     #   pytest-django
 pytest-cov==4.1.0
     # via -r requirements/test.txt
-pytest-django==4.5.2
+pytest-django==4.7.0
     # via -r requirements/test.txt
 python-slugify==8.0.1
     # via
@@ -177,7 +178,7 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==13.6.0
+rich==13.7.0
     # via twine
 secretstorage==3.3.3
     # via keyring
@@ -204,11 +205,11 @@ tomli==2.0.1
     #   coverage
     #   pylint
     #   pytest
-tomlkit==0.12.1
+tomlkit==0.12.3
     # via pylint
 twine==4.0.2
     # via -r requirements/quality.in
-typing-extensions==4.8.0
+typing-extensions==4.9.0
     # via
     #   -r requirements/test.txt
     #   asgiref
@@ -216,12 +217,10 @@ typing-extensions==4.8.0
     #   edx-opaque-keys
     #   pylint
     #   rich
-urllib3==2.0.5
+urllib3==2.1.0
     # via
     #   requests
     #   twine
-wrapt==1.15.0
-    # via astroid
 zipp==3.17.0
     # via
     #   importlib-metadata
