@@ -377,3 +377,8 @@ class TestLoadAllSignals(FreezeSignalCacheMixin, TestCase):
             OpenEdxPublicSignal.get_signal_by_type('org.openedx.learning.course.enrollment.created.v1'),
             OpenEdxPublicSignal
         )
+
+
+class SirNotAppearingInThisFilm(TestCase):
+    def never_run(self):
+        print("Hello")
