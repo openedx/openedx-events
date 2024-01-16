@@ -9,6 +9,7 @@ docs/decisions/0003-events-payload.rst
 """
 
 from openedx_events.learning.data import (
+    BadgeData,
     CertificateData,
     CohortData,
     CourseAccessRoleData,
@@ -371,5 +372,28 @@ COURSE_GRADE_NOW_FAILED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.grade.now.failed.v1",
     data={
         "user_course_data": UserCourseData,
+    }
+)
+
+# .. event_type: org.openedx.learning.badge.awarded.v1
+# .. event_name: BADGE_AWARDED
+# .. event_description: Emit when a badge is awarded to a learner
+# .. event_data: BadgeData
+BADGE_AWARDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.badge.awarded.v1",
+    data={
+        "badge": BadgeData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.badge.revoked.v1
+# .. event_name: BADGE_REVOKED
+# .. event_description: Emit when a badge is revoked for a learner
+# .. event_data: BadgeData
+BADGE_REVOKED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.badge.revoked.v1",
+    data={
+        "badge": BadgeData,
     }
 )
