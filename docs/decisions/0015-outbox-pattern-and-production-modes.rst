@@ -38,11 +38,9 @@ We will implement the transactional outbox pattern (or just "outbox pattern") in
 
 In the outbox pattern, events are not published as part of the request/response cycle, but are instead appended to an "outbox" database table within the transaction. A worker process operating in a separate transaction works through the list in order, publishing them to the message broker and removing them once the broker has acknowledged them. This is the standard solution to the dual-write problem and is likely the only way to meet all of the criteria. Atomicity is ensured by bringing the *intent* to publish an event into the transaction's ACID guarantees. Transaction commits also impose a meaningful ordering across all hosts using the same database. Even events that are not otherwise published in a transactional context will benefit from the at-least-once delivery semantics.
 
-openedx-events will change to support two modes for publishing events when ``send(...)`` is called:
+openedx-events will change to support two modes for publishing events when an OpenEdxPublicSignal's ``send_event(...)`` is called:
 
 - ``on-commit``: Delay publishing to the event bus until after the current transaction commits, or immediately if there is no open transaction (as might occur in a worker process).
-
-  This requires ensuring that any events that are currently being explicitly published on-commit are changed to call ``get_producer().send(...)`` directly, after appropriate per-event configuration. ``emit_catalog_info_changed_signal`` is a known example of this.
 - ``outbox``: Prep the signal for publishing, and save in an outbox table for publishing as soon as possible. A worker process will then relay events from the outbox to the broker and mark them as successfully published. Another management command will be needed to periodically purge old processed events.
 
 openedx-events will add a per event type configuration field specifying the event’s publishing mode in the form of a new key-topic field inside ``EVENT_BUS_PRODUCER_CONFIG``. It will also add a new Django setting ``EVENT_BUS_PRODUCER_MODE`` that names a mode to use when not otherwise specified (defaulting to ``on-commit``.)
@@ -71,6 +69,8 @@ Consequences
 - The new outbox functionality, if used, comes with operational complexity. Adding a new worker process to every service that publishes events will further increase the orchestration needs of Open edX. (See alternatives section for a possible workaround.)
 - Duplication becomes possible, so we would need a way to avoid publishing the same event over and over again to the broker if the broker is failing to return acknowledgments. We may need to revisit existing events and improve documentation around ensuring that consumers can tolerate duplication, either by ensuring that events are idempotent or by keeping track of which event IDs have already been processed.
 - The database will be required to store an unbounded number of events during a broker outage, worker outage, or event bus misconfiguration.
+
+Some events are currently published on-commit because the signal ``send_event()`` call is made in a ``transaction.on_commit()`` callback. ``emit_catalog_info_changed_signal`` is a known example of this. These would need to be migrated to use the new on-commit publishing mode and to lift the signal send out of the on_commit callback, calling send_event directly instead.
 
 Rejected and Unplanned Alternatives
 ***********************************
