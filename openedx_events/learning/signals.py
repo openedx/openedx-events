@@ -9,6 +9,7 @@ docs/decisions/0003-events-payload.rst
 """
 
 from openedx_events.learning.data import (
+    BadgeData,
     CertificateData,
     CohortData,
     CourseDiscussionConfigurationData,
@@ -19,6 +20,7 @@ from openedx_events.learning.data import (
     ManageStudentsPermissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
+    UserCourseData,
     UserData,
     UserNotificationData,
     XBlockSkillVerificationData,
@@ -325,5 +327,50 @@ COURSE_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.notification.requested.v1",
     data={
         "course_notification_data": CourseNotificationData,
+    }
+)
+
+# .. event_type: org.openedx.learning.course.grade.now.passed.v1
+# .. event_name: COURSE_GRADE_NOW_PASSED
+# .. event_description: Emmited when course grade is passed.
+# .. event_data: UserCourseData
+COURSE_GRADE_NOW_PASSED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.grade.now.passed.v1",
+    data={
+        "user_course_data": UserCourseData,
+    }
+)
+
+# .. event_type: org.openedx.learning.course.grade.now.failed.v1
+# .. event_name: COURSE_GRADE_NOW_FAILED
+# .. event_description: Emmited when course grade is failed.
+# .. event_data: UserCourseData
+COURSE_GRADE_NOW_FAILED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.grade.now.failed.v1",
+    data={
+        "user_course_data": UserCourseData,
+    }
+)
+
+# .. event_type: org.openedx.learning.badge.awarded.v1
+# .. event_name: BADGE_AWARDED
+# .. event_description: Emit when a badge is awarded to a learner
+# .. event_data: BadgeData
+BADGE_AWARDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.badge.awarded.v1",
+    data={
+        "badge": BadgeData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.badge.revoked.v1
+# .. event_name: BADGE_REVOKED
+# .. event_description: Emit when a badge is revoked for a learner
+# .. event_data: BadgeData
+BADGE_REVOKED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.badge.revoked.v1",
+    data={
+        "badge": BadgeData,
     }
 )

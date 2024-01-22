@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[9.3.0] - 2024-01-22
+--------------------
+Added
+~~~~~~~
+* Added new COURSE_GRADE_NOW_PASSED, COURSE_GRADE_NOW_FAILED, BADGE_AWARDED, BADGE_REVOKED events in learning
+
 [9.2.0] - 2023-11-16
 --------------------
 Added
