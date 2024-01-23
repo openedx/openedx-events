@@ -9,6 +9,9 @@ Status
 Context
 *******
 
+.. note::
+  Clarification on language: We use "publish", "produce", and "send" somewhat interchangeably in various places in our code and documentation to refer to the transmission of an event from an IDA to the Event Bus message broker. The term "send" is also used in reference to the Django signal system. In this ADR, "send" will refer only to sending to an OpenEdxPublicSignal Django signal, and "publish" will be used for transmitting an event to the message broker.
+
 Some of the event types in the Event Bus might be more sensitive than others to dropped, duplicated, or reordered events. The message broker itself is partially responsible for ensuring that these problems do not occur in transit, but we also need to ensure that the handoff of events to the broker is reliable.
 
 These are the properties we wish to ensure in the general case:
