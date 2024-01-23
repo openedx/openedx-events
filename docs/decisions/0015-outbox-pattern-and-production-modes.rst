@@ -41,7 +41,14 @@ In the outbox pattern, events are not published as part of the request/response 
 openedx-events will change to support two modes for publishing events when an OpenEdxPublicSignal's ``send_event(...)`` is called:
 
 - ``on-commit``: Delay publishing to the event bus until after the current transaction commits, or immediately if there is no open transaction (as might occur in a worker process).
+
+  - Atomicity is preserved in the success case, but not in the failure case. (Events published in this mode may occasionally be lost, but should never be sent when a transaction fails.)
+  - This does not necessarily preserve ordering of events across multiple hosts.
+
 - ``outbox``: Prep the signal for publishing, and save in an outbox table for publishing as soon as possible. A worker process will then relay events from the outbox to the broker and mark them as successfully published. Another management command will be needed to periodically purge old processed events.
+
+  - Atomicity is fully preserved.
+  - As long as only a single worker per topic is emptying the outbox, ordering of events can be fully maintained.
 
 openedx-events will add a per event type configuration field specifying the event’s publishing mode in the form of a new key-topic field inside ``EVENT_BUS_PRODUCER_CONFIG``. It will also add a new Django setting ``EVENT_BUS_PRODUCER_MODE`` that names a mode to use when not otherwise specified (defaulting to ``on-commit``.)
 
