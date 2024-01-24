@@ -44,7 +44,7 @@ pbr==6.0.0
     # via
     #   -r requirements/base.txt
     #   stevedore
-pluggy==1.3.0
+pluggy==1.4.0
     # via pytest
 pymongo==3.13.0
     # via
