@@ -2,11 +2,14 @@
 from datetime import datetime, timezone
 from uuid import UUID
 
+import ddt
 from django.test import TestCase
+from django.test.utils import override_settings
 
 from openedx_events.data import EventsMetadata
 
 
+@ddt.ddt
 class TestEventsMetadata(TestCase):
     """
     Tests for the EventsMetadata class.
@@ -26,3 +29,20 @@ class TestEventsMetadata(TestCase):
         as_json = self.metadata.to_json()
         from_json = EventsMetadata.from_json(as_json)
         self.assertEqual(self.metadata, from_json)
+
+    @ddt.data(
+        ('settings_variant', None, 'openedx/settings_variant/web'),
+        (None, 'eb_app_name', 'openedx/eb_app_name/web'),
+        (None, None, 'openedx//web'),
+        ('settings_variant', 'eb_app_name', 'openedx/eb_app_name/web')
+    )
+    def test_events_metadata_source(self, settings_variant, event_bus_app_name, expected_source):
+        with override_settings(
+                SETTINGS_VARIANT=settings_variant,
+                EVENT_BUS_APP_NAME=event_bus_app_name,
+        ):
+            metadata = EventsMetadata(
+                event_type='test_type'
+            )
+            self.assertEqual(metadata.source, expected_source)
+

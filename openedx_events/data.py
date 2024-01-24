@@ -26,6 +26,12 @@ def _ensure_utc_time(_, attribute, value):
         return
     raise ValueError(f"'{attribute.name}' must have timezone.utc")
 
+def get_source_name():
+    source = getattr(settings, "EVENT_BUS_APP_NAME", None)
+    if not source:
+        source = getattr(settings, "SERVICE_VARIANT")
+    return source or ""
+
 
 @attr.s(frozen=True)
 class EventsMetadata:
@@ -62,7 +68,7 @@ class EventsMetadata:
     source = attr.ib(
         type=str, default=None,
         converter=attr.converters.default_if_none(
-            attr.Factory(lambda: "openedx/{service}/web".format(service=getattr(settings, "SERVICE_VARIANT", "")))
+            attr.Factory(lambda: "openedx/{service}/web".format(service=get_source_name()))
         ),
         validator=attr.validators.instance_of(str),
     )
