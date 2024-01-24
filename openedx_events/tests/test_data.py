@@ -39,7 +39,7 @@ class TestEventsMetadata(TestCase):
     @ddt.unpack
     def test_events_metadata_source(self, settings_variant, event_bus_app_name, expected_source):
         with override_settings(
-                SETTINGS_VARIANT=settings_variant,
+                SERVICE_VARIANT=settings_variant,
                 EVENT_BUS_APP_NAME=event_bus_app_name,
         ):
             metadata = EventsMetadata(
