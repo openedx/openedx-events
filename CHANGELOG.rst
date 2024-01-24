@@ -18,7 +18,7 @@ Unreleased
 --------------------
 Changed
 ~~~~~~~
-* Allow new EVENT_BUS_APP_NAME setting to override SERVICE_VARIANT for data source.
+* Allow new EVENTs_SERVICE_NAME setting to override SERVICE_VARIANT for data source.
 
 [9.2.0] - 2023-11-16
 --------------------
