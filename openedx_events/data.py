@@ -26,7 +26,11 @@ def _ensure_utc_time(_, attribute, value):
         return
     raise ValueError(f"'{attribute.name}' must have timezone.utc")
 
+
 def get_source_name():
+    """
+    Get the value that should be used for the source of an event.
+    """
     source = getattr(settings, "EVENT_BUS_APP_NAME", None)
     if not source:
         source = getattr(settings, "SERVICE_VARIANT", None)
