@@ -469,3 +469,53 @@ class CourseNotificationData:
     content_url = attr.ib(type=str)
     content_context = attr.ib(type=dict, factory=dict)
     audience_filters = attr.ib(type=dict, factory=dict)
+
+
+@attr.s(frozen=True)
+class UserCourseData:
+    """
+    Attributes defined for Open edX user course data object.
+
+    Arguments:
+        user (UserData): user associated with the Course Enrollment.
+        course (CourseData): course where the user is enrolled in.
+    """
+
+    user = attr.ib(type=UserData)
+    course = attr.ib(type=CourseData)
+
+
+@attr.s(frozen=True)
+class BadgeTemplateData:
+    """
+    Attributes defined for Open edX badge template data object.
+
+    Arguments:
+        uuid (str): UUID of the badge template
+        type (str): type of badge template
+        name (str): badge name
+        description (str): badge description
+        image_url (str): badge image url
+    """
+
+    uuid = attr.ib(type=str)
+    type = attr.ib(type=str)
+    name = attr.ib(type=str, default=None)
+    description = attr.ib(type=str, default=None)
+    image_url = attr.ib(type=str, default=None)
+
+
+@attr.s(frozen=True)
+class BadgeData:
+    """
+    Attributes defined for the Open edX badge data object.
+
+    Arguments:
+        uuid (str): the UUID of the badge
+        user (UserData): user associated with the badge
+        template (BadgeTemplateData): badge template data
+    """
+
+    uuid = attr.ib(type=str)
+    user = attr.ib(type=UserData)
+    template = attr.ib(type=BadgeTemplateData)
