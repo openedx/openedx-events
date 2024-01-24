@@ -31,7 +31,7 @@ def get_source_name():
     """
     Get the value that should be used for the source of an event.
     """
-    source = getattr(settings, "EVENT_BUS_APP_NAME", None)
+    source = getattr(settings, "EVENT_BUS_SERVICE_NAME", None)
     if not source:
         source = getattr(settings, "SERVICE_VARIANT", None)
     return source or ""
