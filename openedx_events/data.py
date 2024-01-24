@@ -29,7 +29,7 @@ def _ensure_utc_time(_, attribute, value):
 def get_source_name():
     source = getattr(settings, "EVENT_BUS_APP_NAME", None)
     if not source:
-        source = getattr(settings, "SERVICE_VARIANT")
+        source = getattr(settings, "SERVICE_VARIANT", None)
     return source or ""
 
 
