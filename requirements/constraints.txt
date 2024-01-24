@@ -11,3 +11,8 @@
 
 # Latest previous version has issues with doc8 because of conflicting docutils constraints
 sphinx-book-theme==0.4.0rc1
+
+# Temporary solution since this version raises RecursionError for test_generate_avro_schemas.py
+# This should be removed once the issue is fixed with a new astroid release or with a test_generate_avro_schemas.py
+# module refactor.
+astroid<3.0.0
