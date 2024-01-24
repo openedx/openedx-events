@@ -13,6 +13,10 @@ from openedx_events.learning.data import (
     CohortData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
+    CourseNotificationData,
+    DiscussionThreadData,
+    ExamAttemptData,
+    ManageStudentsPermissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
     UserData,
@@ -185,7 +189,7 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
 )
 
 # .. event_type: org.openedx.learning.user.notification.requested.v1
-# .. event_name: USER_NOTIFICATION
+# .. event_name: USER_NOTIFICATION_REQUESTED
 # .. event_description: Can be fired from apps to send user notifications.
 # .. event_data: UserNotificationSendListData
 # Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
@@ -194,5 +198,132 @@ USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.notification.requested.v1",
     data={
         "notification_data": UserNotificationData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.submitted.v1
+# .. event_name: EXAM_ATTEMPT_SUBMITTED
+# .. event_description: Emitted when an exam attempt is submitted by a learner in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_SUBMITTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.submitted.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.rejected.v1
+# .. event_name: EXAM_ATTEMPT_REJECTED
+# .. event_description: Emitted when an exam attempt is marked rejected in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.rejected.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.verified.v1
+# .. event_name: EXAM_ATTEMPT_VERIFIED
+# .. event_description: Emitted when an exam attempt is marked verified in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_VERIFIED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.verified.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.errored.v1
+# .. event_name: EXAM_ATTEMPT_ERRORED
+# .. event_description: Emitted when a learner's exam attempt errors out in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_ERRORED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.errored.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.exam.attempt.reset.v1
+# .. event_name: EXAM_ATTEMPT_RESET
+# .. event_description: Emitted when an exam attempt is reset in edx-exams.
+# .. event_data: ExamAttemptData
+EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.exam.attempt.reset.v1",
+    data={
+        "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.user.manage.students.permission.added.v1
+# .. event_name: MANAGE_STUDENTS_PERMISSION_ADDED
+# .. event_description: Emitted when permission to manage students within a course is given to a user.
+# .. event_data: ManageStudentsPermissionData
+MANAGE_STUDENTS_PERMISSION_ADDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.manage.students.permission.added.v1",
+    data={
+        "course_staff_data": ManageStudentsPermissionData,
+    }
+)
+
+# .. event_type: org.openedx.learning.user.manage.students.permission.removed.v1
+# .. event_name: MANAGE_STUDENTS_PERMISSION_REMOVED
+# .. event_description: Emitted when permission to manage students within a course is removed from a user.
+# .. event_data: ManageStudentsPermissionData
+MANAGE_STUDENTS_PERMISSION_REMOVED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.manage.students.permission.removed.v1",
+    data={
+        "course_staff_data": ManageStudentsPermissionData,
+    }
+)
+
+# .. event_type: org.openedx.learning.forum.thread.created.v1
+# .. event_name: FORUM_THREAD_CREATED
+# .. event_description: Emitted when a new thread is created in a discussion
+# .. event_data: DiscussionThreadData
+#       Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+FORUM_THREAD_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.thread.created.v1",
+    data={
+        "thread": DiscussionThreadData,
+    }
+)
+
+# .. event_type: org.openedx.learning.forum.thread.response.created.v1
+# .. event_name: FORUM_THREAD_RESPONSE_CREATED
+# .. event_description: Emitted when a new response is added to a thread
+# .. event_data: DiscussionThreadData
+#        Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.response.created.v1",
+    data={
+        "thread": DiscussionThreadData,
+    }
+)
+
+# .. event_type: org.openedx.learning.forum.thread.response.comment.created.v1
+# .. event_name: FORUM_RESPONSE_COMMENT_CREATED
+# .. event_description: Emitted when a new comment is added to a response
+# .. event_data: DiscussionThreadData
+#       Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.response.created.v1",
+    data={
+        "thread": DiscussionThreadData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.course.notification.requested.v1
+# .. event_name: COURSE_NOTIFICATION_REQUESTED
+# .. event_description: Emitted when a notification is requested for a course
+# .. event_data: CourseNotificationData
+# Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+#
+COURSE_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.notification.requested.v1",
+    data={
+        "course_notification_data": CourseNotificationData,
     }
 )

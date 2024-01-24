@@ -2,6 +2,7 @@
 Tests for event bus implementation loader.
 """
 
+import copy
 import warnings
 from contextlib import contextmanager
 from unittest import TestCase
@@ -9,7 +10,7 @@ from unittest import TestCase
 from django.test import override_settings
 
 from openedx_events.data import EventsMetadata
-from openedx_events.event_bus import _try_load, get_producer, make_single_consumer
+from openedx_events.event_bus import _try_load, get_producer, make_single_consumer, merge_producer_configs
 from openedx_events.learning.signals import SESSION_LOGIN_COMPLETED
 
 
@@ -126,3 +127,76 @@ class TestConsumer(TestCase):
         with assert_warnings([]):
             # Nothing thrown, no warnings.
             assert consumer.consume_indefinitely() is None
+
+
+class TestSettings(TestCase):
+
+    def setUp(self) -> None:
+        super().setUp()
+        self.base_config = {
+            'event_type_0': {
+                'topic_a': {'event_key_field': 'field', 'enabled': True},
+                'topic_b': {'event_key_field': 'field', 'enabled': True}
+            },
+            'event_type_1': {
+                'topic_c': {'event_key_field': 'field', 'enabled': True},
+            }
+        }
+
+    def test_merge_configs(self):
+        # for ensuring we didn't change the original dict
+        base_copy = copy.deepcopy(self.base_config)
+        overrides = {
+            'event_type_0': {
+                # disable an existing event/topic pairing and change the key field
+                'topic_a': {'event_key_field': 'new_field', 'enabled': False},
+                # add a new topic to an existing event_type
+                'topic_d': {'event_key_field': 'field', 'enabled': True},
+            },
+            # add a new event_type
+            'event_type_2': {
+                'topic_e': {'event_key_field': 'field', 'enabled': True},
+            }
+        }
+        overrides_copy = copy.deepcopy(overrides)
+        result = merge_producer_configs(self.base_config, overrides)
+        self.assertDictEqual(result, {
+            'event_type_0': {
+                'topic_a': {'event_key_field': 'new_field', 'enabled': False},
+                'topic_b': {'event_key_field': 'field', 'enabled': True},
+                'topic_d': {'event_key_field': 'field', 'enabled': True},
+            },
+            'event_type_1': {
+                'topic_c': {'event_key_field': 'field', 'enabled': True},
+            },
+            'event_type_2': {
+                'topic_e': {'event_key_field': 'field', 'enabled': True},
+            }
+        })
+        self.assertDictEqual(self.base_config, base_copy)
+        self.assertDictEqual(overrides, overrides_copy)
+
+    def test_merge_configs_with_empty(self):
+        overrides = {}
+        result = merge_producer_configs(self.base_config, overrides)
+        self.assertDictEqual(result, self.base_config)
+
+    def test_merge_configs_with_partial(self):
+        overrides = {
+            'event_type_0': {
+                # no override for 'event_key_field'
+                'topic_a': {'enabled': False},
+                # no override for 'enabled'
+                'topic_b': {'event_key_field': 'new_field'}
+            }
+        }
+        result = merge_producer_configs(self.base_config, overrides)
+        self.assertDictEqual(result, {
+            'event_type_0': {
+                'topic_a': {'event_key_field': 'field', 'enabled': False},
+                'topic_b': {'event_key_field': 'new_field', 'enabled': True}
+            },
+            'event_type_1': {
+                'topic_c': {'event_key_field': 'field', 'enabled': True},
+            }
+        })

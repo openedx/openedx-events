@@ -13,9 +13,49 @@ Change Log
 
 Unreleased
 ----------
+
+[9.2.0] - 2023-11-16
+--------------------
+Added
+~~~~~~~
+* Added new COURSE_NOTIFICATION_REQUESTED event in learning
+
+[9.1.0] - 2023-11-07
+--------------------
+Added
+~~~~~~~
+* Added new event TRACKING_EVENT_EMITTED.
+
+[9.0.1] - 2023-10-31
+--------------------
+Changed
+~~~~~~~
+* Fixed key error in merging event producer configs. Previously, setting only one of `enabled` or `event_key_field` would result in a KeyError being thrown
+
+[9.0.0] - 2023-10-04
+--------------------
 Changed
 ~~~~~~~
 * Re-licensed this repository from AGPL 3.0 to Apache 2.0
+* **Breaking change**: Restructured EVENT_BUS_PRODUCER_CONFIG
+
+[8.9.0] - 2023-10-04
+--------------------
+Added
+~~~~~
+* Added new ``FORUM_THREAD_CREATED``, ``FORUM_THREAD_RESPONSE_CREATED``, ``FORUM_RESPONSE_COMMENT_CREATED`` events in learning subdomain
+
+[8.8.0] - 2023-10-02
+--------------------
+Added
+~~~~~
+* Added new ``MANAGE_STUDENTS_PERMISSION_ADDED`` and ``MANAGE_STUDENTS_PERMISSION_REMOVED`` events in learning
+
+[8.7.0] - 2023-09-29
+--------------------
+Added
+~~~~~
+* Added new ``EXAM_ATTEMPT_SUBMITTED``, ``EXAM_ATTEMPT_REJECTED``, ``EXAM_ATTEMPT_VERIFIED``, ``EXAM_ATTEMPT_RESET``, and ``EXAM_ATTEMPT_ERRORED`` events in learning.
 
 [8.6.0] - 2023-08-28
 --------------------

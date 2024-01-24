@@ -12,16 +12,22 @@ from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
 
 def general_signal_handler(sender, signal, **kwargs):  # pylint: disable=unused-argument
     """
-    Signal handler for publishing events to configured event bus.
+    Signal handler for producing events to configured event bus.
     """
-    configurations = getattr(settings, "EVENT_BUS_PRODUCER_CONFIG", {}).get(signal.event_type, ())
+    event_type_producer_configs = getattr(settings, "EVENT_BUS_PRODUCER_CONFIG", {}).get(signal.event_type, {})
+    # event_type_producer_configs should look something like
+    # {
+    #        "topic_a": { "event_key_field": "my.key.field", "enabled": True },
+    #        "topic_b": { "event_key_field": "my.key.field", "enabled": False }
+    # }"
     event_data = {key: kwargs.get(key) for key in signal.init_data}
-    for configuration in configurations:
-        if configuration["enabled"]:
+
+    for topic in event_type_producer_configs.keys():
+        if event_type_producer_configs[topic]["enabled"] is True:
             get_producer().send(
                 signal=signal,
-                topic=configuration["topic"],
-                event_key_field=configuration["event_key_field"],
+                topic=topic,
+                event_key_field=event_type_producer_configs[topic]["event_key_field"],
                 event_data=event_data,
                 event_metadata=kwargs["metadata"],
             )
@@ -34,46 +40,63 @@ class OpenedxEventsConfig(AppConfig):
 
     name = "openedx_events"
 
-    def _get_validated_signal_config(self, event_type, configurations):
+    def _get_validated_signal_config(self, event_type, configuration):
         """
         Validate signal configuration format.
+
+        Example expected signal configuration:
+        {
+            "topic_a": { "event_key_field": "my.key.field", "enabled": True },
+            "topic_b": { "event_key_field": "my.key.field", "enabled": False }
+        }
 
         Raises:
             ProducerConfigurationError: If configuration is not valid.
         """
-        if not isinstance(configurations, list) and not isinstance(configurations, tuple):
+        if not isinstance(configuration, dict):
             raise ProducerConfigurationError(
                 event_type=event_type,
-                message="Configuration for event_types should be a list or a tuple of dictionaries"
+                message="Configuration for event_types should be a dict"
             )
         try:
             signal = OpenEdxPublicSignal.get_signal_by_type(event_type)
         except KeyError as exc:
             raise ProducerConfigurationError(message=f"No OpenEdxPublicSignal of type: '{event_type}'.") from exc
-        for configuration in configurations:
-            if not isinstance(configuration, dict):
+        for _, topic_configuration in configuration.items():
+            if not isinstance(topic_configuration, dict):
                 raise ProducerConfigurationError(
                     event_type=event_type,
-                    message="One of the configuration object is not a dictionary"
+                    message="One of the configuration objects is not a dictionary"
                 )
-            expected_keys = {"topic": str, "event_key_field": str, "enabled": bool}
+            expected_keys = {"event_key_field": str, "enabled": bool}
             for expected_key, expected_type in expected_keys.items():
-                if expected_key not in configuration:
+                if expected_key not in topic_configuration.keys():
                     raise ProducerConfigurationError(
                         event_type=event_type,
                         message=f"One of the configuration object is missing '{expected_key}' key."
                     )
-                if not isinstance(configuration[expected_key], expected_type):
+                if not isinstance(topic_configuration[expected_key], expected_type):
                     raise ProducerConfigurationError(
                         event_type=event_type,
                         message=(f"Expected type: {expected_type} for '{expected_key}', "
-                                 f"found: {type(configuration[expected_key])}")
+                                 f"found: {type(topic_configuration[expected_key])}")
                     )
         return signal
 
     def ready(self):
         """
         Read `EVENT_BUS_PRODUCER_CONFIG` setting and connects appropriate handlers to the events based on it.
+
+        Example expected configuration:
+        {
+            "org.openedx.content_authoring.xblock.deleted.v1" : {
+                "topic_a": { "event_key_field": "xblock_info.usage_key", "enabled": True },
+                "topic_b": { "event_key_field": "xblock_info.usage_key", "enabled": False }
+            },
+            "org.openedx.content_authoring.course.catalog_info.changed.v1" : {
+                "topic_c": {"event_key_field": "course_info.course_key", "enabled": True }
+            }
+        }
 
         Raises:
             ProducerConfigurationError: If `EVENT_BUS_PRODUCER_CONFIG` is not valid.

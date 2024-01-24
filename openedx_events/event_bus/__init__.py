@@ -14,6 +14,7 @@ API:
   ``EVENT_BUS_CONSUMER``.
 """
 
+import copy
 import warnings
 from abc import ABC, abstractmethod
 from functools import lru_cache
@@ -183,3 +184,32 @@ def make_single_consumer(*, topic: str, group_id: str,
 def _reset_state(sender, **kwargs):  # pylint: disable=unused-argument
     """Reset caches when settings change during unit tests."""
     get_producer.cache_clear()
+
+
+def merge_producer_configs(producer_config_original, producer_config_overrides):
+    """
+    Merge two EVENT_BUS_PRODUCER_CONFIG maps.
+
+    Arguments:
+        producer_config_original: An EVENT_BUS_PRODUCER_CONFIG-structured map
+        producer_config_overrides: An EVENT_BUS_PRODUCER_CONFIG-structured map
+
+    Returns:
+        A new EVENT_BUS_PRODUCER_CONFIG map created by combining the two maps. All event_type/topic pairs in
+        producer_config_overrides are added to the producer_config_original. If there is a conflict on whether a
+        particular event_type/topic pair is enabled, producer_config_overrides wins out.
+    """
+    combined = copy.deepcopy(producer_config_original)
+    for event_type, event_type_config_overrides in producer_config_overrides.items():
+        event_type_config_combined = combined.get(event_type, {})
+        for topic, topic_config_overrides in event_type_config_overrides.items():
+            topic_config_combined = event_type_config_combined.get(topic, {})
+            enabled_override = topic_config_overrides.get('enabled', None)
+            event_key_field_override = topic_config_overrides.get('event_key_field', None)
+            if enabled_override is not None:
+                topic_config_combined['enabled'] = enabled_override
+            if event_key_field_override is not None:
+                topic_config_combined['event_key_field'] = event_key_field_override
+            event_type_config_combined[topic] = topic_config_combined
+        combined[event_type] = event_type_config_combined
+    return combined

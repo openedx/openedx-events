@@ -243,12 +243,12 @@ class UserNotificationData:
     Attributes defined for Open edX User Notification data object.
 
     Arguments:
-        user_ids (List(int)): identifier of the user to which the notification belongs.
+        user_ids (List(int)): identifier of the users to which the notification belongs.
         notification_type (str): type of the notification.
-        context (dict): additional structured information about the context in
-                        which this topic is used, such as the section, subsection etc.
         content_url (str): url of the content.
         app_name (str): name of the app.
+        course_key (str): identifier of the Course object.
+        context (dict): additional structured information about the context of the notification.
     """
 
     user_ids = attr.ib(type=List[int])
@@ -296,3 +296,176 @@ class ProgramCertificateData:
     status = attr.ib(type=str)
     url = attr.ib(type=str)
     certificate_available_date = attr.ib(type=datetime, default=None)
+
+
+@attr.s(frozen=True)
+class ExamAttemptData:
+    """
+    Attributes defined for the Open edX Exam downstream effects.
+
+    Note that events that use this data type:
+        A. Pretain to "Special Exams", e.g. Timed or Proctored exams, and not non-timed course
+        subsections that are labelled as an exam.
+        B. Are only ever emitted from the newer exams backend, edx-exams, and never from the
+        legacy exams backend, edx-proctoring.
+
+    The event signals that use this data have the prefix `EXAM_`, which is equivalent to "special exam".
+    We are using this as a shortened form of the prefix `SPECIAL_EXAM` to avoid confusion, as these are likely
+    the only type of exams that will be of concern in the context of events/the event bus.
+
+    For more information, please see the ADR relating to this event data:
+    https://github.com/openedx/openedx-events/blob/main/docs/decisions/0013-special-exam-submission-and-review-events.rst
+
+    Arguments:
+        student_user (UserData): user object for the student to whom the exam attempt belongs
+        course_key (CourseKey): identifier of the course to which the exam attempt belongs
+        usage_key (UsageKey): identifier of the content that will get a exam attempt
+        exam_type (str): type of exam that was taken (e.g. timed, proctored, etc.)
+        requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
+    """
+
+    student_user = attr.ib(type=UserData)
+    course_key = attr.ib(type=CourseKey)
+    usage_key = attr.ib(type=UsageKey)
+    exam_type = attr.ib(type=str)
+    requesting_user = attr.ib(type=UserData, default=None)
+
+
+@attr.s(frozen=True)
+class ManageStudentsPermissionData:
+    """
+    Attributes defined for the Open edX to represent users that can manage students within a course/org.
+
+    IMPORTANT:
+        edX currently uses roles, and only roles, to decide what kind of access a user has.
+
+        There is an ongoing project to replace this roles-only system with a system that uses roles that are
+        made up of permissions, which is being worked on in parallel with another project to emit events
+        whenever users are assigned any type of "Course Staff" role.
+
+        It's unclear what the state of this roles/permissions project will be the time the events project
+        is completed, so each project's respective teams will stay in touch with each other.
+
+        For now, we're making a best effort to publish this an event that will regard the permission(s)
+        we'd expect to "filter" for in the future (For more info, please check out this document:
+        https://docs.google.com/spreadsheets/d/1htsV0eWq5-y96DZ5A245ukfZ4_qeH0KjHVaOyfqD8OA/edit#gid=908503896)
+        and not for the roles we have now. Likely this/these permission(s) will be something like `manage_students`,
+        but we need to evaluate how this will align with some possible future roles such as `limited_staff` or `ccx`.
+
+        As such, the current plan is to do one of the following once the roles/permissions project's
+        feature branch is merged to master:
+            1. Modify this event to "filter" by the correct permissions once the
+            2. As a backup plan, make a new event if this proves too difficult.
+
+        Until either of these plans are executed, this comment under the IMPORTANT header should stay put.
+
+    Arguments:
+        user (UserData): User who will have a role/permission assigned/removed.
+        permission (str): The permission the user is being assigned.
+        course_key (Course ID): identifier of the course where the user will have staff role assigned/removed.
+            A blank course_id implies org wide role.
+        org (str): identifier of the org where the user will have staff role assigned/removed.
+            A blank org is for global group based roles such as course creator (may be deprecated).
+    """
+
+    user = attr.ib(type=UserData)
+    permission = attr.ib(type=str)
+    course_key = attr.ib(type=str, default=None)
+    org = attr.ib(type=str, default=None)
+
+
+@attr.s(frozen=True)
+class DiscussionThreadData:
+    """
+    Attributes defined for the Open edX to represent events in the Forum such as comments, responses, and threads.
+
+    For more details on the data attributes, please see the following documentation:
+    https://docs.openedx.org/en/latest/developers/references/internal_data_formats/tracking_logs/student_event_types.html#edx-forum-thread-created
+
+    Arguments:
+        anonymous (bool): indicates whether the user is anonymous.
+        anonymous_to_peers (bool): indicates whether the user is anonymous to peers.
+        body (str): body of the discussion thread.
+        category_id (int): identifier of the category.
+        category_name (str): name of the category.
+        commentable_id (str): identifier of the commentable.
+        group_id (int): identifier of the group.
+        id (int): identifier of the discussion thread.
+        team_id (int): identifier of the team.
+        thread_type (str): type of the thread.
+        title (str): title of the thread.
+        title_truncated (bool): indicates whether the title is truncated.
+        truncated (bool): indicates whether the thread is truncated.
+        url (str): url of the thread.
+        user (UserData): information of the user that authored the thread/comment/response.
+        course_id (CourseKey): identifier of the course.
+        discussion (dict): discussion data. (optional, specific to comments and responses)
+        user_course_roles (List[str]): user course roles.
+        user_forums_roles (List[str]): user forums roles.
+        options (dict): options for the thread.
+    """
+
+    anonymous = attr.ib(type=bool)
+    anonymous_to_peers = attr.ib(type=bool)
+    body = attr.ib(type=str)
+    category_id = attr.ib(type=int)
+    category_name = attr.ib(type=str)
+    commentable_id = attr.ib(type=str)
+    group_id = attr.ib(type=int)
+    id = attr.ib(type=int)
+    team_id = attr.ib(type=int)
+    thread_type = attr.ib(type=str)
+    title = attr.ib(type=str)
+    title_truncated = attr.ib(type=bool)
+    truncated = attr.ib(type=bool)
+    url = attr.ib(type=str)
+    user = attr.ib(type=UserData)
+    course_id = attr.ib(type=CourseKey)
+    discussion = attr.ib(type=dict, factory=dict)
+    user_course_roles = attr.ib(type=List[str], factory=list)
+    user_forums_roles = attr.ib(type=List[str], factory=list)
+    options = attr.ib(type=dict, factory=dict)
+
+
+@attr.s(frozen=True)
+class CourseNotificationData:
+    """
+    Attributes defined for Open edX Course Notification data object.
+
+    Arguments:
+        course_key (str): identifier of the Course object.
+        app_name (str): name of the app requesting the course notification.
+        notification_type (str): type of the notification.
+        content_url (str): url of the content the notification will redirect to.
+        content_context (dict): additional information related to the content of the notification.
+            Notification content templates are defined in edx-platform here:
+                https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/base_notification.py#L10
+
+        Example of content_context for a discussion notification (new_comment_on_response):
+
+            {
+                ...,
+                "content_context": {
+                    "post_title": "Post Title",
+                    "replier_name": "test_user",
+            }
+
+        audience_filters (dict): additional information related to the audience of the notification.
+            We can have different filters on course level, such as roles, enrollments, cohorts etc.
+
+        Example of audience_filters for a discussion notification (new_discussion_post):
+
+            {
+                ...,
+                "audience_filters": {
+                    "enrollment": ["verified", "audit"],
+                    "role": ["discussion admin", "discussion moderator"],
+            }
+    """
+
+    course_key = attr.ib(type=CourseKey)
+    app_name = attr.ib(type=str)
+    notification_type = attr.ib(type=str)
+    content_url = attr.ib(type=str)
+    content_context = attr.ib(type=dict, factory=dict)
+    audience_filters = attr.ib(type=dict, factory=dict)
