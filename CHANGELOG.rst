@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[9.3.0] - 2024-01-24
+--------------------
+Changed
+~~~~~~~
+* Choose new EVENT_BUS_APP_NAME setting over SERVICE_VARIANT for data source
+
 [9.2.0] - 2023-11-16
 --------------------
 Added
