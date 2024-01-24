@@ -31,10 +31,13 @@ def get_source_name():
     """
     Get the value that should be used for the source of an event.
     """
-    source = getattr(settings, "EVENT_BUS_SERVICE_NAME", None)
-    if not source:
-        source = getattr(settings, "SERVICE_VARIANT", None)
-    return source or ""
+    # .. setting_name: EVENTS_SERVICE_NAME
+    # .. setting_default: None
+    # .. setting_description: Identifier for the producing/consuming service of an event. Used in setting the source in
+    #   the EventsMetadata. If not set, the EventsMetadata object will look for a SERVICE_VARIANT setting (usually only
+    #   set for lms and cms). The full source will be set to openedx/<EVENTS_SERVICE_NAME or SERVICE_VARIANT>/web.
+    #   If neither variable is set, the source will be "unidentified."
+    return getattr(settings, "EVENTS_SERVICE_NAME", None) or getattr(settings, "SERVICE_VARIANT", None)
 
 
 @attr.s(frozen=True)
@@ -72,7 +75,8 @@ class EventsMetadata:
     source = attr.ib(
         type=str, default=None,
         converter=attr.converters.default_if_none(
-            attr.Factory(lambda: "openedx/{service}/web".format(service=get_source_name()))
+            attr.Factory(lambda: "openedx/{service}/web".format(service=get_source_name()) if get_source_name()
+                         else "unidentified")
         ),
         validator=attr.validators.instance_of(str),
     )

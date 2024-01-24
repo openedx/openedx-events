@@ -33,14 +33,14 @@ class TestEventsMetadata(TestCase):
     @ddt.data(
         ('settings_variant', None, 'openedx/settings_variant/web'),
         (None, 'my_service', 'openedx/my_service/web'),
-        (None, None, 'openedx//web'),
+        (None, None, 'unidentified'),
         ('settings_variant', 'my_service', 'openedx/my_service/web')
     )
     @ddt.unpack
     def test_events_metadata_source(self, settings_variant, event_bus_service_name, expected_source):
         with override_settings(
                 SERVICE_VARIANT=settings_variant,
-                EVENT_BUS_SERVICE_NAME=event_bus_service_name,
+                EVENTS_SERVICE_NAME=event_bus_service_name,
         ):
             metadata = EventsMetadata(
                 event_type='test_type'
