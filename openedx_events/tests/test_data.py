@@ -46,4 +46,3 @@ class TestEventsMetadata(TestCase):
                 event_type='test_type'
             )
             self.assertEqual(metadata.source, expected_source)
-
