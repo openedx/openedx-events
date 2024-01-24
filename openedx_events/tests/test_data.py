@@ -36,6 +36,7 @@ class TestEventsMetadata(TestCase):
         (None, None, 'openedx//web'),
         ('settings_variant', 'eb_app_name', 'openedx/eb_app_name/web')
     )
+    @ddt.unpack
     def test_events_metadata_source(self, settings_variant, event_bus_app_name, expected_source):
         with override_settings(
                 SETTINGS_VARIANT=settings_variant,
