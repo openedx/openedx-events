@@ -40,7 +40,7 @@ class TestEventsMetadata(TestCase):
     def test_events_metadata_source(self, settings_variant, event_bus_service_name, expected_source):
         with override_settings(
                 SERVICE_VARIANT=settings_variant,
-                EVENT_BUS_APP_NAME=event_bus_service_name,
+                EVENT_BUS_SERVICE_NAME=event_bus_service_name,
         ):
             metadata = EventsMetadata(
                 event_type='test_type'
