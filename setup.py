@@ -53,7 +53,7 @@ def load_requirements(*requirements_paths):
         if seen_spelling is None:
             by_canonical_name[canonical] = package
         elif seen_spelling != package:
-            raise Exception(
+            raise Exception(  # pylint: disable=broad-exception-raised
                 f'Encountered both "{seen_spelling}" and "{package}" in requirements '
                 'and constraints files; please use just one or the other.'
             )
