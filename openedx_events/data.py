@@ -39,6 +39,7 @@ def get_service_name():
     #   If neither variable is set, the source will be "SERVICE_NAME_UNSET"
     return getattr(settings, "EVENTS_SERVICE_NAME", None) or getattr(settings, "SERVICE_VARIANT", None)
 
+
 def _get_source():
     service_name = get_service_name()
     if service_name:
