@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[9.3.0] - 2024-01-24
+--------------------
+Changed
+~~~~~~~
+* Allow new EVENTS_SERVICE_NAME setting to override SERVICE_VARIANT for data source.
+
 [9.2.0] - 2023-11-16
 --------------------
 Added
