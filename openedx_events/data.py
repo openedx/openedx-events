@@ -39,6 +39,13 @@ def get_service_name():
     #   If neither variable is set, the source will be "SERVICE_NAME_UNSET"
     return getattr(settings, "EVENTS_SERVICE_NAME", None) or getattr(settings, "SERVICE_VARIANT", None)
 
+def _get_source():
+    service_name = get_service_name()
+    if service_name:
+        return "openedx/{service}/web".format(service=service_name)
+    else:
+        return "SERVICE_NAME_UNSET"
+
 
 @attr.s(frozen=True)
 class EventsMetadata:
@@ -74,8 +81,7 @@ class EventsMetadata:
     )
     source = attr.ib(
         type=str, default=None,
-        converter=attr.converters.default_if_none(
-            attr.Factory(lambda: "openedx/{service}/web".format(service=(get_service_name() or "SERVICE_NAME_UNSET")))),
+        converter=attr.converters.default_if_none(attr.Factory(_get_source)),
         validator=attr.validators.instance_of(str),
     )
     sourcehost = attr.ib(

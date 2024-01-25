@@ -33,7 +33,7 @@ class TestEventsMetadata(TestCase):
     @ddt.data(
         ('settings_variant', None, 'openedx/settings_variant/web'),
         (None, 'my_service', 'openedx/my_service/web'),
-        (None, None, 'unidentified'),
+        (None, None, 'SERVICE_NAME_UNSET'),
         ('settings_variant', 'my_service', 'openedx/my_service/web')
     )
     @ddt.unpack
