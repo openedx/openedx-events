@@ -29,7 +29,7 @@ def _ensure_utc_time(_, attribute, value):
 
 def get_service_name():
     """
-    Get the value that should be used for the source of an event.
+    Get the service name that should be used in the source of an event.
     """
     # .. setting_name: EVENTS_SERVICE_NAME
     # .. setting_default: None
@@ -41,6 +41,9 @@ def get_service_name():
 
 
 def _get_source():
+    """
+    Get the source for an event.
+    """
     service_name = get_service_name()
     if service_name:
         return "openedx/{service}/web".format(service=service_name)
