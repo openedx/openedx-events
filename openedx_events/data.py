@@ -29,26 +29,23 @@ def _ensure_utc_time(_, attribute, value):
 
 def get_service_name():
     """
-    Get the service name that should be used in the source of an event.
+    Get the service name of the producing/consuming service of an event (or None if not set).
     """
     # .. setting_name: EVENTS_SERVICE_NAME
     # .. setting_default: None
-    # .. setting_description: Identifier for the producing/consuming service of an event. Used in setting the source in
-    #   the EventsMetadata. If not set, the EventsMetadata object will look for a SERVICE_VARIANT setting (usually only
-    #   set for lms and cms). The full source will be set to openedx/<EVENTS_SERVICE_NAME or SERVICE_VARIANT>/web.
-    #   If neither variable is set, the source will be "SERVICE_NAME_UNSET"
+    # .. setting_description: Identifier for the producing/consuming service of an event. For example, "cms" or
+    #   "course-discovery." Used, among other places, to determine the source header of the event.
     return getattr(settings, "EVENTS_SERVICE_NAME", None) or getattr(settings, "SERVICE_VARIANT", None)
 
 
 def _get_source():
     """
-    Get the source for an event.
+    Get the source for an event using the service name.
+
+    If the service name is set, the full source will be set to openedx/<service_name>/web or
+    openedx/SERVICE_NAME_UNSET/web if service name is None.
     """
-    service_name = get_service_name()
-    if service_name:
-        return "openedx/{service}/web".format(service=service_name)
-    else:
-        return "SERVICE_NAME_UNSET"
+    return "openedx/{service}/web".format(service=(get_service_name() or "SERVICE_NAME_UNSET"))
 
 
 @attr.s(frozen=True)
