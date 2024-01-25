@@ -27,7 +27,7 @@ def _ensure_utc_time(_, attribute, value):
     raise ValueError(f"'{attribute.name}' must have timezone.utc")
 
 
-def get_source_name():
+def get_service_name():
     """
     Get the value that should be used for the source of an event.
     """
@@ -36,7 +36,7 @@ def get_source_name():
     # .. setting_description: Identifier for the producing/consuming service of an event. Used in setting the source in
     #   the EventsMetadata. If not set, the EventsMetadata object will look for a SERVICE_VARIANT setting (usually only
     #   set for lms and cms). The full source will be set to openedx/<EVENTS_SERVICE_NAME or SERVICE_VARIANT>/web.
-    #   If neither variable is set, the source will be "unidentified."
+    #   If neither variable is set, the source will be "SERVICE_NAME_UNSET"
     return getattr(settings, "EVENTS_SERVICE_NAME", None) or getattr(settings, "SERVICE_VARIANT", None)
 
 
@@ -75,9 +75,7 @@ class EventsMetadata:
     source = attr.ib(
         type=str, default=None,
         converter=attr.converters.default_if_none(
-            attr.Factory(lambda: "openedx/{service}/web".format(service=get_source_name()) if get_source_name()
-                         else "unidentified")
-        ),
+            attr.Factory(lambda: "openedx/{service}/web".format(service=(get_service_name() or "SERVICE_NAME_UNSET")))),
         validator=attr.validators.instance_of(str),
     )
     sourcehost = attr.ib(
