@@ -30,6 +30,8 @@ def _ensure_utc_time(_, attribute, value):
 def get_service_name():
     """
     Get the service name of the producing/consuming service of an event (or None if not set).
+
+    Uses EVENTS_SERVICE_NAME setting if present, otherwise looks for SERVICE_VARIANT.
     """
     # .. setting_name: EVENTS_SERVICE_NAME
     # .. setting_default: None
