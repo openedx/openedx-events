@@ -14,7 +14,7 @@ click==8.1.7
     # via code-annotations
 code-annotations==1.5.0
     # via -r requirements/test.in
-coverage[toml]==7.4.0
+coverage[toml]==7.4.1
     # via
     #   coverage
     #   pytest-cov
@@ -50,7 +50,7 @@ pymongo==3.13.0
     # via
     #   -r requirements/base.txt
     #   edx-opaque-keys
-pytest==7.4.4
+pytest==8.0.0
     # via
     #   pytest-cov
     #   pytest-django
@@ -58,7 +58,7 @@ pytest-cov==4.1.0
     # via -r requirements/test.in
 pytest-django==4.7.0
     # via -r requirements/test.in
-python-slugify==8.0.1
+python-slugify==8.0.2
     # via code-annotations
 pytz==2023.3.post1
     # via
