@@ -13,6 +13,11 @@ Change Log
 
 Unreleased
 ----------
+[9.4.0] - 2024-01-29
+--------------------
+Added
+~~~~~
+* Added new ``COURSE_ACCESS_ROLE_ADDED`` and ``COURSE_ACCESS_ROLE_REMOVED`` events in learning
 
 [9.3.0] - 2024-01-24
 --------------------
