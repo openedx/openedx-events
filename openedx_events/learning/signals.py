@@ -11,6 +11,7 @@ docs/decisions/0003-events-payload.rst
 from openedx_events.learning.data import (
     CertificateData,
     CohortData,
+    CourseAccessRoleData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
     CourseNotificationData,
@@ -253,6 +254,28 @@ EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.reset.v1",
     data={
         "exam_attempt": ExamAttemptData,
+    }
+)
+
+# .. event_type: org.openedx.learning.user.course_access_role.added.v1
+# .. event_name: COURSE_ACCESS_ROLE_ADDED
+# .. event_description: Emitted when a user is given a course access role.
+# .. event_data: CourseAccessRoleData
+COURSE_ACCESS_ROLE_ADDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.course_access_role.added.v1",
+    data={
+        "course_access_role_data": CourseAccessRoleData,
+    }
+)
+
+# .. event_type: org.openedx.learning.user.course_access_role.removed.v1
+# .. event_name: COURSE_ACCESS_ROLE_REMOVED
+# .. event_description: Emitted when a course access role is removed from a user.
+# .. event_data: CourseAccessRoleData
+COURSE_ACCESS_ROLE_REMOVED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.user.course_access_role.removed.v1",
+    data={
+        "course_access_role_data": CourseAccessRoleData,
     }
 )
 

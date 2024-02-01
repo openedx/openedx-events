@@ -332,6 +332,24 @@ class ExamAttemptData:
 
 
 @attr.s(frozen=True)
+class CourseAccessRoleData:
+    """
+    Attributes defined for the Open edX Course Access Role data object.
+
+    Arguments:
+        user (UserData): user associated with the CourseAccessRole.
+        course_key (CourseKey): identifer of the related course object.
+        org (str): identifier of the organization.
+        role (str): the role of the user in the course.
+    """
+
+    user = attr.ib(type=UserData)
+    org_key = attr.ib(type=str)
+    course_key = attr.ib(type=CourseKey)
+    role = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
 class ManageStudentsPermissionData:
     """
     Attributes defined for the Open edX to represent users that can manage students within a course/org.
