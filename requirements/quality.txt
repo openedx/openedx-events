@@ -15,7 +15,7 @@ astroid==2.15.8
     #   pylint-celery
 attrs==23.2.0
     # via -r requirements/test.txt
-certifi==2023.11.17
+certifi==2024.2.2
     # via requests
 cffi==1.16.0
     # via cryptography
@@ -29,20 +29,20 @@ click==8.1.7
     #   edx-lint
 click-log==0.4.0
     # via edx-lint
-code-annotations==1.5.0
+code-annotations==1.6.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.4.0
+coverage[toml]==7.4.1
     # via
     #   -r requirements/test.txt
     #   coverage
     #   pytest-cov
-cryptography==42.0.0
+cryptography==42.0.2
     # via secretstorage
 ddt==1.7.1
     # via -r requirements/test.txt
-dill==0.3.7
+dill==0.3.8
     # via pylint
 django==3.2.23
     # via
@@ -94,7 +94,7 @@ lazy-object-proxy==1.10.0
     # via astroid
 markdown-it-py==3.0.0
     # via rich
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via
     #   -r requirements/test.txt
     #   jinja2
@@ -116,7 +116,7 @@ pbr==6.0.0
     #   stevedore
 pkginfo==1.9.6
     # via twine
-platformdirs==4.1.0
+platformdirs==4.2.0
     # via pylint
 pluggy==1.4.0
     # via
@@ -150,20 +150,20 @@ pymongo==3.13.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-pytest==7.4.4
+pytest==8.0.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
     #   pytest-django
 pytest-cov==4.1.0
     # via -r requirements/test.txt
-pytest-django==4.7.0
+pytest-django==4.8.0
     # via -r requirements/test.txt
-python-slugify==8.0.1
+python-slugify==8.0.3
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2023.3.post1
+pytz==2024.1
     # via
     #   -r requirements/test.txt
     #   django
@@ -220,7 +220,7 @@ typing-extensions==4.9.0
     #   edx-opaque-keys
     #   pylint
     #   rich
-urllib3==2.1.0
+urllib3==2.2.0
     # via
     #   requests
     #   twine

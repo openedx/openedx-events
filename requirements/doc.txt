@@ -22,7 +22,7 @@ beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
 build==1.0.3
     # via -r requirements/doc.in
-certifi==2023.11.17
+certifi==2024.2.2
     # via requests
 cffi==1.16.0
     # via cryptography
@@ -32,16 +32,16 @@ click==8.1.7
     # via
     #   -r requirements/test.txt
     #   code-annotations
-code-annotations==1.5.0
+code-annotations==1.6.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.4.0
+coverage[toml]==7.4.1
     # via
     #   -r requirements/test.txt
     #   coverage
     #   pytest-cov
-cryptography==42.0.0
+cryptography==42.0.2
     # via secretstorage
 ddt==1.7.1
     # via -r requirements/test.txt
@@ -101,7 +101,7 @@ livereload==2.6.3
     # via sphinx-autobuild
 markdown-it-py==3.0.0
     # via rich
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via
     #   -r requirements/test.txt
     #   jinja2
@@ -146,20 +146,20 @@ pymongo==3.13.0
     #   edx-opaque-keys
 pyproject-hooks==1.0.0
     # via build
-pytest==7.4.4
+pytest==8.0.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
     #   pytest-django
 pytest-cov==4.1.0
     # via -r requirements/test.txt
-pytest-django==4.7.0
+pytest-django==4.8.0
     # via -r requirements/test.txt
-python-slugify==8.0.1
+python-slugify==8.0.3
     # via
     #   -r requirements/test.txt
     #   code-annotations
-pytz==2023.3.post1
+pytz==2024.1
     # via
     #   -r requirements/test.txt
     #   babel
@@ -254,7 +254,7 @@ typing-extensions==4.9.0
     #   edx-opaque-keys
     #   pydata-sphinx-theme
     #   rich
-urllib3==2.1.0
+urllib3==2.2.0
     # via
     #   requests
     #   twine
