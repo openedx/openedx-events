@@ -7,7 +7,9 @@ from importlib import import_module
 from logging import getLogger
 
 from django.conf import settings
+from django.db import connection
 from django.dispatch import Signal
+from edx_django_utils.cache import RequestCache
 
 from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import SenderValidationError
@@ -292,3 +294,45 @@ def load_all_signals():
     Loads all non-test signals.py modules.
     """
     _process_all_signals_modules(import_module)
+
+
+def _reconnect_to_db_if_needed():  # pragma: no cover
+    """
+    Reconnects the db connection if needed.
+
+    This is important because Django only does connection validity/age checks as part of
+    its request/response cycle, which isn't in effect for the consume-loop. If we don't
+    force these checks, a broken connection will remain broken indefinitely. For most
+    consumers, this will cause event processing to fail.
+    """
+    has_connection = bool(connection.connection)
+    requires_reconnect = has_connection and not connection.is_usable()
+    if requires_reconnect:
+        connection.connect()
+
+
+def _clear_request_cache():  # pragma: no cover
+    """
+    Clear the RequestCache so that each event consumption starts fresh.
+
+    Signal handlers may be written with the assumption that they are called in the context
+    of a web request, so we clear the request cache just in case.
+    """
+    RequestCache.clear_all_namespaces()
+
+
+def prepare_for_new_work_cycle():  # pragma: no cover
+    """
+    Ensure that the application state is appropriate for performing a new unit of work.
+
+    This mimics some setup/teardown that is normally performed by Django in its
+    request/response based architecture and that is needed for ensuring a clean and
+    usable state in this worker-based application.
+
+    See https://github.com/openedx/openedx-events/issues/236 for details.
+    """
+    # Ensure that the database connection is active and usable.
+    _reconnect_to_db_if_needed()
+
+    # Clear the request cache, in case anything in the signal handlers rely on it.
+    _clear_request_cache()
