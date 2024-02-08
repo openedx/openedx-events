@@ -27,6 +27,29 @@ def _ensure_utc_time(_, attribute, value):
     raise ValueError(f"'{attribute.name}' must have timezone.utc")
 
 
+def get_service_name():
+    """
+    Get the service name of the producing/consuming service of an event (or None if not set).
+
+    Uses EVENTS_SERVICE_NAME setting if present, otherwise looks for SERVICE_VARIANT.
+    """
+    # .. setting_name: EVENTS_SERVICE_NAME
+    # .. setting_default: None
+    # .. setting_description: Identifier for the producing/consuming service of an event. For example, "cms" or
+    #   "course-discovery." Used, among other places, to determine the source header of the event.
+    return getattr(settings, "EVENTS_SERVICE_NAME", None) or getattr(settings, "SERVICE_VARIANT", None)
+
+
+def _get_source():
+    """
+    Get the source for an event using the service name.
+
+    If the service name is set, the full source will be set to openedx/<service_name>/web or
+    openedx/SERVICE_NAME_UNSET/web if service name is None.
+    """
+    return "openedx/{service}/web".format(service=(get_service_name() or "SERVICE_NAME_UNSET"))
+
+
 @attr.s(frozen=True)
 class EventsMetadata:
     """
@@ -61,9 +84,7 @@ class EventsMetadata:
     )
     source = attr.ib(
         type=str, default=None,
-        converter=attr.converters.default_if_none(
-            attr.Factory(lambda: "openedx/{service}/web".format(service=getattr(settings, "SERVICE_VARIANT", "")))
-        ),
+        converter=attr.converters.default_if_none(attr.Factory(_get_source)),
         validator=attr.validators.instance_of(str),
     )
     sourcehost = attr.ib(

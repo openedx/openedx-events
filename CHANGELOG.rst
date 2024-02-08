@@ -13,6 +13,23 @@ Change Log
 
 Unreleased
 ----------
+[9.5.0] - 2024-02-07
+--------------------
+Added
+~~~~~
+* Adds utility function to reset application state similar to setup/teardown in Django request/response cycle.
+
+[9.4.0] - 2024-01-29
+--------------------
+Added
+~~~~~
+* Added new ``COURSE_ACCESS_ROLE_ADDED`` and ``COURSE_ACCESS_ROLE_REMOVED`` events in learning
+
+[9.3.0] - 2024-01-24
+--------------------
+Changed
+~~~~~~~
+* Allow new EVENTS_SERVICE_NAME setting to override SERVICE_VARIANT for data source.
 
 [9.2.0] - 2023-11-16
 --------------------
