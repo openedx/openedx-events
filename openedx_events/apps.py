@@ -1,13 +1,16 @@
 """
 openedx_events Django application initialization.
 """
+import logging
 
 from django.apps import AppConfig
 from django.conf import settings
 
 from openedx_events.event_bus import get_producer
 from openedx_events.exceptions import ProducerConfigurationError
-from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
+from openedx_events.tooling import SIGNAL_PROCESSED_FROM_EVENT_BUS, OpenEdxPublicSignal, load_all_signals
+
+logger = logging.getLogger(__name__)
 
 
 def general_signal_handler(sender, signal, **kwargs):  # pylint: disable=unused-argument
@@ -20,6 +23,13 @@ def general_signal_handler(sender, signal, **kwargs):  # pylint: disable=unused-
     #        "topic_a": { "event_key_field": "my.key.field", "enabled": True },
     #        "topic_b": { "event_key_field": "my.key.field", "enabled": False }
     # }"
+    if kwargs.get(SIGNAL_PROCESSED_FROM_EVENT_BUS) is True:
+        logger.debug(
+            "Declining to send signal to the Event Bus since that's "
+            f"where it was sent from: {signal.event_type} (preventing recursion)"
+        )
+        return
+
     event_data = {key: kwargs.get(key) for key in signal.init_data}
 
     for topic in event_type_producer_configs.keys():
