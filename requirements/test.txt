@@ -10,20 +10,40 @@ asgiref==3.7.2
     #   django
 attrs==23.2.0
     # via -r requirements/base.txt
+cffi==1.16.0
+    # via
+    #   -r requirements/base.txt
+    #   pynacl
 click==8.1.7
-    # via code-annotations
-code-annotations==1.5.0
+    # via
+    #   -r requirements/base.txt
+    #   code-annotations
+    #   edx-django-utils
+code-annotations==1.6.0
     # via -r requirements/test.in
-coverage[toml]==7.4.0
+coverage[toml]==7.4.1
     # via
     #   coverage
     #   pytest-cov
 ddt==1.7.1
     # via -r requirements/test.in
-django==3.2.23
+django==3.2.24
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/base.txt
+    #   django-crum
+    #   django-waffle
+    #   edx-django-utils
+django-crum==0.7.9
+    # via
+    #   -r requirements/base.txt
+    #   edx-django-utils
+django-waffle==4.1.0
+    # via
+    #   -r requirements/base.txt
+    #   edx-django-utils
+edx-django-utils==5.10.1
+    # via -r requirements/base.txt
 edx-opaque-keys[django]==2.5.1
     # via
     #   -r requirements/base.txt
@@ -36,8 +56,12 @@ iniconfig==2.0.0
     # via pytest
 jinja2==3.1.3
     # via code-annotations
-markupsafe==2.1.4
+markupsafe==2.1.5
     # via jinja2
+newrelic==9.6.0
+    # via
+    #   -r requirements/base.txt
+    #   edx-django-utils
 packaging==23.2
     # via pytest
 pbr==6.0.0
@@ -46,21 +70,33 @@ pbr==6.0.0
     #   stevedore
 pluggy==1.4.0
     # via pytest
+psutil==5.9.8
+    # via
+    #   -r requirements/base.txt
+    #   edx-django-utils
+pycparser==2.21
+    # via
+    #   -r requirements/base.txt
+    #   cffi
 pymongo==3.13.0
     # via
     #   -r requirements/base.txt
     #   edx-opaque-keys
-pytest==7.4.4
+pynacl==1.5.0
+    # via
+    #   -r requirements/base.txt
+    #   edx-django-utils
+pytest==8.0.0
     # via
     #   pytest-cov
     #   pytest-django
 pytest-cov==4.1.0
     # via -r requirements/test.in
-pytest-django==4.7.0
+pytest-django==4.8.0
     # via -r requirements/test.in
-python-slugify==8.0.1
+python-slugify==8.0.3
     # via code-annotations
-pytz==2023.3.post1
+pytz==2024.1
     # via
     #   -r requirements/base.txt
     #   django
@@ -74,6 +110,7 @@ stevedore==5.1.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
+    #   edx-django-utils
     #   edx-opaque-keys
 text-unidecode==1.3
     # via python-slugify
