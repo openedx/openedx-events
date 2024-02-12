@@ -179,6 +179,7 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
             sender=None,
             user=self.user_mock,
             metadata=expected_metadata,
+            from_event_bus=False,
         )
 
     @patch("openedx_events.tooling.OpenEdxPublicSignal.generate_signal_metadata")
@@ -198,7 +199,8 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
             self.public_signal.send_event(user=self.user_mock)
 
         self.ok_receiver.assert_called_once_with(
-            signal=self.public_signal, sender=None, user=self.user_mock, metadata=expected_metadata
+            signal=self.public_signal, sender=None, user=self.user_mock, metadata=expected_metadata,
+            from_event_bus=False
         )
         # format_responses is mocked out because its output is
         # complicated enough to warrant its own set of tests.
@@ -253,7 +255,7 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
 
         assert response == expected_response
         mock_send_event_with_metadata.assert_called_once_with(
-            metadata=metadata, send_robust=True, foo="bar",
+            metadata=metadata, send_robust=True, foo="bar", from_event_bus=True
         )
 
     @ddt.data(
