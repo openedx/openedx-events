@@ -14,6 +14,12 @@ Change Log
 Unreleased
 ----------
 
+[9.5.2] - 2024-02-13
+--------------------
+Removed
+~~~~~
+* Remove unused ``MANAGE_STUDENTS_PERMISSION_ADDED`` and ``MANAGE_STUDENTS_PERMISSION_REMOVED`` events in learning
+
 [9.5.1] - 2024-02-12
 --------------------
 Changed
