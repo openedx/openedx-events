@@ -55,6 +55,29 @@ class ProducerConfiguratonTest(TestCase):
             call_args
         )
 
+    @patch("openedx_events.apps.logger")
+    @patch('openedx_events.apps.get_producer')
+    def test_send_events_with_custom_metadata_not_replayed_by_handler(self, mock_producer, mock_logger):
+        """
+        Check wheter XBLOCK_PUBLISHED is connected to the handler and the handler
+        do not send any events as the signal is marked "from_event_bus".
+
+        Args:
+            mock_producer: mock get_producer to inspect the arguments.
+            mock_logger: mock logger to inspect the arguments.
+        """
+        mock_send = Mock()
+        mock_producer.return_value = mock_send
+        metadata = XBLOCK_PUBLISHED.generate_signal_metadata()
+
+        XBLOCK_PUBLISHED.send_event_with_custom_metadata(metadata, xblock_info=self.xblock_info)
+
+        mock_send.send.assert_not_called()
+        mock_logger.debug.assert_called_once_with(
+            "Declining to send signal to the Event Bus since that's "
+            f"where it was sent from: {XBLOCK_PUBLISHED.event_type} (preventing recursion)"
+        )
+
     @patch('openedx_events.apps.get_producer')
     @override_settings(EVENT_BUS_PRODUCER_CONFIG={})
     def test_events_not_in_config(self, mock_producer):

@@ -30,6 +30,8 @@ KNOWN_UNSERIALIZABLE_SIGNALS = [
     "org.openedx.learning.course.notification.requested.v1",
 ]
 
+SIGNAL_PROCESSED_FROM_EVENT_BUS = "from_event_bus"
+
 
 class OpenEdxPublicSignal(Signal):
     """
@@ -115,7 +117,7 @@ class OpenEdxPublicSignal(Signal):
             time=time,
         )
 
-    def _send_event_with_metadata(self, metadata, send_robust=True, **kwargs):
+    def _send_event_with_metadata(self, metadata, send_robust=True, from_event_bus=False, **kwargs):
         """
         Send events to all connected receivers with the provided metadata.
 
@@ -124,6 +126,10 @@ class OpenEdxPublicSignal(Signal):
         Arguments:
             metadata (EventsMetadata): The metadata to be sent with the signal.
             send_robust (bool): Defaults to True. See Django signal docs.
+            from_event_bus (bool): Defaults to False. If True, the signal is
+                being sent from the event bus. This is used to prevent infinite
+                loops when the event bus is consuming events. It should not be
+                used when sending events from the application.
 
         See ``send_event`` docstring for more details on its usage and behavior.
         """
@@ -163,6 +169,7 @@ class OpenEdxPublicSignal(Signal):
         validate_sender()
 
         kwargs["metadata"] = metadata
+        kwargs[SIGNAL_PROCESSED_FROM_EVENT_BUS] = from_event_bus
 
         if self._allow_send_event_failure or settings.DEBUG or not send_robust:
             return super().send(sender=None, **kwargs)
@@ -234,7 +241,9 @@ class OpenEdxPublicSignal(Signal):
         See ``send_event`` docstring for more details.
 
         """
-        return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)
+        return self._send_event_with_metadata(
+            metadata=metadata, send_robust=send_robust, from_event_bus=True, **kwargs
+        )
 
     def send(self, sender, **kwargs):  # pylint: disable=unused-argument
         """

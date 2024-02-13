@@ -13,6 +13,13 @@ Change Log
 
 Unreleased
 ----------
+
+[9.5.1] - 2024-02-12
+--------------------
+Changed
+~~~~~~~
+* Fixed recursion error when consuming events on the same service that produced them.
+
 [9.5.0] - 2024-02-07
 --------------------
 Added
