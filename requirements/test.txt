@@ -94,7 +94,7 @@ pytest-cov==4.1.0
     # via -r requirements/test.in
 pytest-django==4.8.0
     # via -r requirements/test.in
-python-slugify==8.0.3
+python-slugify==8.0.4
     # via code-annotations
 pytz==2024.1
     # via

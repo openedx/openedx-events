@@ -145,7 +145,7 @@ isort==5.13.2
     # via
     #   -r requirements/quality.txt
     #   pylint
-jaraco-classes==3.3.0
+jaraco-classes==3.3.1
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -291,7 +291,7 @@ pytest-cov==4.1.0
     # via -r requirements/quality.txt
 pytest-django==4.8.0
     # via -r requirements/quality.txt
-python-slugify==8.0.3
+python-slugify==8.0.4
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -369,7 +369,7 @@ tomlkit==0.12.3
     #   pylint
 tox==4.12.1
     # via -r requirements/ci.txt
-twine==4.0.2
+twine==5.0.0
     # via -r requirements/quality.txt
 typing-extensions==4.9.0
     # via
