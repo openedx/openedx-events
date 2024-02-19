@@ -43,9 +43,8 @@ colorama==0.4.6
 coverage[toml]==7.4.1
     # via
     #   -r requirements/test.txt
-    #   coverage
     #   pytest-cov
-cryptography==42.0.2
+cryptography==42.0.3
     # via secretstorage
 ddt==1.7.1
     # via -r requirements/test.txt
@@ -76,14 +75,12 @@ docutils==0.19
 edx-django-utils==5.10.1
     # via -r requirements/test.txt
 edx-opaque-keys[django]==2.5.1
-    # via
-    #   -r requirements/test.txt
-    #   edx-opaque-keys
+    # via -r requirements/test.txt
 exceptiongroup==1.2.0
     # via
     #   -r requirements/test.txt
     #   pytest
-fastavro==1.9.3
+fastavro==1.9.4
     # via -r requirements/test.txt
 idna==3.6
     # via requests
@@ -177,7 +174,7 @@ pynacl==1.5.0
     #   edx-django-utils
 pyproject-hooks==1.0.0
     # via build
-pytest==8.0.0
+pytest==8.0.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -286,7 +283,7 @@ typing-extensions==4.9.0
     #   edx-opaque-keys
     #   pydata-sphinx-theme
     #   rich
-urllib3==2.2.0
+urllib3==2.2.1
     # via
     #   requests
     #   twine

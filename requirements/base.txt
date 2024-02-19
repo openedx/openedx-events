@@ -27,7 +27,7 @@ edx-django-utils==5.10.1
     # via -r requirements/base.in
 edx-opaque-keys[django]==2.5.1
     # via -r requirements/base.in
-fastavro==1.9.3
+fastavro==1.9.4
     # via -r requirements/base.in
 newrelic==9.6.0
     # via edx-django-utils
