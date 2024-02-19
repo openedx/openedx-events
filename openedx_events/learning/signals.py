@@ -17,7 +17,6 @@ from openedx_events.learning.data import (
     CourseNotificationData,
     DiscussionThreadData,
     ExamAttemptData,
-    ManageStudentsPermissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
     UserData,
@@ -276,28 +275,6 @@ COURSE_ACCESS_ROLE_REMOVED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.course_access_role.removed.v1",
     data={
         "course_access_role_data": CourseAccessRoleData,
-    }
-)
-
-# .. event_type: org.openedx.learning.user.manage.students.permission.added.v1
-# .. event_name: MANAGE_STUDENTS_PERMISSION_ADDED
-# .. event_description: Emitted when permission to manage students within a course is given to a user.
-# .. event_data: ManageStudentsPermissionData
-MANAGE_STUDENTS_PERMISSION_ADDED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.user.manage.students.permission.added.v1",
-    data={
-        "course_staff_data": ManageStudentsPermissionData,
-    }
-)
-
-# .. event_type: org.openedx.learning.user.manage.students.permission.removed.v1
-# .. event_name: MANAGE_STUDENTS_PERMISSION_REMOVED
-# .. event_description: Emitted when permission to manage students within a course is removed from a user.
-# .. event_data: ManageStudentsPermissionData
-MANAGE_STUDENTS_PERMISSION_REMOVED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.user.manage.students.permission.removed.v1",
-    data={
-        "course_staff_data": ManageStudentsPermissionData,
     }
 )
 
