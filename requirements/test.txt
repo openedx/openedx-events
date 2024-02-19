@@ -22,9 +22,7 @@ click==8.1.7
 code-annotations==1.6.0
     # via -r requirements/test.in
 coverage[toml]==7.4.1
-    # via
-    #   coverage
-    #   pytest-cov
+    # via pytest-cov
 ddt==1.7.1
     # via -r requirements/test.in
 django==3.2.24
@@ -45,12 +43,10 @@ django-waffle==4.1.0
 edx-django-utils==5.10.1
     # via -r requirements/base.txt
 edx-opaque-keys[django]==2.5.1
-    # via
-    #   -r requirements/base.txt
-    #   edx-opaque-keys
+    # via -r requirements/base.txt
 exceptiongroup==1.2.0
     # via pytest
-fastavro==1.9.3
+fastavro==1.9.4
     # via -r requirements/base.txt
 iniconfig==2.0.0
     # via pytest
@@ -86,7 +82,7 @@ pynacl==1.5.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-pytest==8.0.0
+pytest==8.0.1
     # via
     #   pytest-cov
     #   pytest-django
