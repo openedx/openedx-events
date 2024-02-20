@@ -36,7 +36,7 @@ click==8.1.7
     #   -r requirements/test.txt
     #   code-annotations
     #   edx-django-utils
-code-annotations==1.6.0
+git+https://github.com/openedx/code-annotations.git@bmtcril/add_openedx_events
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild

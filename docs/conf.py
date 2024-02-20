@@ -35,6 +35,7 @@ extensions = [
     'sphinx_copybutton',
     'sphinx.ext.graphviz',
     'sphinxcontrib.mermaid',
+    'code_annotations.contrib.sphinx.extensions.openedx_events',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
