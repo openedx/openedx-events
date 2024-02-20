@@ -20,6 +20,7 @@ from openedx_events.tooling import OpenEdxPublicSignal
 
 # .. event_type: org.openedx.content_authoring.course.catalog_info.changed.v1
 # .. event_name: COURSE_CATALOG_INFO_CHANGED
+# .. event_key_field: catalog_info.course_key
 # .. event_description: Fired when a course changes in Studio in a way that is relevant for catalog consumers.
 # .. event_data: CourseCatalogData
 COURSE_CATALOG_INFO_CHANGED = OpenEdxPublicSignal(

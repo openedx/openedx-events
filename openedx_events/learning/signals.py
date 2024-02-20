@@ -39,6 +39,7 @@ STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.auth.session.login.completed.v1
 # .. event_name: SESSION_LOGIN_COMPLETED
+# .. event_key_field: user.pii.username
 # .. event_description: emitted when the user's login process in the LMS is completed.
 # .. event_data: UserData
 SESSION_LOGIN_COMPLETED = OpenEdxPublicSignal(
@@ -75,6 +76,7 @@ COURSE_ENROLLMENT_CHANGED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.course.unenrollment.completed.v1
 # .. event_name: COURSE_UNENROLLMENT_COMPLETED
+# .. event_key_field: enrollment.course.course_key
 # .. event_description: emitted when the user's unenrollment process is completed.
 # .. event_data: CourseEnrollmentData
 COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
@@ -87,6 +89,7 @@ COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.certificate.created.v1
 # .. event_name: CERTIFICATE_CREATED
+# .. event_key_field: certificate.course.course_key
 # .. event_description: emitted when the user's certificate creation process is completed.
 # .. event_data: CertificateData
 CERTIFICATE_CREATED = OpenEdxPublicSignal(
@@ -98,6 +101,7 @@ CERTIFICATE_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.program.certificate.awarded.v1
 # .. event_name: PROGRAM_CERTIFICATE_AWARDED
+# .. event_key_field: program_certificate.program.uuid
 # .. event_description: Emit when a program certificate is awarded to a learner
 # .. event_data: ProgramCertificateData
 PROGRAM_CERTIFICATE_AWARDED = OpenEdxPublicSignal(
@@ -121,6 +125,7 @@ CERTIFICATE_CHANGED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.certificate.revoked.v1
 # .. event_name: CERTIFICATE_REVOKED
+# .. event_key_field: certificate.course.course_key
 # .. event_description: emitted when the user's certificate annulation process is completed.
 # .. event_data: CertificateData
 CERTIFICATE_REVOKED = OpenEdxPublicSignal(
@@ -132,6 +137,7 @@ CERTIFICATE_REVOKED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.program.certificate.revoked.v1
 # .. event_name: PROGRAM_CERTIFICATE_REVOKED
+# .. event_key_field: program_certificate.program.uuid
 # .. event_description: Emit when a program certificate is revoked from a learner
 # .. event_data: ProgramCertificateData
 PROGRAM_CERTIFICATE_REVOKED = OpenEdxPublicSignal(
@@ -179,6 +185,7 @@ PERSISTENT_GRADE_SUMMARY_CHANGED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.xblock.skill.verified.v1
 # .. event_name: XBLOCK_SKILL_VERIFIED
+# .. event_key_field: xblock_info.usage_key
 # .. event_description: Fired when an XBlock skill is verified.
 # .. event_data: XBlockSkillVerificationData
 XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
@@ -258,6 +265,7 @@ EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.user.course_access_role.added.v1
 # .. event_name: COURSE_ACCESS_ROLE_ADDED
+# .. event_key_field: course_access_role_data.course_key
 # .. event_description: Emitted when a user is given a course access role.
 # .. event_data: CourseAccessRoleData
 COURSE_ACCESS_ROLE_ADDED = OpenEdxPublicSignal(
@@ -269,6 +277,7 @@ COURSE_ACCESS_ROLE_ADDED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.user.course_access_role.removed.v1
 # .. event_name: COURSE_ACCESS_ROLE_REMOVED
+# .. event_key_field: course_access_role_data.course_key
 # .. event_description: Emitted when a course access role is removed from a user.
 # .. event_data: CourseAccessRoleData
 COURSE_ACCESS_ROLE_REMOVED = OpenEdxPublicSignal(
