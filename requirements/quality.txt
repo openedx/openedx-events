@@ -37,11 +37,11 @@ code-annotations==1.6.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.4.1
+coverage[toml]==7.4.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==42.0.3
+cryptography==42.0.5
     # via secretstorage
 ddt==1.7.1
     # via -r requirements/test.txt
@@ -82,7 +82,7 @@ importlib-metadata==7.0.1
     # via
     #   keyring
     #   twine
-importlib-resources==6.1.1
+importlib-resources==6.1.2
     # via keyring
 iniconfig==2.0.0
     # via
@@ -118,7 +118,7 @@ mdurl==0.1.2
     # via markdown-it-py
 more-itertools==10.2.0
     # via jaraco-classes
-newrelic==9.6.0
+newrelic==9.7.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -178,7 +178,7 @@ pynacl==1.5.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pytest==8.0.1
+pytest==8.0.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -221,7 +221,7 @@ sqlparse==0.4.4
     # via
     #   -r requirements/test.txt
     #   django
-stevedore==5.1.0
+stevedore==5.2.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -241,7 +241,7 @@ tomlkit==0.12.3
     # via pylint
 twine==5.0.0
     # via -r requirements/quality.in
-typing-extensions==4.9.0
+typing-extensions==4.10.0
     # via
     #   -r requirements/test.txt
     #   asgiref
