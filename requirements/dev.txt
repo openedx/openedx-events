@@ -71,7 +71,7 @@ cryptography==42.0.5
     # via
     #   -r requirements/quality.txt
     #   secretstorage
-ddt==1.7.1
+ddt==1.7.2
     # via -r requirements/quality.txt
 diff-cover==8.0.3
     # via -r requirements/dev.in
@@ -85,7 +85,7 @@ distlib==0.3.8
     #   virtualenv
 django==3.2.24
     # via
-    #   -c requirements/common_constraints.txt
+    #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
     #   django-crum
     #   django-waffle
@@ -301,7 +301,7 @@ pyyaml==6.0.1
     # via
     #   -r requirements/quality.txt
     #   code-annotations
-readme-renderer==42.0
+readme-renderer==43.0
     # via
     #   -r requirements/quality.txt
     #   twine
