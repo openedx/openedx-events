@@ -10,6 +10,10 @@ asgiref==3.7.2
     #   django
 attrs==23.2.0
     # via -r requirements/base.txt
+backports-zoneinfo==0.2.1
+    # via
+    #   -r requirements/base.txt
+    #   django
 cffi==1.16.0
     # via
     #   -r requirements/base.txt
@@ -23,9 +27,9 @@ code-annotations==1.6.0
     # via -r requirements/test.in
 coverage[toml]==7.4.3
     # via pytest-cov
-ddt==1.7.1
+ddt==1.7.2
     # via -r requirements/test.in
-django==3.2.24
+django==4.2.10
     # via
     #   -c requirements/common_constraints.txt
     #   -r requirements/base.txt
@@ -82,7 +86,7 @@ pynacl==1.5.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-pytest==8.0.2
+pytest==8.1.0
     # via
     #   pytest-cov
     #   pytest-django
@@ -92,10 +96,6 @@ pytest-django==4.8.0
     # via -r requirements/test.in
 python-slugify==8.0.4
     # via code-annotations
-pytz==2024.1
-    # via
-    #   -r requirements/base.txt
-    #   django
 pyyaml==6.0.1
     # via code-annotations
 sqlparse==0.4.4
