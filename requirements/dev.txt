@@ -35,6 +35,7 @@ certifi==2024.2.2
 cffi==1.16.0
     # via
     #   -r requirements/quality.txt
+    #   cryptography
     #   pynacl
 chardet==5.2.0
     # via
@@ -66,10 +67,14 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.4.3
+coverage[toml]==7.4.4
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
+cryptography==42.0.5
+    # via
+    #   -r requirements/quality.txt
+    #   secretstorage
 ddt==1.7.2
     # via -r requirements/quality.txt
 diff-cover==8.0.3
@@ -130,7 +135,7 @@ importlib-metadata==6.11.0
     #   build
     #   keyring
     #   twine
-importlib-resources==6.3.0
+importlib-resources==6.3.1
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -146,6 +151,11 @@ jaraco-classes==3.3.1
     # via
     #   -r requirements/quality.txt
     #   keyring
+jeepney==0.8.0
+    # via
+    #   -r requirements/quality.txt
+    #   keyring
+    #   secretstorage
 jinja2==3.1.3
     # via
     #   -r requirements/quality.txt
@@ -313,6 +323,10 @@ rich==13.7.1
     # via
     #   -r requirements/quality.txt
     #   twine
+secretstorage==3.3.3
+    # via
+    #   -r requirements/quality.txt
+    #   keyring
 six==1.16.0
     # via
     #   -r requirements/quality.txt
@@ -381,7 +395,7 @@ wrapt==1.16.0
     # via
     #   -r requirements/quality.txt
     #   astroid
-zipp==3.18.0
+zipp==3.18.1
     # via
     #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
