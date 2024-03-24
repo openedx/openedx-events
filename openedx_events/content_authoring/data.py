@@ -180,3 +180,15 @@ class LibraryBlockData:
 
     library_key = attr.ib(type=LibraryLocatorV2)
     usage_key = attr.ib(type=LibraryUsageLocatorV2)
+
+
+@attr.s(frozen=True)
+class ContentObjectData:
+    """
+    Data about changed content object
+
+    Arguments:
+        object_id (str): identifier of the Content object.
+    """
+
+    object_id = attr.ib(type=str)
