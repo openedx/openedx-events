@@ -62,7 +62,7 @@
                   "type": "string"
                 },
                 {
-                  "name": "type",
+                  "name": "origin",
                   "type": "string"
                 },
                 {

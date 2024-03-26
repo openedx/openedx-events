@@ -500,14 +500,14 @@ class BadgeTemplateData:
 
     Arguments:
         uuid (str): UUID of the badge template
-        type (str): type of badge template
+        origin (str): type of badge template
         name (str): badge name
         description (str): badge description
         image_url (str): badge image url
     """
 
     uuid = attr.ib(type=str)
-    type = attr.ib(type=str)
+    origin = attr.ib(type=str)
     name = attr.ib(type=str, default=None)
     description = attr.ib(type=str, default=None)
     image_url = attr.ib(type=str, default=None)
