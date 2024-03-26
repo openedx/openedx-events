@@ -1,0 +1,87 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "ccx_course",
+      "type": {
+        "name": "CcxCourseData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "course_key",
+            "type": "string"
+          },
+          {
+            "name": "master_course_key",
+            "type": "string"
+          },
+          {
+            "name": "max_students_allowed",
+            "type": "long"
+          },
+          {
+            "name": "coach",
+            "type": {
+              "name": "UserData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "long"
+                },
+                {
+                  "name": "is_active",
+                  "type": "boolean"
+                },
+                {
+                  "name": "pii",
+                  "type": {
+                    "name": "UserPersonalData",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "name": "username",
+                        "type": "string"
+                      },
+                      {
+                        "name": "email",
+                        "type": "string"
+                      },
+                      {
+                        "name": "name",
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "display_name",
+            "type": "string"
+          },
+          {
+            "name": "start",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "end",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.ccx.course.grade.now.passed.v1"
+}

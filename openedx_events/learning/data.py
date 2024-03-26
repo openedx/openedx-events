@@ -526,3 +526,24 @@ class BadgeData:
     uuid = attr.ib(type=str)
     user = attr.ib(type=UserData)
     template = attr.ib(type=BadgeTemplateData)
+
+
+@attr.s(frozen=True)
+class CcxCourseData(CourseData):
+    """
+    Attributes defined fir the Open edX custom course data object.
+
+    Arguments:
+        master_course_key (str): identifier of the master Course object.
+        max_students_allowed (int): maximum number of students allowed on the custom course
+        coach (UserData): coach associated with the custom course
+    """
+
+    master_course_key = attr.ib(type=CourseKey)
+    max_students_allowed = attr.ib(type=int)
+    coach = attr.ib(type=UserData)
+
+    # copypasted from CourseData to avoid ValueError
+    display_name = attr.ib(type=str, factory=str)
+    start = attr.ib(type=datetime, default=None)
+    end = attr.ib(type=datetime, default=None)
