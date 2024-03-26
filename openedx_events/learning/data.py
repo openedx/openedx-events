@@ -8,6 +8,7 @@ from datetime import datetime
 from typing import List, Optional
 
 import attr
+from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
 
@@ -529,21 +530,24 @@ class BadgeData:
 
 
 @attr.s(frozen=True)
-class CcxCourseData(CourseData):
+class CcxCourseData:
     """
-    Attributes defined fir the Open edX custom course data object.
+    Represents data for a CCX (Custom Courses for edX) course.
 
-    Arguments:
-        master_course_key (str): identifier of the master Course object.
-        max_students_allowed (int): maximum number of students allowed on the custom course
-        coach (UserData): coach associated with the custom course
+    Attributes:
+        ccx_course_key (CCXLocator): The unique identifier for the CCX course.
+        master_course_key (CourseKey): The unique identifier for the original course from which the CCX is derived.
+        display_name (str): The name of the CCX course as it should appear to users.
+        coach_email (str): The email address of the coach (instructor) for the CCX course.
+        start (str, optional): The start date of the CCX course. Defaults to None, indicating no specific start date.
+        end (str, optional): The end date of the CCX course. Defaults to None, indicating no specific end date.
+        max_students_allowed (int, optional): The maximum number of students that can enroll in the CCX course. Defaults to None, indicating no limit.
     """
 
+    ccx_course_key = attr.ib(type=CCXLocator)
     master_course_key = attr.ib(type=CourseKey)
-    max_students_allowed = attr.ib(type=int)
-    coach = attr.ib(type=UserData)
-
-    # copypasted from CourseData to avoid ValueError
     display_name = attr.ib(type=str, factory=str)
-    start = attr.ib(type=datetime, default=None)
-    end = attr.ib(type=datetime, default=None)
+    coach_email = attr.ib(type=str, factory=str)
+    start = attr.ib(type=str, default=None)
+    end = attr.ib(type=str, default=None)
+    max_students_allowed = attr.ib(type=int, default=None)
