@@ -5,6 +5,7 @@ Classes to serialize and deserialize custom types used by openedx events. See RE
 from abc import ABC, abstractmethod
 from datetime import datetime
 
+from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 
@@ -47,6 +48,25 @@ class CourseKeyAvroSerializer(BaseCustomTypeAvroSerializer):
     def deserialize(data: str):
         """Deserialize string into obj."""
         return CourseKey.from_string(data)
+
+
+class CcxCourseLocatorAvroSerializer(BaseCustomTypeAvroSerializer):
+    """
+    CustomTypeAvroSerializer for CCXLocator class.
+    """
+
+    cls = CCXLocator
+    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[str]
+
+    @staticmethod
+    def serialize(obj) -> str:
+        """Serialize obj into string."""
+        return str(obj)
+    
+    @staticmethod
+    def deserialize(data: str):
+        """Deserialize string into obj."""
+        return CCXLocator.from_string(data)
 
 
 class DatetimeAvroSerializer(BaseCustomTypeAvroSerializer):
@@ -131,6 +151,7 @@ class LibraryUsageLocatorV2AvroSerializer(BaseCustomTypeAvroSerializer):
 
 DEFAULT_CUSTOM_SERIALIZERS = [
     CourseKeyAvroSerializer,
+    CcxCourseLocatorAvroSerializer,
     DatetimeAvroSerializer,
     LibraryLocatorV2AvroSerializer,
     LibraryUsageLocatorV2AvroSerializer,
