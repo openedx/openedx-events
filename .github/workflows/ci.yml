@@ -17,6 +17,17 @@ jobs:
         os: [ubuntu-20.04]
         python-version: ['3.8']
         toxenv: ["quality", "docs", "django32", "django42"]
+    permissions:
+      # Gives the action the necessary permissions for publishing new
+      # comments in pull requests.
+      pull-requests: write
+      # Gives the action the necessary permissions for editing existing
+      # comments (to avoid publishing multiple comments in the same PR)
+      contents: write
+      # Gives the action the necessary permissions for looking up the
+      # workflow that launched this workflow, and download the related
+      # artifact that contains the comment to be published
+      actions: read
 
     steps:
       - uses: actions/checkout@v4
