@@ -46,7 +46,7 @@ jobs:
 
       - name: Report coverage
         id: coverage_comment
-        if: matrix.python-version == '3.8' && matrix.toxenv == 'django32'
+        if: matrix.python-version == '3.8' && matrix.toxenv == 'django42'
         uses: py-cov-action/python-coverage-comment-action@v3
         with:
           GITHUB_TOKEN: ${{ github.token }}
