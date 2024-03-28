@@ -19,14 +19,13 @@ jobs:
         - '3.8'
         - '3.11'
         toxenv:
-        - "py38"
-        - "py311"
+        - "django42"
         - "quality"
         - "docs"
 
     steps:
     - uses: actions/checkout@v4
-    - name: setup python
+    - name: Setup python
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
