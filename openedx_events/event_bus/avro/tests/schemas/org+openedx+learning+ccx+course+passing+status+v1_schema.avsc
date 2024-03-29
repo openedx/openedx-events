@@ -4,11 +4,15 @@
   "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
   "fields": [
     {
-      "name": "user_course_data",
+      "name": "course_passing_status",
       "type": {
-        "name": "UserCourseData",
+        "name": "CcxCoursePassingStatusData",
         "type": "record",
         "fields": [
+          {
+            "name": "status",
+            "type": "string"
+          },
           {
             "name": "user",
             "type": {
@@ -48,17 +52,33 @@
             }
           },
           {
+            "name": "update_timestamp",
+            "type": "string"
+          },
+          {
+            "name": "grading_policy_hash",
+            "type": "string"
+          },
+          {
             "name": "course",
             "type": {
-              "name": "CourseData",
+              "name": "CcxCourseData",
               "type": "record",
               "fields": [
                 {
-                  "name": "course_key",
+                  "name": "ccx_course_key",
+                  "type": "string"
+                },
+                {
+                  "name": "master_course_key",
                   "type": "string"
                 },
                 {
                   "name": "display_name",
+                  "type": "string"
+                },
+                {
+                  "name": "coach_email",
                   "type": "string"
                 },
                 {
@@ -76,6 +96,14 @@
                     "string"
                   ],
                   "default": null
+                },
+                {
+                  "name": "max_students_allowed",
+                  "type": [
+                    "null",
+                    "long"
+                  ],
+                  "default": null
                 }
               ]
             }
@@ -84,5 +112,5 @@
       }
     }
   ],
-  "namespace": "org.openedx.learning.course.grade.now.failed.v1"
+  "namespace": "org.openedx.learning.ccx.course.passing.status.v1"
 }

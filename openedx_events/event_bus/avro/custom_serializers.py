@@ -62,7 +62,7 @@ class CcxCourseLocatorAvroSerializer(BaseCustomTypeAvroSerializer):
     def serialize(obj) -> str:
         """Serialize obj into string."""
         return str(obj)
-    
+
     @staticmethod
     def deserialize(data: str):
         """Deserialize string into obj."""

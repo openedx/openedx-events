@@ -8,6 +8,7 @@ from datetime import datetime
 from typing import List, Optional
 
 import attr
+from attr.validators import in_
 from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
@@ -73,6 +74,30 @@ class CourseData:
     display_name = attr.ib(type=str, factory=str)
     start = attr.ib(type=datetime, default=None)
     end = attr.ib(type=datetime, default=None)
+
+
+@attr.s(frozen=True)
+class CcxCourseData:
+    """
+    Represents data for a CCX (Custom Courses for edX) course.
+
+    Attributes:
+        ccx_course_key (CCXLocator): The unique identifier for the CCX course.
+        master_course_key (CourseKey): The unique identifier for the original course from which the CCX is derived.
+        display_name (str): The name of the CCX course as it should appear to users.
+        coach_email (str): The email address of the coach (instructor) for the CCX course.
+        start (str, optional): The start date of the CCX course. Defaults to None, indicating no specific start date.
+        end (str, optional): The end date of the CCX course. Defaults to None, indicating no specific end date.
+        max_students_allowed (int, optional): The maximum number of students that can enroll in the CCX course. Defaults to None, indicating no limit.
+    """
+
+    ccx_course_key = attr.ib(type=CCXLocator)
+    master_course_key = attr.ib(type=CourseKey)
+    display_name = attr.ib(type=str, factory=str)
+    coach_email = attr.ib(type=str, factory=str)
+    start = attr.ib(type=str, default=None)
+    end = attr.ib(type=str, default=None)
+    max_students_allowed = attr.ib(type=int, default=None)
 
 
 @attr.s(frozen=True)
@@ -480,17 +505,40 @@ class ORASubmissionData:
 
 
 @attr.s(frozen=True)
-class UserCourseData:
+class CoursePassingStatusData:
     """
-    Attributes defined for Open edX user course data object.
+    Represents the event data when a user's grade crosses a grading policy threshold in a course.
 
-    Arguments:
-        user (UserData): user associated with the Course Enrollment.
-        course (CourseData): course where the user is enrolled in.
+    Attributes:
+        user (UserData): An instance of UserData containing information about the user whose grade crossed the threshold.
+        course (CourseData): An instance of CourseData containing details about the course in which the grade threshold was crossed.
+        update_timestamp (datetime): The timestamp when the grade crossing event was recorded.
+        grading_policy_hash (str): A hash of the course's grading policy at the time of the event, used for verifying the grading policy has not changed.
     """
+    PASSING = 'passing'
+    FAILING = 'failing'
+    STATUSES = [PASSING, FAILING]
 
-    user = attr.ib(type=UserData)
+    status = attr.ib(type=str, validator=in_(STATUSES))
     course = attr.ib(type=CourseData)
+    user = attr.ib(type=UserData)
+    update_timestamp = attr.ib(type=datetime)
+    grading_policy_hash = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class CcxCoursePassingStatusData(CoursePassingStatusData):
+    """
+    Extends CoursePassingStatusData for CCX courses, specifying CCX course data.
+
+    This class is used for events where a user's grade crosses a threshold specifically in a CCX course,
+    providing a custom course attribute suited for CCX course instances.
+
+    Attributes:
+        course (CcxCourseData): An instance of CcxCourseData containing details about the CCX course in which the grade threshold was crossed.
+        All other attributes are inherited from CoursePassingStatusData.
+    """
+    course = attr.ib(type=CcxCourseData)
 
 
 @attr.s(frozen=True)
@@ -527,27 +575,3 @@ class BadgeData:
     uuid = attr.ib(type=str)
     user = attr.ib(type=UserData)
     template = attr.ib(type=BadgeTemplateData)
-
-
-@attr.s(frozen=True)
-class CcxCourseData:
-    """
-    Represents data for a CCX (Custom Courses for edX) course.
-
-    Attributes:
-        ccx_course_key (CCXLocator): The unique identifier for the CCX course.
-        master_course_key (CourseKey): The unique identifier for the original course from which the CCX is derived.
-        display_name (str): The name of the CCX course as it should appear to users.
-        coach_email (str): The email address of the coach (instructor) for the CCX course.
-        start (str, optional): The start date of the CCX course. Defaults to None, indicating no specific start date.
-        end (str, optional): The end date of the CCX course. Defaults to None, indicating no specific end date.
-        max_students_allowed (int, optional): The maximum number of students that can enroll in the CCX course. Defaults to None, indicating no limit.
-    """
-
-    ccx_course_key = attr.ib(type=CCXLocator)
-    master_course_key = attr.ib(type=CourseKey)
-    display_name = attr.ib(type=str, factory=str)
-    coach_email = attr.ib(type=str, factory=str)
-    start = attr.ib(type=str, default=None)
-    end = attr.ib(type=str, default=None)
-    max_students_allowed = attr.ib(type=int, default=None)
