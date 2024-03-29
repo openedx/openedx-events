@@ -83,14 +83,6 @@
                 }
               ]
             }
-          },
-          {
-            "name": "update_timestamp",
-            "type": "string"
-          },
-          {
-            "name": "grading_policy_hash",
-            "type": "string"
           }
         ]
       }

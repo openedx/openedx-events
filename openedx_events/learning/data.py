@@ -507,13 +507,12 @@ class ORASubmissionData:
 @attr.s(frozen=True)
 class CoursePassingStatusData:
     """
-    Represents the event data when a user's grade crosses a grading policy threshold in a course.
+    Represents the event data when a user's grade is updated, indicates if current grade is enough for course passing.
 
     Attributes:
-        user (UserData): An instance of UserData containing information about the user whose grade crossed the threshold.
-        course (CourseData): An instance of CourseData containing details about the course in which the grade threshold was crossed.
-        update_timestamp (datetime): The timestamp when the grade crossing event was recorded.
-        grading_policy_hash (str): A hash of the course's grading policy at the time of the event, used for verifying the grading policy has not changed.
+        status (str): A string containing information about user's current course grade value in comparison to the grading policy threshold.
+        user (UserData): An instance of UserData containing information about the user whose grade was updated.
+        course (CourseData): An instance of CourseData containing details about the course in which the grade was updated.
     """
     PASSING = 'passing'
     FAILING = 'failing'
@@ -522,8 +521,6 @@ class CoursePassingStatusData:
     status = attr.ib(type=str, validator=in_(STATUSES))
     course = attr.ib(type=CourseData)
     user = attr.ib(type=UserData)
-    update_timestamp = attr.ib(type=datetime)
-    grading_policy_hash = attr.ib(type=str)
 
 
 @attr.s(frozen=True)
