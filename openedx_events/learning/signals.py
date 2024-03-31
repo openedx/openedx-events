@@ -354,24 +354,39 @@ ORA_SUBMISSION_CREATED = OpenEdxPublicSignal(
     },
 )
 
-# .. event_type: org.openedx.learning.course.passing.status.v1
+
+# .. event_type: org.openedx.learning.ora.submission.created.v1
+# .. event_name: ORA_SUBMISSION_CREATED
+# .. event_description: Emitted when a new ORA submission is created
+# .. event_data: ORASubmissionData
+# Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+ORA_SUBMISSION_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.ora.submission.created.v1",
+    data={
+        "submission": ORASubmissionData,
+    },
+)
+
+
+
+# .. event_type: org.openedx.learning.course.passing.status.updated.v1
 # .. event_name: COURSE_PASSING_STATUS_UPDATED
 # .. event_description: Emitted when course grade updates.
 # .. event_data: CoursePassingStatusData
 COURSE_PASSING_STATUS_UPDATED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.course.passing.status.v1",
+    event_type="org.openedx.learning.course.passing.status.updated.v1",
     data={
         "course_passing_status": CoursePassingStatusData,
     }
 )
 
 
-# .. event_type: org.openedx.learning.ccx.course.passing.status.v1
+# .. event_type: org.openedx.learning.ccx.course.passing.status.updated.v1
 # .. event_name: CCX_COURSE_PASSING_STATUS_UPDATED
 # .. event_description: Emitted when a CCX course grade updates.
 # .. event_data: CcxCoursePassingStatusData
 CCX_COURSE_PASSING_STATUS_UPDATED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.ccx.course.passing.status.v1",
+    event_type="org.openedx.learning.ccx.course.passing.status.updated.v1",
     data={
         "course_passing_status": CcxCoursePassingStatusData,
     }
