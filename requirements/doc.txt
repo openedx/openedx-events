@@ -24,7 +24,7 @@ backports-zoneinfo==0.2.1
     #   django
 beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
-build==1.1.1
+build==1.2.1
     # via -r requirements/doc.in
 certifi==2024.2.2
     # via requests
@@ -76,7 +76,7 @@ docutils==0.19
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
-edx-django-utils==5.11.0
+edx-django-utils==5.12.0
     # via -r requirements/test.txt
 edx-opaque-keys[django]==2.5.1
     # via -r requirements/test.txt
@@ -103,7 +103,7 @@ iniconfig==2.0.0
     # via
     #   -r requirements/test.txt
     #   pytest
-jaraco-classes==3.3.1
+jaraco-classes==3.4.0
     # via keyring
 jaraco-context==4.3.0
     # via keyring
@@ -134,11 +134,11 @@ more-itertools==10.2.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==9.7.1
+newrelic==9.8.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-nh3==0.2.15
+nh3==0.2.17
     # via readme-renderer
 packaging==24.0
     # via
@@ -161,7 +161,7 @@ psutil==5.9.8
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pycparser==2.21
+pycparser==2.22
     # via
     #   -r requirements/test.txt
     #   cffi
