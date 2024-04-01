@@ -180,3 +180,17 @@ class LibraryBlockData:
 
     library_key = attr.ib(type=LibraryLocatorV2)
     usage_key = attr.ib(type=LibraryUsageLocatorV2)
+
+
+@attr.s(frozen=True)
+class ContentObjectData:
+    """
+    Data about changed content object
+
+    Arguments:
+        object_id (str): identifier of the Content object. This represents the id of the course or library block
+        as a string. For example:
+        block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
+    """
+
+    object_id = attr.ib(type=str)

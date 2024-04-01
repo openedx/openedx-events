@@ -13,6 +13,9 @@ Change Log
 
 Unreleased
 ----------
+Added
+~~~~~
+* Added new ``CONTENT_OBJECT_TAGGED`` events in content_authoring.
 
 [9.5.2] - 2024-02-13
 --------------------
