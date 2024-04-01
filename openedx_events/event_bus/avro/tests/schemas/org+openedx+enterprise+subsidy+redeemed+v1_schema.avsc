@@ -1,0 +1,29 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "redemption",
+      "type": {
+        "name": "SubsidyRedemption",
+        "type": "record",
+        "fields": [
+          {
+            "name": "subsidy_identifier",
+            "type": "string"
+          },
+          {
+            "name": "content_key",
+            "type": "string"
+          },
+          {
+            "name": "lms_user_id",
+            "type": "long"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.enterprise.subsidy.redeemed.v1"
+}
