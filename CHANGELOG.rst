@@ -13,8 +13,16 @@ Change Log
 
 Unreleased
 ----------
+[9.7.0] - 2024-04-04
+--------------------
 Added
-~~~~~
+~~~~~~~
+* Added new ``SUBSIDY_REDEEMED`` and ``SUBSIDY_REDEMPTION_REVERSED`` events in enterprise.
+
+[9.6.0] - 2024-04-01
+--------------------
+Added
+~~~~~~~
 * Added new ``CONTENT_OBJECT_TAGGED`` events in content_authoring.
 
 [9.5.2] - 2024-02-13
