@@ -4,11 +4,11 @@ Tests for event bus implementation loader.
 
 import copy
 import sys
-import pytest
 import warnings
 from contextlib import contextmanager
 from unittest import TestCase
 
+import pytest
 from django.test import override_settings
 
 from openedx_events.data import EventsMetadata
