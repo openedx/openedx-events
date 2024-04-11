@@ -42,18 +42,16 @@ class ProducerConfiguratonTest(TestCase):
         XBLOCK_PUBLISHED.send_event(xblock_info=self.xblock_info)
         mock_send.send.assert_called()
         mock_send.send.call_count = 2
+        expected_call_args = [
+            {'topic': 'enabled_topic_a', 'event_key_field': 'xblock_info.usage_key'},
+            {'topic': 'enabled_topic_b', 'event_key_field': 'xblock_info.usage_key'}
+        ]
 
         # check that call_args_list only consists of enabled topics.
         call_args = mock_send.send.call_args_list[0][1]
-        self.assertDictContainsSubset(
-            {'topic': 'enabled_topic_a', 'event_key_field': 'xblock_info.usage_key'},
-            call_args
-        )
+        self.assertEqual(call_args, call_args | expected_call_args[0])
         call_args = mock_send.send.call_args_list[1][1]
-        self.assertDictContainsSubset(
-            {'topic': 'enabled_topic_b', 'event_key_field': 'xblock_info.usage_key'},
-            call_args
-        )
+        self.assertEqual(call_args, call_args | expected_call_args[1])
 
     @patch("openedx_events.apps.logger")
     @patch('openedx_events.apps.get_producer')
