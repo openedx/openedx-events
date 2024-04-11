@@ -85,6 +85,35 @@ class TestLoader(TestCase):
             )
         assert loaded == {'def': 'ault'}
 
+    @pytest.mark.skipif(sys.version_info > (3, 9), reason="Python 3.8.x required")
+    @override_settings(EB_LOAD_PATH='builtins.dict')
+    def test_bad_args_for_callable(self):
+        with assert_warnings([
+                "Failed to load <class 'dict'> from setting EB_LOAD_PATH: "
+                "TypeError('type object argument after * must be an iterable, not int'); "
+                "component will be inactive"
+        ]):
+            loaded = _try_load(
+                setting_name="EB_LOAD_PATH", args=(1), kwargs={'2': 3},
+                expected_class=dict, default={'def': 'ault'},
+            )
+        assert loaded == {'def': 'ault'}
+
+
+    @pytest.mark.skipif(sys.version_info < (3, 9), reason="Python 3.11.x required")
+    @override_settings(EB_LOAD_PATH='builtins.dict')
+    def test_bad_args_for_callable(self):
+        with assert_warnings([
+                "Failed to load <class 'dict'> from setting EB_LOAD_PATH: "
+                "TypeError('dict() argument after * must be an iterable, not int'); "
+                "component will be inactive"
+        ]):
+            loaded = _try_load(
+                setting_name="EB_LOAD_PATH", args=(1), kwargs={'2': 3},
+                expected_class=dict, default={'def': 'ault'},
+            )
+        assert loaded == {'def': 'ault'}
+
 
 class TestProducer(TestCase):
 
