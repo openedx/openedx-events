@@ -3,6 +3,8 @@ Tests for event bus implementation loader.
 """
 
 import copy
+import sys
+import pytest
 import warnings
 from contextlib import contextmanager
 from unittest import TestCase
@@ -83,11 +85,26 @@ class TestLoader(TestCase):
             )
         assert loaded == {'def': 'ault'}
 
+    @pytest.mark.skipif(sys.version_info < (3, 8), reason="requires Python 3.8+")
     @override_settings(EB_LOAD_PATH='builtins.dict')
-    def test_bad_args_for_callable(self):
+    def test_bad_args_for_callable_python38(self):
         with assert_warnings([
                 "Failed to load <class 'dict'> from setting EB_LOAD_PATH: "
                 "TypeError('type object argument after * must be an iterable, not int'); "
+                "component will be inactive"
+        ]):
+            loaded = _try_load(
+                setting_name="EB_LOAD_PATH", args=(1), kwargs={'2': 3},
+                expected_class=dict, default={'def': 'ault'},
+            )
+        assert loaded == {'def': 'ault'}
+
+    @pytest.mark.skipif(sys.version_info < (3, 11), reason="requires Python 3.11+")
+    @override_settings(EB_LOAD_PATH='builtins.dict')
+    def test_bad_args_for_callable_python311(self):
+        with assert_warnings([
+                "Failed to load <class 'dict'> from setting EB_LOAD_PATH: "
+                "TypeError('dict() argument after * must be an iterable, not int'); "
                 "component will be inactive"
         ]):
             loaded = _try_load(
