@@ -8,8 +8,9 @@ asgiref==3.8.1
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==3.1.0
+astroid==2.15.8
     # via
+    #   -c requirements/constraints.txt
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
@@ -127,7 +128,7 @@ filelock==3.13.4
     #   -r requirements/ci.txt
     #   tox
     #   virtualenv
-idna==3.7
+idna==3.6
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -177,6 +178,10 @@ keyring==25.1.0
     # via
     #   -r requirements/quality.txt
     #   twine
+lazy-object-proxy==1.10.0
+    # via
+    #   -r requirements/quality.txt
+    #   astroid
 markdown-it-py==3.0.0
     # via
     #   -r requirements/quality.txt
@@ -257,7 +262,7 @@ pygments==2.17.2
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==3.1.0
+pylint==2.17.7
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -400,6 +405,10 @@ wheel==0.43.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
+wrapt==1.16.0
+    # via
+    #   -r requirements/quality.txt
+    #   astroid
 zipp==3.18.1
     # via
     #   -r requirements/pip-tools.txt
