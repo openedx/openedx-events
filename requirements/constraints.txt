@@ -11,10 +11,5 @@
 # Common constraints for openedx repos
 -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
 
-# Temporary solution since this version raises RecursionError for test_generate_avro_schemas.py
-# This should be removed once the issue is fixed with a new astroid release or with a test_generate_avro_schemas.py
-# module refactor.
-astroid<3.0.0
-
 # Temporary to Support the python 3.11 Upgrade
 backports.zoneinfo;python_version<"3.9"  # Newer versions have zoneinfo available in the standard library
