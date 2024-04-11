@@ -85,7 +85,7 @@ class TestLoader(TestCase):
             )
         assert loaded == {'def': 'ault'}
 
-    @pytest.mark.skipif(sys.version_info > (3, 9), reason="Python 3.8.x required")
+    @pytest.mark.skipif(sys.version_info > (3, 9), reason="Python 3.8.x required")  # Temporary until 3.8 is dropped
     @override_settings(EB_LOAD_PATH='builtins.dict')
     def test_bad_args_for_callable(self):
         with assert_warnings([
@@ -99,7 +99,7 @@ class TestLoader(TestCase):
             )
         assert loaded == {'def': 'ault'}
 
-    @pytest.mark.skipif(sys.version_info < (3, 9), reason="Python 3.11.x required")
+    @pytest.mark.skipif(sys.version_info < (3, 9), reason="Python 3.11.x required")  # Temporary until 3.8 is dropped
     @override_settings(EB_LOAD_PATH='builtins.dict')
     def test_bad_args_for_callable(self):
         with assert_warnings([
