@@ -14,8 +14,14 @@ Change Log
 Unreleased
 ----------
 
-[9.8.0] - 2024-04-11
+[9.9.0] - 2024-04-11
+--------------------
+Added
+~~~~~~~
+* Added new ``ORA_SUBMISSION_CREATED`` event in learning.
 
+[9.8.0] - 2024-04-11
+--------------------
 Added
 ~~~~~
 * Added support for Python 3.11
