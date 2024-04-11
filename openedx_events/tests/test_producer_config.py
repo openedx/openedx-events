@@ -49,9 +49,9 @@ class ProducerConfiguratonTest(TestCase):
 
         # check that call_args_list only consists of enabled topics.
         call_args = mock_send.send.call_args_list[0][1]
-        self.assertEqual(call_args, call_args | expected_call_args[0])
+        self.assertEqual(call_args, {**call_args, **expected_call_args[0]})
         call_args = mock_send.send.call_args_list[1][1]
-        self.assertEqual(call_args, call_args | expected_call_args[1])
+        self.assertEqual(call_args, {**call_args, **expected_call_args[1]})
 
     @patch("openedx_events.apps.logger")
     @patch('openedx_events.apps.get_producer')
