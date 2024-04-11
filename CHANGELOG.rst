@@ -13,6 +13,13 @@ Change Log
 
 Unreleased
 ----------
+
+[9.8.0] - 2024-04-11
+
+Added
+~~~~~
+* Added support for Python 3.11
+
 [9.7.0] - 2024-04-04
 --------------------
 Added
