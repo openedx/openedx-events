@@ -111,8 +111,9 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         }
 
         metadata = self.public_signal.generate_signal_metadata()
+        metadata_as_dict = attr.asdict(metadata)
 
-        self.assertDictContainsSubset(expected_metadata, attr.asdict(metadata))
+        self.assertEqual(metadata_as_dict, {**expected_metadata, **metadata_as_dict})
         self.assertIsInstance(metadata.id, UUID)
 
     @override_settings(SERVICE_VARIANT="lms")
@@ -138,8 +139,9 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         }
 
         metadata = self.public_signal.generate_signal_metadata(time=expected_time)
+        metadata_as_dict = attr.asdict(metadata)
 
-        self.assertDictContainsSubset(expected_metadata, attr.asdict(metadata))
+        self.assertEqual(metadata_as_dict, {**expected_metadata, **metadata_as_dict})
         self.assertIsInstance(metadata.id, UUID)
 
     @ddt.data(

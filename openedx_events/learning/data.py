@@ -444,3 +444,35 @@ class CourseNotificationData:
     content_url = attr.ib(type=str)
     content_context = attr.ib(type=dict, factory=dict)
     audience_filters = attr.ib(type=dict, factory=dict)
+
+
+@attr.s(frozen=True)
+class ORAFileDownloadsData:
+    """
+    Attributes defined to represent file downloads in an ORA submission.
+
+    Arguments:
+        download_url (str): URL to download the file.
+        description (str): Description of the file.
+        name (str): Name of the file.
+        size (int): Size of the file.
+    """
+
+    download_url = attr.ib(type=str)
+    description = attr.ib(type=str)
+    name = attr.ib(type=str)
+    size = attr.ib(type=int)
+
+
+@attr.s(frozen=True)
+class ORASubmissionData:
+    """
+    Attributes defined to represent event when a user submits an ORA assignment.
+
+    Arguments:
+        id (str): identifier of the ORA submission.
+        file_downloads (List[ORAFileDownloadsData]): list of related files in the ORA submission.
+    """
+
+    id = attr.ib(type=str)
+    file_downloads = attr.ib(type=List[ORAFileDownloadsData], factory=list)

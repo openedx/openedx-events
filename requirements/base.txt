@@ -8,8 +8,10 @@ asgiref==3.8.1
     # via django
 attrs==23.2.0
     # via -r requirements/base.in
-backports-zoneinfo==0.2.1
-    # via django
+backports-zoneinfo==0.2.1 ; python_version < "3.9"
+    # via
+    #   -c requirements/constraints.txt
+    #   django
 cffi==1.16.0
     # via pynacl
 click==8.1.7
@@ -25,19 +27,19 @@ django-crum==0.7.9
     # via edx-django-utils
 django-waffle==4.1.0
     # via edx-django-utils
-edx-django-utils==5.11.0
+edx-django-utils==5.12.0
     # via -r requirements/base.in
 edx-opaque-keys[django]==2.5.1
     # via -r requirements/base.in
 fastavro==1.9.4
     # via -r requirements/base.in
-newrelic==9.7.1
+newrelic==9.8.0
     # via edx-django-utils
 pbr==6.0.0
     # via stevedore
 psutil==5.9.8
     # via edx-django-utils
-pycparser==2.21
+pycparser==2.22
     # via cffi
 pymongo==3.13.0
     # via edx-opaque-keys
@@ -49,7 +51,7 @@ stevedore==5.2.0
     # via
     #   edx-django-utils
     #   edx-opaque-keys
-typing-extensions==4.10.0
+typing-extensions==4.11.0
     # via
     #   asgiref
     #   edx-opaque-keys
