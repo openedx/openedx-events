@@ -185,7 +185,7 @@ class LibraryBlockData:
 @attr.s(frozen=True)
 class ContentObjectData:
     """
-    Data about changed content object
+    Data about changed content object.
 
     Arguments:
         object_id (str): identifier of the Content object. This represents the id of the course or library block
