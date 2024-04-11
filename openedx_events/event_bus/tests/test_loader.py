@@ -99,7 +99,6 @@ class TestLoader(TestCase):
             )
         assert loaded == {'def': 'ault'}
 
-
     @pytest.mark.skipif(sys.version_info < (3, 9), reason="Python 3.11.x required")
     @override_settings(EB_LOAD_PATH='builtins.dict')
     def test_bad_args_for_callable(self):
