@@ -14,6 +14,14 @@ Change Log
 Unreleased
 ----------
 
+[9.9.1] - 2024-04-12
+--------------------
+
+Changed
+~~~~~~~
+
+* Updated Python classifiers to include Python 3.11.
+
 [9.9.0] - 2024-04-11
 --------------------
 Added
