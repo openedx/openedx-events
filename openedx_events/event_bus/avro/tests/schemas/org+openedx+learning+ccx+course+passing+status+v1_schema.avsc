@@ -1,0 +1,108 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "course_passing_status",
+      "type": {
+        "name": "CcxCoursePassingStatusData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "status",
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "type": {
+              "name": "UserData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "long"
+                },
+                {
+                  "name": "is_active",
+                  "type": "boolean"
+                },
+                {
+                  "name": "pii",
+                  "type": {
+                    "name": "UserPersonalData",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "name": "username",
+                        "type": "string"
+                      },
+                      {
+                        "name": "email",
+                        "type": "string"
+                      },
+                      {
+                        "name": "name",
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "course",
+            "type": {
+              "name": "CcxCourseData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "ccx_course_key",
+                  "type": "string"
+                },
+                {
+                  "name": "master_course_key",
+                  "type": "string"
+                },
+                {
+                  "name": "display_name",
+                  "type": "string"
+                },
+                {
+                  "name": "coach_email",
+                  "type": "string"
+                },
+                {
+                  "name": "start",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                },
+                {
+                  "name": "end",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                },
+                {
+                  "name": "max_students_allowed",
+                  "type": [
+                    "null",
+                    "long"
+                  ],
+                  "default": null
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.ccx.course.passing.status.v1"
+}

@@ -8,6 +8,8 @@ from datetime import datetime
 from typing import List, Optional
 
 import attr
+from attr.validators import in_
+from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
 
@@ -72,6 +74,30 @@ class CourseData:
     display_name = attr.ib(type=str, factory=str)
     start = attr.ib(type=datetime, default=None)
     end = attr.ib(type=datetime, default=None)
+
+
+@attr.s(frozen=True)
+class CcxCourseData:
+    """
+    Represents data for a CCX (Custom Courses for edX) course.
+
+    Attributes:
+        ccx_course_key (CCXLocator): The unique identifier for the CCX course.
+        master_course_key (CourseKey): The unique identifier for the original course from which the CCX is derived.
+        display_name (str): The name of the CCX course as it should appear to users.
+        coach_email (str): The email address of the coach (instructor) for the CCX course.
+        start (str, optional): The start date of the CCX course. Defaults to None, indicating no specific start date.
+        end (str, optional): The end date of the CCX course. Defaults to None, indicating no specific end date.
+        max_students_allowed (int, optional): The maximum number of students that can enroll in the CCX course. Defaults to None, indicating no limit.
+    """
+
+    ccx_course_key = attr.ib(type=CCXLocator)
+    master_course_key = attr.ib(type=CourseKey)
+    display_name = attr.ib(type=str, factory=str)
+    coach_email = attr.ib(type=str, factory=str)
+    start = attr.ib(type=str, default=None)
+    end = attr.ib(type=str, default=None)
+    max_students_allowed = attr.ib(type=int, default=None)
 
 
 @attr.s(frozen=True)
@@ -476,3 +502,73 @@ class ORASubmissionData:
 
     id = attr.ib(type=str)
     file_downloads = attr.ib(type=List[ORAFileDownloadsData], factory=list)
+
+
+@attr.s(frozen=True)
+class CoursePassingStatusData:
+    """
+    Represents the event data when a user's grade is updated, indicates if current grade is enough for course passing.
+
+    Attributes:
+        status (str): A string containing information about user's current course grade value in comparison to the grading policy threshold.
+        user (UserData): An instance of UserData containing information about the user whose grade was updated.
+        course (CourseData): An instance of CourseData containing details about the course in which the grade was updated.
+    """
+    PASSING = 'passing'
+    FAILING = 'failing'
+    STATUSES = [PASSING, FAILING]
+
+    status = attr.ib(type=str, validator=in_(STATUSES))
+    course = attr.ib(type=CourseData)
+    user = attr.ib(type=UserData)
+
+
+@attr.s(frozen=True)
+class CcxCoursePassingStatusData(CoursePassingStatusData):
+    """
+    Extends CoursePassingStatusData for CCX courses, specifying CCX course data.
+
+    This class is used for events where a user's grade crosses a threshold specifically in a CCX course,
+    providing a custom course attribute suited for CCX course instances.
+
+    Attributes:
+        course (CcxCourseData): An instance of CcxCourseData containing details about the CCX course in which the grade threshold was crossed.
+        All other attributes are inherited from CoursePassingStatusData.
+    """
+    course = attr.ib(type=CcxCourseData)
+
+
+@attr.s(frozen=True)
+class BadgeTemplateData:
+    """
+    Attributes defined for Open edX badge template data object.
+
+    Arguments:
+        uuid (str): UUID of the badge template
+        origin (str): type of badge template
+        name (str): badge name
+        description (str): badge description
+        image_url (str): badge image url
+    """
+
+    uuid = attr.ib(type=str)
+    origin = attr.ib(type=str)
+    name = attr.ib(type=str, default=None)
+    description = attr.ib(type=str, default=None)
+    image_url = attr.ib(type=str, default=None)
+
+
+@attr.s(frozen=True)
+class BadgeData:
+    """
+    Attributes defined for the Open edX badge data object.
+
+    Arguments:
+        uuid (str): the UUID of the badge
+        user (UserData): user associated with the badge
+        template (BadgeTemplateData): badge template data
+    """
+
+    uuid = attr.ib(type=str)
+    user = attr.ib(type=UserData)
+    template = attr.ib(type=BadgeTemplateData)
