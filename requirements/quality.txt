@@ -83,7 +83,7 @@ exceptiongroup==1.2.0
     #   pytest
 fastavro==1.9.4
     # via -r requirements/test.txt
-idna==3.6
+idna==3.7
     # via requests
 importlib-metadata==6.11.0
     # via
@@ -227,7 +227,7 @@ six==1.16.0
     # via edx-lint
 snowballstemmer==2.2.0
     # via pydocstyle
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via
     #   -r requirements/test.txt
     #   django

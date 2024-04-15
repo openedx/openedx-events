@@ -98,7 +98,7 @@ python-slugify==8.0.4
     # via code-annotations
 pyyaml==6.0.1
     # via code-annotations
-sqlparse==0.4.4
+sqlparse==0.5.0
     # via
     #   -r requirements/base.txt
     #   django
