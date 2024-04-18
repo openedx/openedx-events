@@ -104,5 +104,5 @@
       }
     }
   ],
-  "namespace": "org.openedx.learning.ccx.course.passing.status.v1"
+  "namespace": "org.openedx.learning.ccx.course.passing.status.updated.v1"
 }

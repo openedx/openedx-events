@@ -88,7 +88,8 @@ class CcxCourseData:
         coach_email (str): The email address of the coach (instructor) for the CCX course.
         start (str, optional): The start date of the CCX course. Defaults to None, indicating no specific start date.
         end (str, optional): The end date of the CCX course. Defaults to None, indicating no specific end date.
-        max_students_allowed (int, optional): The maximum number of students that can enroll in the CCX course. Defaults to None, indicating no limit.
+        max_students_allowed (int, optional): The maximum number of students that can enroll in the CCX course.
+        Defaults to None, indicating no limit.
     """
 
     ccx_course_key = attr.ib(type=CCXLocator)
@@ -510,10 +511,13 @@ class CoursePassingStatusData:
     Represents the event data when a user's grade is updated, indicates if current grade is enough for course passing.
 
     Attributes:
-        status (str): A string containing information about user's current course grade value in comparison to the grading policy threshold.
+        status (str): A string containing information about user's current course grade value
+        in comparison to the grading policy threshold.
         user (UserData): An instance of UserData containing information about the user whose grade was updated.
-        course (CourseData): An instance of CourseData containing details about the course in which the grade was updated.
+        course (CourseData): An instance of CourseData containing details about the course
+        in which the grade was updated.
     """
+
     PASSING = 'passing'
     FAILING = 'failing'
     STATUSES = [PASSING, FAILING]
@@ -532,9 +536,11 @@ class CcxCoursePassingStatusData(CoursePassingStatusData):
     providing a custom course attribute suited for CCX course instances.
 
     Attributes:
-        course (CcxCourseData): An instance of CcxCourseData containing details about the CCX course in which the grade threshold was crossed.
+        course (CcxCourseData): An instance of CcxCourseData containing details about the CCX course
+        in which the grade threshold was crossed.
         All other attributes are inherited from CoursePassingStatusData.
     """
+
     course = attr.ib(type=CcxCourseData)
 
 

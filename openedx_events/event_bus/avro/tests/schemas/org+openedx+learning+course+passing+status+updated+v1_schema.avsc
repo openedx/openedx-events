@@ -88,5 +88,5 @@
       }
     }
   ],
-  "namespace": "org.openedx.learning.course.passing.status.v1"
+  "namespace": "org.openedx.learning.course.passing.status.updated.v1"
 }
