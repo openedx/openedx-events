@@ -447,24 +447,6 @@ class CourseNotificationData:
 
 
 @attr.s(frozen=True)
-class ORAFileDownloadsData:
-    """
-    Attributes defined to represent file downloads in an ORA submission.
-
-    Arguments:
-        download_url (str): URL to download the file.
-        description (str): Description of the file.
-        name (str): Name of the file.
-        size (int): Size of the file.
-    """
-
-    download_url = attr.ib(type=str)
-    description = attr.ib(type=str)
-    name = attr.ib(type=str)
-    size = attr.ib(type=int)
-
-
-@attr.s(frozen=True)
 class ORASubmissionAnswer:
     """
     Attributes defined to represent the answer submitted by the user in an ORA submission.
