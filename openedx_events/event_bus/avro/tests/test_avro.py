@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import List
 from unittest import TestCase
 
+from ccx_keys.locator import CCXLocator
 from fastavro import schemaless_reader, schemaless_writer
 from fastavro.repository.base import SchemaRepositoryError
 from fastavro.schema import load_schema
@@ -97,7 +98,7 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
     defaults_per_type = {
         int: 1,
         bool: True,
-        str: "default",
+        str: "passing",
         float: 1.0,
         CourseKey: CourseKey.from_string("course-v1:edX+DemoX.1+2014"),
         UsageKey: UsageKey.from_string(
@@ -107,6 +108,7 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
         LibraryUsageLocatorV2: LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1'),
         List[int]: [1, 2, 3],
         datetime: datetime.now(),
+        CCXLocator: CCXLocator(org='edx', course='DemoX', run='Demo_course', ccx='1'),
     }
     data_dict = {}
     for attribute in data_type.__attrs_attrs__:
