@@ -474,21 +474,28 @@ class CourseNotificationData:
 
 
 @attr.s(frozen=True)
-class ORAFileDownloadsData:
+class ORASubmissionAnswer:
     """
-    Attributes defined to represent file downloads in an ORA submission.
+    Attributes defined to represent the answer submitted by the user in an ORA submission.
 
     Arguments:
-        download_url (str): URL to download the file.
-        description (str): Description of the file.
-        name (str): Name of the file.
-        size (int): Size of the file.
+        parts (List[dict]): List with the response text in the ORA submission.
+
+        The following attributes are used to represent the files submitted in the ORA submission:
+
+        file_keys (List[str]): List of file keys in the ORA submission.
+        file_descriptions (List[str]): List of file descriptions in the ORA submission.
+        file_names (List[str]): List of file names in the ORA submission.
+        file_sizes (List[int]): List of file sizes in the ORA submission.
+        file_urls (List[str]): List of file URLs in the ORA submission.
     """
 
-    download_url = attr.ib(type=str)
-    description = attr.ib(type=str)
-    name = attr.ib(type=str)
-    size = attr.ib(type=int)
+    parts = attr.ib(type=List[dict], factory=list)
+    file_keys = attr.ib(type=List[str], factory=list)
+    file_descriptions = attr.ib(type=List[str], factory=list)
+    file_names = attr.ib(type=List[str], factory=list)
+    file_sizes = attr.ib(type=List[int], factory=list)
+    file_urls = attr.ib(type=List[str], factory=list)
 
 
 @attr.s(frozen=True)
@@ -497,12 +504,24 @@ class ORASubmissionData:
     Attributes defined to represent event when a user submits an ORA assignment.
 
     Arguments:
-        id (str): identifier of the ORA submission.
-        file_downloads (List[ORAFileDownloadsData]): list of related files in the ORA submission.
+        uuid (str): The UUID of the ORA submission.
+        anonymous_user_id (str): Optional. Anonymous user ID of the user who submitted the ORA submission.
+        location (str): Optional. Location of the ORA submission.
+        attempt_number (int): Attempt number of the ORA submission.
+        created_at (datetime): Date and time when the ORA submission was created.
+        submitted_at (datetime): Date and time when the ORA submission was submitted.
+        answer (ORASubmissionAnswer): Answer submitted by the user in the ORA submission.
     """
 
     id = attr.ib(type=str)
     file_downloads = attr.ib(type=List[ORAFileDownloadsData], factory=list)
+    uuid = attr.ib(type=str)
+    anonymous_user_id = attr.ib(type=str)
+    location = attr.ib(type=str)
+    attempt_number = attr.ib(type=int)
+    created_at = attr.ib(type=datetime)
+    submitted_at = attr.ib(type=datetime)
+    answer = attr.ib(type=ORASubmissionAnswer)
 
 
 @attr.s(frozen=True)
