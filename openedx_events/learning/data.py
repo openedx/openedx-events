@@ -513,8 +513,6 @@ class ORASubmissionData:
         answer (ORASubmissionAnswer): Answer submitted by the user in the ORA submission.
     """
 
-    id = attr.ib(type=str)
-    file_downloads = attr.ib(type=List[ORAFileDownloadsData], factory=list)
     uuid = attr.ib(type=str)
     anonymous_user_id = attr.ib(type=str)
     location = attr.ib(type=str)
