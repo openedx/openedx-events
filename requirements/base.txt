@@ -33,7 +33,7 @@ edx-opaque-keys[django]==2.5.1
     # via -r requirements/base.in
 fastavro==1.9.4
     # via -r requirements/base.in
-newrelic==9.8.0
+newrelic==9.9.0
     # via edx-django-utils
 pbr==6.0.0
     # via stevedore

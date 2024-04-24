@@ -16,7 +16,7 @@ astroid==2.15.8
     #   pylint-celery
 attrs==23.2.0
     # via -r requirements/quality.txt
-backports-tarfile==1.0.0
+backports-tarfile==1.1.0
     # via
     #   -r requirements/quality.txt
     #   jaraco-context
@@ -117,7 +117,7 @@ edx-lint==5.3.6
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.5.1
     # via -r requirements/quality.txt
-exceptiongroup==1.2.0
+exceptiongroup==1.2.1
     # via
     #   -r requirements/quality.txt
     #   pytest
@@ -160,7 +160,7 @@ jaraco-context==5.3.0
     # via
     #   -r requirements/quality.txt
     #   keyring
-jaraco-functools==4.0.0
+jaraco-functools==4.0.1
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -203,7 +203,7 @@ more-itertools==10.2.0
     #   -r requirements/quality.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==9.8.0
+newrelic==9.9.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -237,7 +237,7 @@ platformdirs==4.2.0
     #   pylint
     #   tox
     #   virtualenv
-pluggy==1.4.0
+pluggy==1.5.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -397,7 +397,7 @@ urllib3==2.2.1
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.25.1
+virtualenv==20.25.3
     # via
     #   -r requirements/ci.txt
     #   tox
