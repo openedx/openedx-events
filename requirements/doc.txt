@@ -18,7 +18,7 @@ babel==2.14.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
-backports-tarfile==1.1.0
+backports-tarfile==1.1.1
     # via jaraco-context
 backports-zoneinfo==0.2.1 ; python_version < "3.9"
     # via
@@ -34,7 +34,6 @@ certifi==2024.2.2
 cffi==1.16.0
     # via
     #   -r requirements/test.txt
-    #   cryptography
     #   pynacl
 charset-normalizer==3.3.2
     # via requests
@@ -47,12 +46,10 @@ code-annotations==1.7.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.4.4
+coverage[toml]==7.5.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==42.0.5
-    # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
 django==4.2.11
@@ -70,6 +67,10 @@ django-waffle==4.1.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
+dnspython==2.6.1
+    # via
+    #   -r requirements/test.txt
+    #   pymongo
 doc8==1.1.1
     # via -r requirements/doc.in
 docutils==0.19
@@ -79,10 +80,14 @@ docutils==0.19
     #   readme-renderer
     #   restructuredtext-lint
     #   sphinx
+edx-ccx-keys==1.3.0
+    # via -r requirements/test.txt
 edx-django-utils==5.12.0
     # via -r requirements/test.txt
-edx-opaque-keys[django]==2.5.1
-    # via -r requirements/test.txt
+edx-opaque-keys[django]==2.9.0
+    # via
+    #   -r requirements/test.txt
+    #   edx-ccx-keys
 exceptiongroup==1.2.1
     # via
     #   -r requirements/test.txt
@@ -112,10 +117,6 @@ jaraco-context==5.3.0
     # via keyring
 jaraco-functools==4.0.1
     # via keyring
-jeepney==0.8.0
-    # via
-    #   keyring
-    #   secretstorage
 jinja2==3.1.3
     # via
     #   -r requirements/test.txt
@@ -178,7 +179,7 @@ pygments==2.17.2
     #   readme-renderer
     #   rich
     #   sphinx
-pymongo==3.13.0
+pymongo==4.4.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -222,10 +223,11 @@ rfc3986==2.0.0
     # via twine
 rich==13.7.1
     # via twine
-secretstorage==3.3.3
-    # via keyring
 six==1.16.0
-    # via livereload
+    # via
+    #   -r requirements/test.txt
+    #   edx-ccx-keys
+    #   livereload
 snowballstemmer==2.2.0
     # via sphinx
 soupsieve==2.5
