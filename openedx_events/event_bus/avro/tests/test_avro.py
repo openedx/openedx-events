@@ -98,7 +98,7 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
     defaults_per_type = {
         int: 1,
         bool: True,
-        str: "passing",
+        str: "default",
         float: 1.0,
         CourseKey: CourseKey.from_string("course-v1:edX+DemoX.1+2014"),
         UsageKey: UsageKey.from_string(
