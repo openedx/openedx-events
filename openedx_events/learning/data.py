@@ -535,11 +535,7 @@ class CoursePassingStatusData:
         in which the grade was updated.
     """
 
-    PASSING = 'passing'
-    FAILING = 'failing'
-    STATUSES = [PASSING, FAILING]
-
-    status = attr.ib(type=str, validator=in_(STATUSES))
+    status = attr.ib(type=str)
     course = attr.ib(type=CourseData)
     user = attr.ib(type=UserData)
 
