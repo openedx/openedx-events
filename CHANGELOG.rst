@@ -14,6 +14,14 @@ Change Log
 Unreleased
 ----------
 
+[9.9.2] - 2024-04-18
+--------------------
+
+Changed
+~~~~~~~
+
+* Updated ``ORASubmissionData`` class.
+
 [9.9.1] - 2024-04-12
 --------------------
 
