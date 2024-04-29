@@ -27,9 +27,11 @@ django-crum==0.7.9
     # via edx-django-utils
 django-waffle==4.1.0
     # via edx-django-utils
+dnspython==2.6.1
+    # via pymongo
 edx-django-utils==5.12.0
     # via -r requirements/base.in
-edx-opaque-keys[django]==2.5.1
+edx-opaque-keys[django]==2.9.0
     # via -r requirements/base.in
 fastavro==1.9.4
     # via -r requirements/base.in
@@ -41,7 +43,7 @@ psutil==5.9.8
     # via edx-django-utils
 pycparser==2.22
     # via cffi
-pymongo==3.13.0
+pymongo==4.4.0
     # via edx-opaque-keys
 pynacl==1.5.0
     # via edx-django-utils
