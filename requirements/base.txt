@@ -29,7 +29,7 @@ django-waffle==4.1.0
     # via edx-django-utils
 dnspython==2.6.1
     # via pymongo
-edx-django-utils==5.12.0
+edx-django-utils==5.13.0
     # via -r requirements/base.in
 edx-opaque-keys[django]==2.9.0
     # via -r requirements/base.in
