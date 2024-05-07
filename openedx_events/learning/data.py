@@ -528,14 +528,13 @@ class CoursePassingStatusData:
     Represents the event data when a user's grade is updated, indicates if current grade is enough for course passing.
 
     Attributes:
-        status (str): A string containing information about user's current course grade value
-        in comparison to the grading policy threshold.
+        is_passing (bool): Indicates whether the user's grade is enough to pass the course.
         user (UserData): An instance of UserData containing information about the user whose grade was updated.
         course (CourseData): An instance of CourseData containing details about the course
         in which the grade was updated.
     """
 
-    status = attr.ib(type=str)
+    is_passing = attr.ib(type=bool)
     course = attr.ib(type=CourseData)
     user = attr.ib(type=UserData)
 
