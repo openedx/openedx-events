@@ -10,8 +10,8 @@
         "type": "record",
         "fields": [
           {
-            "name": "status",
-            "type": "string"
+            "name": "is_passing",
+            "type": "boolean"
           },
           {
             "name": "course",
