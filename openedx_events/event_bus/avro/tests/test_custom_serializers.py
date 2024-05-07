@@ -1,10 +1,9 @@
+"""Test custom servializers"""
 from unittest import TestCase
 
 from ccx_keys.locator import CCXLocator
 
-from openedx_events.event_bus.avro.custom_serializers import (
-    CcxCourseLocatorAvroSerializer,
-)
+from openedx_events.event_bus.avro.custom_serializers import CcxCourseLocatorAvroSerializer
 
 
 class TestCCXLocatorSerailizer(TestCase):

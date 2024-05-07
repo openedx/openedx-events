@@ -8,7 +8,6 @@ from datetime import datetime
 from typing import List, Optional
 
 import attr
-from attr.validators import in_
 from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
