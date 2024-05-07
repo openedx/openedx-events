@@ -355,20 +355,6 @@ ORA_SUBMISSION_CREATED = OpenEdxPublicSignal(
 )
 
 
-# .. event_type: org.openedx.learning.ora.submission.created.v1
-# .. event_name: ORA_SUBMISSION_CREATED
-# .. event_description: Emitted when a new ORA submission is created
-# .. event_data: ORASubmissionData
-# Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
-ORA_SUBMISSION_CREATED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.ora.submission.created.v1",
-    data={
-        "submission": ORASubmissionData,
-    },
-)
-
-
-
 # .. event_type: org.openedx.learning.course.passing.status.updated.v1
 # .. event_name: COURSE_PASSING_STATUS_UPDATED
 # .. event_description: Emitted when course grade updates.
