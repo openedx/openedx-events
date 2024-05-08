@@ -14,6 +14,14 @@ Change Log
 Unreleased
 ----------
 
+[9.10.0] - 2024-05-08
+---------------------
+
+Added
+~~~~~~~
+
+* Added new ``COURSE_PASSING_STATUS_UPDATED``, ``COURSE_PASSING_STATUS_UPDATED``, ``CCX_COURSE_PASSING_STATUS_UPDATED``, ``CCX_COURSE_PASSING_STATUS_UPDATED``, ``BADGE_AWARDED`` and ``BADGE_REVOKED`` events in learning.
+
 [9.9.2] - 2024-04-18
 --------------------
 
