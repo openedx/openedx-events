@@ -9,12 +9,15 @@ docs/decisions/0003-events-payload.rst
 """
 
 from openedx_events.learning.data import (
+    BadgeData,
+    CcxCoursePassingStatusData,
     CertificateData,
     CohortData,
     CourseAccessRoleData,
     CourseDiscussionConfigurationData,
     CourseEnrollmentData,
     CourseNotificationData,
+    CoursePassingStatusData,
     DiscussionThreadData,
     ExamAttemptData,
     ORASubmissionData,
@@ -349,4 +352,52 @@ ORA_SUBMISSION_CREATED = OpenEdxPublicSignal(
     data={
         "submission": ORASubmissionData,
     },
+)
+
+
+# .. event_type: org.openedx.learning.course.passing.status.updated.v1
+# .. event_name: COURSE_PASSING_STATUS_UPDATED
+# .. event_description: Emitted when course grade updates.
+# .. event_data: CoursePassingStatusData
+COURSE_PASSING_STATUS_UPDATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.passing.status.updated.v1",
+    data={
+        "course_passing_status": CoursePassingStatusData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.ccx.course.passing.status.updated.v1
+# .. event_name: CCX_COURSE_PASSING_STATUS_UPDATED
+# .. event_description: Emitted when a CCX course grade updates.
+# .. event_data: CcxCoursePassingStatusData
+CCX_COURSE_PASSING_STATUS_UPDATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.ccx.course.passing.status.updated.v1",
+    data={
+        "course_passing_status": CcxCoursePassingStatusData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.badge.awarded.v1
+# .. event_name: BADGE_AWARDED
+# .. event_description: Emit when a badge is awarded to a learner
+# .. event_data: BadgeData
+BADGE_AWARDED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.badge.awarded.v1",
+    data={
+        "badge": BadgeData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.badge.revoked.v1
+# .. event_name: BADGE_REVOKED
+# .. event_description: Emit when a badge is revoked for a learner
+# .. event_data: BadgeData
+BADGE_REVOKED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.badge.revoked.v1",
+    data={
+        "badge": BadgeData,
+    }
 )
