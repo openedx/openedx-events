@@ -5,4 +5,4 @@ These definitions are part of the Hooks Extension Framework, see OEP-50 for
 more information about the project.
 """
 
-__version__ = "9.9.2"
+__version__ = "9.10.0"
