@@ -27,6 +27,7 @@ certifi==2024.2.2
 cffi==1.16.0
     # via
     #   -r requirements/test.txt
+    #   cryptography
     #   pynacl
 charset-normalizer==3.3.2
     # via requests
@@ -47,6 +48,8 @@ coverage[toml]==7.5.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
+cryptography==42.0.7
+    # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
 dill==0.3.8
@@ -111,6 +114,10 @@ jaraco-context==5.3.0
     # via keyring
 jaraco-functools==4.0.1
     # via keyring
+jeepney==0.8.0
+    # via
+    #   keyring
+    #   secretstorage
 jinja2==3.1.4
     # via
     #   -r requirements/test.txt
@@ -222,6 +229,8 @@ rfc3986==2.0.0
     # via twine
 rich==13.7.1
     # via twine
+secretstorage==3.3.3
+    # via keyring
 six==1.16.0
     # via
     #   -r requirements/test.txt
@@ -249,7 +258,7 @@ tomli==2.0.1
     #   coverage
     #   pylint
     #   pytest
-tomlkit==0.12.4
+tomlkit==0.12.5
     # via pylint
 twine==5.0.0
     # via -r requirements/quality.in
