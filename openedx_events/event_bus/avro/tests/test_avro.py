@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 from typing import List
 from unittest import TestCase
+from uuid import UUID, uuid4
 
 from ccx_keys.locator import CCXLocator
 from fastavro import schemaless_reader, schemaless_writer
@@ -109,6 +110,7 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
         List[int]: [1, 2, 3],
         datetime: datetime.now(),
         CCXLocator: CCXLocator(org='edx', course='DemoX', run='Demo_course', ccx='1'),
+        UUID: uuid4(),
     }
     data_dict = {}
     for attribute in data_type.__attrs_attrs__:
