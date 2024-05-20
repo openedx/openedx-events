@@ -122,7 +122,7 @@ jinja2==3.1.4
     # via
     #   -r requirements/test.txt
     #   code-annotations
-keyring==25.2.0
+keyring==25.2.1
     # via twine
 lazy-object-proxy==1.10.0
     # via astroid
@@ -140,7 +140,7 @@ more-itertools==10.2.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==9.9.0
+newrelic==9.9.1
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -156,7 +156,7 @@ pbr==6.0.0
     #   stevedore
 pkginfo==1.10.0
     # via twine
-platformdirs==4.2.1
+platformdirs==4.2.2
     # via pylint
 pluggy==1.5.0
     # via
@@ -200,7 +200,7 @@ pynacl==1.5.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pytest==8.2.0
+pytest==8.2.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -260,7 +260,7 @@ tomli==2.0.1
     #   pytest
 tomlkit==0.12.5
     # via pylint
-twine==5.0.0
+twine==5.1.0
     # via -r requirements/quality.in
 typing-extensions==4.11.0
     # via
@@ -276,7 +276,7 @@ urllib3==2.2.1
     #   twine
 wrapt==1.16.0
     # via astroid
-zipp==3.18.1
+zipp==3.18.2
     # via
     #   importlib-metadata
     #   importlib-resources
