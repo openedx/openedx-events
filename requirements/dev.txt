@@ -16,7 +16,7 @@ astroid==2.15.8
     #   pylint-celery
 attrs==23.2.0
     # via -r requirements/quality.txt
-backports-tarfile==1.1.1
+backports-tarfile==1.2.0
     # via
     #   -r requirements/quality.txt
     #   jaraco-context
@@ -33,7 +33,7 @@ cachetools==5.3.3
     # via
     #   -r requirements/ci.txt
     #   tox
-certifi==2024.2.2
+certifi==2024.6.2
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -72,11 +72,11 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.5.1
+coverage[toml]==7.5.3
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
-cryptography==42.0.7
+cryptography==42.0.8
     # via
     #   -r requirements/quality.txt
     #   secretstorage
@@ -117,7 +117,7 @@ docutils==0.20.1
     #   readme-renderer
 edx-ccx-keys==1.3.0
     # via -r requirements/quality.txt
-edx-django-utils==5.13.0
+edx-django-utils==5.14.2
     # via -r requirements/quality.txt
 edx-lint==5.3.6
     # via -r requirements/quality.txt
@@ -182,7 +182,7 @@ jinja2==3.1.4
     #   -r requirements/quality.txt
     #   code-annotations
     #   diff-cover
-keyring==25.2.0
+keyring==25.2.1
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -211,7 +211,7 @@ more-itertools==10.2.0
     #   -r requirements/quality.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==9.9.0
+newrelic==9.10.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
@@ -219,7 +219,7 @@ nh3==0.2.17
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-packaging==24.0
+packaging==24.1
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -234,11 +234,11 @@ pbr==6.0.0
     #   stevedore
 pip-tools==7.4.1
     # via -r requirements/pip-tools.txt
-pkginfo==1.10.0
+pkginfo==1.11.1
     # via
     #   -r requirements/quality.txt
     #   twine
-platformdirs==4.2.1
+platformdirs==4.2.2
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -307,7 +307,7 @@ pyproject-hooks==1.1.0
     #   -r requirements/pip-tools.txt
     #   build
     #   pip-tools
-pytest==8.2.0
+pytest==8.2.2
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -328,7 +328,7 @@ readme-renderer==43.0
     # via
     #   -r requirements/quality.txt
     #   twine
-requests==2.31.0
+requests==2.32.3
     # via
     #   -r requirements/quality.txt
     #   requests-toolbelt
@@ -388,11 +388,11 @@ tomlkit==0.12.5
     # via
     #   -r requirements/quality.txt
     #   pylint
-tox==4.15.0
+tox==4.15.1
     # via -r requirements/ci.txt
-twine==5.0.0
+twine==5.1.0
     # via -r requirements/quality.txt
-typing-extensions==4.11.0
+typing-extensions==4.12.2
     # via
     #   -r requirements/quality.txt
     #   asgiref
@@ -405,7 +405,7 @@ urllib3==2.2.1
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.26.1
+virtualenv==20.26.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -417,7 +417,7 @@ wrapt==1.16.0
     # via
     #   -r requirements/quality.txt
     #   astroid
-zipp==3.18.1
+zipp==3.19.2
     # via
     #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
