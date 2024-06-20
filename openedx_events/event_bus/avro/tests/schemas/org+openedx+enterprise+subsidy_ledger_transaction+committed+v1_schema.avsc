@@ -1,0 +1,110 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "ledger_transaction",
+      "type": {
+        "name": "LedgerTransaction",
+        "type": "record",
+        "fields": [
+          {
+            "name": "uuid",
+            "type": "string"
+          },
+          {
+            "name": "created",
+            "type": "string"
+          },
+          {
+            "name": "modified",
+            "type": "string"
+          },
+          {
+            "name": "idempotency_key",
+            "type": "string"
+          },
+          {
+            "name": "quantity",
+            "type": "long"
+          },
+          {
+            "name": "state",
+            "type": "string"
+          },
+          {
+            "name": "ledger_uuid",
+            "type": "string"
+          },
+          {
+            "name": "subsidy_access_policy_uuid",
+            "type": "string"
+          },
+          {
+            "name": "lms_user_id",
+            "type": "long"
+          },
+          {
+            "name": "content_key",
+            "type": "string"
+          },
+          {
+            "name": "parent_content_key",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "fulfillment_identifier",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "reversal",
+            "type": [
+              "null",
+              {
+                "name": "LedgerTransactionReversal",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "uuid",
+                    "type": "string"
+                  },
+                  {
+                    "name": "created",
+                    "type": "string"
+                  },
+                  {
+                    "name": "modified",
+                    "type": "string"
+                  },
+                  {
+                    "name": "idempotency_key",
+                    "type": "string"
+                  },
+                  {
+                    "name": "quantity",
+                    "type": "long"
+                  },
+                  {
+                    "name": "state",
+                    "type": "string"
+                  }
+                ]
+              }
+            ],
+            "default": null
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.enterprise.subsidy_ledger_transaction.committed.v1"
+}

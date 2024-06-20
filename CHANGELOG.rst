@@ -14,6 +14,17 @@ Change Log
 Unreleased
 ----------
 
+[9.11.0] - 2024-05-15
+---------------------
+
+Added
+~~~~~~~
+
+* Added new enterprise signals ``LEDGER_TRANSACTION_CREATED``, ``LEDGER_TRANSACTION_COMMITTED``,
+  ``LEDGER_TRANSACTION_FAILED``, and ``LEDGER_TRANSACTION_REVERSED``.
+* Added a ``UuidAvroSerializer`` to serialize uuid fields.
+* Added ``isort`` make target.
+
 [9.10.0] - 2024-05-08
 ---------------------
 

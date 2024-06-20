@@ -62,3 +62,6 @@ requirements/private.txt
 
 # IDA cruft
 .idea
+
+# emacs backup files
+*~

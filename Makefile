@@ -75,6 +75,9 @@ test-all: quality ## run tests on every supported Python/Django combination
 
 validate: quality test ## run tests and quality checks
 
+isort:  ## fix improperly sorted imports
+	isort test_utils openedx_events manage.py setup.py
+
 selfcheck: ## check that the Makefile is well-formed
 	@echo "The Makefile is well-formed."
 
