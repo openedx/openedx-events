@@ -33,6 +33,7 @@ from openedx_events.tooling import OpenEdxPublicSignal
 # .. event_name: STUDENT_REGISTRATION_COMPLETED
 # .. event_description: emitted when the user registration process in the LMS is completed.
 # .. event_data: UserData
+# .. event_status: provisional
 STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.student.registration.completed.v1",
     data={
@@ -46,6 +47,7 @@ STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
 # .. event_key_field: user.pii.username
 # .. event_description: emitted when the user's login process in the LMS is completed.
 # .. event_data: UserData
+# .. event_status: provisional
 SESSION_LOGIN_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.auth.session.login.completed.v1",
     data={
@@ -58,6 +60,7 @@ SESSION_LOGIN_COMPLETED = OpenEdxPublicSignal(
 # .. event_name: COURSE_ENROLLMENT_CREATED
 # .. event_description: emitted when the user's enrollment process is completed.
 # .. event_data: CourseEnrollmentData
+# .. event_status: provisional
 COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.enrollment.created.v1",
     data={
@@ -70,6 +73,7 @@ COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
 # .. event_name: COURSE_ENROLLMENT_CHANGED
 # .. event_description: emitted when the user's enrollment update process is completed.
 # .. event_data: CourseEnrollmentData
+# .. event_status: provisional
 COURSE_ENROLLMENT_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.enrollment.changed.v1",
     data={
@@ -83,6 +87,7 @@ COURSE_ENROLLMENT_CHANGED = OpenEdxPublicSignal(
 # .. event_key_field: enrollment.course.course_key
 # .. event_description: emitted when the user's unenrollment process is completed.
 # .. event_data: CourseEnrollmentData
+# .. event_status: provisional
 COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.unenrollment.completed.v1",
     data={
@@ -96,6 +101,7 @@ COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
 # .. event_key_field: certificate.course.course_key
 # .. event_description: emitted when the user's certificate creation process is completed.
 # .. event_data: CertificateData
+# .. event_status: provisional
 CERTIFICATE_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.certificate.created.v1",
     data={
@@ -119,6 +125,7 @@ PROGRAM_CERTIFICATE_AWARDED = OpenEdxPublicSignal(
 # .. event_name: CERTIFICATE_CHANGED
 # .. event_description: emitted when the user's certificate update process is completed.
 # .. event_data: CertificateData
+# .. event_status: provisional
 CERTIFICATE_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.certificate.changed.v1",
     data={
@@ -132,6 +139,7 @@ CERTIFICATE_CHANGED = OpenEdxPublicSignal(
 # .. event_key_field: certificate.course.course_key
 # .. event_description: emitted when the user's certificate annulation process is completed.
 # .. event_data: CertificateData
+# .. event_status: provisional
 CERTIFICATE_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.certificate.revoked.v1",
     data={
@@ -155,6 +163,7 @@ PROGRAM_CERTIFICATE_REVOKED = OpenEdxPublicSignal(
 # .. event_name: COHORT_MEMBERSHIP_CHANGED
 # .. event_description: emitted when the user's cohort update is completed.
 # .. event_data: CohortData
+# .. event_status: provisional
 COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.cohort_membership.changed.v1",
     data={
