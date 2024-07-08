@@ -22,7 +22,7 @@ backports-zoneinfo==0.2.1 ; python_version < "3.9"
     #   -c requirements/constraints.txt
     #   -r requirements/test.txt
     #   django
-certifi==2024.6.2
+certifi==2024.7.4
     # via requests
 cffi==1.16.0
     # via
@@ -144,7 +144,7 @@ newrelic==9.11.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-nh3==0.2.17
+nh3==0.2.18
     # via readme-renderer
 packaging==24.1
     # via

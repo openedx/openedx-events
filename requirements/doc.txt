@@ -29,7 +29,7 @@ beautifulsoup4==4.12.3
     # via pydata-sphinx-theme
 build==1.2.1
     # via -r requirements/doc.in
-certifi==2024.6.2
+certifi==2024.7.4
     # via requests
 cffi==1.16.0
     # via
@@ -149,7 +149,7 @@ newrelic==9.11.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-nh3==0.2.17
+nh3==0.2.18
     # via readme-renderer
 packaging==24.1
     # via

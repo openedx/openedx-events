@@ -33,7 +33,7 @@ cachetools==5.3.3
     # via
     #   -r requirements/ci.txt
     #   tox
-certifi==2024.6.2
+certifi==2024.7.4
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -215,7 +215,7 @@ newrelic==9.11.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-nh3==0.2.17
+nh3==0.2.18
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
@@ -388,7 +388,7 @@ tomlkit==0.12.5
     # via
     #   -r requirements/quality.txt
     #   pylint
-tox==4.15.1
+tox==4.16.0
     # via -r requirements/ci.txt
 twine==5.1.1
     # via -r requirements/quality.txt
