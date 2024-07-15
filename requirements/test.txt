@@ -26,7 +26,7 @@ click==8.1.7
     #   edx-django-utils
 code-annotations==1.7.0
     # via -r requirements/test.in
-coverage[toml]==7.5.4
+coverage[toml]==7.6.0
     # via pytest-cov
 ddt==1.7.2
     # via -r requirements/test.in
@@ -56,9 +56,9 @@ edx-opaque-keys[django]==2.10.0
     # via
     #   -r requirements/base.txt
     #   edx-ccx-keys
-exceptiongroup==1.2.1
+exceptiongroup==1.2.2
     # via pytest
-fastavro==1.9.4
+fastavro==1.9.5
     # via -r requirements/base.txt
 iniconfig==2.0.0
     # via pytest
@@ -66,7 +66,7 @@ jinja2==3.1.4
     # via code-annotations
 markupsafe==2.1.5
     # via jinja2
-newrelic==9.11.0
+newrelic==9.12.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
