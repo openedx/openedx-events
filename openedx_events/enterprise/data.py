@@ -94,3 +94,71 @@ class LedgerTransaction(BaseLedgerTransaction):
     parent_content_key = attr.ib(type=str, default=None)
     fulfillment_identifier = attr.ib(type=str, default=None)
     reversal = attr.ib(type=LedgerTransactionReversal, default=None)
+
+
+@attr.s(frozen=True)
+class EnterpriseCustomerUser:
+    """
+    Attributes of an ``enterprise.EnterpriseCustomerUser`` record.
+    """
+
+    id = attr.ib(type=int)
+    created = attr.ib(type=datetime)
+    modified = attr.ib(type=datetime)
+    enterprise_customer_uuid = attr.ib(type=UUID)
+    user_id = attr.ib(type=int)
+    active = attr.ib(type=bool)
+    linked = attr.ib(type=bool)
+    is_relinkable = attr.ib(type=bool)
+    invite_key = attr.ib(type=UUID)
+    should_inactivate_other_customers = attr.ib(type=bool)
+
+
+@attr.s(frozen=True)
+class EnterpriseCourseEnrollment:
+    """
+    Attributes of an ``enterprise.EnterpriseCourseEnrollment`` record.
+    """
+
+    id = attr.ib(type=int)
+    created = attr.ib(type=datetime)
+    modified = attr.ib(type=datetime)
+    enterprise_customer_user = attr.ib(type=EnterpriseCustomerUser)
+    course_id = attr.ib(type=CourseKey)
+    saved_for_later = attr.ib(type=bool)
+    source_slug = attr.ib(type=str)
+    unenrolled = attr.ib(type=bool)
+    unenrolled_at = attr.ib(type=datetime)
+
+
+@attr.s(frozen=True)
+class BaseEnterpriseFulfillment:
+    """
+    Defines the common attributes of enterprise fulfillment classes, i.e. ``enterprise.EnterpriseFulfillmentSource``.
+    """
+
+    uuid = attr.ib(type=UUID)
+    created = attr.ib(type=datetime)
+    modified = attr.ib(type=datetime)
+    fulfillment_type = attr.ib(type=str)
+    enterprise_course_entitlement_uuid = attr.ib(type=UUID)
+    enterprise_course_enrollment = attr.ib(type=EnterpriseCourseEnrollment)
+    is_revoked = attr.ib(type=bool)
+
+
+@attr.s(frozen=True)
+class LearnerCreditEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
+    """
+    Attributes of an ``enterprise.LearnerCreditEnterpriseCourseEnrollment`` record.
+    """
+
+    transaction_id = attr.ib(type=UUID)
+
+
+@attr.s(frozen=True)
+class LicensedEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
+    """
+    Attributes of an ``enterprise.LicensedEnterpriseCourseEnrollment`` record.
+    """
+
+    license_uuid = attr.ib(type=UUID)

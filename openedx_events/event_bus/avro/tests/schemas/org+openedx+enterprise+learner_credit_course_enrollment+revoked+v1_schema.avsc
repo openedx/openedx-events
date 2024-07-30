@@ -1,0 +1,135 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "learner_credit_course_enrollment",
+      "type": {
+        "name": "LearnerCreditEnterpriseCourseEnrollment",
+        "type": "record",
+        "fields": [
+          {
+            "name": "uuid",
+            "type": "string"
+          },
+          {
+            "name": "created",
+            "type": "string"
+          },
+          {
+            "name": "modified",
+            "type": "string"
+          },
+          {
+            "name": "fulfillment_type",
+            "type": "string"
+          },
+          {
+            "name": "enterprise_course_entitlement_uuid",
+            "type": "string"
+          },
+          {
+            "name": "enterprise_course_enrollment",
+            "type": {
+              "name": "EnterpriseCourseEnrollment",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "long"
+                },
+                {
+                  "name": "created",
+                  "type": "string"
+                },
+                {
+                  "name": "modified",
+                  "type": "string"
+                },
+                {
+                  "name": "enterprise_customer_user",
+                  "type": {
+                    "name": "EnterpriseCustomerUser",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "name": "id",
+                        "type": "long"
+                      },
+                      {
+                        "name": "created",
+                        "type": "string"
+                      },
+                      {
+                        "name": "modified",
+                        "type": "string"
+                      },
+                      {
+                        "name": "enterprise_customer_uuid",
+                        "type": "string"
+                      },
+                      {
+                        "name": "user_id",
+                        "type": "long"
+                      },
+                      {
+                        "name": "active",
+                        "type": "boolean"
+                      },
+                      {
+                        "name": "linked",
+                        "type": "boolean"
+                      },
+                      {
+                        "name": "is_relinkable",
+                        "type": "boolean"
+                      },
+                      {
+                        "name": "invite_key",
+                        "type": "string"
+                      },
+                      {
+                        "name": "should_inactivate_other_customers",
+                        "type": "boolean"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "name": "course_id",
+                  "type": "string"
+                },
+                {
+                  "name": "saved_for_later",
+                  "type": "boolean"
+                },
+                {
+                  "name": "source_slug",
+                  "type": "string"
+                },
+                {
+                  "name": "unenrolled",
+                  "type": "boolean"
+                },
+                {
+                  "name": "unenrolled_at",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          {
+            "name": "is_revoked",
+            "type": "boolean"
+          },
+          {
+            "name": "transaction_id",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.enterprise.learner_credit_course_enrollment.revoked.v1"
+}
