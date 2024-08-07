@@ -135,6 +135,9 @@ class EnterpriseCourseEnrollment:
 class BaseEnterpriseFulfillment:
     """
     Defines the common attributes of enterprise fulfillment classes, i.e. ``enterprise.EnterpriseFulfillmentSource``.
+
+    Django model definition:
+    https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2213
     """
 
     uuid = attr.ib(type=UUID)
@@ -150,6 +153,9 @@ class BaseEnterpriseFulfillment:
 class LearnerCreditEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
     """
     Attributes of an ``enterprise.LearnerCreditEnterpriseCourseEnrollment`` record.
+
+    Django model definition:
+    https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2325
     """
 
     transaction_id = attr.ib(type=UUID)
@@ -159,6 +165,9 @@ class LearnerCreditEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
 class LicensedEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
     """
     Attributes of an ``enterprise.LicensedEnterpriseCourseEnrollment`` record.
+
+    Django model definition:
+    https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2355
     """
 
     license_uuid = attr.ib(type=UUID)
