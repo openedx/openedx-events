@@ -589,3 +589,19 @@ class BadgeData:
     uuid = attr.ib(type=str)
     user = attr.ib(type=UserData)
     template = attr.ib(type=BadgeTemplateData)
+
+
+@attr.s(frozen=True)
+class VerificationAttemptData:
+    """
+    Attributes defined for the persona-integration IDV attempt data object.
+
+    Arguments:
+        asdf (type): description
+    """
+
+    user = attr.ib(type=UserData)
+    name = attr.ib(type=str)
+    status = attr.ib(type=str)
+    expiration_date = attr.ib(type=datetime)
+    inquiry_id = attr.ib(type=str)

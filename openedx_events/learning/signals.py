@@ -25,6 +25,7 @@ from openedx_events.learning.data import (
     ProgramCertificateData,
     UserData,
     UserNotificationData,
+    VerificationAttemptData,
     XBlockSkillVerificationData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -399,5 +400,53 @@ BADGE_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.badge.revoked.v1",
     data={
         "badge": BadgeData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.idv_attempt.created.v1
+# .. event_name: IDV_ATTEMPT_CREATED
+# .. event_description: Emitted when a IDV attempt is created by an IDV vendor
+# .. event_data: VerificationAttemptData
+IDV_ATTEMPT_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.idv_attempt.created.v1",
+    data={
+        "idv_attempt": VerificationAttemptData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.idv_attempt.pending.v1
+# .. event_name: IDV_ATTEMPT_PENDING
+# .. event_description: Emitted when a IDV attempt is marked as pending by an IDV vendor
+# .. event_data: VerificationAttemptData
+IDV_ATTEMPT_PENDING = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.idv_attempt.pending.v1",
+    data={
+        "idv_attempt": VerificationAttemptData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.idv_attempt.approved.v1
+# .. event_name: IDV_ATTEMPT_APPROVED
+# .. event_description: Emitted when a IDV attempt is approved by an IDV vendor
+# .. event_data: VerificationAttemptData
+IDV_ATTEMPT_APPROVED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.idv_attempt.approved.v1",
+    data={
+        "idv_attempt": VerificationAttemptData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.idv_attempt.denied.v1
+# .. event_name: IDV_ATTEMPT_DENIED
+# .. event_description: Emitted when a IDV attempt is denied by an IDV vendor
+# .. event_data: VerificationAttemptData
+IDV_ATTEMPT_DENIED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.idv_attempt.denied.v1",
+    data={
+        "idv_attempt": VerificationAttemptData,
     }
 )
