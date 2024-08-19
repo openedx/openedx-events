@@ -78,6 +78,7 @@ doc8==1.1.1
     # via -r requirements/doc.in
 docutils==0.20.1
     # via
+    #   -c requirements/constraints.txt
     #   doc8
     #   pydata-sphinx-theme
     #   readme-renderer
@@ -101,7 +102,7 @@ idna==3.7
     #   requests
 imagesize==1.4.1
     # via sphinx
-importlib-metadata==8.2.0
+importlib-metadata==8.3.0
     # via
     #   keyring
     #   twine

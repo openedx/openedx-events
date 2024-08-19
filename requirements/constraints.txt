@@ -18,3 +18,7 @@ astroid<3.0.0
 
 # Temporary to Support the python 3.11 Upgrade
 backports.zoneinfo;python_version<"3.9"  # Newer versions have zoneinfo available in the standard library
+
+# Python 3.8 is not supported by newer versions of docutils. Remove this pin once
+# python 3.8 is deprecated
+docutils==0.20.1
