@@ -100,6 +100,21 @@ class LedgerTransaction(BaseLedgerTransaction):
 class EnterpriseCustomerUser:
     """
     Attributes of an ``enterprise.EnterpriseCustomerUser`` record.
+
+    Django model definition: https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L1036
+
+    Arguments:
+        id (int): Primary identifier of the record.
+        created (datetime): When the record was created.
+        modified (datetime): When the record was last modified.
+        enterprise_customer_uuid (UUID): The enterprise customer to which the user is linked.
+        user_id (int): The LMS user ID corresponding to this enterprise user.
+        active (bool): The active enterprise user for the given LMS user.
+        linked (bool): This enterprise user has been linked to an enterprise customer.
+        is_relinkable (bool): When set to False, the user cannot be relinked to the enterprise.
+        invite_key (UUID): Invite key used to link a learner to an enterprise.
+        should_inactivate_other_customers (bool): When enabled along with `active`, all other linked enterprise
+            customers for this user will be marked as inactive upon save.
     """
 
     id = attr.ib(type=int)
@@ -118,6 +133,19 @@ class EnterpriseCustomerUser:
 class EnterpriseCourseEnrollment:
     """
     Attributes of an ``enterprise.EnterpriseCourseEnrollment`` record.
+
+    Django model definition: https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L1983
+
+    Arguments:
+        id (int): Primary identifier of the record.
+        created (datetime): When the record was created.
+        modified (datetime): When the record was last modified.
+        enterprise_customer_user (EnterpriseCustomerUser): The enterprise learner to which this enrollment is attached.
+        course_id (CourseKey): The ID of the course in which the learner was enrolled.
+        saved_for_later (bool): Specifies whether a user marked this course as saved for later in the learner portal.
+        source_slug (str): DB slug for the source of the enrollment, e.g. "enrollment_task", "management_command", etc.
+        unenrolled (bool): Specifies whether the related LMS course enrollment object was unenrolled.
+        unenrolled_at (datetime): Specifies when the related LMS course enrollment object was unenrolled.
     """
 
     id = attr.ib(type=int)
@@ -136,8 +164,16 @@ class BaseEnterpriseFulfillment:
     """
     Defines the common attributes of enterprise fulfillment classes, i.e. ``enterprise.EnterpriseFulfillmentSource``.
 
-    Django model definition:
-    https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2213
+    Django model definition: https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2213
+
+    Arguments:
+        uuid (str): Primary identifier of the record.
+        created (datetime): When the record was created.
+        modified (datetime): When the record was last modified.
+        fulfillment_type (str): Subsidy fulfillment type, typical values: "license", "learner_credit", "coupon_code".
+        enterprise_course_entitlement_uuid (UUID): The course entitlement the associated subsidy is for.
+        enterprise_course_enrollment (EnterpriseCourseEnrollment): The course enrollment the associated subsidy is for.
+        is_revoked (bool): Whether the enterprise subsidy is revoked, e.g., when a user's license is revoked.
     """
 
     uuid = attr.ib(type=UUID)
@@ -154,8 +190,11 @@ class LearnerCreditEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
     """
     Attributes of an ``enterprise.LearnerCreditEnterpriseCourseEnrollment`` record.
 
-    Django model definition:
-    https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2325
+    Django model definition: https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2325
+
+    Arguments:
+        (All of the same from BaseEnterpriseFulfillment plus the following:)
+        transaction_id (UUID): Ledgered transaction UUID to associate with this learner credit fulfillment.
     """
 
     transaction_id = attr.ib(type=UUID)
@@ -166,8 +205,11 @@ class LicensedEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
     """
     Attributes of an ``enterprise.LicensedEnterpriseCourseEnrollment`` record.
 
-    Django model definition:
-    https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2355
+    Django model definition: https://github.com/openedx/edx-enterprise/blob/cc873d6/enterprise/models.py#L2355
+
+    Arguments:
+        (All of the same from BaseEnterpriseFulfillment plus the following:)
+        license_uuid (UUID): License UUID to associate with this enterprise license fulfillment.
     """
 
     license_uuid = attr.ib(type=UUID)
