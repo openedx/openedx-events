@@ -14,6 +14,14 @@ Change Log
 Unreleased
 ----------
 
+[9.12.0] - 2024-07-31
+---------------------
+
+Added
+~~~~~~~
+
+* Added new enterprise signal ``LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED``.
+
 [9.11.0] - 2024-05-15
 ---------------------
 
