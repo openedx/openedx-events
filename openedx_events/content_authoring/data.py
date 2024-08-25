@@ -194,3 +194,17 @@ class ContentObjectData:
     """
 
     object_id = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class LibraryCollectionData:
+    """
+    Data about changed content library Collection.
+
+    Arguments:
+        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        collection_id (int): an id (pk) that represents a collection associated with the content library.
+    """
+
+    library_key = attr.ib(type=LibraryLocatorV2)
+    collection_id = attr.ib(type=int)

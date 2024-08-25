@@ -14,6 +14,10 @@ Change Log
 Unreleased
 ----------
 
+Added
+~~~~~
+* Added new ``LIBRARY_COLLECTION_CREATED``, ``LIBRARY_COLLECTION_UPDATED`` and ``LIBRARY_COLLECTION_DELETED`` events in content_authoring.
+
 [9.12.0] - 2024-07-31
 ---------------------
 
