@@ -20,3 +20,4 @@ Architectural Decision Records (ADRs)
    0013-special-exam-submission-and-review-events
    0014-new-event-bus-producer-config
    0015-outbox-pattern-and-production-modes
+   0016-idv-attempt-events

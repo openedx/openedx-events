@@ -26,10 +26,9 @@ Decision
 Where these events will be produced/consumed:
 =============================================
 
-* `persona-integration` will produce these events.
-    <!-- TODO: Is this line below correct? -->
-    * NOTE: There is no plan to have the legacy backend in `edx-platform`, produce these events.
 <!-- This is based off the special exam decision doc, lmk if this is wrong -->
+* `persona-integration` will produce these events.
+* NOTE: There is no plan to have the legacy backend in `edx-platform`, produce these events.
 * `edx-platform` will consume these events in order to handle all behavior as it pertains to the state of an ID Verification.
 
 Event Definitions:
