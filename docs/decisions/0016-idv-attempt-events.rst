@@ -40,6 +40,6 @@ Event Definitions:
 Consequences
 ************
 
-* `persona_integration` will emit events via the event bus to send information without needing a response.
+* The `verify_student` app will emit events via the event bus to send information without needing a response.
 * These events are dynamic, in that they can also be consumed by other services/applications as needed in the future.
 
