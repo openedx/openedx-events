@@ -594,14 +594,17 @@ class BadgeData:
 @attr.s(frozen=True)
 class VerificationAttemptData:
     """
-    Attributes defined for the persona-integration IDV attempt data object.
+    Attributes defined for the Open edX IDV attempt data object.
 
     Arguments:
-        asdf (type): description
+        attempt_id (int): the verification attempt id of the attempt being created or updated
+        user (User): the user (usually a learner) performing the verification attempt
+        name (string): the name being ID verified
+        status (string): the status of the verification attempt. Defaults to None.
+        expiration_datetime (datetime, optional): When the verification attempt expires. Defaults to None.
     """
-
+    attempt_id = attr.ib(type=int) 
     user = attr.ib(type=UserData)
-    name = attr.ib(type=str)
     status = attr.ib(type=str)
-    expiration_date = attr.ib(type=datetime)
-    inquiry_id = attr.ib(type=str)
+    name = attr.ib(type=str, default=None)
+    expiration_date = attr.ib(type=datetime, default=None)

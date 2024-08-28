@@ -10,6 +10,10 @@
         "type": "record",
         "fields": [
           {
+            "name": "attempt_id",
+            "type": "long"
+          },
+          {
             "name": "user",
             "type": {
               "name": "UserData",
@@ -48,20 +52,24 @@
             }
           },
           {
-            "name": "name",
-            "type": "string"
-          },
-          {
             "name": "status",
             "type": "string"
           },
           {
-            "name": "expiration_date",
-            "type": "string"
+            "name": "name",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
           },
           {
-            "name": "inquiry_id",
-            "type": "string"
+            "name": "expiration_date",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
           }
         ]
       }
