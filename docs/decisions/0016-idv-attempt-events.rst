@@ -1,12 +1,10 @@
 16. Event definitions for ID Verification
 #########################################
 
-NOTE: This decision doc is still a work in progress.
-
 Status
 ******
 
-**Draft** 2024-08-19
+**Draft** 2024-08-28
 
 Context
 *******
@@ -25,20 +23,16 @@ Decision
 
 Where these events will be produced/consumed:
 =============================================
-
-<!-- This is based off the special exam decision doc, lmk if this is wrong -->
-* `persona-integration` will produce these events.
-* NOTE: There is no plan to have the legacy backend in `edx-platform`, produce these events.
+* The intention is for the verify_student application to produce these events.
+* These events should be vendor agnostic and should not produced by any IDV plugin.
 * `edx-platform` will consume these events in order to handle all behavior as it pertains to the state of an ID Verification.
 
 Event Definitions:
 ==================
-<!-- NOTE: do we have to do this? -->
-* We will define the events that as planned in `the ADR for events in persona_integration <insert url here>`_.
+* We will define the events that as planned in `the ADR for events in persona_integration <https://2u-internal.atlassian.net/wiki/spaces/COSMO/pages/1183645808/Diff+Spec+Persona+Integration#%5BhardBreak%5DEvent-Hooks>`_.
 
 Consequences
 ************
 
-* The `verify_student` app will emit events via the event bus to send information without needing a response.
+* The `verify_student` app will emit events to send information to other applications, which can be handled as normal Django signals.
 * These events are dynamic, in that they can also be consumed by other services/applications as needed in the future.
-
