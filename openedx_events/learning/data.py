@@ -603,7 +603,7 @@ class VerificationAttemptData:
         status (string): the status of the verification attempt. Defaults to None.
         expiration_datetime (datetime, optional): When the verification attempt expires. Defaults to None.
     """
-    attempt_id = attr.ib(type=int) 
+    attempt_id = attr.ib(type=int)
     user = attr.ib(type=UserData)
     status = attr.ib(type=str)
     name = attr.ib(type=str, default=None)
