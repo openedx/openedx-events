@@ -597,10 +597,10 @@ class VerificationAttemptData:
     Attributes defined for the Open edX IDV attempt data object.
 
     Arguments:
-        attempt_id (int): the verification attempt id of the attempt being created or updated
-        user (User): the user (usually a learner) performing the verification attempt
-        name (string): the name being ID verified
-        status (string): the status of the verification attempt. Defaults to None.
+        attempt_id (int): the id of the verification attempt
+        user (User): the user (usually a learner) performing the verification attempt.
+        status (string): the status of the verification attempt.
+        name (string): the name being ID verified. Defaults to None.
         expiration_datetime (datetime, optional): When the verification attempt expires. Defaults to None.
     """
 

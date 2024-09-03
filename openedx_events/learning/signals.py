@@ -406,7 +406,7 @@ BADGE_REVOKED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.idv_attempt.created.v1
 # .. event_name: IDV_ATTEMPT_CREATED
-# .. event_description: Emitted when a IDV attempt is created
+# .. event_description: Emitted when an IDV attempt is created
 # .. event_data: VerificationAttemptData
 IDV_ATTEMPT_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.created.v1",
@@ -418,7 +418,7 @@ IDV_ATTEMPT_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.idv_attempt.pending.v1
 # .. event_name: IDV_ATTEMPT_PENDING
-# .. event_description: Emitted when a IDV attempt is marked as pending
+# .. event_description: Emitted when an IDV attempt is marked as pending
 # .. event_data: VerificationAttemptData
 IDV_ATTEMPT_PENDING = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.pending.v1",
@@ -430,7 +430,7 @@ IDV_ATTEMPT_PENDING = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.idv_attempt.approved.v1
 # .. event_name: IDV_ATTEMPT_APPROVED
-# .. event_description: Emitted when a IDV attempt is approved
+# .. event_description: Emitted when an IDV attempt is approved
 # .. event_data: VerificationAttemptData
 IDV_ATTEMPT_APPROVED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.approved.v1",
@@ -442,7 +442,7 @@ IDV_ATTEMPT_APPROVED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.idv_attempt.denied.v1
 # .. event_name: IDV_ATTEMPT_DENIED
-# .. event_description: Emitted when a IDV attempt is denied
+# .. event_description: Emitted when an IDV attempt is denied
 # .. event_data: VerificationAttemptData
 IDV_ATTEMPT_DENIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.denied.v1",
