@@ -14,8 +14,8 @@
             "type": "string"
           },
           {
-            "name": "collection_id",
-            "type": "long"
+            "name": "collection_key",
+            "type": "string"
           }
         ]
       }

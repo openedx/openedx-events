@@ -203,8 +203,8 @@ class LibraryCollectionData:
 
     Arguments:
         library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
-        collection_id (int): an id (pk) that represents a collection associated with the content library.
+        collection_key (str): identifies the collection within the library's learning package
     """
 
     library_key = attr.ib(type=LibraryLocatorV2)
-    collection_id = attr.ib(type=int)
+    collection_key = attr.ib(type=str)
