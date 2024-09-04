@@ -11,11 +11,19 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+
+
 Unreleased
-----------
+__________
+
+
+
+[9.13.0] - 2024-09-05
+---------------------
 
 Added
 ~~~~~
+
 * Added new ``LIBRARY_COLLECTION_CREATED``, ``LIBRARY_COLLECTION_UPDATED`` and ``LIBRARY_COLLECTION_DELETED`` events in content_authoring.
 
 [9.12.0] - 2024-07-31
