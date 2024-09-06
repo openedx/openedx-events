@@ -25,6 +25,7 @@ Added
 ~~~~~
 
 * Adds event ``CONTENT_OBJECT_ASSOCIATIONS_CHANGED``
+* Added new ``LIBRARY_COLLECTION_CREATED``, ``LIBRARY_COLLECTION_UPDATED`` and ``LIBRARY_COLLECTION_DELETED`` events in content_authoring.
 * Adds ``ContentObjectChangedData``, which inherits from ContentObjectData and adds an optional list of string ``changes``.
 
 Deprecated
