@@ -225,34 +225,34 @@ CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
     }
 )
 
-# .. event_type: org.openedx.content_authoring.content.library.collection.created.v1
+# .. event_type: org.openedx.content_authoring.content_library.collection.created.v1
 # .. event_name: LIBRARY_COLLECTION_CREATED
 # .. event_description: emitted when a content library collection is created
 # .. event_data: LibraryCollectionData
 LIBRARY_COLLECTION_CREATED = OpenEdxPublicSignal(
-    event_type="org.openedx.content_authoring.content.library.collection.created.v1",
+    event_type="org.openedx.content_authoring.content_library.collection.created.v1",
     data={
         "library_collection": LibraryCollectionData
     }
 )
 
-# .. event_type: org.openedx.content_authoring.content.library.collection.updated.v1
+# .. event_type: org.openedx.content_authoring.content_library.collection.updated.v1
 # .. event_name: LIBRARY_COLLECTION_UPDATED
 # .. event_description: emitted when when a content library collection is updated
 # .. event_data: LibraryCollectionData
 LIBRARY_COLLECTION_UPDATED = OpenEdxPublicSignal(
-    event_type="org.openedx.content_authoring.content.library.collection.updated.v1",
+    event_type="org.openedx.content_authoring.content_library.collection.updated.v1",
     data={
         "library_collection": LibraryCollectionData
     }
 )
 
-# .. event_type: org.openedx.content_authoring.content.library.collection.deleted.v1
+# .. event_type: org.openedx.content_authoring.content_library.collection.deleted.v1
 # .. event_name: LIBRARY_COLLECTION_DELETED
 # .. event_description: emitted when an when a content library collection is deleted
 # .. event_data: LibraryCollectionData
 LIBRARY_COLLECTION_DELETED = OpenEdxPublicSignal(
-    event_type="org.openedx.content_authoring.content.library.collection.deleted.v1",
+    event_type="org.openedx.content_authoring.content_library.collection.deleted.v1",
     data={
         "library_collection": LibraryCollectionData
     }
