@@ -37,14 +37,6 @@ Deprecated
 ---------------------
 
 Added
-~~~~~
-
-* Added new ``LIBRARY_COLLECTION_CREATED``, ``LIBRARY_COLLECTION_UPDATED`` and ``LIBRARY_COLLECTION_DELETED`` events in content_authoring.
-
-[9.13.0] - 2024-09-05
----------------------
-
-Added
 ~~~~~~~
 
 * Added new IDV events ``LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED``, ``IDV_ATTEMPT_CREATED``, ``IDV_ATTEMPT_PENDING``, ``IDV_ATTEMPT_APPROVED``, and ``IDV_ATTEMPT_DENIED`` in learning.
