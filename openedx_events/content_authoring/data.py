@@ -185,7 +185,7 @@ class LibraryBlockData:
 @attr.s(frozen=True)
 class ContentObjectData:
     """
-    Data about changed content object.
+    Data about a content object.
 
     Arguments:
         object_id (str): identifier of the Content object. This represents the id of the course or library block
@@ -194,3 +194,34 @@ class ContentObjectData:
     """
 
     object_id = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class ContentObjectChangedData(ContentObjectData):
+    """
+    Data about a changed content object.
+
+    Arguments:
+        object_id (str): identifier of the Content object. This represents the id of the course or library block
+        as a string. For example:
+        block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
+
+        changes: list of changes made to this ContentObject, e.g. "tags", "collections"
+        If list is empty, assume everything has changed.
+    """
+
+    changes = attr.ib(type=List[str], factory=list)
+
+
+@attr.s(frozen=True)
+class LibraryCollectionData:
+    """
+    Data about changed content library Collection.
+
+    Arguments:
+        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        collection_key (str): identifies the collection within the library's learning package
+    """
+
+    library_key = attr.ib(type=LibraryLocatorV2)
+    collection_key = attr.ib(type=str)

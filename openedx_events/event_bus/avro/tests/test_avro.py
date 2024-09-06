@@ -108,6 +108,7 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
         LibraryLocatorV2: LibraryLocatorV2.from_string('lib:MITx:reallyhardproblems'),
         LibraryUsageLocatorV2: LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1'),
         List[int]: [1, 2, 3],
+        List[str]: ["hi", "there"],
         datetime: datetime.now(),
         CCXLocator: CCXLocator(org='edx', course='DemoX', run='Demo_course', ccx='1'),
         UUID: uuid4(),

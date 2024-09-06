@@ -10,11 +10,13 @@ docs/decisions/0003-events-payload.rst
 from openedx_events.content_authoring.data import (
     CertificateConfigData,
     ContentLibraryData,
+    ContentObjectChangedData,
     ContentObjectData,
     CourseCatalogData,
     CourseData,
     DuplicatedXBlockData,
     LibraryBlockData,
+    LibraryCollectionData,
     XBlockData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -200,13 +202,58 @@ LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
     }
 )
 
+# .. event_type: org.openedx.content_authoring.content.object.associations.changed.v1
+# .. event_name: CONTENT_OBJECT_ASSOCIATIONS_CHANGED
+# .. event_description: emitted when an object's associations are changed, e.g tags, collections
+# .. event_data: ContentObjectData
+CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content.object.associations.changed.v1",
+    data={
+        "content_object": ContentObjectChangedData
+    }
+)
+
 # .. event_type: org.openedx.content_authoring.content.object.tags.changed.v1
 # .. event_name: CONTENT_OBJECT_TAGS_CHANGED
 # .. event_description: emitted when an object's tags are changed
+#    DEPRECATED: please use CONTENT_OBJECT_ASSOCIATIONS_CHANGED instead.
 # .. event_data: ContentObjectData
 CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.tags.changed.v1",
     data={
         "content_object": ContentObjectData
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.content_library.collection.created.v1
+# .. event_name: LIBRARY_COLLECTION_CREATED
+# .. event_description: emitted when a content library collection is created
+# .. event_data: LibraryCollectionData
+LIBRARY_COLLECTION_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content_library.collection.created.v1",
+    data={
+        "library_collection": LibraryCollectionData
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.content_library.collection.updated.v1
+# .. event_name: LIBRARY_COLLECTION_UPDATED
+# .. event_description: emitted when when a content library collection is updated
+# .. event_data: LibraryCollectionData
+LIBRARY_COLLECTION_UPDATED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content_library.collection.updated.v1",
+    data={
+        "library_collection": LibraryCollectionData
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.content_library.collection.deleted.v1
+# .. event_name: LIBRARY_COLLECTION_DELETED
+# .. event_description: emitted when an when a content library collection is deleted
+# .. event_data: LibraryCollectionData
+LIBRARY_COLLECTION_DELETED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content_library.collection.deleted.v1",
+    data={
+        "library_collection": LibraryCollectionData
     }
 )
