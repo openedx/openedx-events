@@ -10,6 +10,7 @@ docs/decisions/0003-events-payload.rst
 from openedx_events.content_authoring.data import (
     CertificateConfigData,
     ContentLibraryData,
+    ContentObjectChangedData,
     ContentObjectData,
     CourseCatalogData,
     CourseData,
@@ -201,9 +202,21 @@ LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
     }
 )
 
+# .. event_type: org.openedx.content_authoring.content.object.associations.changed.v1
+# .. event_name: CONTENT_OBJECT_ASSOCIATIONS_CHANGED
+# .. event_description: emitted when an object's associations are changed, e.g tags, collections
+# .. event_data: ContentObjectData
+CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content.object.associations.changed.v1",
+    data={
+        "content_object": ContentObjectChangedData
+    }
+)
+
 # .. event_type: org.openedx.content_authoring.content.object.tags.changed.v1
 # .. event_name: CONTENT_OBJECT_TAGS_CHANGED
 # .. event_description: emitted when an object's tags are changed
+#    DEPRECATED: please use CONTENT_OBJECT_ASSOCIATIONS_CHANGED instead.
 # .. event_data: ContentObjectData
 CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.tags.changed.v1",
