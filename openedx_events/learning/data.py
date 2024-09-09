@@ -589,3 +589,23 @@ class BadgeData:
     uuid = attr.ib(type=str)
     user = attr.ib(type=UserData)
     template = attr.ib(type=BadgeTemplateData)
+
+
+@attr.s(frozen=True)
+class VerificationAttemptData:
+    """
+    Attributes defined for the Open edX IDV attempt data object.
+
+    Arguments:
+        attempt_id (int): the id of the verification attempt
+        user (User): the user (usually a learner) performing the verification attempt.
+        status (string): the status of the verification attempt.
+        name (string): the name being ID verified. Defaults to None.
+        expiration_datetime (datetime, optional): When the verification attempt expires. Defaults to None.
+    """
+
+    attempt_id = attr.ib(type=int)
+    user = attr.ib(type=UserData)
+    status = attr.ib(type=str)
+    name = attr.ib(type=str, default=None)
+    expiration_date = attr.ib(type=datetime, default=None)

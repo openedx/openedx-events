@@ -1,0 +1,28 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "content_object",
+      "type": {
+        "name": "ContentObjectChangedData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "object_id",
+            "type": "string"
+          },
+          {
+            "name": "changes",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.content_authoring.content.object.associations.changed.v1"
+}

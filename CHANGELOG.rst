@@ -11,8 +11,44 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+
+
 Unreleased
-----------
+__________
+
+
+
+[9.14.0] - 2024-09-12
+---------------------
+
+Added
+~~~~~
+
+* Adds event ``CONTENT_OBJECT_ASSOCIATIONS_CHANGED``
+* Added new ``LIBRARY_COLLECTION_CREATED``, ``LIBRARY_COLLECTION_UPDATED`` and ``LIBRARY_COLLECTION_DELETED`` events in content_authoring.
+* Adds ``ContentObjectChangedData``, which inherits from ContentObjectData and adds an optional list of string ``changes``.
+
+Deprecated
+~~~~~~~~~~
+
+* Deprecated event ``CONTENT_OBJECT_TAGS_CHANGED`` in favor of ``CONTENT_OBJECT_ASSOCIATIONS_CHANGED``
+  Plan to remove after Sumac.
+
+[9.13.0] - 2024-09-05
+---------------------
+
+Added
+~~~~~~~
+
+* Added new IDV events ``LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED``, ``IDV_ATTEMPT_CREATED``, ``IDV_ATTEMPT_PENDING``, ``IDV_ATTEMPT_APPROVED``, and ``IDV_ATTEMPT_DENIED`` in learning.
+
+[9.12.0] - 2024-07-31
+---------------------
+
+Added
+~~~~~~~
+
+* Added new enterprise signal ``LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED``.
 
 [9.11.0] - 2024-05-15
 ---------------------

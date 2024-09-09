@@ -16,7 +16,7 @@ are meant to be extended using Open edX plugins and configuration.
 
 Hooks can be of two types, events and filters. Events are in essence signals, in
 that they are sent in specific application places and whose listeners can extend
-functionality. functionality. On the other hand Filters can be used to act on data before
+functionality. On the other hand Filters can be used to act on data before
 it is put back in the original application flow. In order to allow
 extension developers to use the Events and Filters definitions on their plugins,
 both kinds of hooks are defined in lightweight external libraries.
