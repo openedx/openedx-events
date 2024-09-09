@@ -14,8 +14,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-20.04]
-        python-version: ['3.8', '3.11']
+        os: [ubuntu-20.04, ubuntu-24.04]
+        python-version: ['3.11', '3.12']
         toxenv: ["django42", "quality", "docs"]
 
     steps:
