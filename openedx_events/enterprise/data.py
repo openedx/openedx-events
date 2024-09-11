@@ -125,8 +125,8 @@ class EnterpriseCustomerUser:
     active = attr.ib(type=bool)
     linked = attr.ib(type=bool)
     is_relinkable = attr.ib(type=bool)
-    invite_key = attr.ib(type=UUID)
     should_inactivate_other_customers = attr.ib(type=bool)
+    invite_key = attr.ib(type=UUID, default=None)
 
 
 @attr.s(frozen=True)
@@ -154,9 +154,9 @@ class EnterpriseCourseEnrollment:
     enterprise_customer_user = attr.ib(type=EnterpriseCustomerUser)
     course_id = attr.ib(type=CourseKey)
     saved_for_later = attr.ib(type=bool)
-    source_slug = attr.ib(type=str)
-    unenrolled = attr.ib(type=bool)
-    unenrolled_at = attr.ib(type=datetime)
+    source_slug = attr.ib(type=str, default=None)
+    unenrolled = attr.ib(type=bool, default=None)
+    unenrolled_at = attr.ib(type=datetime, default=None)
 
 
 @attr.s(frozen=True)
@@ -180,9 +180,9 @@ class BaseEnterpriseFulfillment:
     created = attr.ib(type=datetime)
     modified = attr.ib(type=datetime)
     fulfillment_type = attr.ib(type=str)
-    enterprise_course_entitlement_uuid = attr.ib(type=UUID)
-    enterprise_course_enrollment = attr.ib(type=EnterpriseCourseEnrollment)
     is_revoked = attr.ib(type=bool)
+    enterprise_course_entitlement_uuid = attr.ib(type=UUID, default=None)
+    enterprise_course_enrollment = attr.ib(type=EnterpriseCourseEnrollment, default=None)
 
 
 @attr.s(frozen=True)
@@ -197,7 +197,7 @@ class LearnerCreditEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
         transaction_id (UUID): Ledgered transaction UUID to associate with this learner credit fulfillment.
     """
 
-    transaction_id = attr.ib(type=UUID)
+    transaction_id = attr.ib(type=UUID, default=None)
 
 
 @attr.s(frozen=True)
@@ -212,4 +212,4 @@ class LicensedEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
         license_uuid (UUID): License UUID to associate with this enterprise license fulfillment.
     """
 
-    license_uuid = attr.ib(type=UUID)
+    license_uuid = attr.ib(type=UUID, default=None)
