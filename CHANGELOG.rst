@@ -18,6 +18,14 @@ __________
 
 
 
+[9.14.1] - 2024-09-17
+---------------------
+
+Changed
+~~~~~~~
+
+* Fixed event ``LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED`` so that its serializer can tolerate null nullable fields.
+
 [9.14.0] - 2024-09-12
 ---------------------
 
