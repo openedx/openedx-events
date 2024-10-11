@@ -6,5 +6,6 @@ References
    :caption: Contents:
 
    events
+   glossary
    oeps
    architecture-subdomains
