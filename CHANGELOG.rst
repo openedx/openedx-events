@@ -24,7 +24,7 @@ __________
 Changed
 ~~~~~~~
 
-* Added ``lazy`` field to ``LibraryCollectionData`` so that senders can specify if handlers can run asynchrounously.
+* Added ``background`` field to ``LibraryCollectionData`` so that senders can specify if handlers can run asynchrounously.
 
 [9.14.1] - 2024-09-17
 ---------------------
