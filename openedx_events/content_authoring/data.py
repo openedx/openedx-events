@@ -221,7 +221,10 @@ class LibraryCollectionData:
     Arguments:
         library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
         collection_key (str): identifies the collection within the library's learning package
+        background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
+        i.e., the handler can run the task in background. By default it is False.
     """
 
     library_key = attr.ib(type=LibraryLocatorV2)
     collection_key = attr.ib(type=str)
+    background = attr.ib(type=bool, default=False)

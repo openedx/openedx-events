@@ -18,6 +18,14 @@ __________
 
 
 
+[9.15.0] - 2024-10-10
+---------------------
+
+Changed
+~~~~~~~
+
+* Added ``background`` field to ``LibraryCollectionData`` so that senders can specify if handlers can run asynchrounously.
+
 [9.14.1] - 2024-09-17
 ---------------------
 
