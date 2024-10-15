@@ -16,7 +16,9 @@ Open edX Events are a key component of the Hooks Extension Framework, which allo
 How are Open edX Events used?
 -----------------------------
 
-Developers can create handlers for Open edX Events by implementing Django signal handlers that respond to specific events emitted by the platform. These signal handlers can be registered using Django's signal mechanism, allowing them to listen for events and execute custom logic in response.
+Developers can create handlers for Open edX Events by implementing Django signal handlers that respond to these events emitted by the platform. These signal handlers can be registered using Django's signal mechanism, allowing them to listen for events and execute custom logic in response.
+
+For more information on using Open edX Events, refer to the `Using Open edX Events`_ how-to guide.
 
 How do Open edX Events work?
 ----------------------------
@@ -39,6 +41,7 @@ Here is an example of how that might look like with an existing event:
 
 The `Django Signals Documentation`_ provides a more detailed explanation of how Django signals work.
 
+.. _Using Open edX Events: how-tos/using-events
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _triggering the COURSE_ENROLLMENT_CREATED event: https://github.com/openedx/edx-platform/blob/master/common/djangoapps/student/models/course_enrollment.py#L777-L795
 .. _signal handler listening: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/handlers.py#L38-L53
