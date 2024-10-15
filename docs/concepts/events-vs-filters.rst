@@ -1,9 +1,7 @@
 Events vs Filters
 =================
 
-Open edX Events and Filters are two types of hooks that allow developers to
-extend the functionality of the Open edX platform. They are defined in the
-`openedx-events`_ and `openedx-filters`_ libraries respectively.
+Open edX Events and Filters are two types of hooks that allow developers to extend the functionality of the Open edX platform. They are defined in the `openedx-events`_ and `openedx-filters`_ libraries respectively.
 
 .. _openedx-events: https://github.com/openedx/openedx-events
 .. _openedx-filters: https://github.com/openedx/openedx-filters
@@ -11,18 +9,14 @@ extend the functionality of the Open edX platform. They are defined in the
 Events
 ------
 
-Events are Open edX-specific Django signals sent in specific places in the Open edX
-platform. Signal handlers can then be hooked into these signals to perform additional processing based on the event data.
+Events are Open edX-specific Django signals sent in specific places in the Open edX platform. Signal handlers can then be hooked into these signals to perform additional processing based on the event data.
 
 For a more detailed explanation of Open edX Events, see the rest of the Open edX Events documentation.
 
 Filters
 -------
 
-Filters are functions that can modify the application's behavior by
-altering input data or halting execution based on specific conditions. They
-allow developers to implement application flow control based on their business
-logic or requirements without directly modifying the application code.
+Filters are functions that can modify the application's behavior by altering input data or halting execution based on specific conditions. They allow developers to implement application flow control based on their business logic or requirements without directly modifying the application code.
 
 For a more detailed explanation of Open edX Filters, see the `Open edX Filters`_ documentation.
 
