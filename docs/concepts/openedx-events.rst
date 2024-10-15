@@ -32,7 +32,7 @@ How are Open edX Events used?
 Developers can create handlers for Open edX Events by implementing Django signal
 handlers that respond to specific events emitted by the platform. These signal
 handlers can be registered using Django's signal mechanism, allowing them to
-listen for events and execute custom logic in response. 
+listen for events and execute custom logic in response.
 
 How do Open edX Events work?
 ----------------------------
