@@ -16,7 +16,7 @@ platform. They allow external functions, known as signal handlers in the Django 
 to be executed when the event is triggered. These functions can extend the functionality of the platform or perform additional
 processing based on the event data.
 
-For a more detailed explanation of Open edX Events, see the `Open edX Events`_ document.
+For a more detailed explanation of Open edX Events, see the rest of the Open edX Events documentation.
 
 Filters
 -------
@@ -27,6 +27,8 @@ allow developers to implement application flow control based on their business
 login or requirements without directly modifying the application code.
 
 For a more detailed explanation of Open edX Filters, see the `Open edX Filters`_ documentation.
+
+.. _Open edX Filters: https://docs.openedx.org/projects/openedx-filters/en/latest/
 
 Differences between Events and Filters
 --------------------------------------
