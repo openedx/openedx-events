@@ -73,3 +73,6 @@ For more details on the following topics, see the corresponding links:
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _triggering the COURSE_ENROLLMENT_CREATED event: https://github.com/openedx/edx-platform/blob/master/common/djangoapps/student/models/course_enrollment.py#L777-L795
 .. _signal handler listening: https://github.com/openedx/edx-platform/blob/master/common/djangoapps/student/models/course_enrollment.py#L777-L795
+.. _Open edX Events Naming and Versioning: https://github.com/openedx/openedx-events/blob/main/docs/decisions/0002-events-naming-and-versioning.rst
+.. _Open edX Events Payload: https://github.com/openedx/openedx-events/blob/main/docs/decisions/0003-events-payload.rst
+.. _External Event Bus and Django Signal Events: https://github.com/openedx/openedx-events/blob/main/docs/decisions/0004-external-event-bus-and-django-signal-events.rst
