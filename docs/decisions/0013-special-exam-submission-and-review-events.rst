@@ -4,7 +4,7 @@
 Status
 ******
 
-**Draft** 2023-10-02
+**Accepted** 2023-10-02
 
 Context
 *******
