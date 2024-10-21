@@ -4,7 +4,7 @@ Hooks Extension Framework
 Overview
 --------
 
-Based on the `open-closed principle`_, this framework seeks to extend the platform in a maintainable way instead of modifying its core. The main objective of this framework is to leverage the existing extension capabilities provided by the plugin architecture, allowing developers to implement new features without making maintenance overwhelming.
+Based on the `open-closed principle`_, this framework aims to extend the platform in a maintainable way without modifying its core. The main goal is to leverage the existing extension capabilities provided by the plugin architecture, allowing developers to implement new features to fit customer needs while reducing the need for core modifications and minimizing maintenance efforts.
 
 Hooks: Open edX Events and Filters
 ----------------------------------
