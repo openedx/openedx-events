@@ -4,12 +4,12 @@ Open edX Events
 Overview
 --------
 
-In the context of Open edX, events provide a mechanism for extending the platform by enabling developers to listen to Open edX-specific Django signals emitted by various services and respond accordingly. This allows for customized reactions to key actions or changes within the platform without modifying the Open edX platform codebase.
+In the context of Open edX, events provide a mechanism for extending the platform by enabling developers to listen to Open edX-specific Django signals emitted by various services and respond accordingly. This allows for customized reactions to key actions or changes within the platform without modifying the Open edX platform codebase. 
 
 What are Open edX Events?
 -------------------------
 
-An Open edX Event is an Open edX-specific Django signal emitted by a service when a specific action or event occurs. These signals notify other services or components of the platform that an event has taken place, allowing them to respond accordingly.
+An Open edX Event is an Open edX-specific Django signal emitted by a service when a specific action or event occurs. These signals notify other services or components of the platform that an event has taken place, allowing them to respond accordingly. Open edX Events are the current standard for communication between components and services within the Open edX ecosystem.
 
 How do Open edX Events work?
 ----------------------------
