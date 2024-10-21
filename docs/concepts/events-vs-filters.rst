@@ -9,7 +9,7 @@ Open edX Events and Filters are two types of hooks that allow developers to exte
 Events
 ------
 
-Events are Open edX-specific Django signals sent in specific places in the Open edX platform. Signal handlers can then be hooked into these signals to perform additional processing based on the event data.
+Events are Open edX-specific Django signals sent in specific places on the Open edX platform. They allow developers to listen to these signals and perform additional processing based on the event data.
 
 For a more detailed explanation of Open edX Events, see the rest of the Open edX Events documentation.
 
@@ -37,17 +37,17 @@ Here are some key differences between Open edX Events and Filters:
 |                    | triggered.                                                             |  component without directly modifying the application       |
 |                    |                                                                        |  itself.                                                    |
 +--------------------+------------------------------------------------------------------------+-------------------------------------------------------------+
-|  **Definition**    |  Defined using the `OpenEdxPublicSignal` class, which                  |  Defined using the `OpenEdxFilter` class, which provides a  |
-|                    |  provides a structured way to define the data and                      |  way to define the filter function and the parameters it    |
-|                    |  metadata associated with the event.                                   |  should receive.                                            |
+|  **Definition**    |  Defined using the `OpenEdxPublicSignal` class, which                  |  Defined using the ``OpenEdxPublicFilter`` class,           |
+|                    |  provides a structured way to define the data and                      |  which provides a way to define the filter function         |
+|                    |  metadata associated with the event.                                   |  and the parameters it should receive.                      |
 +--------------------+------------------------------------------------------------------------+-------------------------------------------------------------+
 | **Implementation** |  Implemented using Django signals, which allow                         |  Implemented using an accumulative pipeline mechanism which |
-|                    |  developers to send and receive notifications within                   |  takes a set of arguments and returns a modified set        |
-|                    |  a Django application.                                                 |  to the caller or raises exceptions during                  |
+|                    |  developers to send and receive notifications that an action happened  |  takes a set of arguments and returns a modified set        |
+|                    |  within a Django application.                                          |  to the caller or raises exceptions during                  |
 |                    |                                                                        |  processing.                                                |
 +--------------------+------------------------------------------------------------------------+-------------------------------------------------------------+
-| **Example**        |  A custom event that triggers an email notification                    |  A filter that modifies the data returned by a specific     |
-|                    |  when a user enrolls in a course.                                      |  API endpoint to include additional information.            |
+| **Use cases**      |  Send an email notification when a user enrolls in a course.           |  Include additional information in an API endpoint response.|
+|                    |  an email notification.                                                |                                                             |
 +--------------------+------------------------------------------------------------------------+-------------------------------------------------------------+
 
 When to use an Open edX Event?
@@ -67,7 +67,7 @@ When to use an Open edX Filter?
 Use an Open edX Filter when:
 
 - Enrich the data or parameters passed to a specific component, e.g., fetch reusable LTI configurations from external plugins.
-- Intercept and modify the input of a specific component, e.g., modify block structure so it renders additional data.
+- Intercept and modify the input of a specific component, e.g., include "Edit" link to an HTML block if certain conditions are met.
 - Enforce specific constraints or business rules on the input or output of a specific function or method, e.g., prevent enrollment for non-authorized users.
 
 In summary, filters can be used when implementing application flow control that modifies the application's behavior, navigation, or user interaction flow during runtime.
