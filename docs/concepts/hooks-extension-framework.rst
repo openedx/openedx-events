@@ -27,7 +27,7 @@ Why adopt the Hooks Extension Framework?
 
 #. Stable and Maintainable Extensions
 
-The Hooks Extension Framework allows developers to extend the platform's functionality in a stable, maintainable, and decoupled way ensuring easier upgrades and long-term stability by removing the need to modify the core in an significant way. 
+The Hooks Extension Framework allows developers to extend the platform's functionality in a stable, maintainable, and decoupled way ensuring easier upgrades and long-term stability by removing the need to modify the core in an significant way.
 
 #. Contained Solution Implementation
 
