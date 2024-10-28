@@ -22,8 +22,8 @@ The main goal of the framework is that developers can use it to change the platf
 
 A longer description of the framework and its history can be found in `OEP 50`_.
 
-Why use Open edX Hooks?
--------------------------------------- 
+Why adopt the Hooks Extension Framework?
+-------------------------------------------
 
 #. Stable and Maintainable Extensions
 
