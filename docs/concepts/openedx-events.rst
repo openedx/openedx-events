@@ -50,4 +50,4 @@ For more information on using Open edX Events, refer to the `Using Open edX Even
 .. _Using Open edX Events: ../how-tos/using-events.html
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _triggering the COURSE_ENROLLMENT_CREATED event: https://github.com/openedx/edx-platform/blob/master/common/djangoapps/student/models/course_enrollment.py#L777-L795
-.. _signal handler listening: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/handlers.py#L38-L53
+.. _signal receiver listening: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/handlers.py#L38-L53
