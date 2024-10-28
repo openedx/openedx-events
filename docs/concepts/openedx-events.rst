@@ -22,26 +22,28 @@ How do Open edX Events work?
 
 Open edX Events are implemented by a class called ``OpenEdxPublicSignal``, which inherits from Django’s ``Signals`` class and adds behaviors specific to the Open edX ecosystem. Thanks to this design, ``OpenEdxPublicSignal`` leverages the functionality of Django signals, allowing developers to apply their existing knowledge of the Django framework.
 
-The lifecycle of an Open edX Event can be summarized as follows:
+The event execution process follows these steps:
 
-1. A service emits an Open edX Event (an Open edX-specific Django signal) triggered by a specific action or event. The event data includes information about the event, such as the event name, timestamp, and other additional metadata.
-2. Registered signal handlers listening to the event are called in response to the signal being emitted.
-3. The signal handler performs additional processing or triggers other actions based on the event data.
-4. The event is considered complete once all registered signal handlers have executed.
+1. An application component emits an event by calling the ``send_event`` method implemented by ``OpenEdxPublicEvents``, which calls the Django signal ``send`` method under the hood.
+2. The class generates Open edX-specific metadata for the event on the fly, like the event version or the timestamp when the event was sent. The event receivers use this metadata during their processing.
+3. We call the ``send`` method from Django signals, which allows us to use the same Django signals registry for receiver management.
+4. The event receivers registered by the Django signals registry mechanism for the emitted event are executed.
+5. Each event receivers performs additional processing or triggers other actions based on the event data.
+6. The event is considered complete once all registered signal receivers have executed.
 
-Here is an example of how that might look with an existing event:
+Here is an example of an event in action:
 
 1. A user enrolls in a course, `triggering the COURSE_ENROLLMENT_CREATED event`_. This event includes information about the user, course, and enrollment details.
-2. A `signal handler listening`_ for the ``COURSE_ENROLLMENT_CREATED`` event is called and processes the event data.
-3. The signal handler sends a notification to the user's email confirming their enrollment in the course.
-4. The event is considered complete once the signal handler has finished processing the event.
+2. A `signal receiver listening`_ for the ``COURSE_ENROLLMENT_CREATED`` event is called and processes the event data.
+3. The signal receiver sends a notification to the user's email confirming their enrollment in the course.
+4. The event is considered complete once the signal receiver has finished processing the event.
 
 The `Django Signals Documentation`_ provides a more detailed explanation of how Django signals work.
 
 How are Open edX Events used?
 -----------------------------
 
-Developers can create handlers for Open edX Events by implementing Django signal handlers that respond to these events emitted by the Open edX platform. These signal handlers can be registered using Django's signal mechanism, allowing them to listen for events and execute custom logic in response.
+Developers can create receivers for Open edX Events by implementing Django signal receivers that respond to these events emitted by the Open edX platform. These signal receivers can be registered using Django's signal mechanism, allowing them to listen for events and execute custom logic in response.
 
 For more information on using Open edX Events, refer to the `Using Open edX Events`_ how-to guide.
 
