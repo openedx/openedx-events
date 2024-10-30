@@ -21,21 +21,22 @@ In the producing/host application, include ``openedx_events`` in ``INSTALLED_APP
 
    # .. setting_name: EVENT_BUS_PRODUCER_CONFIG
    # .. setting_default: {}
-   # .. setting_description: Dictionary of event_types mapped to lists of dictionaries containing topic related configuration.
-   #    Each topic configuration dictionary contains
-   #    * a topic/stream name called `topic` where the event will be pushed to.
-   #    * a flag called `enabled` denoting whether the event will be published to the topic.
-   #    * `event_key_field` which is a period-delimited string path to event data field to use as event key.
+   # .. setting_description: Dictionary of event_types to dictionaries for topic related configuration.
+   #    Each topic configuration dictionary uses the topic as a key and contains a flag called `enabled`
+   #    denoting whether the event will be and `event_key_field` which is a period-delimited string path
+   #    to event data field to use as event key.
    #    Note: The topic names should not include environment prefix as it will be dynamically added based on
    #    EVENT_BUS_TOPIC_PREFIX setting.
    EVENT_BUS_PRODUCER_CONFIG = {
-       'org.openedx.content_authoring.xblock.published.v1': [
-           {'topic': 'content-authoring-xblock-lifecycle', 'event_key_field': 'xblock_info.usage_key', 'enabled': True},
-           {'topic': 'content-authoring-xblock-published', 'event_key_field': 'xblock_info.usage_key', 'enabled': True},
-       ],
-       'org.openedx.content_authoring.xblock.deleted.v1': [
-           {'topic': 'content-authoring-xblock-lifecycle', 'event_key_field': 'xblock_info.usage_key', 'enabled': True},
-       ],
+       'org.openedx.content_authoring.xblock.published.v1': {
+           'content-authoring-xblock-lifecycle': {'event_key_field': 'xblock_info.usage_key', 'enabled': True},
+           'content-authoring-xblock-published': {'event_key_field': 'xblock_info.usage_key', 'enabled': True}
+       },
+       'org.openedx.content_authoring.xblock.deleted.v1': {
+           'content-authoring-xblock-lifecycle': {'event_key_field': 'xblock_info.usage_key', 'enabled': True},
+       },
    }
 
-The ``EVENT_BUS_PRODUCER_CONFIG`` is read by openedx_events and a handler is attached which does the leg work of reading the configuration again and pushing to appropriate handlers.
+The ``EVENT_BUS_PRODUCER_CONFIG`` is read by openedx_events and a handler is
+attached which does the leg work of reading the configuration again and pushing
+to appropriate handlers.
