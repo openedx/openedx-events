@@ -117,5 +117,5 @@ so you receive the events data in Zapier. Try it out!
 .. _Django plugin: https://github.com/openedx/edx-django-utils/blob/master/edx_django_utils/plugins/README.rst
 
 .. warning::
-    The `event receiver <Event Receiver>` function implemented in this tutorial was intended to be lightweight, just to serve as an example for events' receivers. However, in production
+    The `event receiver <Event Receiver>` function implemented in this tutorial was intended to be lightweight, just to serve as an example for event receivers. However, in production
     settings, we encourage the use of asynchronous tasks to avoid creating bottlenecks.
