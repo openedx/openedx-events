@@ -18,6 +18,6 @@ An event has multiple components that are used to define, trigger, and handle th
       The event type is a unique identifier for an event that distinguishes it from other events. For example, ``org.openedx.content_authoring.xblock.published.v1``. The event type is used to identify the event, its purpose, and version. In the event-bus context, the event type is used to connect events to the appropriate topics in the ``EVENT_BUS_PRODUCER_CONFIG``.
 
     Event Definition
-      An event definition (or simply, event) is the instantiation of the ``OpenEdxPublicSignal`` class that defines the structure and metadata of an event. This definition includes information such as the event name, description, payload, and version. Event definitions are used to create events which are later imported into the services and are triggered by using the ``send_event`` method.
+      An event is a signal that is emitted when a specific action occurs in the platform. The event definition is the instantiation of the ``OpenEdxPublicSignal`` class that defines the structure and metadata of an event. This definition includes information such as the event name, description, payload, and version. Event definitions are used to create events which are later imported into the services and are triggered by using the ``send_event`` method.
 
 .. _Events Payload ADR: :doc: `/decisions/0003-events-payload`

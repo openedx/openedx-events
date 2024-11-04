@@ -16,7 +16,7 @@ an event and you want to react to it in your plugin.
 For this you need to:
 
 1. Include openedx-events in your dependencies.
-2. Connect your receiver functions to the signals being sent.
+2. Connect your :term:`receiver <Event Receiver>` functions to the signals being sent.
 
 Connecting signals can be done using regular django syntax:
 
@@ -59,7 +59,7 @@ plugin system.
 Sending events
 ^^^^^^^^^^^^^^
 
-Sending events requires you to import both the event definition as well as the
+Sending events requires you to import both the :term:`event definition <Event Definition>` as well as the
 attr data classes that encapsulate the event data.
 
 .. code-block:: python
