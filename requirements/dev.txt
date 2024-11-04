@@ -296,7 +296,7 @@ pytest==8.3.3
     #   -r requirements/quality.txt
     #   pytest-cov
     #   pytest-django
-pytest-cov==5.0.0
+pytest-cov==6.0.0
     # via -r requirements/quality.txt
 pytest-django==4.9.0
     # via -r requirements/quality.txt
@@ -325,7 +325,7 @@ rfc3986==2.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-rich==13.9.3
+rich==13.9.4
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -373,7 +373,7 @@ urllib3==2.2.3
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.27.0
+virtualenv==20.27.1
     # via
     #   -r requirements/ci.txt
     #   tox
