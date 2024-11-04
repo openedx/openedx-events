@@ -21,10 +21,10 @@ In the producing/host application, include ``openedx_events`` in ``INSTALLED_APP
 
    # .. setting_name: EVENT_BUS_PRODUCER_CONFIG
    # .. setting_default: {}
-   # .. setting_description: Dictionary of event_types to dictionaries for topic related configuration.
-   #    Each topic configuration dictionary uses the topic as a key and contains a flag called `enabled`
-   #    denoting whether the event will be and `event_key_field` which is a period-delimited string path
-   #    to event data field to use as event key.
+   # .. setting_description: Dictionary of event_types to dictionaries for topic-related configuration.
+   #    Each topic configuration dictionary uses the topic as a key and contains:
+   #    * A flag called `enabled` denoting whether the event will be published.
+   #    * The `event_key_field` which is a period-delimited string path to event data field to use as event key.
    #    Note: The topic names should not include environment prefix as it will be dynamically added based on
    #    EVENT_BUS_TOPIC_PREFIX setting.
    EVENT_BUS_PRODUCER_CONFIG = {
