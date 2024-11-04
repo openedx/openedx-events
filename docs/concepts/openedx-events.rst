@@ -28,7 +28,7 @@ The event execution process follows these steps:
 
 #. The class generates Open edX-specific metadata for the event on the fly, like the event version or the timestamp when the event was sent. The event receivers use this metadata during their processing.
 
-#. The tooling uses the `send or send_robust`_ method from Django signals under the hood. The `send`` method is used for development and testing, while the `send_robust` method is used in production to ensure receivers don't raise exceptions halting the application process.
+#. The tooling uses the `send or send_robust`_ method from Django signals under the hood. The ``send`` method is used for development and testing, while the ``send_robust`` method is used in production to ensure receivers don't raise exceptions halting the application process.
 
 #. Building on Django signals allows us to use the same `Django signals registry mechanism`_ for receiver management. This means that developers can register `signal receivers in their plugins`_ for Open edX Events in the same way they would for Django signals.
 
