@@ -66,4 +66,4 @@ For more information on using Open edX Events, refer to the `Using Open edX Even
 .. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
 .. _Django's Signals class: https://docs.djangoproject.com/en/4.2/topics/signals/#defining-and-sending-signals
 .. _send_event: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L185
-.. _send: https://docs.djangoproject.com/en/4.2/topics/signals/#sending-signals
+.. _send or send_robust: https://docs.djangoproject.com/en/4.2/topics/signals/#sending-signals
