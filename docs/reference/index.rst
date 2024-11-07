@@ -8,3 +8,4 @@ References
    events
    oeps
    architecture-subdomains
+   real-life-use-cases
