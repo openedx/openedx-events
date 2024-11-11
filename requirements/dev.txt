@@ -203,7 +203,7 @@ nh3==0.2.18
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-packaging==24.1
+packaging==24.2
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -377,7 +377,7 @@ virtualenv==20.27.1
     # via
     #   -r requirements/ci.txt
     #   tox
-wheel==0.44.0
+wheel==0.45.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
@@ -385,7 +385,7 @@ wrapt==1.16.0
     # via
     #   -r requirements/quality.txt
     #   astroid
-zipp==3.20.2
+zipp==3.21.0
     # via
     #   -r requirements/quality.txt
     #   importlib-metadata

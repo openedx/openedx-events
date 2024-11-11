@@ -63,7 +63,7 @@ newrelic==10.2.0
     # via
     #   -r requirements/base.txt
     #   edx-django-utils
-packaging==24.1
+packaging==24.2
     # via pytest
 pbr==6.1.0
     # via
