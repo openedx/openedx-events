@@ -134,7 +134,7 @@ newrelic==10.2.0
     #   edx-django-utils
 nh3==0.2.18
     # via readme-renderer
-packaging==24.1
+packaging==24.2
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -254,5 +254,5 @@ urllib3==2.2.3
     #   twine
 wrapt==1.16.0
     # via astroid
-zipp==3.20.2
+zipp==3.21.0
     # via importlib-metadata
