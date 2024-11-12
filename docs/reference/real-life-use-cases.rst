@@ -62,7 +62,7 @@ More details on: `Real-Time Event Tracking`_.
 Communication between Application Components
 ********************************************
 
-Open edX Events can also be used to facilitate communication between different application components, allowing them to interact and synchronize their actions. Here are some examples of how Open edX Events can be used to coordinate between application components:
+Open edX Events can also be used to facilitate communication between different application components running in the same process, allowing them to interact and synchronize their actions. Here are some examples of how Open edX Events can be used to coordinate between application components:
 
 Automatic Content Tagging
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -81,7 +81,7 @@ More details on: `Update Search Indexes`_
 External Certificate Generation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Open edX Events are sent after the certificate generation for a user when they complete a course, these events trigger the generation of corresponding certificates in an external system if the proper conditions are met.
+Open edX Events are sent after the certificate generation for a user when they complete a course, these events trigger the generation of corresponding certificates in an external system if the proper conditions are met, allowing for seamless integrations with external certification services.
 
 More details on: `External Certificate Generation`_.
 
@@ -102,7 +102,7 @@ More details on: `Forum Emails Notifier`_.
 Webhooks Integration
 ~~~~~~~~~~~~~~~~~~~~
 
-`Webhooks`_ trigger an HTTP POST request to a configurable URL when certain events happen in the Open edX platform, including information relevant to the event. When these events are sent, then the data is sent to services like Zapier or any other configured.
+`Webhooks`_ trigger an HTTP POST request to a configurable URL when certain events happen in the Open edX platform, including information relevant to the event. When these events are sent, then the data is sent to services like Zapier or any other configured, allowing the sharing of data between different external services.
 
 More details on:
 
