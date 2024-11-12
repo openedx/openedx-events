@@ -8,7 +8,7 @@ As mentioned in the Hooks Extension Framework overview, Open edX Events can be u
 
 .. TODO: add cross-reference to Hooks Extension Framework after PR is merged docs.openedx.org/pull/599
 
-To illustrate the different solutions that can be implemented with this framework, we have compiled a list of use cases built using Open edX Events to address various challenges. The goal of this list is to serve as a reference for extension developers to implement their own solutions in their own plugins or IDAs based on the community's experience.
+To illustrate the different solutions that can be implemented with this approach, we have compiled a list of use cases built using Open edX Events to address various challenges. The goal of this list is to serve as a reference for extension developers to implement their own solutions in their own plugins or IDAs based on the community's experience.
 
 Use Cases
 ---------
