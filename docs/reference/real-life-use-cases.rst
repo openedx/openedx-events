@@ -20,6 +20,8 @@ Communication between IDAs
 
 The suggested strategy for communicating IDAs efficiently in the Open edX ecosystem is through an event-based architecture implemented via the Event Bus. This functionality used for asynchronous communication between services is built on top of sending Open edX Events (Open edX-specific Django signals) within a service. The Event Bus extends these signals, allowing them to be broadcast and handled across multiple services. For more details on the Event Bus,  please see `How to Start Using the Event Bus`_.
 
+.. TODO: replace event bus confluence page with native docs
+
 Here are some examples of how the Event Bus can be used to facilitate communication between IDAs:
 
 Exam Downstream Effects
@@ -34,14 +36,14 @@ More details on: `ADR Implementation of Event Driven Architecture for Exam Downs
 Course Metadata Synchronization
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-An event is emitted each time a course is published by the CMS, which is sent to the event bus and received by the `Course Discovery`_ service. This process allows course discovery to automatically update course metadata, ensuring that any changes in the CMS are reflected. By communicating through the event bus, this setup decreases the need for manual data syncs, keeping course metadata consistently up-to-date across services.
+An event is emitted each time a course is published by the CMS, which is sent to the event bus and received by the `Course Discovery`_ service. This process allows `Course Discovery`_ to automatically update course metadata, ensuring that any changes in the CMS are reflected. By communicating through the event bus, this setup decreases the need for manual data syncs, keeping course metadata consistently up-to-date across services.
 
 More details on: `Use Event Bus to Replace Refresh Course Metadata`_.
 
 Credentials Management
 ~~~~~~~~~~~~~~~~~~~~~~
 
-When the LMS emits certificate-related events, they are sent to the event bus and received by the `Credentials`_ service. Credentials can automatically award or revoke learner credentials based on the event type. This integration simplifies credential management by enabling real-time updates from the LMS, ensuring the appropriate generation of learner credentials without requiring manual synchronization.
+When the LMS emits certificate-related events, they are sent to the event bus and received by the `Credentials`_ service. `Credentials`_ can automatically award or revoke learner credentials based on the event type. This integration simplifies credential management by enabling real-time updates from the LMS, ensuring the appropriate generation of learner credentials without requiring manual synchronization.
 
 More details on: `Credentials - Event Bus`_.
 
@@ -55,7 +57,7 @@ More details on: `Credly Integration`_.
 Real-Time Event Tracking
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-To make event tracking faster and more efficient, tracking logs are optionally sent through the event bus instead of the traditional method, which relied on asynchronous tasks to process logs. A receiver listens for each tracking event and sends it to the event bus, allowing real-time updates. This new approach improves performance by reducing delays, as logs now reach the Aspects stack in a near real-time manner.
+To make event tracking faster and more efficient, tracking logs are optionally sent through the event bus instead of the traditional method, which relied on asynchronous tasks to process logs. A receiver listens for each tracking event and sends it to the event bus, allowing real-time updates. This new approach improves performance by reducing delays, as logs now reach the `Aspects`_ stack in a near real-time manner.
 
 More details on: `Real-Time Event Tracking`_.
 
@@ -81,14 +83,14 @@ More details on: `Update Search Indexes`_
 External Certificate Generation
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Open edX Events are sent after the certificate generation for a user when they complete a course, these events trigger the generation of corresponding certificates in an external system if the proper conditions are met, allowing for seamless integrations with external certification services.
+Events are sent after the certificate generation for a user when they complete a course, these events trigger the generation of corresponding certificates in an external system if the proper conditions are met, allowing for seamless integrations with external certification services.
 
 More details on: `External Certificate Generation`_.
 
 Automatic Group Association
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Enrollment-related events trigger the association of the user into a pre-defined cohort based on the user's preference language. This way, instructors don't need to add a student into a cohort manually, but it's automatically done, reducing logistic efforts and creating more seamless integrations with language-based restricted content.
+Enrollment events trigger the association of the user into a pre-defined cohort based on the user's preference language. This way, instructors don't need to add a student into a cohort manually, but it's automatically done, reducing logistic efforts and creating more seamless integrations with language-based restricted content.
 
 More details on: `Automatic Group Association`_.
 
@@ -106,9 +108,9 @@ Webhooks Integration
 
 More details on:
 
-* `Webhooks`_
-* `Open edX Events Sender`_
-* `Open edX Events To Zapier`_
+* `Webhooks`_.
+* `Open edX Events Sender`_.
+* `Open edX Events To Zapier`_.
 
 Send ORA Submissions to Third-Party Plagiarism Services
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -139,6 +141,7 @@ Here are some additional use cases that can be implemented using Open edX Events
 .. _Credly: https://credly.com/
 .. _Credentials - Event Bus: https://github.com/openedx/credentials/blob/master/docs/event_bus.rst
 .. _Credly Integration: https://github.com/openedx/platform-roadmap/issues/280
+.. _Aspects: https://github.com/openedx/openedx-aspects
 .. _Real-Time Event Tracking: https://github.com/openedx/wg-data/issues/28
 .. _Automatic Content Tagging: https://github.com/openedx/modular-learning/issues/78
 .. _Update Search Indexes: https://github.com/openedx/edx-platform/pull/34391
