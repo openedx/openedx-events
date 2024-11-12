@@ -130,6 +130,7 @@ Here are some additional use cases that can be implemented using Open edX Events
 - `Program Certificate Sync`_
 - `Link User to Invite`_
 - `Enterprise Unenrollment Sync`_
+- `IDV Integration with new Vendors`
 
 .. _How to Start Using the Event Bus: https://openedx.atlassian.net/wiki/spaces/AC/pages/3508699151/How+to+start+using+the+Event+Bus
 .. _edx-exams: https://github.com/edx/edx-exams
@@ -158,3 +159,4 @@ Here are some additional use cases that can be implemented using Open edX Events
 .. _Program Certificate Sync: https://github.com/openedx/credentials/pull/2119
 .. _Link User to Invite: https://github.com/academic-innovation/mogc-partnerships/blob/main/mogc_partnerships/receivers.py#L9
 .. _Enterprise Unenrollment Sync: https://github.com/openedx/edx-enterprise/pull/1754
+.. _IDV Integration with new Vendors: https://openedx.atlassian.net/wiki/spaces/OEPM/pages/4307386369/Proposal+Add+Extensibility+Mechanisms+to+IDV+to+Enable+Integration+of+New+IDV+Vendor+Persona#Event-Hooks
