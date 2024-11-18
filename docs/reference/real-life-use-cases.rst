@@ -16,7 +16,7 @@ Use Cases
 The following list of real-life use cases showcases the different ways Open edX Events can be used to facilitate communication between IDAs and application components, allowing them to interact, synchronize, and perform additional actions when specific triggers occur.
 
 Cross-services communication
-**************************
+****************************
 
 The suggested strategy for cross-service communication efficiently in the Open edX ecosystem is through an event-based architecture implemented via the Event Bus. This functionality used for asynchronous communication between services is built on top of sending Open edX Events (Open edX-specific Django signals) within a service. The Event Bus extends these signals, allowing them to be broadcast and handled across multiple services. For more details on the Event Bus,  please see `How to Start Using the Event Bus`_.
 
