@@ -22,17 +22,30 @@ How do Open edX Events work?
 
 Open edX Events are implemented by a class called `OpenEdxPublicSignal`_, which inherits from `Django's Signals class` and adds behaviors specific to the Open edX ecosystem. Thanks to this design, ``OpenEdxPublicSignal`` leverages the functionality of Django signals, allowing developers to apply their existing knowledge of the Django framework.
 
+Components
+~~~~~~~~~~
+
+#. Application (caller): The application component that emits the event. Developers may have emitted this event in a key section of the application logic, signaling that a specific action has occurred. E.g., a user has enrolled in a course, `triggering the COURSE_ENROLLMENT_CREATED event`_.
+#. OpenEdxPublicSignal: The class that implements all methods used to manage sending the event. As mentioned previously, this class inherits from Django's Signals class and adds Open edX-specific metadata and behaviors.
+#. Django Signals: The Django framework's built-in signal mechanism.
+#. Receiver1...ReceiverN: The components that listen to the event and execute custom logic in response. This receivers are implemented as Django signal receivers.
+
+Workflow
+~~~~~~~~
+
+The workflow of emitting and processing an Open edX Event with N receivers is as follows:
+
 The event execution process follows these steps:
 
-#. An application component emits an event by calling the `send_event` method implemented by `OpenEdxPublicSignal`_.
+#. An application (caller) emits an event by calling the `send_event`_ method implemented by `OpenEdxPublicSignal`_ which the event inherits from.
 
-#. The class generates Open edX-specific metadata for the event on the fly, like the event version or the timestamp when the event was sent. The event receivers use this metadata during their processing.
+#. The `send_event`_ method generates Open edX-specific metadata for the event on the fly, like the event version or the timestamp when the event was sent. The event receivers can access this metadata during their processing.
 
-#. The tooling uses the `send or send_robust`_ method from Django signals under the hood. The ``send`` method is used for development and testing, while the ``send_robust`` method is used in production to ensure receivers don't raise exceptions halting the application process.
+#. After, the `send_event`_ method calls the `send or send_robust`_ method from Django Signals under the hood. The ``send`` method is used for development and testing, while the ``send_robust`` method is used in production to ensure receivers don't raise exceptions halting the application process.
 
-#. Building on Django signals allows us to use the same `Django signals registry mechanism`_ for receiver management. This means that developers can register `signal receivers in their plugins`_ for Open edX Events in the same way they would for Django signals.
+#. Building on Django Signals allows us to use the same `Django signals registry mechanism`_ for receiver management. This means that developers can register `signal receivers in their plugins`_ for Open edX Events in the same way they would for Django signals.
 
-#. The event is sent to all registered receivers, which are executed in the order they were registered. Each receiver processes the event data and performs the necessary actions.
+#. All registered receivers are executed in the order they were registered. Each receiver processes the event data and performs the necessary actions.
 
 #. After all receivers for the event have been executed, the process continues with the application logic.
 
