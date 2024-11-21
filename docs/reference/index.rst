@@ -9,3 +9,4 @@ References
    glossary
    oeps
    architecture-subdomains
+   real-life-use-cases
