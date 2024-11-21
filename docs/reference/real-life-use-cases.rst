@@ -132,6 +132,8 @@ Here are some additional use cases that can be implemented using Open edX Events
 - `Enterprise Unenrollment Sync`_
 - `IDV Integration with new Vendors`_
 
+.. note:: If you have implemented a solution using Open edX Events and would like to share it with the community, please submit a pull request to add it to this list!
+
 .. _How to Start Using the Event Bus: https://openedx.atlassian.net/wiki/spaces/AC/pages/3508699151/How+to+start+using+the+Event+Bus
 .. _edx-exams: https://github.com/edx/edx-exams
 .. _edx-proctoring: https://github.com/openedx/edx-proctoring
