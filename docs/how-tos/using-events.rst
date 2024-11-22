@@ -28,29 +28,9 @@ Connecting signals can be done using regular django syntax:
     def your_receiver_function(**kwargs):
         # your implementation here
 
-
-Or at the apps.py
-
-.. code-block:: python
-
-    {
-        "signals_config": {
-            "lms.djangoapp": {
-                "relative_path": "your_module_name",
-                "receivers": [
-                    {
-                        "receiver_func_name": "your_receiver_function",
-                        "signal_path": "openedx_events.learning.signals.STUDENT_REGISTRATION_COMPLETED",
-                    },
-                ],
-            }
-        }
-    }
-
-
-In case you are listening to an event in an Open edX platform repo, you can directly
-use the django syntax since the apps.py method will not be available without the
-plugin system.
+.. note::
+    You may encounter an older pattern for configuring signal receivers that is no longer recommended. This
+    outdated Django plugin configuration used ``plugin_app`` and ``signals_config`` in apps.py.
 
 .. warning::
     For non-trivial work, we encourage using asynchronous tasks in your receiver functions in order
