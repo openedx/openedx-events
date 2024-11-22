@@ -39,6 +39,8 @@ The event execution process follows these steps:
 
 #. An application (caller) emits an event by calling the `send_event`_ method implemented by `OpenEdxPublicSignal`_ which the event inherits from.
 
+#. The caller passes the :term:`event payload<Event Payload>` to the `send_event`_ method. The event payload is the data associated with the event that is passed to the receivers when it's triggered, and uses data attribute classes (e.g. ``CourseEnrollmentData``, ``UserData``, etc.) to carry data about the event.
+
 #. The `send_event`_ method generates Open edX-specific metadata for the event on the fly, like the event version or the timestamp when the event was sent. The event receivers can access this metadata during their processing.
 
 #. After, the `send_event`_ method calls the `send or send_robust`_ method from Django Signals under the hood. The ``send`` method is used for development and testing, while the ``send_robust`` method is used in production to ensure receivers don't raise exceptions halting the application process.
