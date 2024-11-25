@@ -4,9 +4,7 @@ Real-Life Use Cases for Open edX Events
 Overview
 --------
 
-As mentioned in the Hooks Extension Framework overview, Open edX Events can be used to integrate application components with each other or with external services, allowing them to communicate, synchronize, and perform additional actions when specific triggers occur.
-
-.. TODO: add cross-reference to Hooks Extension Framework after PR is merged docs.openedx.org/pull/599
+As mentioned in the `Hooks Extension Framework overview`_, Open edX Events can be used to integrate application components with each other or with external services, allowing them to communicate, synchronize, and perform additional actions when specific triggers occur.
 
 To illustrate the different solutions that can be implemented with this approach, we have compiled a list of use cases built using Open edX Events to address various challenges. The goal of this list is to serve as a reference for extension developers to implement their own solutions in their own plugins or IDAs based on the community's experience.
 
@@ -162,3 +160,4 @@ Here are some additional use cases that can be implemented using Open edX Events
 .. _Link User to Invite: https://github.com/academic-innovation/mogc-partnerships/blob/main/mogc_partnerships/receivers.py#L9
 .. _Enterprise Unenrollment Sync: https://github.com/openedx/edx-enterprise/pull/1754
 .. _IDV Integration with new Vendors: https://openedx.atlassian.net/wiki/spaces/OEPM/pages/4307386369/Proposal+Add+Extensibility+Mechanisms+to+IDV+to+Enable+Integration+of+New+IDV+Vendor+Persona#Event-Hooks
+.. _Hooks Extension Framework overview: https://docs.openedx.org/en/latest/developers/concepts/hooks_extension_framework.html
