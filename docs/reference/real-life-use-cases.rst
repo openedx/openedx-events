@@ -4,7 +4,7 @@ Real-Life Use Cases for Open edX Events
 Overview
 --------
 
-As mentioned in the `Hooks Extension Framework overview`_, Open edX Events can be used to integrate application components with each other or with external services, allowing them to communicate, synchronize, and perform additional actions when specific triggers occur.
+As mentioned in the :doc:`docs.openedx.org:developers/concepts/hooks_extension_framework` docs, Open edX Events can be used to integrate application components with each other or with external services, allowing them to communicate, synchronize, and perform additional actions when specific triggers occur.
 
 To illustrate the different solutions that can be implemented with this approach, we have compiled a list of use cases built using Open edX Events to address various challenges. The goal of this list is to serve as a reference for extension developers to implement their own solutions in their own plugins or IDAs based on the community's experience.
 

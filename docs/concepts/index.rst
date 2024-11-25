@@ -5,4 +5,4 @@ Concepts
    :maxdepth: 1
    :caption: Contents:
 
-   openedx-events
+   :doc:`docs.openedx.org:developers/concepts/hooks_extension_framework`
