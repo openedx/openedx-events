@@ -128,7 +128,7 @@ if re.search(DIGITS_ONLY, rtd_version):
 
 intersphinx_mapping = {
     "docs.openedx.org": (
-        f"https://docs.openedx.org/{rtd_language}/{rtd_version}/",
+        f"https://docs.openedx.org/{rtd_language}/{rtd_version}",
         None,
     ),
 }
