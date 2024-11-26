@@ -6,6 +6,8 @@
 Welcome to Open edX Events' documentation!
 ============================================
 
+Open edX Events is type of hook in the Hooks Extension Framework that allows extending the Open edX platform in a more stable and maintainable way. If you're new to this approach for extending Open edX, start by reading the :doc:`docs.openedx.org:developers/concepts/hooks_extension_framework` documentation. This documentation provides an overview of the framework's concepts and structure useful to support your adoption of Open edX Events.
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
