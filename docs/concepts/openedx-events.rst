@@ -22,6 +22,8 @@ How do Open edX Events work?
 
 Open edX Events are implemented by a class called `OpenEdxPublicSignal`_, which inherits from `Django's Signals class` and adds behaviors specific to the Open edX ecosystem. Thanks to this design, ``OpenEdxPublicSignal`` leverages the functionality of Django signals, allowing developers to apply their existing knowledge of the Django framework.
 
+.. _events-architecture:
+
 Architectural Diagram
 *********************
 
