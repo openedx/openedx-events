@@ -6,3 +6,4 @@ Concepts
    :caption: Contents:
 
    openedx-events
+   event-bus
