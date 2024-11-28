@@ -25,7 +25,7 @@ Open edX Events are implemented by a class called `OpenEdxPublicSignal`_, which 
 Architectural Diagram
 *********************
 
-In this diagram, we illustrate the workflow of sending an Open edX Event:
+In this diagram, we illustrate the workflow of emitting and processing an Open edX Event:
 
 .. image:: ../_images/openedx-events-workflow.png
    :alt: Open edX Events workflow
@@ -41,10 +41,6 @@ Components
 
 Workflow
 ~~~~~~~~
-
-The workflow of emitting and processing an Open edX Event with N receivers is as follows:
-
-The event execution process follows these steps:
 
 #. An application (caller) emits an event by calling the `send_event`_ method implemented by `OpenEdxPublicSignal`_ which the event inherits from.
 
