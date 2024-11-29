@@ -7,6 +7,7 @@ References
 
    events
    glossary
+   event-bus-configurations
    oeps
    architecture-subdomains
    real-life-use-cases
