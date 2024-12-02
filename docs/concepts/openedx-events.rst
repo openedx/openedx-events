@@ -15,7 +15,7 @@ These events are built on top of Django signals, inheriting their behavior while
 
 Django includes a "signal dispatcher" which helps decoupled applications get notified when actions occur elsewhere in the framework. In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place. They’re especially useful when many pieces of code may be interested in the same events.
 
-Events are primarily used as a communication method between components within the same application process or with external services using the `Event Bus technology`_, making them the standard communication mechanism within the Open edX ecosystem.
+Events are primarily used as a communication method between components within the same application process or with external services using the :doc:`../concepts/event-bus`, making them the standard communication mechanism within the Open edX ecosystem.
 
 How do Open edX Events work?
 ----------------------------
@@ -80,7 +80,6 @@ For more information on using Open edX Events, refer to the :doc:`../how-tos/usi
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _triggering the COURSE_ENROLLMENT_CREATED event: https://github.com/openedx/edx-platform/blob/master/common/djangoapps/student/models/course_enrollment.py#L777-L795
 .. _course_enrollment_post_save receiver: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/handlers.py#L38-L53
-.. _Event Bus technology: https://openedx.atlassian.net/wiki/spaces/AC/pages/3508699151/How+to+start+using+the+Event+Bus
 .. _Django signals registry mechanism: https://docs.djangoproject.com/en/4.2/topics/signals/#listening-to-signals
 .. _signal receivers in their plugins: https://edx.readthedocs.io/projects/edx-django-utils/en/latest/edx_django_utils.plugins.html#edx_django_utils.plugins.constants.PluginSignals
 .. _Open edX Django plugins: https://edx.readthedocs.io/projects/edx-django-utils/en/latest/plugins/readme.html
