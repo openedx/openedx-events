@@ -10,8 +10,8 @@ Setup
 
 To start producing and consuming events using the Open edX Event Bus, follow these steps:
 
-Install the Open edX Event Bus Plugin
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 1: Install the Open edX Event Bus Plugin
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 First, you need to install the Open edX Event Bus plugin in both the producing and consuming services. The plugin is a Django app that provides the necessary tools and configurations to produce and consume events. You could install the Redis plugin by running:
 
@@ -19,8 +19,10 @@ First, you need to install the Open edX Event Bus plugin in both the producing a
 
    pip install edx-event-bus-redis
 
-Configure the Event Bus
-~~~~~~~~~~~~~~~~~~~~~~~
+.. note:: Redis is the community-supported plugin for the Open edX Event Bus and is the recommended plugin to use. You can find more information about the Redis plugin in the `event-bus-redis`_ repository. However, you can also implement your own plugin with your preferred message broker by following the :doc:`../how-tos/add-new-event-bus-concrete-implementation` documentation.
+
+Step 2: Configure the Event Bus
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In :doc:`../reference/event-bus-configurations`, you can find the available configurations for the event bus that are used to set up the event bus in the Open edX platform.
 
@@ -31,8 +33,8 @@ In both the producing and consuming services, you need to configure the event bu
 
 By configuring these settings, you are telling Open edX Events which concrete implementation to use for producing and consuming events.
 
-Produce the Event
-~~~~~~~~~~~~~~~~~
+Step 3: Produce the Event
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the producing/host application, include ``openedx_events`` in ``INSTALLED_APPS`` settings if necessary and add ``EVENT_BUS_PRODUCER_CONFIG`` setting. This setting is a dictionary of :term:`event types <Event Type>` to dictionaries for :term:`Topic` related configuration. Each :term:`Topic` configuration dictionary uses the topic as a key and contains:
 
@@ -57,8 +59,8 @@ Here's an example of the producer configuration which will publish events for XB
 
 The ``EVENT_BUS_PRODUCER_CONFIG`` is read by ``openedx_events`` and a handler (`general_signal_handler`_) is attached which does the leg work of reading the configuration again and pushing to appropriate handlers.
 
-Consume the Event
-~~~~~~~~~~~~~~~~~
+Step 4: Consume the Event
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the consuming service, include ``openedx_events`` in ``INSTALLED_APPS`` settings if necessary and add ``EVENT_BUS_CONSUMER_CONFIG`` setting. Then, you should implement a receiver for the event type you are interested in. In this example, we are interested in the XBlock deleted event:
 
@@ -69,8 +71,8 @@ In the consuming service, include ``openedx_events`` in ``INSTALLED_APPS`` setti
    ... do things with the data in kwargs ...
    ... log the event for debugging purposes ...
 
-Run the Consumer
-~~~~~~~~~~~~~~~~
+Step 5: Run the Consumer
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 To consume events, Open edX Events provides a management command called `consume_events`_ which can be called from the command line, how to run this command will depend on your deployment strategy. This command will start a process that listens to the message broker for new messages, processes them and emits the event. Here is an example using of a `consumer using Tutor hosted in Kubernetes`_.
 
