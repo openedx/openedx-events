@@ -76,6 +76,44 @@ Workflow
 
 This approach of producing events via settings with the generic handler was chosen to allow for flexibility in the event bus implementation. It allows developers to choose the event bus implementation that best fits their needs, and to easily switch between implementations if necessary. See more details in the :doc:`../decisions/0012-producing-to-event-bus-via-settings` Architectural Decision Record (ADR).
 
+Event Bus vs Asynchronous Tasks
+-------------------------------
+
+Asynchronous tasks are used for long-running, resource-intensive operations that should not block the main thread of a service. The event bus is used for broadcasting messages to multiple services, allowing them to react to changes or actions in the system. Both can be used for asynchronous communication, they serve different purposes and have different workflows.
+
+In this diagram, you can see the difference between the two when it comes to asynchronous communication:
+
+.. image:: ../_images/event-bus-vs-asynchronous-tasks.png
+   :alt: Open edX Event Bus vs Asynchronous Tasks
+   :align: center
+
+In the upper part of the diagram, we have Service A and Service B. Service A is the producer of the event, and a :term:`Worker` of Service B is the consumer. This is the event bus workflow which allows asynchronous non-blocking communication between services:
+
+- Service A sends the event as a message to the event bus and continues its execution, as we previously explained.
+- Service B polls the message broker for new messages and processes them.
+- Service B re-emits the event with the data that was transmitted.
+- Service C can also listen to the event and react to it.
+
+In the lower part of the diagram, we have the asynchronous tasks workflow:
+
+- A worker of Service A picks up a task which communicates with Service B via a request-response mechanism, such as HTTP.
+- The worker of Service A sends a request to Service B and waits for a response.
+- Service B processes the request and sends a response back to the worker.
+- The worker receives the response and continues with the next step in its processing.
+
+If we were to introduce a Service C in this scenario, it would need to wait for the worker of Service A to finish processing the response from Service B and receive a response before it could continue.
+
+This is an example of an asynchronous approach (from the producer point of view) to send messages to another services but with a blocking nature.
+
+Use the Open edX Event bus instead of asynchronous tasks when:
+
+- You want to send a message but don't need a response.
+- You need to send a high volume of messages to services.
+- You want to broadcast messages to multiple services.
+- You want to decouple services and avoid direct dependencies.
+
+When you need to send a message to a particular service and wait their response for further processing, use asynchronous tasks.
+
 How is the Open edX Event Bus Used?
 -----------------------------------
 
