@@ -107,10 +107,10 @@ This is an example of an asynchronous approach (from the producer point of view)
 
 Use the Open edX Event bus instead of asynchronous tasks when:
 
-- You want to send a message but don't need a response.
-- You need to send a high volume of messages to services.
-- You want to broadcast messages to multiple services.
+- You want to send a message but don't need a response. For example, notifying other services of an event that occurred.
+- You need to send a high volume of messages to a single or multiple services. For example, notifying when users visit a unit in a course or watch a video.
 - You want to decouple services and avoid direct dependencies.
+- You want to send events out of the Open edX ecosystem. For example, external databases or services that can consume events to update their own state.
 
 When you need to send a message to a particular service and wait their response for further processing, use asynchronous tasks.
 
