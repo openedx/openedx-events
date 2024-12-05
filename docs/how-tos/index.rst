@@ -7,6 +7,7 @@ How-tos
 
    creating-new-events
    adding-events-to-a-service
-   using-events
+   adding-event-bus-support-to-an-event
    using-the-event-bus
+   using-events
    add-new-event-bus-concrete-implementation
