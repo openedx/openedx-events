@@ -19,7 +19,7 @@ First, you need to install the Open edX Event Bus plugin in both the producing a
 
    pip install edx-event-bus-redis
 
-.. note:: Redis is the community-supported plugin for the Open edX Event Bus and is the recommended plugin to use. You can find more information about the Redis plugin in the `event-bus-redis`_ repository. However, you can also implement your own plugin with your preferred message broker by following the :doc:`../how-tos/add-new-event-bus-concrete-implementation` documentation.
+.. note:: There are currently two community-supported concrete implementations of the Open edX Events Bus, Redis (`event-bus-redis`_) and Kafka (`event-bus-kafka`_). Redis is the default plugin for the Open edX Event Bus, but you can also use Kafka depending on your requirements. If none of these implementations meet your needs, you can implement your own plugin by following the :doc:`../how-tos/add-new-event-bus-concrete-implementation` documentation.   
 
 Step 2: Configure the Event Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -80,6 +80,7 @@ You can find more a concrete example of how to produce and consume events in the
 
 .. _consume_events: https://github.com/openedx/openedx-events/blob/main/openedx_events/management/commands/consume_events.py
 .. _event-bus-redis: https://github.com/openedx/event-bus-redis
+.. _event-bus-kafka: https://github.com/openedx/event-bus-kafka
 .. _run the consumer locally without tutor: https://github.com/openedx/event-bus-redis/?tab=readme-ov-file#testing-locally
 .. _run the consumer locally with tutor: https://github.com/openedx/event-bus-redis/blob/main/docs/tutor_installation.rst#setup-example-with-openedx-course-discovery-and-tutor
 .. _general_signal_handler: https://github.com/openedx/openedx-events/blob/main/openedx_events/apps.py#L16-L44
