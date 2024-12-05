@@ -26,9 +26,11 @@ If you don't add the event to the ``KNOWN_UNSERIALIZABLE_SIGNALS`` list, the CI/
 Step 2: Define the Event Payload
 --------------------------------
 
-An Open edX Event is compatible with the event bus when its payload can be serialized, sent, and deserialized by other services. The payload, structured as attrs data classes, must align with the event bus schema format which in this case is the `Avro`_ schema. This ensures the event can be sent by the producer and be then re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side. For more information on the event bus schema format, refer to the :doc:`../decisions/0005-external-event-schema-format` and :doc:`../decisions/0004-external-event-bus-and-django-signal-events` decision records.
+An Open edX Event is compatible with the event bus when its payload can be serialized, sent, and deserialized by other services. The payload, structured as `attrs data classes`_, must align with the event bus schema format which in this case is the :term:`Avro Schema`. This schema is used to serialize and deserialize the :term:`Event Payload` when sending it across services.
 
-Here is an example of an :term:`Event Payload` structured as attrs data classes that align with the event bus schema format:
+This ensures the event can be sent by the producer and be then re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side. For more information on the event bus schema format, refer to the :doc:`../decisions/0004-external-event-bus-and-django-signal-events` and :doc:`../decisions/0005-external-event-schema-format` decision records.
+
+Here is an example of an :term:`Event Payload` structured as `attrs data classes`_ that align with the event bus schema format:
 
 .. code-block:: python
 
@@ -114,7 +116,7 @@ Ensure that the :term:`Event Payload` is structured as `attrs data classes`_ and
 Step 3: Ensure Serialization and Deserialization
 ------------------------------------------------
 
-Before sending the event across services, you need to ensure that the :term:`Event Payload` can be serialized and deserialized correctly. The event bus concrete implementations use the Avro schema to serialize and deserialize the :term:`Event Payload` as mentioned in the :doc:`../decisions/0005-external-event-schema-format` decision record. The concrete implementation of the event bus handles the serialization and deserialization with the help of methods implemented by this library.
+Before sending the event across services, you need to ensure that the :term:`Event Payload` can be serialized and deserialized correctly. The event bus concrete implementations use the :term:`Avro Schema` to serialize and deserialize the :term:`Event Payload` as mentioned in the :doc:`../decisions/0005-external-event-schema-format` decision record. The concrete implementation of the event bus handles the serialization and deserialization with the help of methods implemented by this library.
 
 .. For example, here's how the Redis event bus handles serialization before sending a message:
 
@@ -183,7 +185,7 @@ If your :term:`Event Payload` contains only supported data types, you can skip t
 Step 4: Generate the Avro Schema
 --------------------------------
 
-As mentioned in the previous step, the serialization and deserialization of the :term:`Event Payload` is handled by the concrete event bus implementation with the help of methods implemented in this library. However, ``openedx-events`` ensures the payload of new events can be serialized and deserialized correctly by adding checks in the CI/CD pipeline for schema verification. To ensure this, you need to generate the Avro schema for the :term:`Event Payload`:
+As mentioned in the previous step, the serialization and deserialization of the :term:`Event Payload` is handled by the concrete event bus implementation with the help of methods implemented in this library. However, although openedx-events does not handles the serialization and deserialization of the :term:`Event Payload` directly, it ensures the payload of new events can be serialized and deserialized correctly by adding checks in the CI/CD pipeline for schema verification. To ensure this, you need to generate the Avro schema for the :term:`Event Payload`:
 
 1. Run the following command to generate the Avro schema for the :term:`Event Payload`:
 
