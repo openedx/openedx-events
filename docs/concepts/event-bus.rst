@@ -90,8 +90,8 @@ In this diagram, you can see the difference between the two when it comes to asy
 In the upper part of the diagram, we have Service A and Service B. Service A is the producer of the event, and a :term:`Worker` of Service B is the consumer. This is the event bus workflow which allows asynchronous non-blocking communication between services:
 
 - Service A sends the event as a message to the event bus and continues its execution, as we previously explained.
-- Service B polls the message broker for new messages and processes them.
-- Service B re-emits the event with the data that was transmitted.
+- Service B polls the message broker for new messages and converts them into ``OpenEdxPublicSignal``.
+- Service B emits the event locally and registered Django Signal receivers can react to it.
 - Service C can also listen to the event and react to it.
 
 In the lower part of the diagram, we have the asynchronous tasks workflow:
