@@ -19,7 +19,7 @@ First, you need to install the Open edX Event Bus plugin in both the producing a
 
    pip install edx-event-bus-redis
 
-.. note:: There are currently two community-supported concrete implementations of the Open edX Events Bus, Redis (`event-bus-redis`_) and Kafka (`event-bus-kafka`_). Redis is the default plugin for the Open edX Event Bus, but you can also use Kafka depending on your requirements. If none of these implementations meet your needs, you can implement your own plugin by following the :doc:`../how-tos/add-new-event-bus-concrete-implementation` documentation.   
+.. note:: There are currently two community-supported concrete implementations of the Open edX Events Bus, Redis (`event-bus-redis`_) and Kafka (`event-bus-kafka`_). Redis is the default plugin for the Open edX Event Bus, but you can also use Kafka depending on your requirements. If none of these implementations meet your needs, you can implement your own plugin by following the :doc:`../how-tos/add-new-event-bus-concrete-implementation` documentation.
 
 Step 2: Configure the Event Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
