@@ -19,7 +19,7 @@ By default, Open edX Events should be compatible with the Open edX Event Bus. Ho
 When adding support is not possible do the following:
 
 - Add it to the ``KNOWN_UNSERIALIZABLE_SIGNALS`` list in the ``openedx_events/tooling.py`` file so the event bus ignores it.
-- Add a ``warning`` in the event's docstring to inform developers that the event is not compatible with the event bus.
+- Add a ``warning`` in the event's docstring to inform developers that the event is not compatible with the event bus and why.
 
 If you don't add the event to the ``KNOWN_UNSERIALIZABLE_SIGNALS`` list, the CI/CD pipeline will fail for the missing Avro schema that could not be generated for the :term:`Event Payload`. If you don't add a warning in the event's docstring, developers might try to send the event across services and encounter issues.
 
