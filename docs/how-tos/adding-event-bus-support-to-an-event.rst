@@ -128,7 +128,9 @@ As mentioned in the previous step, the serialization and deserialization of the 
 
 .. code-block:: bash
 
-    python manage.py generate_avro_schemas org.openedx.learning.course.enrollment.changed.v1
+    python manage.py generate_avro_schemas YOUR_EVENT_TYPE
+
+Run ``python manage.py generate_avro_schemas --help`` to see the available options for the command.
 
 2. The Avro schema for the :term:`Event Payload` will be generated in the ``openedx_events/event_bus/avro/tests/schemas`` directory.
 3. Push the changes to the branch and create a pull request or run the checks locally to verify that the Avro schema was generated correctly.
