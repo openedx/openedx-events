@@ -16,9 +16,7 @@ The following list of real-life use cases showcases the different ways Open edX 
 Cross-services communication
 ****************************
 
-The suggested strategy for cross-service communication efficiently in the Open edX ecosystem is through an event-based architecture implemented via the Event Bus. This functionality used for asynchronous communication between services is built on top of sending Open edX Events (Open edX-specific Django signals) within a service. The Event Bus extends these signals, allowing them to be broadcast and handled across multiple services. For more details on the Event Bus,  please see `How to Start Using the Event Bus`_.
-
-.. TODO: replace event bus confluence page with native docs
+As mentioned in :doc:`../concepts/event-bus`, the suggested strategy for cross-service communication in the Open edX ecosystem is through an event-based architecture implemented via the :doc:`../concepts/event-bus`. This functionality used for asynchronous communication between services is built on top of sending Open edX Events (Open edX-specific Django signals) within a service. For more details on the Event Bus,  please see :doc:`../how-tos/using-the-event-bus`.
 
 Here are some examples of how the Event Bus can be used to facilitate communication between IDAs:
 
@@ -132,7 +130,6 @@ Here are some additional use cases that can be implemented using Open edX Events
 
 .. note:: If you have implemented a solution using Open edX Events and would like to share it with the community, please submit a pull request to add it to this list!
 
-.. _How to Start Using the Event Bus: https://openedx.atlassian.net/wiki/spaces/AC/pages/3508699151/How+to+start+using+the+Event+Bus
 .. _edx-exams: https://github.com/edx/edx-exams
 .. _edx-proctoring: https://github.com/openedx/edx-proctoring
 .. _ADR Implementation of Event Driven Architecture for Exam Downstream Effects: https://github.com/edx/edx-exams/blob/main/docs/decisions/0004-downstream-effect-events.rst
