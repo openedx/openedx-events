@@ -119,8 +119,6 @@ Now the :term:`Event Payload` can be serialized and deserialized correctly when 
 .. warning::
     One of the known limitations of the current Open edX Event Bus is that it does not support dictionaries as data types. If the :term:`Event Payload` contains dictionaries, you may need to refactor the :term:`Event Payload` to use supported data types. When you know the structure of the dictionary, you can create an attrs class that represents the dictionary structure. If not, you can use a str type to represent the dictionary as a string and deserialize it on the consumer side using JSON deserialization.
 
-If your :term:`Event Payload` contains only supported data types, you can skip this step.
-
 Step 4: Generate the Avro Schema
 --------------------------------
 
