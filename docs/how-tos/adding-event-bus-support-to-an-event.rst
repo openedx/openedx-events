@@ -124,7 +124,7 @@ If your :term:`Event Payload` contains only supported data types, you can skip t
 Step 4: Generate the Avro Schema
 --------------------------------
 
-As mentioned in the previous step, the serialization and deserialization of the :term:`Event Payload` is handled by the concrete event bus implementation with the help of methods implemented in this library. However, although openedx-events does not handles the serialization and deserialization of the :term:`Event Payload` directly, it ensures the payload of new events can be serialized and deserialized correctly by adding checks in the CI/CD pipeline for schema verification. To ensure this, you need to generate the Avro schema for the :term:`Event Payload`:
+As mentioned in the previous step, the serialization and deserialization of the :term:`Event Payload` is handled by the concrete event bus implementation with the help of methods implemented in this library. However, although openedx-events does not handles the serialization and deserialization of the :term:`Event Payload` directly, it ensures the payload of new events can be serialized and deserialized correctly by adding checks in the CI/CD pipeline for schema verification. To ensure tests pass, you need to generate an Avro test schema for your new event's :term:`Event Payload`:
 
 1. Run the following command to generate the Avro schema for the :term:`Event Payload`:
 
