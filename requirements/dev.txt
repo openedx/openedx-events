@@ -67,11 +67,11 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.6.8
+coverage[toml]==7.6.9
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
-cryptography==43.0.3
+cryptography==44.0.0
     # via
     #   -r requirements/quality.txt
     #   secretstorage
@@ -87,7 +87,7 @@ distlib==0.3.9
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==4.2.16
+django==4.2.17
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
@@ -110,9 +110,9 @@ docutils==0.21.2
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-edx-ccx-keys==1.3.0
+edx-ccx-keys==2.0.2
     # via -r requirements/quality.txt
-edx-django-utils==7.0.1
+edx-django-utils==7.1.0
     # via -r requirements/quality.txt
 edx-lint==5.4.1
     # via -r requirements/quality.txt
@@ -135,7 +135,6 @@ importlib-metadata==8.5.0
     # via
     #   -r requirements/quality.txt
     #   keyring
-    #   twine
 iniconfig==2.0.0
     # via
     #   -r requirements/quality.txt
@@ -195,11 +194,11 @@ more-itertools==10.5.0
     #   -r requirements/quality.txt
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.3.0
+newrelic==10.3.1
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-nh3==0.2.18
+nh3==0.2.19
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
@@ -212,13 +211,14 @@ packaging==24.2
     #   pyproject-api
     #   pytest
     #   tox
+    #   twine
 pbr==6.1.0
     # via
     #   -r requirements/quality.txt
     #   stevedore
 pip-tools==7.4.1
     # via -r requirements/pip-tools.txt
-pkginfo==1.10.0
+pkginfo==1.12.0
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -291,7 +291,7 @@ pyproject-hooks==1.2.0
     #   -r requirements/pip-tools.txt
     #   build
     #   pip-tools
-pytest==8.3.3
+pytest==8.3.4
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -333,7 +333,7 @@ secretstorage==3.3.3
     # via
     #   -r requirements/quality.txt
     #   keyring
-six==1.16.0
+six==1.17.0
     # via
     #   -r requirements/quality.txt
     #   edx-ccx-keys
@@ -362,7 +362,7 @@ tomlkit==0.13.2
     #   pylint
 tox==4.23.2
     # via -r requirements/ci.txt
-twine==5.1.1
+twine==6.0.1
     # via -r requirements/quality.txt
 typing-extensions==4.12.2
     # via
@@ -373,7 +373,7 @@ urllib3==2.2.3
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.27.1
+virtualenv==20.28.0
     # via
     #   -r requirements/ci.txt
     #   tox
