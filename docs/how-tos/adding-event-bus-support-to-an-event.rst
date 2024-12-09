@@ -28,70 +28,7 @@ Step 2: Define the Event Payload
 
 An Open edX Event is compatible with the event bus when its payload can be serialized, sent, and deserialized by other services. The payload, structured as `attrs data classes`_, must align with the event bus schema format which in this case is the :term:`Avro Schema`. This schema is used to serialize and deserialize the :term:`Event Payload` when sending it across services.
 
-This ensures the event can be sent by the producer and be then re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side. For more information on the event bus schema format, refer to the :doc:`../decisions/0004-external-event-bus-and-django-signal-events` and :doc:`../decisions/0005-external-event-schema-format` decision records.
-
-Here is an example of an :term:`Event Payload` structured as `attrs data classes`_ that align with the event bus schema format:
-
-.. code-block:: python
-
-    @attr.s(frozen=True)
-    class UserNonPersonalData:
-        """
-        Attributes defined for Open edX user object based on non-PII data.
-
-        Arguments:
-            id (int): unique identifier for the Django User object.
-            is_active (bool): indicates whether the user is active.
-        """
-
-        id = attr.ib(type=int)
-        is_active = attr.ib(type=bool)
-
-    @attr.s(frozen=True)
-    class UserPersonalData:
-        """
-        Attributes defined for Open edX user object based on PII data.
-
-        Arguments:
-            username (str): username associated with the Open edX user.
-            email (str): email associated with the Open edX user.
-            name (str): name associated with the Open edX user's profile.
-        """
-
-        username = attr.ib(type=str)
-        email = attr.ib(type=str)
-        name = attr.ib(type=str, factory=str)
-
-    @attr.s(frozen=True)
-    class UserData(UserNonPersonalData):
-        """
-        Attributes defined for Open edX user object.
-
-        This class extends UserNonPersonalData to include PII data completing the
-        user object.
-
-        Arguments:
-            pii (UserPersonalData): user's Personal Identifiable Information.
-        """
-
-        pii = attr.ib(type=UserPersonalData)
-
-    @attr.s(frozen=True)
-    class CourseData:
-        """
-        Attributes defined for Open edX Course Overview object.
-
-        Arguments:
-            course_key (str): identifier of the Course object.
-            display_name (str): display name associated with the course.
-            start (datetime): start date for the course.
-            end (datetime): end date for the course.
-        """
-
-        course_key = attr.ib(type=CourseKey)
-        display_name = attr.ib(type=str, factory=str)
-        start = attr.ib(type=datetime, default=None)
-        end = attr.ib(type=datetime, default=None)
+This ensures the event can be sent by the producer and be then re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side, guaranteeing that the data sent and received is the identical. Serializing this way should prevent data inconsistencies between services, e.g., timezone issues and precision loss. For more information on the event bus schema format, refer to the :doc:`../decisions/0004-external-event-bus-and-django-signal-events` and :doc:`../decisions/0005-external-event-schema-format` decision records.
 
 The data types used in the attrs classes that the current Open edX Event Bus with the chosen schema are:
 
@@ -112,6 +49,8 @@ Complex Data Types
 - Types with Custom Serializers (e.g., ``CourseKey``, ``datetime``)
 
 Ensure that the :term:`Event Payload` is structured as `attrs data classes`_ and that the data types used in those classes align with the event bus schema format.
+
+In the ``data.py`` files within each architectural subdomain you can find examples of the :term:`Event Payload` structured as `attrs data classes`_ that align with the event bus schema format.
 
 Step 3: Ensure Serialization and Deserialization
 ------------------------------------------------
