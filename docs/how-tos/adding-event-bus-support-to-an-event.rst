@@ -144,6 +144,8 @@ Step 5: Send the Event Across Services with the Event Bus
 
 To validate that you can consume the event emitted by a service through the event bus, you can send the event across services. Here is an example of how you can send the event across services using the Redis event bus implementation following the `setup instructions in a Tutor environment`_.
 
+.. note:: If you implemented a custom serializer for a type in the :term:`Event Payload`, the custom serializer support must be included in both the producer and consumer sides before it can be used.
+
 .. _Avro: https://avro.apache.org/
 .. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
 .. _attrs data classes: https://www.attrs.org/en/stable/overview.html
