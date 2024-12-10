@@ -186,6 +186,16 @@ def _reset_state(sender, **kwargs):  # pylint: disable=unused-argument
     get_producer.cache_clear()
 
 
+# .. setting_name: EVENT_BUS_PRODUCER_CONFIG
+# .. setting_default: {}
+# .. setting_description: Dictionary of event_types to lists of dictionaries for topic related configuration.
+#    Each topic configuration dictionary contains a flag called `enabled` denoting whether the event will be
+#    published to the topic, topic/stream name called `topic` where the event will be pushed to,
+#    `event_key_field` which is a period-delimited string path to event data field to use as event key.
+#    The topic names should not include environment prefix as it will be dynamically added based on
+#    EVENT_BUS_TOPIC_PREFIX setting. See 0012-producing-to-event-bus-via-settings for more details.
+
+
 def merge_producer_configs(producer_config_original, producer_config_overrides):
     """
     Merge two EVENT_BUS_PRODUCER_CONFIG maps.
