@@ -79,7 +79,7 @@ This approach of producing events via settings with the generic handler was chos
 Event Bus vs Asynchronous Tasks
 -------------------------------
 
-Asynchronous tasks are used for long-running, resource-intensive operations that should not block the main thread of a service. The event bus is used for broadcasting messages to multiple services, allowing them to react to changes or actions in the system. Both can be used for asynchronous communication, they serve different purposes and have different workflows.
+Asynchronous tasks are used for long-running, resource-intensive operations that should not block the main thread of a service. The event bus is used for broadcasting messages to multiple services, allowing them to react to changes or actions in the system. Both can be used for asynchronous communication, but they serve different purposes and have different workflows.
 
 In this diagram, you can see the difference between the two when it comes to asynchronous communication:
 
