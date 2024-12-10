@@ -8,6 +8,10 @@ Use this template as a guide. Omit sections that don't apply.
 You may link to information rather than copy it, but only if the link is publicly readable.
 If the linked information must be private (because it contains secrets), clearly label the link as private.
 
+Fore more details on the Hooks Extension Framework contribution process, see:
+
+https://docs.openedx.org/en/latest/developers/concepts/hooks_extension_framework.html
+
 -->
 
 ## Description
