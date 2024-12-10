@@ -34,7 +34,7 @@ Be sure to check they are publicly readable, or if not, repeat the information h
 
 ## Testing instructions
 
-Please provide detailed step-by-step instructions for testing this change, including any necessary setup or configuration.
+Please provide detailed step-by-step instructions for testing this change, including any necessary setup, e.g., additional requirements, plugins, configuration variables, etc, and environment details to ensure the reviewer can test the change.
 
 ## Deadline
 
@@ -45,7 +45,7 @@ Please provide detailed step-by-step instructions for testing this change, inclu
 Include anything else that will help reviewers and consumers understand the change.
 
 - Any other PRs or issues that should be linked here? Any related PRs?
-- Any special concerns or limitations? For example: deprecations, migrations, security, or accessibility. List any concern about this PR here, e.g. inelegant solutions, hacks, quick-and-dirty implementations, concerns about migrations, etc.
+- Any special concerns or limitations? For example: deprecations, security, or anything you think should be noted.
 
 ## Checklists
 
