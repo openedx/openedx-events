@@ -21,21 +21,24 @@ An event has multiple components that are used to define, trigger, and handle th
       An event is a signal that is emitted when a specific action occurs in the platform. The event definition is the instantiation of the ``OpenEdxPublicSignal`` class that defines the structure and metadata of an event. This definition includes information such as the event name, description, payload, and version. Event definitions are used to create events which are later imported into the services and are triggered by using the ``send_event`` method.
 
     Event Bus
-      To be added soon.
+      Code that handles asynchronous message transfer between services.
 
-    Event Bus Producer
-      To be added soon.
+    Message
+      A unit of information sent from one service to another via a message broker.
 
-    Event Bus Consumer
-      To be added soon.
+    Message Broker
+      A service that receives, organizes, and stores messages so other services can query and retrieve them.
 
-    Event Bus Topic
-      To be added soon.
+    Worker
+      A machine or process that runs service code without hosting the web application. Workers are used to process messages from the message broker.
 
-    Event Bus Producer Config
-      To be added soon.
+    Producer
+      A service that sends events to the event bus. The producer serializes the event data and enriches it with relevant metadata for the consumer.
 
-    Event Bus Settings
-      To be added soon.
+    Consumer
+      A service that receives events from the event bus. The consumer deserializes the message and re-emits it as an event with the data that was transmitted.
+
+    Topic
+      How the event bus implementation groups related events, such as streams in Redis. Producers publish events to topics, and consumers subscribe to topics to receive events.
 
 .. _Events Payload ADR: :doc: `/decisions/0003-events-payload`
