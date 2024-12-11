@@ -111,25 +111,13 @@ specifies:
 
 The definition created in this step must comply with:
 
-- It should be created in the `signals.py` file in the corresponding subdomain. Refer to Naming Conventions ADR for more
+- It should be created in the ``signals.py`` file in the corresponding subdomain. Refer to Naming Conventions ADR for more
   on events subdomains.
-- It should follow the naming conventions specified in Naming Conventions ADR.
-- It must be documented using in-line documentation with at least: `event_type`, `event_name`, `event_description` and
-  `event_data`:
+- It should follow the naming conventions specified in :doc:`../decisions/0002-events-naming-and-versioning`.
+- It must be documented using in-line documentation with at least: ``event_type``, ``event_name``, ``event_description`` and
+  ``event_data``. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
 
-+-------------------+----------------------------------------------------------------------------------------------------+
-| Annotation        | Description                                                                                        |
-+===================+====================================================================================================+
-| event_type        | Identifier across services of the event. Should follow the events naming conventions.              |
-+-------------------+----------------------------------------------------------------------------------------------------+
-| event_name        | Name of the variable storing the event instance.                                                   |
-+-------------------+----------------------------------------------------------------------------------------------------+
-| event_description | General description which includes when the event should be emitted.                               |
-+-------------------+----------------------------------------------------------------------------------------------------+
-| event_data        | What type of class attribute the event sends.                                                      |
-+-------------------+----------------------------------------------------------------------------------------------------+
-
-Consider the following example:
+Consider the course enrollment created event as an example:
 
 .. code-block:: python
 
