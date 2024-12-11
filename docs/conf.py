@@ -38,6 +38,7 @@ extensions = [
     'sphinxcontrib.mermaid',
     'code_annotations.contrib.sphinx.extensions.openedx_events',
     'sphinx.ext.intersphinx',
+    'code_annotations.contrib.sphinx.extensions.settings',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -129,6 +130,12 @@ if re.search(DIGITS_ONLY, rtd_version):
 intersphinx_mapping = {
     "docs.openedx.org": (
         f"https://docs.openedx.org/{rtd_language}/{rtd_version}",
+        None,
+    ),
+    "openedx-proposals": (
+        # Not setting the version on purpose because we always want the latest version
+        # of OEPs
+        f"https://docs.openedx.org/projects/openedx-proposals/{rtd_language}/latest",
         None,
     ),
 }
