@@ -35,7 +35,7 @@ click==8.1.7
     #   edx-lint
 click-log==0.4.0
     # via edx-lint
-code-annotations==1.7.0
+code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/event-warning
     # via
     #   -r requirements/test.txt
     #   edx-lint
@@ -225,7 +225,7 @@ six==1.17.0
     #   edx-lint
 snowballstemmer==2.2.0
     # via pydocstyle
-sqlparse==0.5.2
+sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
     #   django

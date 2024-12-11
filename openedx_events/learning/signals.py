@@ -167,7 +167,7 @@ COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.discussions.configuration.changed.v1
 # .. event_name: COURSE_DISCUSSIONS_CHANGED
 # .. event_description: emitted when the configuration for a course's discussions changes in the course
-#       Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+# .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_data: CourseDiscussionConfigurationData
 COURSE_DISCUSSIONS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.discussions.configuration.changed.v1",
@@ -204,8 +204,7 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
 # .. event_name: USER_NOTIFICATION_REQUESTED
 # .. event_description: Can be fired from apps to send user notifications.
 # .. event_data: UserNotificationSendListData
-# Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
-#
+# .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.notification.requested.v1",
     data={
@@ -296,7 +295,7 @@ COURSE_ACCESS_ROLE_REMOVED = OpenEdxPublicSignal(
 # .. event_name: FORUM_THREAD_CREATED
 # .. event_description: Emitted when a new thread is created in a discussion
 # .. event_data: DiscussionThreadData
-#       Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+# .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 FORUM_THREAD_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.thread.created.v1",
     data={
@@ -308,7 +307,7 @@ FORUM_THREAD_CREATED = OpenEdxPublicSignal(
 # .. event_name: FORUM_THREAD_RESPONSE_CREATED
 # .. event_description: Emitted when a new response is added to a thread
 # .. event_data: DiscussionThreadData
-#        Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+#  .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.response.created.v1",
     data={
@@ -320,7 +319,7 @@ FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
 # .. event_name: FORUM_RESPONSE_COMMENT_CREATED
 # .. event_description: Emitted when a new comment is added to a response
 # .. event_data: DiscussionThreadData
-#       Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+# .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.response.created.v1",
     data={
@@ -333,8 +332,7 @@ FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
 # .. event_name: COURSE_NOTIFICATION_REQUESTED
 # .. event_description: Emitted when a notification is requested for a course
 # .. event_data: CourseNotificationData
-# Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
-#
+# .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 COURSE_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.notification.requested.v1",
     data={
@@ -347,7 +345,7 @@ COURSE_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
 # .. event_name: ORA_SUBMISSION_CREATED
 # .. event_description: Emitted when a new ORA submission is created
 # .. event_data: ORASubmissionData
-# Warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
+# .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 ORA_SUBMISSION_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.ora.submission.created.v1",
     data={

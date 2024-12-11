@@ -43,7 +43,7 @@ click==8.1.7
     #   code-annotations
     #   edx-django-utils
     #   uvicorn
-code-annotations==1.7.0
+code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/event-warning
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
@@ -263,7 +263,7 @@ sphinxcontrib-qthelp==2.0.0
     # via sphinx
 sphinxcontrib-serializinghtml==2.0.0
     # via sphinx
-sqlparse==0.5.2
+sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
     #   django
@@ -294,7 +294,7 @@ urllib3==2.2.3
     #   twine
 uvicorn==0.32.1
     # via sphinx-autobuild
-watchfiles==1.0.0
+watchfiles==1.0.3
     # via sphinx-autobuild
 websockets==14.1
     # via sphinx-autobuild
