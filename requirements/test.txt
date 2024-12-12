@@ -19,7 +19,7 @@ click==8.1.7
     #   -r requirements/base.txt
     #   code-annotations
     #   edx-django-utils
-code-annotations==1.7.0
+code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/event-warning
     # via -r requirements/test.in
 coverage[toml]==7.6.9
     # via pytest-cov
@@ -103,7 +103,7 @@ six==1.17.0
     # via
     #   -r requirements/base.txt
     #   edx-ccx-keys
-sqlparse==0.5.2
+sqlparse==0.5.3
     # via
     #   -r requirements/base.txt
     #   django
