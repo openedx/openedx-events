@@ -1,0 +1,143 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "thread",
+      "type": {
+        "name": "DiscussionThreadData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "anonymous",
+            "type": "boolean"
+          },
+          {
+            "name": "anonymous_to_peers",
+            "type": "boolean"
+          },
+          {
+            "name": "body",
+            "type": "string"
+          },
+          {
+            "name": "category_id",
+            "type": "long"
+          },
+          {
+            "name": "category_name",
+            "type": "string"
+          },
+          {
+            "name": "commentable_id",
+            "type": "string"
+          },
+          {
+            "name": "group_id",
+            "type": "long"
+          },
+          {
+            "name": "id",
+            "type": "long"
+          },
+          {
+            "name": "team_id",
+            "type": "long"
+          },
+          {
+            "name": "thread_type",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "type": "string"
+          },
+          {
+            "name": "title_truncated",
+            "type": "boolean"
+          },
+          {
+            "name": "truncated",
+            "type": "boolean"
+          },
+          {
+            "name": "url",
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "type": {
+              "name": "UserData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "long"
+                },
+                {
+                  "name": "is_active",
+                  "type": "boolean"
+                },
+                {
+                  "name": "pii",
+                  "type": {
+                    "name": "UserPersonalData",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "name": "username",
+                        "type": "string"
+                      },
+                      {
+                        "name": "email",
+                        "type": "string"
+                      },
+                      {
+                        "name": "name",
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "course_id",
+            "type": "string"
+          },
+          {
+            "name": "discussion",
+            "type": {
+              "type": "map",
+              "values": "string"
+            }
+          },
+          {
+            "name": "user_course_roles",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          },
+          {
+            "name": "user_forums_roles",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          },
+          {
+            "name": "options",
+            "type": {
+              "type": "map",
+              "values": "string"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.forum.thread.created.v1"
+}
