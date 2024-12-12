@@ -19,6 +19,7 @@ from openedx_events.learning.data import (
     CourseNotificationData,
     CoursePassingStatusData,
     DiscussionThreadData,
+    DiscussionThreadDataV2,
     ExamAttemptData,
     ORASubmissionData,
     PersistentCourseGradeData,
@@ -304,6 +305,19 @@ FORUM_THREAD_CREATED = OpenEdxPublicSignal(
     }
 )
 
+
+# .. event_type: org.openedx.learning.forum.thread.created.v2
+# .. event_name: FORUM_THREAD_CREATED_V2
+# .. event_description: Emitted when a new thread is created in a discussion
+# .. event_data: DiscussionThreadDataV2
+FORUM_THREAD_CREATED_V2 = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.thread.created.v2",
+    data={
+        "thread": DiscussionThreadDataV2,
+    }
+)
+
+
 # .. event_type: org.openedx.learning.forum.thread.response.created.v1
 # .. event_name: FORUM_THREAD_RESPONSE_CREATED
 # .. event_description: Emitted when a new response is added to a thread
@@ -316,6 +330,19 @@ FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
     }
 )
 
+
+# .. event_type: org.openedx.learning.forum.thread.response.created.v2
+# .. event_name: FORUM_THREAD_RESPONSE_CREATED_V2
+# .. event_description: Emitted when a new response is added to a thread
+# .. event_data: DiscussionThreadData
+FORUM_THREAD_RESPONSE_CREATED_V2 = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.forum.thread.response.created.v2",
+    data={
+        "thread": DiscussionThreadDataV2,
+    }
+)
+
+
 # .. event_type: org.openedx.learning.forum.thread.response.comment.created.v1
 # .. event_name: FORUM_RESPONSE_COMMENT_CREATED
 # .. event_description: Emitted when a new comment is added to a response
@@ -325,6 +352,18 @@ FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.response.created.v1",
     data={
         "thread": DiscussionThreadData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.forum.thread.response.comment.created.v2
+# .. event_name: FORUM_RESPONSE_COMMENT_CREATED_V2
+# .. event_description: Emitted when a new comment is added to a response
+# .. event_data: DiscussionThreadData
+FORUM_RESPONSE_COMMENT_CREATED_V2 = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.forum.thread.response.comment.created.v2",
+    data={
+        "thread": DiscussionThreadDataV2,
     }
 )
 
