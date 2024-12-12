@@ -6,6 +6,7 @@ References
    :caption: Contents:
 
    events
+   in-line-code-annotations-for-an-event
    glossary
    event-bus-configurations
    oeps
