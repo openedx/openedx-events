@@ -95,26 +95,6 @@ class DatetimeAvroSerializer(BaseCustomTypeAvroSerializer):
         return datetime.fromisoformat(data)
 
 
-class DictionaryAvroSerializer(BaseCustomTypeAvroSerializer):
-    """
-    CustomTypeAvroSerializer for dictionary class.
-    """
-
-    cls = dict
-    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[dict]
-
-    @staticmethod
-    def serialize(obj) -> str:
-        """Serialize obj into str."""
-        return obj
-
-    @staticmethod
-    def deserialize(data: str):
-        """Deserialize dict into obj."""
-        return json.loads(data)
-
-
-
 class UsageKeyAvroSerializer(BaseCustomTypeAvroSerializer):
     """
     CustomTypeAvroSerializer for UsageKey class.
@@ -201,5 +181,4 @@ DEFAULT_CUSTOM_SERIALIZERS = [
     LibraryUsageLocatorV2AvroSerializer,
     UsageKeyAvroSerializer,
     UuidAvroSerializer,
-    DictionaryAvroSerializer,
 ]
