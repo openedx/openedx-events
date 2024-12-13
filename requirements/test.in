@@ -6,4 +6,4 @@
 ddt                       # A library to multiply test cases
 pytest-cov                # pytest extension for code coverage statistics
 pytest-django             # pytest extension for better Django support
-git+https://github.com/eduNEXT/code-annotations.git@MJG/event-warning
+code-annotations
