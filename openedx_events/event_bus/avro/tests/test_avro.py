@@ -125,7 +125,9 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
             "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
         )},
         dict[str, LibraryLocatorV2]: {'key': LibraryLocatorV2.from_string('lib:MITx:reallyhardproblems')},
-        dict[str, LibraryUsageLocatorV2]: {'key': LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1')},
+        dict[str, LibraryUsageLocatorV2]: {
+            'key': LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1'),
+        },
         dict[str, List[int]]: {'key': [1, 2, 3]},
         dict[str, List[str]]: {'key': ["hi", "there"]},
         dict[str, dict[str, str]]: {'key': {'key': 'value'}},
