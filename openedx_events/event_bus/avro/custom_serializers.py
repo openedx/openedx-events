@@ -13,8 +13,6 @@ from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 from openedx_events.event_bus.avro.types import PYTHON_TYPE_TO_AVRO_MAPPING
 
 
-import json
-
 class BaseCustomTypeAvroSerializer(ABC):
     """
     Used by openedx_events.avro_utilities class to serialize/deserialize custom types.

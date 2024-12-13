@@ -9,8 +9,6 @@ from datetime import datetime
 
 import attr
 
-from typing import Dict
-
 
 @attr.s(frozen=True)
 class TrackingLogData:
