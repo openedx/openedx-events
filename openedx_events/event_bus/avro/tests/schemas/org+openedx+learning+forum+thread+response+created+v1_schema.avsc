@@ -10,23 +10,7 @@
         "type": "record",
         "fields": [
           {
-            "name": "anonymous",
-            "type": "boolean"
-          },
-          {
-            "name": "anonymous_to_peers",
-            "type": "boolean"
-          },
-          {
             "name": "body",
-            "type": "string"
-          },
-          {
-            "name": "category_id",
-            "type": "long"
-          },
-          {
-            "name": "category_name",
             "type": "string"
           },
           {
@@ -34,28 +18,8 @@
             "type": "string"
           },
           {
-            "name": "group_id",
-            "type": "long"
-          },
-          {
             "name": "id",
-            "type": "long"
-          },
-          {
-            "name": "team_id",
-            "type": "long"
-          },
-          {
-            "name": "thread_type",
             "type": "string"
-          },
-          {
-            "name": "title",
-            "type": "string"
-          },
-          {
-            "name": "title_truncated",
-            "type": "boolean"
           },
           {
             "name": "truncated",
@@ -108,11 +72,87 @@
             "type": "string"
           },
           {
+            "name": "thread_type",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "anonymous",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "default": null
+          },
+          {
+            "name": "anonymous_to_peers",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "default": null
+          },
+          {
+            "name": "title",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "title_truncated",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "default": null
+          },
+          {
+            "name": "group_id",
+            "type": [
+              "null",
+              "long"
+            ],
+            "default": null
+          },
+          {
+            "name": "team_id",
+            "type": [
+              "null",
+              "long"
+            ],
+            "default": null
+          },
+          {
+            "name": "category_id",
+            "type": [
+              "null",
+              "long"
+            ],
+            "default": null
+          },
+          {
+            "name": "category_name",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
             "name": "discussion",
-            "type": {
-              "type": "map",
-              "values": "string"
-            }
+            "type": [
+              "null",
+              {
+                "type": "map",
+                "values": "string"
+              }
+            ],
+            "default": null
           },
           {
             "name": "user_course_roles",
@@ -132,7 +172,7 @@
             "name": "options",
             "type": {
               "type": "map",
-              "values": "string"
+              "values": "boolean"
             }
           }
         ]
