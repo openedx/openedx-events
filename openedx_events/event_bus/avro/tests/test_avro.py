@@ -2,7 +2,7 @@
 import io
 import os
 from datetime import datetime
-from typing import List
+from typing import List, Union
 from unittest import TestCase
 from uuid import UUID, uuid4
 
@@ -126,6 +126,12 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
         )},
         dict[str, LibraryLocatorV2]: {'key': LibraryLocatorV2.from_string('lib:MITx:reallyhardproblems')},
         dict[str, LibraryUsageLocatorV2]: {'key': LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1')},
+        dict[str, List[int]]: {'key': [1, 2, 3]},
+        dict[str, List[str]]: {'key': ["hi", "there"]},
+        dict[str, dict[str, str]]: {'key': {'key': 'value'}},
+        dict[str, dict[str, int]]: {'key': {'key': 1}},
+        dict[str, Union[str, int]]: {'key': 'value'},
+        dict[str, Union[str, int, float]]: {'key': 1.0},
     }
     data_dict = {}
     for attribute in data_type.__attrs_attrs__:
