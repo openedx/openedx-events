@@ -2,7 +2,7 @@
 import ddt
 import json
 from datetime import datetime
-from typing import List
+from typing import Dict, List
 from unittest import TestCase
 
 from opaque_keys.edx.keys import CourseKey, UsageKey
@@ -263,6 +263,38 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         deserializer = AvroSignalDeserializer(SIGNAL)
         # Update signal with incomplete type info
         deserializer.signal = LIST_SIGNAL
+        with self.assertRaises(TypeError):
+            deserializer.from_dict(initial_dict)
+
+    def test_deserialization_of_dict_with_annotation(self):
+        """
+        Check that deserialization works as expected when dict data is annotated.
+        """
+        DICT_SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
+        initial_dict = {"dict_input": {"key1": 1, "key2": 3}}
+
+        deserializer = AvroSignalDeserializer(DICT_SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = {"key1": 1, "key2": 3}
+        test_data = event_data["dict_input"]
+
+        self.assertIsInstance(test_data, dict)
+        self.assertEqual(test_data, expected_event_data)
+
+    def test_deserialization_of_dict_without_annotation(self):
+        """
+        Check that deserialization raises error when dict data is not annotated.
+
+        Create dummy signal to bypass schema check while initializing deserializer. Then,
+        update signal with incomplete type info to test whether correct exceptions are raised while deserializing data.
+        """
+        SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
+        DICT_SIGNAL = create_simple_signal({"dict_input": Dict})
+        initial_dict = {"dict_input": {"key1": 1, "key2": 3}}
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        deserializer.signal = DICT_SIGNAL
+
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
