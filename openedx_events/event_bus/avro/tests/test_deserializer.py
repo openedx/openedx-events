@@ -1,15 +1,16 @@
 """Tests for avro.deserializer"""
-import ddt
 import json
 from datetime import datetime
 from typing import Dict, List
 from unittest import TestCase
 
+import ddt
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
 from openedx_events.event_bus.avro.tests.test_utilities import (
+    ComplexAttrs,
     EventData,
     NestedAttrsWithDefaults,
     NestedNonAttrs,
@@ -20,7 +21,6 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     SubTestData0,
     SubTestData1,
     create_simple_signal,
-    ComplexAttrs
 )
 from openedx_events.tests.utils import FreezeSignalCacheMixin
 
