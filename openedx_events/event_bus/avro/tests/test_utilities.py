@@ -40,6 +40,13 @@ class SimpleAttrs:
 
 
 @attr.s(auto_attribs=True)
+class ComplexAttrs:
+    """Class with all complex type fields"""
+    list_field: list[int]
+    dict_field: dict[str, int]
+
+
+@attr.s(auto_attribs=True)
 class SubTestData0:
     """Subclass for testing nested attrs"""
     sub_name: str

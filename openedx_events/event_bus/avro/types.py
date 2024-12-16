@@ -9,6 +9,6 @@ SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING = {
 PYTHON_TYPE_TO_AVRO_MAPPING = {
     **SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING,
     None: "null",
-    dict: "record",
+    dict: "map",
     list: "array",
 }

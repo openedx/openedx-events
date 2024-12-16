@@ -1,7 +1,7 @@
 """
 Tests for event_bus.avro.schema module
 """
-from typing import List
+from typing import Dict, List
 from unittest import TestCase
 
 from openedx_events.event_bus.avro.schema import schema_from_signal
@@ -245,8 +245,9 @@ class TestSchemaGeneration(TestCase):
 
     def test_throw_exception_to_list_or_dict_types_without_annotation(self):
         LIST_SIGNAL = create_simple_signal({"list_input": list})
-        DICT_SIGNAL = create_simple_signal({"list_input": dict})
+        DICT_SIGNAL = create_simple_signal({"dict_input": dict})
         LIST_WITHOUT_ANNOTATION_SIGNAL = create_simple_signal({"list_input": List})
+        DICT_WITHOUT_ANNOTATION_SIGNAL = create_simple_signal({"dict_input": Dict})
         with self.assertRaises(Exception):
             schema_from_signal(LIST_SIGNAL)
 
@@ -255,6 +256,14 @@ class TestSchemaGeneration(TestCase):
 
         with self.assertRaises(TypeError):
             schema_from_signal(LIST_WITHOUT_ANNOTATION_SIGNAL)
+
+        with self.assertRaises(TypeError):
+            schema_from_signal(DICT_WITHOUT_ANNOTATION_SIGNAL)
+
+    def test_throw_exception_invalid_dict_annotation(self):
+        INVALID_DICT_SIGNAL = create_simple_signal({"dict_input": Dict[str, NestedAttrsWithDefaults]})
+        with self.assertRaises(TypeError):
+            schema_from_signal(INVALID_DICT_SIGNAL)
 
     def test_list_with_annotation_works(self):
         LIST_SIGNAL = create_simple_signal({"list_input": List[int]})
@@ -269,4 +278,19 @@ class TestSchemaGeneration(TestCase):
             }],
         }
         schema = schema_from_signal(LIST_SIGNAL)
+        self.assertDictEqual(schema, expected_dict)
+
+    def test_dict_with_annotation_works(self):
+        DICT_SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
+        expected_dict = {
+            'name': 'CloudEvent',
+            'type': 'record',
+            'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
+            'namespace': 'simple.signal',
+            'fields': [{
+                'name': 'dict_input',
+                'type': {'type': 'map', 'values': 'long'},
+            }],
+        }
+        schema = schema_from_signal(DICT_SIGNAL)
         self.assertDictEqual(schema, expected_dict)
