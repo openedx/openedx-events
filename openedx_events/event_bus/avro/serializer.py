@@ -69,7 +69,6 @@ def _event_data_to_avro_record_dict(event_data, serializers=None):
     def value_to_dict(value):
         # Case 1: Value is an instance of an attrs-decorated class
         if hasattr(value, "__attrs_attrs__"):
-            print("\n\n MY VALUE IN VALUE TO DICT", value, "\n\n")
             return attr.asdict(value, value_serializer=_get_non_attrs_serializer(serializers))
         return _get_non_attrs_serializer(serializers)(None, None, value)
 
