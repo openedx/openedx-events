@@ -429,6 +429,18 @@ class DiscussionThreadData:
 
 
 @attr.s(frozen=True)
+class DiscussionThreadDataV2(DiscussionThreadData):
+    """
+    Attributes defined for the Open edX to represent events in the Forum such as comments, responses, and threads.
+
+    This class extends the DiscussionThreadData class to include support for the Open edX EVent Bus with
+    all serializable attributes.
+    """
+    discussion = attr.ib(type=str, factory=str)
+    options = attr.ib(type=str, factory=str)
+
+
+@attr.s(frozen=True)
 class CourseNotificationData:
     """
     Attributes defined for Open edX Course Notification data object.
