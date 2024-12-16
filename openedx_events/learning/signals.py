@@ -297,7 +297,7 @@ COURSE_ACCESS_ROLE_REMOVED = OpenEdxPublicSignal(
 # .. event_data: DiscussionThreadData
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 FORUM_THREAD_CREATED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.thread.created.v1",
+    event_type="org.openedx.learning.forum.thread.created.v1",
     data={
         "thread": DiscussionThreadData,
     }
@@ -309,7 +309,7 @@ FORUM_THREAD_CREATED = OpenEdxPublicSignal(
 # .. event_data: DiscussionThreadData
 #  .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.response.created.v1",
+    event_type="org.openedx.learning.forum.thread.response.created.v1",
     data={
         "thread": DiscussionThreadData,
     }
@@ -321,7 +321,7 @@ FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
 # .. event_data: DiscussionThreadData
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
-    event_type="org.openedx.learning.response.created.v1",
+    event_type="org.openedx.learning.forum.thread.response.comment.created.v1",
     data={
         "thread": DiscussionThreadData,
     }
