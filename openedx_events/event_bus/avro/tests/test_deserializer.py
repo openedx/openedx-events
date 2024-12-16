@@ -1,4 +1,5 @@
 """Tests for avro.deserializer"""
+import ddt
 import json
 from datetime import datetime
 from typing import List
@@ -19,10 +20,12 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     SubTestData0,
     SubTestData1,
     create_simple_signal,
+    ComplexAttrs
 )
 from openedx_events.tests.utils import FreezeSignalCacheMixin
 
 
+@ddt.ddt
 class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
     """Test AvroSignalDeserializer"""
 
@@ -30,36 +33,66 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         super().setUp()
         self.maxDiff = None
 
-    def test_schema_string(self):
+    @ddt.data(
+        (
+            SimpleAttrs,
+            {
+                "name": "CloudEvent",
+                "type": "record",
+                "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+                "namespace": "simple.signal",
+                "fields": [
+                    {
+                        "name": "data",
+                        "type": {
+                            "name": "SimpleAttrs",
+                            "type": "record",
+                            "fields": [
+                                {"name": "boolean_field", "type": "boolean"},
+                                {"name": "int_field", "type": "long"},
+                                {"name": "float_field", "type": "double"},
+                                {"name": "bytes_field", "type": "bytes"},
+                                {"name": "string_field", "type": "string"},
+                            ],
+                        },
+                    },
+                ],
+            }
+        ),
+        (
+            ComplexAttrs,
+            {
+                "name": "CloudEvent",
+                "type": "record",
+                "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+                "namespace": "simple.signal",
+                "fields": [
+                    {
+                        "name": "data",
+                        "type": {
+                            "name": "ComplexAttrs",
+                            "type": "record",
+                            "fields": [
+                                {"name": "list_field", "type": {"type": "array", "items": "long"}},
+                                {"name": "dict_field", "type": {"type": "map", "values": "long"}},
+                            ],
+                        },
+                    },
+                ],
+            }
+        )
+    )
+    @ddt.unpack
+    def test_schema_string(self, data_cls, expected_schema):
         """
         Test JSON round-trip; schema creation is tested more fully in test_schema.py.
         """
         SIGNAL = create_simple_signal({
-            "data": SimpleAttrs
+            "data": data_cls
         })
+
         actual_schema = json.loads(AvroSignalDeserializer(SIGNAL).schema_string())
-        expected_schema = {
-            'name': 'CloudEvent',
-            'type': 'record',
-            'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
-            'namespace': 'simple.signal',
-            'fields': [
-                {
-                    'name': 'data',
-                    'type': {
-                        'name': 'SimpleAttrs',
-                        'type': 'record',
-                        'fields': [
-                            {'name': 'boolean_field', 'type': 'boolean'},
-                            {'name': 'int_field', 'type': 'long'},
-                            {'name': 'float_field', 'type': 'double'},
-                            {'name': 'bytes_field', 'type': 'bytes'},
-                            {'name': 'string_field', 'type': 'string'},
-                        ]
-                    }
-                }
-            ]
-        }
+
         assert actual_schema == expected_schema
 
     def test_convert_dict_to_event_data(self):
