@@ -17,7 +17,7 @@ attrs==24.2.0
     # via -r requirements/test.txt
 backports-tarfile==1.2.0
     # via jaraco-context
-certifi==2024.8.30
+certifi==2024.12.14
     # via requests
 cffi==1.17.1
     # via
