@@ -1,7 +1,7 @@
 """
 Tests for event_bus.avro.schema module
 """
-from typing import List, Dict
+from typing import Dict, List
 from unittest import TestCase
 
 from openedx_events.event_bus.avro.schema import schema_from_signal
