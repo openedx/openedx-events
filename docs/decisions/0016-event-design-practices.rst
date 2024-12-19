@@ -22,16 +22,32 @@ We have compiled a list of suggested practices taken from the following sources:
 
 These are the practices that we recommend reviewing and following when designing an Open edX Event and contributing to the library. The goal is to implement events that are consistent with the architecture, reusable, and maintainable over time.
 
-#. An event should describe as accurately as possible what happened (what) and why it happened (why). It must contain enough information for consumers to understand the message. For instance, if an event is about a user enrollment, it should contain the user's data, the course data, and the enrollment status and the event should be named accordingly.
-#. Manage the granularity of the event so it is not too coarse (generic with too much information) or too fine-grained (specific with too little information). When making a decision on the granularity of the event, start with the minimum required information for consumers to react to the event and add more information as needed with enough justification. If necessary, leverage API calls to retrieve additional information but always consider the trade-offs of adding dependencies with other services.
-#. Avoid immediately contacting the source service to retrieve additional information. Instead, consider adding the necessary information to the event payload by managing the granularity of the event. If the event requires additional information, consider adding a field to the event that contains the necessary information. This will reduce the number of dependencies between services and make the event more self-contained.
-#. Design events with a single responsibility in mind. Each event should represent a single action or fact that happened in the system. If an event contains multiple actions, consider splitting it into multiple events. For instance, if the course grade is updated to pass or fail, there should be two events: one for the pass action and another for the fail action.
-#. Ensure that the triggering logic is consistent and narrow. For instance, if an event is triggered when a user enrolls in a course, it should be trigger only when the user enrolls in a course in all ways possible to enroll in a course. If the event is triggered when a user enrolls in a course through the API, it should also be triggered when the user enrolls in a course through the UI.
-#. Avoid adding flow-control information or business logic to events. Events should be solely a representation of what took place. If a field is necessary to control the behavior of the consumer, consider moving it to the consumer side. If adding additional data to the event is absolutely necessary document the reasoning behind it and carefully study the use case and implications.
-#. Use appropriate data types and formats for the event fields. Don't use generic data types like strings for all fields. Use specific data types like integers, floats, dates, or custom types when necessary.
-#. Avoid ambiguous data fields or fields with multiple meaning. For instance, if an event contains a field called ``status`` it should be clear what the status represents. If the status can have multiple meanings, consider splitting the event into multiple events or adding a new field to clarify the status.
-#. When designing an event, consider the consumers that will be using it. What information do they need to react to the event? What data is necessary for them to process the event?
-#. Design events carefully from the start to minimize breaking changes for consumers, although it is not always possible to avoid breaking changes.
+Event Purpose and Content
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- An event should describe as accurately as possible what happened (what) and why it happened (why). It must contain enough information for consumers to understand the message. For instance, if an event is about a user enrollment, it should contain the user's data, the course data, and the enrollment status and the event should be named accordingly.
+- Avoid immediately contacting the source service to retrieve additional information. Instead, consider adding the necessary information to the event payload by managing the granularity of the event. If the event requires additional information, consider adding a field to the event that contains the necessary information. This will reduce the number of dependencies between services and make the event more self-contained.
+- Keep the event size small. Avoid adding unnecessary information to the event. If the information is not necessary for consumers to react to the event, consider removing it.
+- Avoid adding flow-control information or business logic to events. Events should be solely a representation of what took place. If a field is necessary to control the behavior of the consumer, consider moving it to the consumer side. If adding additional data to the event is absolutely necessary document the reasoning behind it and carefully study the use case and implications.
+
+Responsibility and Granularity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Design events with a single responsibility in mind. Each event should represent a single action or fact that happened in the system. If an event contains multiple actions, consider splitting it into multiple events. For instance, if the course grade is updated to pass or fail, there should be two events: one for the pass action and another for the fail action.
+- Manage the granularity of the event so it is not too coarse (generic with too much information) or too fine-grained (specific with too little information). When making a decision on the granularity of the event, start with the minimum required information for consumers to react to the event and add more information as needed with enough justification. If necessary, leverage API calls from the consumer side to retrieve additional information but always consider the trade-offs of adding dependencies with other services.
+- Ensure that the triggering logic is consistent and narrow. For instance, if an event is triggered when a user enrolls in a course, it should be trigger only when the user enrolls in a course in all ways possible to enroll in a course. If the event is triggered when a user enrolls in a course through the API, it should also be triggered when the user enrolls in a course through the UI.
+
+Event Structure and Clarity
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+- Use appropriate data types and formats for the event fields. Don't use generic data types like strings for all fields. Use specific data types like integers, floats, dates, or custom types when necessary.
+- Avoid ambiguous data fields or fields with multiple meaning. For instance, if an event contains a field called ``status`` it should be clear what the status represents. If the status can have multiple meanings, consider splitting the event into multiple events or adding a new field to clarify the status.
+
+Consumer-Centric Design
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- When designing an event, consider the consumers that will be using it. What information do they need to react to the event? What data is necessary for them to process the event?
+- Design events carefully from the start to minimize breaking changes for consumers, although it is not always possible to avoid breaking changes.
 
 Some of these practices might not be applicable to all events, but they are a good starting point to ensure that the events are consistent and maintainable over time. So, design the event so it is small, well-defined and only contain relevant information.
 
