@@ -75,7 +75,7 @@ How are Open edX Events used?
 
 As mentioned previously, developers can listen to Open edX Events by registering signal receivers from their Open edX Django plugins that respond to the emitted events or by using the :doc:`../concepts/event-bus` to send events to external services.
 
-For more information on using Open edX Events, refer to the :doc:`../how-tos/using-events` how-to guide. We also encourage you to explore the :doc:`../reference/real-life-use-cases` section for real-life examples of how Open edX Events are used by the community.
+For more information on using Open edX Events, refer to the :doc:`../how-tos/create-a-new-event` how-to guide. We also encourage you to explore the :doc:`../reference/real-life-use-cases` section for real-life examples of how Open edX Events are used by the community.
 
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _triggering the COURSE_ENROLLMENT_CREATED event: https://github.com/openedx/edx-platform/blob/master/common/djangoapps/student/models/course_enrollment.py#L777-L795

@@ -1,5 +1,5 @@
-Using the Open edX Event Bus
-============================
+Use the Open edX Event Bus to Broadcast and Consume Events
+==========================================================
 
 After creating a new Open edX Event, you might need to send it across services instead of just within the same process. For this kind of use-cases, you might want to use the Open edX Event Bus. Here :doc:`../concepts/event-bus`, you can find useful information to start getting familiar with the Open edX Event Bus.
 

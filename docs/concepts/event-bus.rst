@@ -119,7 +119,7 @@ How is the Open edX Event Bus Used?
 
 The event bus is used to broadcast Open edX Events to multiple services, allowing them to react to changes or actions in the system.
 
-We encourage you to review the :doc:`../reference/real-life-use-cases` page for examples of how the event bus is used in the Open edX ecosystem by the community. Also, see the :doc:`../how-tos/using-the-event-bus` guide to get start sending events to the event bus.
+We encourage you to review the :doc:`../reference/real-life-use-cases` page for examples of how the event bus is used in the Open edX ecosystem by the community. Also, see the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events` guide to get start sending events to the event bus.
 
 .. _general_signal_handler: https://github.com/openedx/openedx-events/blob/main/openedx_events/apps.py#L16-L44
 .. _EventProducer: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/__init__.py#L71-L91
