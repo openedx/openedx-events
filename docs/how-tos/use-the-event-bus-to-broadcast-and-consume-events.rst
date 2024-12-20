@@ -5,7 +5,16 @@ After creating a new Open edX Event, you might need to send it across services i
 
 The Open edX Event Bus is a key component of the Open edX architecture, enabling services to communicate without direct dependencies on each other. This guide provides an overview of how to use the event bus to broadcast Open edX Events to multiple services, allowing them to react to changes or actions in the system.
 
-Setup
+Assumptions
+-----------
+
+- You have a development environment set up using `Tutor`_.
+- You have a basic understanding of Python and Django.
+- You have basic understanding of the Open edX Event Bus. If not, you can review the :doc:`../concepts/event-bus` docs.
+- You understand the concept of filters or have reviewed the relevant :doc:`/concepts/index` docs.
+- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Topic`. If not, you can review the :doc:`/reference/glossary` docs.
+
+Steps
 -----
 
 To start producing and consuming events using the Open edX Event Bus, follow these steps:
@@ -85,3 +94,4 @@ You can find more a concrete example of how to produce and consume events in the
 .. _run the consumer locally with tutor: https://github.com/openedx/event-bus-redis/blob/main/docs/tutor_installation.rst#setup-example-with-openedx-course-discovery-and-tutor
 .. _general_signal_handler: https://github.com/openedx/openedx-events/blob/main/openedx_events/apps.py#L16-L44
 .. _consumer using Tutor hosted in Kubernetes: https://github.com/openedx/tutor-contrib-aspects/blob/master/tutoraspects/patches/k8s-deployments#L535-L588
+.. _Tutor: https://docs.tutor.edly.io/
