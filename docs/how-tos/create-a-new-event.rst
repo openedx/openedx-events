@@ -198,7 +198,7 @@ Here is how the integration could look like:
 
 .. code-block:: python
 
-    # Location openedx/core/djangoapps/enrollments/models.py
+    # Location common/djangoapps/student/models.py
     from openedx_events.learning.signals import COURSE_ENROLLMENT_CREATED
 
     def enroll(cls, user, course_key, mode=None, **kwargs):
@@ -242,6 +242,62 @@ To ensure that our example is tested thoroughly, we should:
 - Verify that the payload contains the necessary information for consumers to react to the event like user information, course information, enrollment mode, and other relevant data.
 
 There is no need to test the event definition since the tooling already tests the definitions for you, but you should test the event triggering logic to ensure that the event complies with the expected behavior.
+
+In our example, we could write a test that enrolls a user in a course and verifies that the event is triggered with the correct payload. Here is an example of how the test could look like:
+
+.. code-block:: python
+
+    # Location common/djangoapps/student/tests/test_events.py
+    from openedx_events.learning.signals import COURSE_ENROLLMENT_CREATED
+
+    def _event_receiver_side_effect(self, **kwargs):
+        """
+        Used show that the Open edX Event was called by the Django signal handler.
+        """
+        self.receiver_called = True
+
+    def test_enrollment_created_event_emitted(self):
+        """
+        Test whether the student enrollment event is sent after the user's enrollment process.
+
+        Expected result:
+            - COURSE_ENROLLMENT_CREATED is sent and received by the mocked receiver.
+            - The arguments that the receiver gets are the arguments sent by the event
+            except the metadata generated on the fly.
+        """
+        event_receiver = mock.Mock(side_effect=self._event_receiver_side_effect)
+        COURSE_ENROLLMENT_CREATED.connect(event_receiver)
+
+        enrollment = CourseEnrollment.enroll(self.user, self.course.id)
+
+        self.assertTrue(self.receiver_called)
+        self.assertDictContainsSubset(
+            {
+                "signal": COURSE_ENROLLMENT_CREATED,
+                "sender": None,
+                "enrollment": CourseEnrollmentData(
+                    user=UserData(
+                        pii=UserPersonalData(
+                            username=self.user.username,
+                            email=self.user.email,
+                            name=self.user.profile.name,
+                        ),
+                        id=self.user.id,
+                        is_active=self.user.is_active,
+                    ),
+                    course=CourseData(
+                        course_key=self.course.id,
+                        display_name=self.course.display_name,
+                    ),
+                    mode=enrollment.mode,
+                    is_active=enrollment.is_active,
+                    creation_date=enrollment.created,
+                ),
+            },
+            event_receiver.call_args.kwargs
+        )
+
+.. note:: Ensure that the test verifies that the event is triggered when the enrollment process completes successfully and that the payload contains the necessary information.
 
 Step 8: Consume the Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~
