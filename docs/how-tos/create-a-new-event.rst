@@ -233,7 +233,11 @@ Step 7: Test the Event
 
 You should test the event to ensure it triggers consistently and that its payload contains the necessary information. Add unit tests in the service that triggers the event. The main goal is to verify that the event triggers as needed, consumers can react to it, and it carries the expected information.
 
-In our example, we should add checks for all places where the event is triggered to ensure that the event is triggered consistently. We should also verify that the payload contains the necessary information for consumers to react to the event like user information, course information, enrollment mode, and other relevant data.
+To ensure that our example is tested thoroughly, we should:
+
+- Add unit tests to the ``enroll`` method to ensure that the event is triggered when a user enrolls in a course. This means testing the event is triggered when the enrollment process completes successfully.
+- Add checks to ensure that the event is triggered consistently and only when the event should be triggered.
+- Verify that the payload contains the necessary information for consumers to react to the event like user information, course information, enrollment mode, and other relevant data.
 
 Another way we suggest you test your events is by consuming them in a test environment. This will help you verify that the event is triggered and that the payload contains the necessary information. You can use follow the steps in :doc:`../how-tos/consume-an-event` to consume the event in a test environment with a Django Signal Receiver. Or you could also use the Open edX Event Bus to consume the event in a test environment. For more information on how to use the Open edX Event Bus, refer to the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
 
