@@ -241,6 +241,8 @@ To ensure that our example is tested thoroughly, we should:
 - Add checks to ensure that the event is triggered consistently and only when the event should be triggered.
 - Verify that the payload contains the necessary information for consumers to react to the event like user information, course information, enrollment mode, and other relevant data.
 
+There is no need to test the event definition since the tooling already tests the definitions for you, but you should test the event triggering logic to ensure that the event complies with the expected behavior.
+
 Step 8: Consume the Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
