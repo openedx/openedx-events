@@ -110,8 +110,8 @@ This will help ensure that the event is self-descriptive and self-contained as m
 
 .. note:: There has been cases where events also carry other contextual data not directly related to the event but useful for consumers. Although this is not recommended, if you need to include such data, ensure that the reasoning behind it is documented and does not introduce ambiguity.
 
-Step 5: Write the Event Definition and Payload
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 5: Implement the Event Definition and Payload
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Implement the :term:`Event Definition` and :term:`Event Payload` for your event in the corresponding subdomain module. The event definition would be a signal that is triggered when the event takes place, and the event payload would be the data that is included in the event.
 
