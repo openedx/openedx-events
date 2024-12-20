@@ -106,6 +106,8 @@ The triggering logic for the event should be identified to ensure that the event
 
 In our example, the triggering logic could be a place where all enrollment logic goes through. This could be the ``enroll`` method in the enrollment model in the LMS, which is called when a user enrolls in a course in all cases.
 
+.. note:: When designing an event take into account the support over time of the service and triggering logic. If the service is likely to change or be deprecated, consider the implications of implementing the event in that service.
+
 Step 5: Write the Event Definition and Payload
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
