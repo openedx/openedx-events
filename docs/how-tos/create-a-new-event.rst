@@ -36,6 +36,8 @@ Assumptions
 - You have a basic understanding of Django signals. If not, you can review the `Django Signals Documentation`_.
 - You understand the concept of events or have reviewed the relevant :doc:`/concepts/index` docs.
 - You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Payload`. If not, you can review the :doc:`/reference/glossary` docs.
+- You have reviewed the :doc:`../decisions/0016-event-design-practices` ADR.
+- You have identified that you need to create a new event and have a use case for the event.
 
 Steps
 -----
@@ -93,9 +95,9 @@ As a rule of thumb, the event should contain the minimum amount of data required
 - Key data about the entities is included in the event.
 - The outcome of the event is clear.
 
-This will ensure that the event is self-descriptive and self-contained as much as possible.
+This will help ensure that the event is self-descriptive and self-contained as much as possible.
 
-There has been cases where events also carry other contextual data not directly related to the event but useful for consumers. Although this is not recommended, if you need to include such data, ensure that the reasoning behind it is documented and does not introduce ambiguity.
+.. note:: There has been cases where events also carry other contextual data not directly related to the event but useful for consumers. Although this is not recommended, if you need to include such data, ensure that the reasoning behind it is documented and does not introduce ambiguity.
 
 Step 4: Identify the Event Triggering Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -115,6 +117,7 @@ The event definition and payload must comply with the practices outlined in the 
 
 - The event should be self-descriptive and self-contained as much as possible.
 - The event should contain all the necessary information directly related to the event that took place.
+- Maintain the right granularity: not too fine-grained or too coarse to ensure that the event is useful for consumers.
 
 Event Payload
 *************
@@ -150,6 +153,8 @@ In our example, the event definition and payload for the enrollment event could 
 .. note:: Try grouping the data into logical groups to make the event more readable and maintainable. For instance, in the above example, we have grouped the data into User, Course, and Enrollment data.
 
 Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
+
+.. note:: Try reusing existing data classes if possible to avoid duplicating data classes. This will help maintain consistency and reduce the chances of introducing errors.
 
 Event Definition
 ****************
