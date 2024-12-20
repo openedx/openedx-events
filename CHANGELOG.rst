@@ -17,6 +17,13 @@ Unreleased
 __________
 
 
+[9.15.1] - 2024-12-20
+---------------------
+
+Changed
+~~~~~~~
+
+* Fixed ``event_type`` field in ``FORUM_THREAD_CREATED``, ``FORUM_THREAD_RESPONSE_CREATED``, and ``FORUM_RESPONSE_COMMENT_CREATED`` events in learning.
 
 [9.15.0] - 2024-10-10
 ---------------------
