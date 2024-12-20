@@ -7,7 +7,16 @@ You have two ways of consuming an Open edX event, within the same service or in 
 
 Throughout this guide, we will use an example of creating an event handler that will execute when a user enrolls in a course from the course about page to better illustrate the steps involved in creating a consumer for an event.
 
-Setup
+Assumptions
+-----------
+
+- You have a development environment set up using `Tutor`_.
+- You have a basic understanding of Python and Django.
+- You have created a new Open edX event. If not, you can follow the :doc:`../how-tos/create-a-new-event` guide to create a new event.
+- You have a basic understanding of Django signals. If not, you can review the `Django Signals Documentation`_.
+- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Receiver`. If not, you can review the :doc:`../reference/glossary` documentation.
+
+Steps
 -----
 
 To consume an event within the same service, follow these steps:
@@ -42,7 +51,7 @@ Now, the django dispatcher will call the ``create_notification_preference`` func
 
 .. note:: Consider using asynchronous tasks to handle the event processing to avoid blocking the main thread and improve performance. Also, make sure to handle exceptions and errors gracefully to avoid silent failures and improve debugging. You should also consider not creating a tight coupling between receivers and other services, if doing so is necessary consider using the event bus to broadcast the event.
 
-Step 5: Test the Event Receiver
+Step 3: Test the Event Receiver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Given the design of Open edX Events, you can include the events definitions in your test suite to ensure that the event receiver is working as expected. You can use the ``send_event`` method to trigger the event and test the event receiver. Here's an example of how you can test the event receiver:
@@ -70,3 +79,6 @@ Given the design of Open edX Events, you can include the events definitions in y
         assert NotificationPreference.objects.filter(user=enrollment.user).exists()
 
 This way you can ensure that the event receiver is working as expected and that the custom logic is executed when the event is triggered. If the event definition or payload changes in any way, you can catch the error in the test suite instead of in production.
+
+.. _Tutor: https://docs.tutor.edly.io/
+.. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/

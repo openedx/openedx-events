@@ -1,7 +1,7 @@
 Create a New Open edX Event with Long-Term Support
 ==================================================
 
-This guide describes how to create a new Open edX event with long-term support by following the practices outlined in the :doc:`../decisions/0016-event-design-practices` ADR.
+Open edX Events are supported and maintained by the Open edX community. This mechanism is designed to be extensible and flexible to allow developers to create new events that can be consumed by other services. This guide describes how to create a new Open edX event with long-term support by following the practices outlined in the :doc:`../decisions/0016-event-design-practices` ADR.
 
 Events design with long-support follow closely the practices described in the ADR to minimize breaking changes, maximize compatibility and support for future versions of Open edX.
 
@@ -28,8 +28,22 @@ The :doc:`../decisions/0016-event-design-practices` outlines the following key p
 - Consider the consumers' needs when designing the event.
 - Avoid breaking changes.
 
+Assumptions
+-----------
+
+- You have a development environment set up using `Tutor`_.
+- You have a basic understanding of Python and Django.
+- You have a basic understanding of Django signals. If not, you can review the `Django Signals Documentation`_.
+- You understand the concept of events or have reviewed the relevant :doc:`/concepts/index` docs.
+- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Payload`. If not, you can review the :doc:`/reference/glossary` docs.
+
+Steps
+-----
+
+To create a new Open edX event with long-term support, follow these steps:
+
 Step 1: Propose the Use Case to the Community
-----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Before contributing a new event, it is important to propose the event to the community to get feedback on the event's design and use case. For instance, you could create a post in Open edX Discuss Forum or create a new issue in the repository's issue tracker describing your use case for the new event. Here are some examples of community members that have taken this step:
 
@@ -45,7 +59,7 @@ In our example our use case proposal could be:
 If you are confident that the event is beneficial to the community, you can proceed to the next steps and implement the event.
 
 Step 2: Place Your Event In an Architecture Subdomain
------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 To implement the new event in the library, you should understand the purpose of the event and where it fits in the Open edX main architecture subdomains. This will help you place the event in the right architecture subdomain and ensure that the event is consistent with the framework's definitions. Fore more details on the Open edX Architectural Subdomains, refer to the :doc:`../reference/architecture-subdomains`.
 
@@ -56,7 +70,7 @@ For the enrollment event, the event type could be ``org.openedx.learning.course.
 .. note:: If you don't find a suitable subdomain for your event, you can propose a new subdomain to the community. However, new subdomains may require some discussion with the community. So we encourage you to start the conversation as soon as possible through any of the communication channels available.
 
 Step 3: Determine the Content of the Event
--------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The content of the event should comply with the practices outlined in the :doc:`../decisions/0016-event-design-practices`. The event should be self-descriptive and self-contained as much as possible. The event should contain all the necessary information for consumers to react to the event without having to make additional calls to other services when possible.
 
@@ -84,14 +98,14 @@ This will ensure that the event is self-descriptive and self-contained as much a
 There has been cases where events also carry other contextual data not directly related to the event but useful for consumers. Although this is not recommended, if you need to include such data, ensure that the reasoning behind it is documented and does not introduce ambiguity.
 
 Step 4: Identify the Event Triggering Logic
--------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The triggering logic for the event should be identified to ensure that the event is triggered in the right places and that the event is triggered consistently. We should identify the triggering logic to ensure that maximum coverage is achieved with minimal modifications. The goal is to focus on core, critical areas where the logic we want to modify executes, ensuring the event is triggered consistently.
 
 In our example, the triggering logic could be a place where all enrollment logic goes through. This could be the ``enroll`` method in the enrollment model in the LMS, which is called when a user enrolls in a course in all cases.
 
 Step 5: Write the Event Definition and Payload
-----------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Implement the :term:`Event Definition` and :term:`Event Payload` for your event in the corresponding subdomain module. The event definition would be a signal that is triggered when the event takes place, and the event payload would be the data that is included in the event.
 
@@ -103,7 +117,7 @@ The event definition and payload must comply with the practices outlined in the 
 - The event should contain all the necessary information directly related to the event that took place.
 
 Event Payload
-~~~~~~~~~~~~~
+*************
 
 The event payload is a data `attrs`_ class which defines the data that is included in the event that is defined in the corresponding subdomain module in the ``data.py`` file. The payload should contain all the necessary information directly related to the event that took place to ensure that consumers can react to the event without introducing new dependencies to understand the event.
 
@@ -138,7 +152,7 @@ In our example, the event definition and payload for the enrollment event could 
 Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
 
 Event Definition
-~~~~~~~~~~~~~~~~
+****************
 
 The event definition should be defined in the corresponding subdomain module in the ``signals.py`` file. The :term:`Event Definition` should comply with:
 
@@ -165,7 +179,7 @@ Consumers will be able to access the event payload in their receivers to react t
 .. TODO: add reference to how to add event bus support to the event's payload
 
 Step 6: Send the Event
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 After defining the event, you should trigger the event in the places we identified in the triggering logic. In our example, we identified that the event should be triggered when a user enrolls in a course so it should be triggered when the enrollment process completes successfully independent of the method of enrollment used. Therefore, we should trigger the event in the ``enroll`` method in the enrollment model in the LMS services.
 
@@ -204,7 +218,7 @@ Here is how the integration could look like:
 .. note:: Ensure that the event is triggered consistently and only when the event should be triggered. Avoid triggering the event multiple times for the same event unless necessary, e.g., when there is no other way to ensure that the event is triggered consistently.
 
 Step 7: Test the Event
-----------------------
+~~~~~~~~~~~~~~~~~~~~~~~
 
 You should test the event to ensure it triggers consistently and that its payload contains the necessary information. Add unit tests in the service that triggers the event. The main goal is to verify that the event triggers as needed, consumers can react to it, and it carries the expected information.
 
@@ -213,7 +227,7 @@ In our example, we should add checks for all places where the event is triggered
 Another way we suggest you test your events is by consuming them in a test environment. This will help you verify that the event is triggered and that the payload contains the necessary information. You can use follow the steps in :doc:`../how-tos/consume-an-event` to consume the event in a test environment with a Django Signal Receiver. Or you could also use the Open edX Event Bus to consume the event in a test environment. For more information on how to use the Open edX Event Bus, refer to the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
 
 Step 8: Continue the Contribution Process
------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 After implementing the event, you should continue the contribution process by creating a pull request in the repository. The pull request should contain the changes you made to implement the event, including the event definition, payload, and the places where the event is triggered.
 
@@ -222,3 +236,5 @@ For more details on how the contribution flow works, refer to the :doc:`docs.ope
 .. _Add Extensibility Mechanism to IDV to Enable Integration of New IDV Vendor Persona: https://openedx.atlassian.net/wiki/spaces/OEPM/pages/4307386369/Proposal+Add+Extensibility+Mechanisms+to+IDV+to+Enable+Integration+of+New+IDV+Vendor+Persona
 .. _Add Program Certificate events: https://github.com/openedx/openedx-events/issues/250
 .. _attrs: https://www.attrs.org/en/stable/
+.. _Tutor: https://docs.tutor.edly.io/
+.. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
