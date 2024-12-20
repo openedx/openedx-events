@@ -125,6 +125,11 @@ Some of these practices might not be applicable to all events, but they are a go
 
 In addition to these practices, review the Architectural Decision Records (ADRs) related to events to understand the naming, versioning, payload, and other practices that are specific to Open edX events.
 
+Consequences
+------------
+
+Following these practices will help ensure that the events are consistent, maintainable, and reusable. It will also help consumers understand the message and react to the event accordingly. However, it might require additional effort to design the event and ensure that it contains the necessary information for consumers to react to the event, although this effort will pay off in the long run. Having these standards in place will also make the decision process easier when designing new events.
+
 .. _Event-Driven Microservices: https://www.oreilly.com/library/view/building-event-driven-microservices/9781492057888/
 .. _Event-Driven article: https://martinfowler.com/articles/201701-event-driven.html
 .. _Thin Events - The lean muscle of event-driven architecture: https://www.thoughtworks.com/insights/blog/architecture/thin-events-the-lean-muscle-of-event-driven-architecture
