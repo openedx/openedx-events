@@ -35,14 +35,14 @@ Assumptions
 - You have a basic understanding of Python and Django.
 - You have a basic understanding of Django signals. If not, you can review the `Django Signals Documentation`_.
 - You understand the concept of events or have reviewed the relevant :doc:`/concepts/index` docs.
-- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Payload`. If not, you can review the :doc:`/reference/glossary` docs.
+- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Payload`. If not, you can review the :doc:`../reference/glossary` docs.
 - You have reviewed the :doc:`../decisions/0016-event-design-practices` ADR.
 - You have identified that you need to create a new event and have a use case for the event.
 
 Steps
 -----
 
-To create a new Open edX event with long-term support, follow these steps:
+To create a new Open edX Event with long-term support, follow these steps:
 
 Step 1: Propose the Use Case to the Community
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,7 +71,18 @@ For the enrollment event, the event type could be ``org.openedx.learning.course.
 
 .. note:: If you don't find a suitable subdomain for your event, you can propose a new subdomain to the community. However, new subdomains may require some discussion with the community. So we encourage you to start the conversation as soon as possible through any of the communication channels available.
 
-Step 3: Determine the Content of the Event
+Step 3: Identify the Event Triggering Logic
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The triggering logic for the event should be identified to ensure that the event is triggered in the right places and that the event is triggered consistently. We should identify the triggering logic to ensure that maximum coverage is achieved with minimal modifications. The goal is to focus on core, critical areas where the logic we want to modify executes, ensuring the event is triggered consistently.
+
+In our example, the triggering logic could be a place where all enrollment logic goes through. This could be the ``enroll`` method in the enrollment model in the LMS, which is called when a user enrolls in a course in all cases.
+
+.. note:: When designing an event take into account the support over time of the service and triggering logic. If the service is likely to change or be deprecated, consider the implications of implementing the event in that service.
+
+.. note:: It is helpful to inspect the triggering logic to review the data that is available at the time the event is triggered. This will help you determine the content of the event and the data that should be included in the event payload.
+
+Step 4: Determine the Content of the Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The content of the event should comply with the practices outlined in the :doc:`../decisions/0016-event-design-practices`. The event should be self-descriptive and self-contained as much as possible. The event should contain all the necessary information for consumers to react to the event without having to make additional calls to other services when possible.
@@ -98,15 +109,6 @@ As a rule of thumb, the event should contain the minimum amount of data required
 This will help ensure that the event is self-descriptive and self-contained as much as possible.
 
 .. note:: There has been cases where events also carry other contextual data not directly related to the event but useful for consumers. Although this is not recommended, if you need to include such data, ensure that the reasoning behind it is documented and does not introduce ambiguity.
-
-Step 4: Identify the Event Triggering Logic
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The triggering logic for the event should be identified to ensure that the event is triggered in the right places and that the event is triggered consistently. We should identify the triggering logic to ensure that maximum coverage is achieved with minimal modifications. The goal is to focus on core, critical areas where the logic we want to modify executes, ensuring the event is triggered consistently.
-
-In our example, the triggering logic could be a place where all enrollment logic goes through. This could be the ``enroll`` method in the enrollment model in the LMS, which is called when a user enrolls in a course in all cases.
-
-.. note:: When designing an event take into account the support over time of the service and triggering logic. If the service is likely to change or be deprecated, consider the implications of implementing the event in that service.
 
 Step 5: Write the Event Definition and Payload
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
