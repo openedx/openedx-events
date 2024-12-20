@@ -228,6 +228,8 @@ Here is how the integration could look like:
 
 .. note:: Ensure that the event is triggered consistently and only when the event should be triggered. Avoid triggering the event multiple times for the same event unless necessary, e.g., when there is no other way to ensure that the event is triggered consistently.
 
+.. note:: Try placing the event after the triggering logic to ensure that the event is triggered only when the triggering logic completes successfully. This will help ensure that the event is triggered only for factual events if the triggering logic fails, the event should not be triggered.
+
 Step 7: Test the Event
 ~~~~~~~~~~~~~~~~~~~~~~~
 
