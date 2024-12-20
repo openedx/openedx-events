@@ -110,6 +110,8 @@ This will help ensure that the event is self-descriptive and self-contained as m
 
 .. note:: There has been cases where events also carry other contextual data not directly related to the event but useful for consumers. Although this is not recommended, if you need to include such data, ensure that the reasoning behind it is documented and does not introduce ambiguity.
 
+.. note:: Also consider how relevant is the data to where the event is triggered. Consider whether it could be removed or deprecated in the future so that the event remains consistent and maintainable over time.
+
 Step 5: Implement the Event Definition and Payload
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
