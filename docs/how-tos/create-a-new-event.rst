@@ -241,9 +241,12 @@ To ensure that our example is tested thoroughly, we should:
 - Add checks to ensure that the event is triggered consistently and only when the event should be triggered.
 - Verify that the payload contains the necessary information for consumers to react to the event like user information, course information, enrollment mode, and other relevant data.
 
-Another way we suggest you test your events is by consuming them in a test environment. This will help you verify that the event is triggered and that the payload contains the necessary information. You can use follow the steps in :doc:`../how-tos/consume-an-event` to consume the event in a test environment with a Django Signal Receiver. Or you could also use the Open edX Event Bus to consume the event in a test environment. For more information on how to use the Open edX Event Bus, refer to the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
+Step 8: Consume the Event
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Step 8: Continue the Contribution Process
+Since the event is now implemented, you should consume the event to verify that it is triggered and that the payload contains the necessary information. You can consume the event in a test environment using a Django Signal Receiver. This will help you verify that the event is triggered and that the payload contains the necessary information. You can use follow the steps in :doc:`../how-tos/consume-an-event` to consume the event in a test environment with a Django Signal Receiver. Or you could also use the Open edX Event Bus to consume the event in a test environment. For more information on how to use the Open edX Event Bus, refer to the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
+
+Step 9: Continue the Contribution Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 After implementing the event, you should continue the contribution process by creating a pull request in the repository. The pull request should contain the changes you made to implement the event, including the event definition, payload, and the places where the event is triggered.
