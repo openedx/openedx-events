@@ -16,7 +16,7 @@ asgiref==3.8.1
     # via
     #   -r requirements/test.txt
     #   django
-attrs==24.2.0
+attrs==24.3.0
     # via -r requirements/test.txt
 babel==2.16.0
     # via
@@ -37,7 +37,7 @@ cffi==1.17.1
     #   pynacl
 charset-normalizer==3.4.0
     # via requests
-click==8.1.7
+click==8.1.8
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -91,7 +91,7 @@ edx-opaque-keys[django]==2.11.0
     # via
     #   -r requirements/test.txt
     #   edx-ccx-keys
-fastavro==1.9.7
+fastavro==1.10.0
     # via -r requirements/test.txt
 h11==0.14.0
     # via uvicorn
@@ -117,7 +117,7 @@ jeepney==0.8.0
     # via
     #   keyring
     #   secretstorage
-jinja2==3.1.4
+jinja2==3.1.5
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -140,7 +140,7 @@ newrelic==10.4.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-nh3==0.2.19
+nh3==0.2.20
     # via readme-renderer
 packaging==24.2
     # via
@@ -159,7 +159,7 @@ pluggy==1.5.0
     # via
     #   -r requirements/test.txt
     #   pytest
-psutil==6.1.0
+psutil==6.1.1
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -167,7 +167,7 @@ pycparser==2.22
     # via
     #   -r requirements/test.txt
     #   cffi
-pydata-sphinx-theme==0.16.0
+pydata-sphinx-theme==0.16.1
     # via sphinx-book-theme
 pygments==2.18.0
     # via
@@ -288,7 +288,7 @@ typing-extensions==4.12.2
     #   anyio
     #   edx-opaque-keys
     #   pydata-sphinx-theme
-urllib3==2.2.3
+urllib3==2.3.0
     # via
     #   requests
     #   twine

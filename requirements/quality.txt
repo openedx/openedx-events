@@ -13,7 +13,7 @@ astroid==2.15.8
     #   -c requirements/constraints.txt
     #   pylint
     #   pylint-celery
-attrs==24.2.0
+attrs==24.3.0
     # via -r requirements/test.txt
 backports-tarfile==1.2.0
     # via jaraco-context
@@ -26,7 +26,7 @@ cffi==1.17.1
     #   pynacl
 charset-normalizer==3.4.0
     # via requests
-click==8.1.7
+click==8.1.8
     # via
     #   -r requirements/test.txt
     #   click-log
@@ -80,7 +80,7 @@ edx-opaque-keys[django]==2.11.0
     # via
     #   -r requirements/test.txt
     #   edx-ccx-keys
-fastavro==1.9.7
+fastavro==1.10.0
     # via -r requirements/test.txt
 idna==3.10
     # via requests
@@ -104,7 +104,7 @@ jeepney==0.8.0
     # via
     #   keyring
     #   secretstorage
-jinja2==3.1.4
+jinja2==3.1.5
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -130,7 +130,7 @@ newrelic==10.4.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-nh3==0.2.19
+nh3==0.2.20
     # via readme-renderer
 packaging==24.2
     # via
@@ -149,7 +149,7 @@ pluggy==1.5.0
     # via
     #   -r requirements/test.txt
     #   pytest
-psutil==6.1.0
+psutil==6.1.1
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -247,7 +247,7 @@ typing-extensions==4.12.2
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-urllib3==2.2.3
+urllib3==2.3.0
     # via
     #   requests
     #   twine
