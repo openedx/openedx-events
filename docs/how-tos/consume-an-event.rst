@@ -47,9 +47,8 @@ An :term:`Event Receiver` is simply a function that listens for a specific event
         # Custom logic to create a notification preference for the user
         pass
 
-Now, the django dispatcher will call the ``create_notification_preference`` function when the ``COURSE_ENROLLMENT_CREATED`` event is triggered. In this case, that would be every time a user enrolls in a course.
-
-.. note:: Consider using asynchronous tasks to handle the event processing to avoid blocking the main thread and improve performance. Also, make sure to handle exceptions and errors gracefully to avoid silent failures and improve debugging. You should also consider not creating a tight coupling between receivers and other services, if doing so is necessary consider using the event bus to broadcast the event.
+- The Django dispatcher will call the ``create_notification_preference`` function when the ``COURSE_ENROLLMENT_CREATED`` event is triggered by using the ``receiver`` decorator. In this case, that would be every time a user enrolls in a course.
+- Consider using asynchronous tasks to handle the event processing to avoid blocking the main thread and improve performance. Also, make sure to handle exceptions and errors gracefully to avoid silent failures and improve debugging. You should also consider not creating a tight coupling between receivers and other services, if doing so is necessary consider using the event bus to broadcast the event.
 
 Step 3: Test the Event Receiver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -62,21 +61,36 @@ Given the design of Open edX Events, you can include the events definitions in y
 
     def test_create_notification_preference():
         # Trigger the event
-        COURSE_ENROLLMENT_CREATED.connect(create_notification_preference)
-        COURSE_ENROLLMENT_CREATED.send_event(
+        enrollment_data = CourseEnrollmentData(
             user=UserData(
                 pii=UserPersonalData(
-                    username='test_username',
-                    email='test_email@example.com',
-                    name='test_name',
+                    username=self.user.username,
+                    email=self.user.email,
+                    name=self.user.profile.name,
                 ),
-                id=1,
-                is_active=True,
+                id=self.user.id,
+                is_active=self.user.is_active,
             ),
+            course=CourseData(
+                course_key=self.course.id,
+                display_name=self.course.display_name,
+            ),
+            mode=self.course_enrollment.mode,
+            is_active=self.course_enrollment.is_active,
+            creation_date=self.course_enrollment.created,
+        )
+        COURSE_ENROLLMENT_CREATED.send_event(
+            enrollment=enrollment_data
         )
 
-        # Assert that the notification preference was created
-        assert NotificationPreference.objects.filter(user=enrollment.user).exists()
+        # Assert that CourseNotificationPreference object was created with correct attributes
+        notification_preferences = CourseNotificationPreference.objects.all()
+
+        self.assertEqual(notification_preferences.count(), 1)
+        self.assertEqual(notification_preferences[0].user, self.user)
+
+- In the test suite, you can use the ``send_event`` method to trigger the event and pass the necessary data to the event receiver. In this case, we are passing the user, course and enrollment data to the event receiver as the triggering logic would do.
+- After triggering the event, you can assert that the event receiver executed the custom logic as expected. In this case, we are checking that a ``CourseNotificationPreference`` object was created with the correct attributes.
 
 This way you can ensure that the event receiver is working as expected and that the custom logic is executed when the event is triggered. If the event definition or payload changes in any way, you can catch the error in the test suite instead of in production.
 

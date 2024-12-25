@@ -156,20 +156,17 @@ In our example, the event definition and payload for the enrollment event could 
         creation_date = attr.ib(type=datetime)
         created_by = attr.ib(type=UserData, default=None)
 
-.. note:: Try grouping the data into logical groups to make the event more readable and maintainable. For instance, in the above example, we have grouped the data into User, Course, and Enrollment data.
-
-Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
-
-.. note:: Try reusing existing data classes if possible to avoid duplicating data classes. This will help maintain consistency and reduce the chances of introducing errors.
+- The payload should be an `attrs`_ class to ensure that the data is immutable by using the ``frozen=True`` argument and to ensure that the data is self-descriptive.
+- Use the ``attr.ib`` decorator to define the fields in the payload with the data type that the field should contain. Try to use the appropriate data type for each field to ensure that the data is consistent and maintainable, you can inspect the triggering logic to review the data that is available at the time the event is triggered.
+- Try using nested data classes to group related data together. This will help maintain consistency and make the event more readable. For instance, in the above example, we have grouped the data into User, Course, and Enrollment data.
+- Try reusing existing data classes if possible to avoid duplicating data classes. This will help maintain consistency and reduce the chances of introducing errors.
+- Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
+- Use defaults for optional fields in the payload to ensure its consistency in all cases.
 
 Event Definition
 ****************
 
-The event definition should be defined in the corresponding subdomain module in the ``signals.py`` file. The :term:`Event Definition` should comply with:
-
-- It must be documented using in-line documentation with at least: ``event_type``, ``event_name``, ``event_description`` and ``event_data``. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
-
-In our example, the event definition for the enrollment event could be:
+The :term:`Event Definition` should be implemented in the corresponding subdomain module in the ``signals.py`` file. In our example, the event definition for the enrollment event could be:
 
 .. code-block:: python
 
@@ -185,7 +182,13 @@ In our example, the event definition for the enrollment event could be:
         }
     )
 
-Consumers will be able to access the event payload in their receivers to react to the event. The ``event_type`` is mainly used to identify the event.
+- The event definition should be documented using in-line documentation with at lest ``event_type``, ``event_name``, ``event_description`` and ``event_data``. This will help consumers understand the event and react to it. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
+- The :term:`Event Type` should be unique and follow the naming convention for event types specified in the :doc:`../decisions/0002-events-naming-and-versioning` ADR. This is used by consumers to identify the event.
+- The ``event_name`` should be a constant that is used to identify the event in the code.
+- The ``event_description`` should describe what the event is about and why it is triggered.
+- The ``event_data`` should be the payload class that is used to define the data that is included in the event.
+- The event should be an instance of the ``OpenEdxPublicSignal`` class to ensure that the event is consistent with the Open edX event framework.
+- Receivers should be able to access the event payload in their receivers to react to the event.
 
 .. TODO: add reference to how to add event bus support to the event's payload
 
@@ -226,9 +229,8 @@ Here is how the integration could look like:
             )
         )
 
-.. note:: Ensure that the event is triggered consistently and only when the event should be triggered. Avoid triggering the event multiple times for the same event unless necessary, e.g., when there is no other way to ensure that the event is triggered consistently.
-
-.. note:: Try placing the event after the triggering logic to ensure that the event is triggered only when the triggering logic completes successfully. This will help ensure that the event is triggered only for factual events if the triggering logic fails, the event should not be triggered.
+- Ensure that the event is triggered consistently and only when the event should be triggered. Avoid triggering the event multiple times for the same event unless necessary, e.g., when there is no other way to ensure that the event is triggered consistently.
+- Try placing the event after the triggering logic completes successfully to ensure that the event is triggered only when the event should be triggered. This will help ensure that the event is triggered only for factual events if the triggering logic fails, the event should not be triggered.
 
 Step 7: Test the Event
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -297,7 +299,9 @@ In our example, we could write a test that enrolls a user in a course and verifi
             event_receiver.call_args.kwargs
         )
 
-.. note:: Ensure that the test verifies that the event is triggered when the enrollment process completes successfully and that the payload contains the necessary information.
+- Ensure that the test verifies that the event is triggered when the enrollment process completes successfully and that the payload contains the necessary information.
+- Connect a dummy event receiver to the event to verify that the event is triggered.
+- Verify that the event receiver is called with the correct payload when the event is triggered.
 
 Step 8: Consume the Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~
