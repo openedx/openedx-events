@@ -195,7 +195,7 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
 Step 6: Send the Event
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-After defining the event, you should trigger the event in the places we identified in the triggering logic. In our example, we identified that the event should be triggered when a user enrolls in a course so it should be triggered when the enrollment process completes successfully independent of the method of enrollment used. Therefore, we should trigger the event in the ``enroll`` method in the enrollment model in the LMS services.
+After defining the event, you should trigger the event in the places we identified in the triggering logic. In our example, we identified that the event should be triggered when a user enrolls in a course so it should be triggered when the enrollment process completes successfully independent of the method of enrollment used. Therefore, we should trigger the event in the ``enroll`` method in the enrollment model in the LMS service when the enrollment process completes successfully, i.e., at the end of the method.
 
 Here is how the integration could look like:
 
@@ -230,7 +230,7 @@ Here is how the integration could look like:
         )
 
 - Ensure that the event is triggered consistently and only when the event should be triggered. Avoid triggering the event multiple times for the same event unless necessary, e.g., when there is no other way to ensure that the event is triggered consistently.
-- Try placing the event after the triggering logic completes successfully to ensure that the event is triggered only when the event should be triggered. This will help ensure that the event is triggered only for factual events if the triggering logic fails, the event should not be triggered.
+- Try placing the event after the triggering logic completes successfully to ensure that the event is triggered only when it's needed. This will help ensure that the event is triggered only for factual events if the triggering logic fails, the event should not be triggered.
 
 Step 7: Test the Event
 ~~~~~~~~~~~~~~~~~~~~~~~
