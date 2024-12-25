@@ -5,7 +5,7 @@ You have two ways of consuming an Open edX event, within the same service or in 
 
 .. note:: We encourage you to also consider the practices outlined in the :doc:`../decisions/0016-event-design-practices` ADR for event consumption.
 
-Throughout this guide, we will use an example of creating an event handler that will execute when a user enrolls in a course from the course about page to better illustrate the steps involved in creating a consumer for an event.
+Throughout this guide, we will implement the use case to send the enrollment data to a webhook when a user enrolls in a course to better illustrate the steps involved in creating a consumer for an event.
 
 Assumptions
 -----------
