@@ -26,6 +26,8 @@ Step 1: Understand your Use Case
 
 Before you start consuming an event, you should understand the use case and the event you want to consume. In this case, we want to send the enrollment data to a webhook when a user enrolls in a course. You should review the event definition and payload to understand the data that is being passed to the event receiver and how you can use it to implement the custom logic.
 
+In our example, we want to send the enrollment data to a webhook when a user enrolls in a course. We will consume the ``COURSE_ENROLLMENT_CREATED`` event, which is triggered every time a user enrolls in a course. You can review the event definition and payload to understand the data that is being passed to the event receiver and how you can use it to implement the request to the webhook.
+
 Step 2: Install Open edX Events
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
