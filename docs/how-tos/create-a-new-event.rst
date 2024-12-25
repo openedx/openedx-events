@@ -56,7 +56,7 @@ Before contributing a new event, it is important to propose the event to the com
 
 In our example our use case proposal could be:
 
-   I want to add an event that will be triggered when a user enrolls in a course from the course about page. This event will be useful for services that need to send notifications to the user when they enroll in a course.
+   I want to add an event that will be triggered when a user enrolls in a course from the course about page. This event will be useful for services that need to send the enrollment data to external services for further processing.
 
 If you are confident that the event is beneficial to the community, you can proceed to the next steps and implement the event.
 
