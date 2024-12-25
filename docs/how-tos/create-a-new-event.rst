@@ -74,9 +74,9 @@ For the enrollment event, the event type could be ``org.openedx.learning.course.
 Step 3: Identify the Event Triggering Logic
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The triggering logic for the event should be identified to ensure that the event is triggered in the right places and that the event is triggered consistently. We should identify the triggering logic to ensure that maximum coverage is achieved with minimal modifications. The goal is to focus on core, critical areas where the logic we want to modify executes, ensuring the event is triggered consistently.
+The triggering logic for the event should be identified to ensure that the event is triggered consistently in the right places. We should ensure that maximum coverage is achieved with minimal modifications when placing the event in the service we're modifying. The goal is to focus on core, critical areas where the logic we want to modify executes.
 
-In our example, the triggering logic could be a place where all enrollment logic goes through. This could be the ``enroll`` method in the enrollment model in the LMS, which is called when a user enrolls in a course in all cases.
+For this, choose a specific point in the service where the event should be triggered. This could be a method in a service, a view, or a model where the logic that you interested in is executed. The triggering logic should be consistent and narrow to ensure that the event is triggered only when the conditions are met. For instance, the triggering logic should be a place where all enrollment logic goes through, ensuring that the event is triggered consistently when a user enrolls in a course. This could be the ``enroll`` method in the enrollment model in the LMS, which is called when a user enrolls in a course in all cases.
 
 .. note:: When designing an event take into account the support over time of the service and triggering logic. If the service is likely to change or be deprecated, consider the implications of implementing the event in that service.
 
