@@ -49,6 +49,20 @@ An :term:`Event Receiver` is simply a function that listens for a specific event
 
 - The Django dispatcher will call the ``create_notification_preference`` function when the ``COURSE_ENROLLMENT_CREATED`` event is triggered by using the ``receiver`` decorator. In this case, that would be every time a user enrolls in a course.
 - Consider using asynchronous tasks to handle the event processing to avoid blocking the main thread and improve performance. Also, make sure to handle exceptions and errors gracefully to avoid silent failures and improve debugging. You should also consider not creating a tight coupling between receivers and other services, if doing so is necessary consider using the event bus to broadcast the event.
+- When implementing the receiver, inspect the event payload to understand the data that is being passed to the event receiver by reviewing the ``data.py`` file of the event you are consuming. For example, the ``COURSE_ENROLLMENT_CREATED`` event has the following payload:
+
+.. code-block:: python
+
+    # Location openedx_events/learning/data.py
+    COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
+        event_type="org.openedx.learning.course.enrollment.created.v1",
+        data={
+            "enrollment": CourseEnrollmentData,
+        }
+    )
+
+- This event has a single field called ``enrollment`` which is an instance of the ``CourseEnrollmentData`` class. You can review the ``CourseEnrollmentData`` class to understand the data that is available to you and how you can use it to implement the custom logic.
+- The ``metadata`` parameter contains the Open edX-specific metadata for the event, such as the event version and timestamp when the event was sent. You can use this metadata to understand more about the event and its context.
 
 Step 3: Test the Event Receiver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
