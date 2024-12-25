@@ -71,7 +71,9 @@ An :term:`Event Receiver` is simply a function that listens for a specific event
 - This event has a single field called ``enrollment`` which is an instance of the ``CourseEnrollmentData`` class. You can review the ``CourseEnrollmentData`` class to understand the data that is available to you and how you can use it to implement the custom logic.
 - The ``metadata`` parameter contains the Open edX-specific metadata for the event, such as the event version and timestamp when the event was sent. You can use this metadata to understand more about the event and its context.
 
-These event receivers are implemented in `Open edX Django plugins`_ and are registered in the ``signals.py`` file of the plugin. You can review the ``signals.py`` file of the openedx-events-2-zapier_ plugin to understand how the event receivers are implemented and connected to the events.
+These event receivers are usually implemented independently of the service in an `Open edX Django plugins`_ and are registered in the ``handlers.py`` (according to `OEP-49`_) file of the plugin. You can review the ``handlers.py`` file of the openedx-events-2-zapier_ plugin to understand how the event receivers are implemented and connected to the events.
+
+.. TODO: change receivers.py in openedx-events-2-zapier to handlers.py
 
 Step 4: Test the Event Receiver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,3 +122,4 @@ This way you can ensure that the event receiver is working as expected and that 
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _openedx-events-2-zapier: https://github.com/eduNEXT/openedx-events-2-zapier
 .. _Open edX Django plugins: https://docs.openedx.org/en/latest/developers/concepts/platform_overview.html#new-plugin
+.. _OEP-49: https://docs.openedx.org/projects/openedx-proposals/en/latest/best-practices/oep-0049-django-app-patterns.html#signals
