@@ -21,10 +21,10 @@ Steps
 
 To consume an event within the same service, follow these steps:
 
-Step 1: Understand your Use Case
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Step 1: Understand your Use Case and Identify the Event to Consume
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Before you start consuming an event, you should understand the use case and the event you want to consume. In this case, we want to send the enrollment data to a webhook when a user enrolls in a course. You should review the event definition and payload to understand the data that is being passed to the event receiver and how you can use it to implement the custom logic.
+Before you start consuming an event, you should understand the use case and the event you want to consume, for this review the `list of events`_ available in the Open edX platform. In this case, we want to send the enrollment data to a webhook when a user enrolls in a course. You should review the event definition and payload to understand the data that is being passed to the event receiver and how you can use it to implement the custom logic.
 
 In our example, we want to send the enrollment data to a webhook when a user enrolls in a course. We will consume the ``COURSE_ENROLLMENT_CREATED`` event, which is triggered every time a user enrolls in a course. You can review the event definition and payload to understand the data that is being passed to the event receiver and how you can use it to implement the request to the webhook.
 
@@ -123,3 +123,4 @@ This way you can ensure that the event receiver is working as expected and that 
 .. _openedx-events-2-zapier: https://github.com/eduNEXT/openedx-events-2-zapier
 .. _Open edX Django plugins: https://docs.openedx.org/en/latest/developers/concepts/platform_overview.html#new-plugin
 .. _OEP-49: https://docs.openedx.org/projects/openedx-proposals/en/latest/best-practices/oep-0049-django-app-patterns.html#signals
+.. _list of events: https://docs.openedx.org/projects/openedx-events/en/latest/reference/events.html
