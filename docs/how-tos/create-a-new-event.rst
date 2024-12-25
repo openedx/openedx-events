@@ -311,7 +311,7 @@ Since the event is now implemented, you should consume the event to verify that 
 Step 9: Continue the Contribution Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-After implementing the event, you should continue the contribution process by creating a pull request in the repository. The pull request should contain the changes you made to implement the event, including the event definition, payload, and the places where the event is triggered.
+After implementing the event, you should continue the contribution process by creating a pull request in the repository. The pull requests should contain the changes you made to implement the event, including the event definition, payload, and the places where the event is triggered.
 
 For more details on how the contribution flow works, refer to the :doc:`docs.openedx.org:developers/concepts/hooks_extension_framework` documentation.
 
