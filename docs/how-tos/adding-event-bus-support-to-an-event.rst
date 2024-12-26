@@ -14,7 +14,7 @@ Step 1: Does my Event Need Event Bus Support?
 By default, Open edX Events should be compatible with the Open edX Event Bus. However, there are cases when the support might not be possible or needed for a particular event. Here are some scenarios where you might not need to add event bus support:
 
 - The event is only used within the same application process and cannot be scoped to other services.
-- The :term:`Event Payload` contains data types that are not supported by the event bus, and it is not possible to refactor the :term:`Event Payload` to use supported data types.
+- The :term:`Event Payload` contains data types that are not supported by the event bus, e.g., lists of dictionaries or data attrs classes with unsupported data types; when it is not possible to refactor the :term:`Event Payload` to use supported data types.
 
 When adding support is not possible do the following:
 
@@ -22,6 +22,8 @@ When adding support is not possible do the following:
 - Add a ``warning`` in the event's docstring to inform developers that the event is not compatible with the event bus and why.
 
 If you don't add the event to the ``KNOWN_UNSERIALIZABLE_SIGNALS`` list, the CI/CD pipeline will fail for the missing Avro schema that could not be generated for the :term:`Event Payload`. If you don't add a warning in the event's docstring, developers might try to send the event across services and encounter issues.
+
+.. warning:: Maintainers will check event bus compatibility for new events. To avoid issues, make sure to consider compatibility during the design phase. Contact maintainers if you are unsure about the compatibility of an event.
 
 Step 2: Define the Event Payload
 --------------------------------
@@ -57,27 +59,7 @@ Step 3: Ensure Serialization and Deserialization
 
 Before sending the event across services, you need to ensure that the :term:`Event Payload` can be serialized and deserialized correctly. The event bus concrete implementations use the :term:`Avro Schema` to serialize and deserialize the :term:`Event Payload` as mentioned in the :doc:`../decisions/0005-external-event-schema-format` decision record. The concrete implementation of the event bus handles the serialization and deserialization with the help of methods implemented by this library.
 
-.. For example, here's how the Redis event bus handles serialization before sending a message:
-
-.. .. code-block:: python
-..     :emphasize-lines: 4
-
-..     # edx_event_bus_redis/internal/producer.py
-..     full_topic = get_full_topic(topic)
-..     context.full_topic = full_topic
-..     event_bytes = serialize_event_data_to_bytes(event_data, signal)
-..     message = RedisMessage(topic=full_topic, event_data=event_bytes, event_metadata=event_metadata)
-..     stream_data = message.to_binary_dict()
-
-.. Where `serialize_event_data_to_bytes`_ is a method that serializes the :term:`Event Payload` to bytes using the Avro schema. While the consumer side deserializes the :term:`Event Payload` using the Avro schema with the help of the `deserialize_bytes_to_event_data`_ method:
-
-.. .. code-block:: python
-..     :emphasize-lines: 3
-
-..     # edx_event_bus_redis/internal/consumer.py
-..     signal = OpenEdxPublicSignal.get_signal_by_type(msg.event_metadata.event_type)
-..     event_data = deserialize_bytes_to_event_data(msg.event_data, signal)
-..     send_results = signal.send_event_with_custom_metadata(msg.event_metadata, **event_data)
+If you are interested in how the serialization and deserialization of the :term:`Event Payload` is handled by the event bus, you can refer to the concrete event bus implementation in the Open edX Event Bus repository. For example, here's how the Redis event bus handles `serialization`_ and `deserialization`_ when sending and receiving events.
 
 If the :term:`Event Payload` contains types that are not supported by the event bus, you could implement custom serializers for these types. This ensures that the :term:`Event Payload` can be serialized and deserialized correctly when sent across services.
 
@@ -152,3 +134,5 @@ To validate that you can consume the event emitted by a service through the even
 .. _serialize_event_data_to_bytes: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/avro/serializer.py#L82-L98
 .. _deserialize_bytes_to_event_data: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/avro/deserializer.py#L86-L98
 .. _setup instructions in a Tutor environment: https://github.com/openedx/event-bus-redis/blob/main/docs/tutor_installation.rst
+.. _serialization: https://github.com/openedx/event-bus-redis/blob/main/edx_event_bus_redis/internal/producer.py#L128-L137
+.. _deserialization: https://github.com/openedx/event-bus-redis/blob/main/edx_event_bus_redis/internal/consumer.py#L276-L289
