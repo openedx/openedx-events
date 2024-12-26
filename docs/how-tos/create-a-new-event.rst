@@ -187,6 +187,7 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
 - The ``event_name`` should be a constant that is used to identify the event in the code.
 - The ``event_description`` should describe what the event is about and why it is triggered.
 - The ``event_data`` should be the payload class that is used to define the data that is included in the event.
+- The ``data`` dictionary should contain the payload class that is used to define the data that is included in the event. This will help consumers understand the event and react to it. Try using a descriptive name for the data field, but keep consistency with the payload class name. Avoid using suffixes like ``_data`` or ``_payload`` in the data field name.
 - The event should be an instance of the ``OpenEdxPublicSignal`` class to ensure that the event is consistent with the Open edX event framework.
 - Receivers should be able to access the event payload in their receivers to react to the event.
 
