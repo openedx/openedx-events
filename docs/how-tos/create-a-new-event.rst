@@ -306,7 +306,7 @@ In our example, we could write a test that enrolls a user in a course and verifi
 Step 8: Consume the Event
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Since the event is now implemented, you should consume the event to verify that it is triggered and that the payload contains the necessary information. You can consume the event in a test environment using a Django Signal Receiver. This will help you verify that the event is triggered and that the payload contains the necessary information. You can use follow the steps in :doc:`../how-tos/consume-an-event` to consume the event in a test environment with a Django Signal Receiver. Or you could also use the Open edX Event Bus to consume the event in a test environment. For more information on how to use the Open edX Event Bus, refer to the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
+Since the event is now implemented, you should consume the event to verify that it is triggered and that the payload contains the necessary information. You can consume the event in a test environment using a Django Signal Receiver. This will help you verify that the event is triggered and that the payload contains the necessary information. You can follow the steps in :doc:`../how-tos/consume-an-event` to consume the event in a test environment with a Django Signal Receiver. Or you could also use the Open edX Event Bus to consume the event in a test environment. For more information on how to use the Open edX Event Bus, refer to the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
 
 Step 9: Continue the Contribution Process
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
