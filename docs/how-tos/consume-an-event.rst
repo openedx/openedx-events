@@ -75,6 +75,13 @@ These event receivers are usually implemented independently of the service in an
 
 .. TODO: change receivers.py in openedx-events-2-zapier to handlers.py
 
+Consider the following when implementing the event receiver:
+
+- Limit each receiver to a single responsibility to make the code easier to maintain and test.
+- Keep the receiver logic simple and focused on the specific task it needs to perform.
+- Consider the performance implications of the receiver and avoid adding unnecessary complexity or overhead, considering that receivers will be executed each time the event is triggered. Consider using asynchronous tasks to handle the event processing to avoid blocking the main thread and improve performance.
+- Implement error handling and logging in the pipeline step to handle exceptions and provide useful information for debugging, considering both development and production environments.
+
 Step 4: Test the Event Receiver
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
