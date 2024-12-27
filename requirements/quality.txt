@@ -24,7 +24,7 @@ cffi==1.17.1
     #   -r requirements/test.txt
     #   cryptography
     #   pynacl
-charset-normalizer==3.4.0
+charset-normalizer==3.4.1
     # via requests
 click==8.1.8
     # via
@@ -35,11 +35,11 @@ click==8.1.8
     #   edx-lint
 click-log==0.4.0
     # via edx-lint
-code-annotations==2.1.0
+code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/triggering-field
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.6.9
+coverage[toml]==7.6.10
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -108,7 +108,7 @@ jinja2==3.1.5
     # via
     #   -r requirements/test.txt
     #   code-annotations
-keyring==25.5.0
+keyring==25.6.0
     # via twine
 lazy-object-proxy==1.10.0
     # via astroid
