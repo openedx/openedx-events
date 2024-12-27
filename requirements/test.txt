@@ -19,7 +19,7 @@ click==8.1.8
     #   -r requirements/base.txt
     #   code-annotations
     #   edx-django-utils
-code-annotations==2.1.0
+code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/triggering-field
     # via -r requirements/test.in
 coverage[toml]==7.6.10
     # via pytest-cov
