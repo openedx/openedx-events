@@ -35,7 +35,7 @@ click==8.1.8
     #   edx-lint
 click-log==0.4.0
     # via edx-lint
-code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/triggering-field
+code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/triggering-field-2.1
     # via
     #   -r requirements/test.txt
     #   edx-lint
