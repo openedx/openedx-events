@@ -43,7 +43,7 @@ click==8.1.8
     #   code-annotations
     #   edx-django-utils
     #   uvicorn
-code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/triggering-field
+code-annotations @ git+https://github.com/eduNEXT/code-annotations.git@MJG/triggering-field-2.1
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
