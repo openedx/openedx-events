@@ -30,51 +30,27 @@ Event Purpose and Content
 - Keep the event size small. Avoid adding unnecessary information to the event. If the information is not necessary for consumers to react to the event, consider removing it.
 - Avoid adding flow-control information or business logic to events. Events should be solely a representation of what took place. If a field is necessary to control the behavior of the consumer, consider moving it to the consumer side. If adding additional data to the event is absolutely necessary document the reasoning behind it and carefully study the use case and implications.
 
-Here is an example of an event that follows these practices ``COURSE_ENROLLMENT_CREATED``:
+Here is an example of an event that follows these practices which is emitted when the a user registers:
 
 .. code-block:: python
 
     # Location openedx_events/learning/signal.py
-    # .. event_type: org.openedx.learning.course.enrollment.created.v1
-    # .. event_name: COURSE_ENROLLMENT_CREATED
-    # .. event_description: emitted when the user's enrollment process is completed.
-    # .. event_data: CourseEnrollmentData
-    COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
-        event_type="org.openedx.learning.course.enrollment.created.v1",
+    # .. event_type: org.openedx.learning.student.registration.completed.v1
+    # .. event_name: STUDENT_REGISTRATION_COMPLETED
+    # .. event_description: emitted when the user registration process in the LMS is completed.
+    # .. event_data: UserData
+    STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
+        event_type="org.openedx.learning.student.registration.completed.v1",
         data={
-            "enrollment": CourseEnrollmentData,
+            "user": UserData,
         }
     )
 
 Where:
 
-- The event name indicates what happened: ``COURSE_ENROLLMENT_CREATED``.
-- The event description explains why the event happened: ``emitted when the user's enrollment process is completed``.
-- The event data contains data directly related to what happened ``CourseEnrollmentData``:
-
-.. code-block:: python
-
-    # Location openedx_events/learning/data.py
-    @attr.s(frozen=True)
-    class CourseEnrollmentData:
-        """
-        Attributes defined for Open edX Course Enrollment object.
-
-        Arguments:
-            user (UserData): user associated with the Course Enrollment.
-            course (CourseData): course where the user is enrolled in.
-            mode (str): course mode associated with the course enrollment.
-            is_active (bool): whether the enrollment is active.
-            creation_date (datetime): creation date of the enrollment.
-            created_by (UserData): if available, who created the enrollment.
-        """
-
-        user = attr.ib(type=UserData)
-        course = attr.ib(type=CourseData)
-        mode = attr.ib(type=str)
-        is_active = attr.ib(type=bool)
-        creation_date = attr.ib(type=datetime)
-        created_by = attr.ib(type=UserData, default=None)
+- The event name indicates what happened: ``STUDENT_REGISTRATION_COMPLETED``.
+- The event description explains why the event happened: ``emitted when the user registration process in the LMS is completed``.
+- The event data contains data directly related to what happened ``UserData`` which should contain the necessary information to understand the event, like the username and email of the user.
 
 Responsibility and Granularity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
