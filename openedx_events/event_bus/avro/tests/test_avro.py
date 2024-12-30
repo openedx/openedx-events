@@ -2,7 +2,7 @@
 import io
 import os
 from datetime import datetime
-from typing import List
+from typing import List, Union
 from unittest import TestCase
 from uuid import UUID, uuid4
 
@@ -43,6 +43,7 @@ def generate_test_data_for_schema(schema):  # pragma: no cover
         'string': "default",
         'double': 1.0,
         'null': None,
+        'map': {'key': 'value'},
     }
 
     def get_default_value_or_raise(schema_field_type):
@@ -71,6 +72,9 @@ def generate_test_data_for_schema(schema):  # pragma: no cover
             elif sub_field_type == "record":
                 # if we're dealing with a record, recurse into the record
                 data_dict.update({key: generate_test_data_for_schema(field_type)})
+            elif sub_field_type == "map":
+                # if we're dealing with a map, "values" will be the type of values in the map
+                data_dict.update({key: {"key": get_default_value_or_raise(field_type["values"])}})
             else:
                 raise Exception(f"Unsupported type {field_type}")  # pylint: disable=broad-exception-raised
 
@@ -112,6 +116,24 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
         datetime: datetime.now(),
         CCXLocator: CCXLocator(org='edx', course='DemoX', run='Demo_course', ccx='1'),
         UUID: uuid4(),
+        dict[str, str]: {'key': 'value'},
+        dict[str, int]: {'key': 1},
+        dict[str, float]: {'key': 1.0},
+        dict[str, bool]: {'key': True},
+        dict[str, CourseKey]: {'key': CourseKey.from_string("course-v1:edX+DemoX.1+2014")},
+        dict[str, UsageKey]: {'key': UsageKey.from_string(
+            "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
+        )},
+        dict[str, LibraryLocatorV2]: {'key': LibraryLocatorV2.from_string('lib:MITx:reallyhardproblems')},
+        dict[str, LibraryUsageLocatorV2]: {
+            'key': LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1'),
+        },
+        dict[str, List[int]]: {'key': [1, 2, 3]},
+        dict[str, List[str]]: {'key': ["hi", "there"]},
+        dict[str, dict[str, str]]: {'key': {'key': 'value'}},
+        dict[str, dict[str, int]]: {'key': {'key': 1}},
+        dict[str, Union[str, int]]: {'key': 'value'},
+        dict[str, Union[str, int, float]]: {'key': 1.0},
     }
     data_dict = {}
     for attribute in data_type.__attrs_attrs__:
