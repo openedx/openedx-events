@@ -30,6 +30,52 @@ Event Purpose and Content
 - Keep the event size small. Avoid adding unnecessary information to the event. If the information is not necessary for consumers to react to the event, consider removing it.
 - Avoid adding flow-control information or business logic to events. Events should be solely a representation of what took place. If a field is necessary to control the behavior of the consumer, consider moving it to the consumer side. If adding additional data to the event is absolutely necessary document the reasoning behind it and carefully study the use case and implications.
 
+Here is an example of an event that follows these practices ``COURSE_ENROLLMENT_CREATED``:
+
+.. code-block:: python
+
+    # Location openedx_events/learning/signal.py
+    # .. event_type: org.openedx.learning.course.enrollment.created.v1
+    # .. event_name: COURSE_ENROLLMENT_CREATED
+    # .. event_description: emitted when the user's enrollment process is completed.
+    # .. event_data: CourseEnrollmentData
+    COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
+        event_type="org.openedx.learning.course.enrollment.created.v1",
+        data={
+            "enrollment": CourseEnrollmentData,
+        }
+    )
+
+Where:
+
+- The event name indicates what happened: ``COURSE_ENROLLMENT_CREATED``.
+- The event description explains why the event happened: ``emitted when the user's enrollment process is completed``.
+- The event data contains data directly related to what happened ``CourseEnrollmentData``:
+
+.. code-block:: python
+
+    # Location openedx_events/learning/data.py
+    @attr.s(frozen=True)
+    class CourseEnrollmentData:
+        """
+        Attributes defined for Open edX Course Enrollment object.
+
+        Arguments:
+            user (UserData): user associated with the Course Enrollment.
+            course (CourseData): course where the user is enrolled in.
+            mode (str): course mode associated with the course enrollment.
+            is_active (bool): whether the enrollment is active.
+            creation_date (datetime): creation date of the enrollment.
+            created_by (UserData): if available, who created the enrollment.
+        """
+
+        user = attr.ib(type=UserData)
+        course = attr.ib(type=CourseData)
+        mode = attr.ib(type=str)
+        is_active = attr.ib(type=bool)
+        creation_date = attr.ib(type=datetime)
+        created_by = attr.ib(type=UserData, default=None)
+
 Responsibility and Granularity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -37,11 +83,57 @@ Responsibility and Granularity
 - Manage the granularity of the event so it is not too coarse (generic with too much information) or too fine-grained (specific with too little information). When making a decision on the granularity of the event, start with the minimum required information for consumers to react to the event and add more information as needed with enough justification. If necessary, leverage API calls from the consumer side to retrieve additional information but always consider the trade-offs of adding dependencies with other services.
 - Ensure that the triggering logic is consistent and narrow. For instance, if an event is triggered when a user enrolls in a course, it should be trigger only when the user enrolls in a course in all ways possible to enroll in a course. If the event is triggered when a user enrolls in a course through the API, it should also be triggered when the user enrolls in a course through the UI.
 
+For instance, consider the following events:
+
+.. code-block:: python
+
+    # Location openedx_events/learning/signal.py
+    # .. event_type: org.openedx.learning.course.grade.passed.v1
+    # .. event_name: COURSE_GRADE_PASSED
+    # .. event_description: emitted when the user's course grade is updated to pass.
+    # .. event_data: CourseGradeData
+    COURSE_GRADE_PASSED = OpenEdxPublicSignal(
+        event_type="org.openedx.learning.course.grade.passed.v1",
+        data={
+            "grade": CourseGradeData,
+        }
+    )
+
+    # Location openedx_events/learning/signal.py
+    # .. event_type: org.openedx.learning.course.grade.failed.v1
+    # .. event_name: COURSE_GRADE_FAILED
+    # .. event_description: emitted when the user's course grade is updated to fail.
+    # .. event_data: CourseGradeData
+    COURSE_GRADE_FAILED = OpenEdxPublicSignal(
+        event_type="org.openedx.learning.course.grade.failed.v1",
+        data={
+            "grade": CourseGradeData,
+        }
+    )
+
+Where:
+
+- The event name indicates what happened: ``COURSE_GRADE_PASSED`` and ``COURSE_GRADE_FAILED``.
+- The event description explains why the event happened: ``emitted when the user's course grade is updated to pass`` and ``emitted when the user's course grade is updated to fail``.
+- The event data contains data directly related to what happened ``CourseGradeData`` which should contain the necessary information to understand the event, like the user, the course, the grade, and the date of the grade update.
+- The granularity of the event is managed by having two events: one for the pass action and another for the fail action.
+
+Each of these practices should be reviewed with each case, and the granularity of the event should be adjusted according to the use case and the information required by the consumers.
+
 Event Structure and Clarity
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - Use appropriate data types and formats for the event fields. Don't use generic data types like strings for all fields. Use specific data types like integers, floats, dates, or custom types when necessary.
 - Avoid ambiguous data fields or fields with multiple meaning. For instance, if an event contains a field called ``status`` it should be clear what the status represents. If the status can have multiple meanings, consider splitting the event into multiple events or adding a new field to clarify the status.
+
+For instance, consider the ``CourseEnrollmentData`` class:
+
+- The ``mode`` field is a string that represents the course mode. It could be a string like "verified", "audit", "honor", etc.
+- The ``is_active`` field is a boolean that represents whether the enrollment is active or not.
+- The ``creation_date`` field is a datetime that represents the creation date of the enrollment.
+- The ``created_by`` field is a ``UserData`` that represents the user who created the enrollment.
+- The ``user`` field is a ``UserData`` that represents the user associated with the Course Enrollment.
+- The ``course`` field is a ``CourseData`` that represents the course where the user is enrolled in.
 
 Consumer-Centric Design
 ~~~~~~~~~~~~~~~~~~~~~~~
