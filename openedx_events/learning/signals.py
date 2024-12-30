@@ -237,7 +237,7 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
 # .. event_data: UserNotificationSendListData
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_trigger_repository: openedx/edx-platform openedx/edx-ora2
-# .. event_trigger_path: lms/djangoapps/discussion/rest_api/discussions_notifications.py openassessment/xblock/utils/notifications.py
+# .. event_trigger_path: lms/djangoapps/discussion/rest_api/discussions_notifications.py openassessment/xblock/utils/notifications.py # noqa
 USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.notification.requested.v1",
     data={
