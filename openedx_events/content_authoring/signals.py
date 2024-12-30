@@ -118,7 +118,6 @@ XBLOCK_DUPLICATED = OpenEdxPublicSignal(
 # .. event_description: Fired when a course certificate configuration changes in Studio.
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_data: CertificateConfigData
-# TODO: Remove this event cause it's not being used
 COURSE_CERTIFICATE_CONFIG_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.course.certificate_config.changed.v1",
     data={
@@ -131,7 +130,6 @@ COURSE_CERTIFICATE_CONFIG_CHANGED = OpenEdxPublicSignal(
 # .. event_description: Fired when a course certificate configuration deletes in Studio.
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_data: CertificateConfigData
-# TODO: Remove this event cause it's not being used
 COURSE_CERTIFICATE_CONFIG_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.course.certificate_config.deleted.v1",
     data={
@@ -248,7 +246,6 @@ CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
 # .. event_description: emitted when an object's tags are changed
 #    DEPRECATED: please use CONTENT_OBJECT_ASSOCIATIONS_CHANGED instead.
 # .. event_data: ContentObjectData
-# TODO: start deprecation process
 CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.tags.changed.v1",
     data={
