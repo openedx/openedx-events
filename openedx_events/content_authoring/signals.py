@@ -26,6 +26,8 @@ from openedx_events.tooling import OpenEdxPublicSignal
 # .. event_key_field: catalog_info.course_key
 # .. event_description: Fired when a course changes in Studio in a way that is relevant for catalog consumers.
 # .. event_data: CourseCatalogData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: cms/djangoapps/contentstore/signals/handlers.py
 COURSE_CATALOG_INFO_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.course.catalog_info.changed.v1",
     data={
@@ -38,6 +40,8 @@ COURSE_CATALOG_INFO_CHANGED = OpenEdxPublicSignal(
 # .. event_key_field: xblock_info.usage_key
 # .. event_description: Fired when an XBlock is created.
 # .. event_data: XBlockData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: xmodule/modulestore/mixed.py
 XBLOCK_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.xblock.created.v1",
     data={
@@ -50,6 +54,8 @@ XBLOCK_CREATED = OpenEdxPublicSignal(
 # .. event_key_field: xblock_info.usage_key
 # .. event_description: Fired when an XBlock is updated.
 # .. event_data: XBlockData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: xmodule/modulestore/mixed.py
 XBLOCK_UPDATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.xblock.updated.v1",
     data={
@@ -67,6 +73,8 @@ XBLOCK_UPDATED = OpenEdxPublicSignal(
 #       only a single event is fired with section details like :
 #       `XBlockData(usage_key="section-usage-key", block_type="chapter")`
 # .. event_data: XBlockData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: xmodule/modulestore/mixed.py
 XBLOCK_PUBLISHED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.xblock.published.v1",
     data={
@@ -80,6 +88,8 @@ XBLOCK_PUBLISHED = OpenEdxPublicSignal(
 # .. event_key_field: xblock_info.usage_key
 # .. event_description: Fired when an XBlock is deleted.
 # .. event_data: XBlockData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: xmodule/modulestore/mixed.py
 XBLOCK_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.xblock.deleted.v1",
     data={
@@ -93,6 +103,8 @@ XBLOCK_DELETED = OpenEdxPublicSignal(
 # .. event_key_field: xblock_info.usage_key
 # .. event_description: Fired when an XBlock is duplicated in Studio.
 # .. event_data: DuplicatedXBlockData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: xmodule/modulestore/mixed.py
 XBLOCK_DUPLICATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.xblock.duplicated.v1",
     data={
@@ -129,6 +141,8 @@ COURSE_CERTIFICATE_CONFIG_DELETED = OpenEdxPublicSignal(
 # .. event_name: COURSE_CREATED
 # .. event_description: emitted when a course is created
 # .. event_data: CourseData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: xmodule/modulestore/mixed.py
 COURSE_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.course.created.v1",
     data={
@@ -140,6 +154,8 @@ COURSE_CREATED = OpenEdxPublicSignal(
 # .. event_name: CONTENT_LIBRARY_CREATED
 # .. event_description: emitted when a content library is created
 # .. event_data: ContentLibraryData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/api.py
 CONTENT_LIBRARY_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.created.v1",
     data={
@@ -151,6 +167,8 @@ CONTENT_LIBRARY_CREATED = OpenEdxPublicSignal(
 # .. event_name: CONTENT_LIBRARY_UPDATED
 # .. event_description: emitted when a content library is updated
 # .. event_data: ContentLibraryData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/api.py
 CONTENT_LIBRARY_UPDATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.updated.v1",
     data={
@@ -162,6 +180,8 @@ CONTENT_LIBRARY_UPDATED = OpenEdxPublicSignal(
 # .. event_name: CONTENT_LIBRARY_DELETED
 # .. event_description: emitted when a content library is deleted
 # .. event_data: ContentLibraryData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/api.py
 CONTENT_LIBRARY_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.deleted.v1",
     data={
@@ -173,6 +193,8 @@ CONTENT_LIBRARY_DELETED = OpenEdxPublicSignal(
 # .. event_name: LIBRARY_BLOCK_CREATED
 # .. event_description: emitted when a library block is created
 # .. event_data: LibraryBlockData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/api.py
 LIBRARY_BLOCK_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.library_block.created.v1",
     data={
@@ -184,6 +206,8 @@ LIBRARY_BLOCK_CREATED = OpenEdxPublicSignal(
 # .. event_name: LIBRARY_BLOCK_UPDATED
 # .. event_description: emitted when a library block is updated
 # .. event_data: LibraryBlockData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/library_context.py
 LIBRARY_BLOCK_UPDATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.library_block.updated.v1",
     data={
@@ -195,6 +219,8 @@ LIBRARY_BLOCK_UPDATED = OpenEdxPublicSignal(
 # .. event_name: LIBRARY_BLOCK_DELETED
 # .. event_description: emitted when a library block is deleted
 # .. event_data: LibraryBlockData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/api.py
 LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.library_block.deleted.v1",
     data={
@@ -206,6 +232,8 @@ LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
 # .. event_name: CONTENT_OBJECT_ASSOCIATIONS_CHANGED
 # .. event_description: emitted when an object's associations are changed, e.g tags, collections
 # .. event_data: ContentObjectData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_tagging/api.py
 CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.associations.changed.v1",
     data={
@@ -229,6 +257,8 @@ CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
 # .. event_name: LIBRARY_COLLECTION_CREATED
 # .. event_description: emitted when a content library collection is created
 # .. event_data: LibraryCollectionData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/signal_handlers.py
 LIBRARY_COLLECTION_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.collection.created.v1",
     data={
@@ -240,6 +270,8 @@ LIBRARY_COLLECTION_CREATED = OpenEdxPublicSignal(
 # .. event_name: LIBRARY_COLLECTION_UPDATED
 # .. event_description: emitted when when a content library collection is updated
 # .. event_data: LibraryCollectionData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/signal_handlers.py
 LIBRARY_COLLECTION_UPDATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.collection.updated.v1",
     data={
@@ -251,6 +283,8 @@ LIBRARY_COLLECTION_UPDATED = OpenEdxPublicSignal(
 # .. event_name: LIBRARY_COLLECTION_DELETED
 # .. event_description: emitted when an when a content library collection is deleted
 # .. event_data: LibraryCollectionData
+# .. event_trigger_repository: openedx/edx-platform
+# .. event_trigger_path: openedx/core/djangoapps/content_libraries/signal_handlers.py
 LIBRARY_COLLECTION_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.collection.deleted.v1",
     data={
