@@ -42,7 +42,7 @@ chardet==5.2.0
     #   -r requirements/ci.txt
     #   diff-cover
     #   tox
-charset-normalizer==3.4.0
+charset-normalizer==3.4.1
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -67,7 +67,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.6.9
+coverage[toml]==7.6.10
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -165,7 +165,7 @@ jinja2==3.1.5
     #   -r requirements/quality.txt
     #   code-annotations
     #   diff-cover
-keyring==25.5.0
+keyring==25.6.0
     # via
     #   -r requirements/quality.txt
     #   twine
