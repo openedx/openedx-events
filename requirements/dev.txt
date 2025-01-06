@@ -248,7 +248,7 @@ pycparser==2.22
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.txt
-pygments==2.18.0
+pygments==2.19.0
     # via
     #   -r requirements/quality.txt
     #   diff-cover
@@ -373,7 +373,7 @@ urllib3==2.3.0
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.28.0
+virtualenv==20.28.1
     # via
     #   -r requirements/ci.txt
     #   tox

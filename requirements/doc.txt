@@ -8,7 +8,7 @@ accessible-pygments==0.0.5
     # via pydata-sphinx-theme
 alabaster==1.0.0
     # via sphinx
-anyio==4.7.0
+anyio==4.8.0
     # via
     #   starlette
     #   watchfiles
@@ -169,7 +169,7 @@ pycparser==2.22
     #   cffi
 pydata-sphinx-theme==0.16.1
     # via sphinx-book-theme
-pygments==2.18.0
+pygments==2.19.0
     # via
     #   accessible-pygments
     #   doc8
@@ -267,7 +267,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
     #   django
-starlette==0.45.0
+starlette==0.45.2
     # via sphinx-autobuild
 stevedore==5.4.0
     # via
