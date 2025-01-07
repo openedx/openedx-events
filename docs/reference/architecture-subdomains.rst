@@ -10,7 +10,7 @@ Currently, these are the `architecture subdomains`_ used by the Open edX Events 
 +-------------------+----------------------------------------------------------------------------------------------------+
 | Learning          | Allows learners to consume content and perform actions in a learning activity on the platform.     |
 +-------------------+----------------------------------------------------------------------------------------------------+
-| Analytics         | Provides insights into learner behavior and course performance.                                    |
+| Analytics         | Provides visibility into learner behavior and course performance.                                  |
 +-------------------+----------------------------------------------------------------------------------------------------+
 | Enterprise        | Provides tools for organizations to manage their learners and courses.                             |
 +-------------------+----------------------------------------------------------------------------------------------------+
