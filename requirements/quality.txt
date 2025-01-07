@@ -161,7 +161,7 @@ pycparser==2.22
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.in
-pygments==2.18.0
+pygments==2.19.0
     # via
     #   readme-renderer
     #   rich
