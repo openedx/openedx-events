@@ -69,8 +69,8 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
         avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[data_type]
         field["type"] = avro_type
     elif data_type_origin == list:
-        # returns types of list contents
-        # if data_type == List[int], arg_data_type = (int,)
+        # Returns types of list contents.
+        # Example: if data_type == List[int], arg_data_type = (int,)
         arg_data_type = get_args(data_type)
         if not arg_data_type:
             raise TypeError(
@@ -84,8 +84,8 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
             )
         field["type"] = {"type": PYTHON_TYPE_TO_AVRO_MAPPING[data_type_origin], "items": avro_type}
     elif data_type_origin == dict:
-        # returns types of dict contents
-        # if data_type == Dict[str, int], arg_data_type = (str, int)
+        # Returns types of dict contents.
+        # Example: if data_type == Dict[str, int], arg_data_type = (str, int)
         arg_data_type = get_args(data_type)
         if not arg_data_type:
             raise TypeError(
