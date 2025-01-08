@@ -12,7 +12,6 @@ Assumptions
 
 - You have a development environment set up using `Tutor`_.
 - You have a basic understanding of Python and Django.
-- You have created a new Open edX event. If not, you can follow the :doc:`../how-tos/create-a-new-event` guide to create a new event.
 - You have a basic understanding of Django signals. If not, you can review the `Django Signals Documentation`_.
 - You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Receiver`. If not, you can review the :doc:`../reference/glossary` documentation.
 
