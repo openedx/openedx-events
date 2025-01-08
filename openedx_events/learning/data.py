@@ -437,10 +437,10 @@ class DiscussionThreadData:
     url = attr.ib(type=str)
     user = attr.ib(type=UserData)
     course_id = attr.ib(type=CourseKey)
-    discussion = attr.ib(type=dict[str, str], factory=dict)
+    discussion = attr.ib(type=dict, factory=dict)
     user_course_roles = attr.ib(type=List[str], factory=list)
     user_forums_roles = attr.ib(type=List[str], factory=list)
-    options = attr.ib(type=dict[str, str], factory=dict)
+    options = attr.ib(type=dict, factory=dict)
 
 
 @attr.s(frozen=True)
