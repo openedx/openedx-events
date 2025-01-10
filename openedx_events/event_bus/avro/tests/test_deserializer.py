@@ -298,6 +298,20 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
+    def test_deserialization_of_dict_with_complex_types_fails(self):
+        SIGNAL = create_simple_signal({"dict_input": Dict[str, list]})
+        with self.assertRaises(TypeError):
+            AvroSignalDeserializer(SIGNAL)
+        initial_dict = {"dict_input": {"key1": [1, 3], "key2": [4, 5]}}
+        # create dummy signal to bypass schema check while initializing deserializer
+        # This allows us to test whether correct exceptions are raised while deserializing data
+        DUMMY_SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
+        deserializer = AvroSignalDeserializer(DUMMY_SIGNAL)
+        # Update signal with incorrect type info
+        deserializer.signal = SIGNAL
+        with self.assertRaises(TypeError):
+            deserializer.from_dict(initial_dict)
+
     def test_deserialization_of_nested_list_fails(self):
         """
         Check that deserialization raises error when nested list data is passed.
