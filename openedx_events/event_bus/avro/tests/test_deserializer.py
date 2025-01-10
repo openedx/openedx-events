@@ -312,6 +312,13 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
+    def test_deserialization_of_dicts_with_keys_of_complex_types_fails(self):
+        SIGNAL = create_simple_signal({"dict_input": Dict[CourseKey, int]})
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        initial_dict = {"dict_input": {CourseKey.from_string("course-v1:edX+DemoX.1+2014"): 1}}
+        with self.assertRaises(TypeError):
+            deserializer.from_dict(initial_dict)
+
     def test_deserialization_of_nested_list_fails(self):
         """
         Check that deserialization raises error when nested list data is passed.
