@@ -61,7 +61,7 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
                 "Dict without annotation type is not supported. The argument should be a type, for eg., Dict[str, int]"
             )
         # Check whether dict items type is in basic types.
-        if arg_data_type[1] in SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING:
+        if all(arg in SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING for arg in arg_data_type):
             return data
     elif hasattr(data_type, "__attrs_attrs__"):
         transformed = {}
