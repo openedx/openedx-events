@@ -114,7 +114,7 @@ edx-ccx-keys==2.0.2
     # via -r requirements/quality.txt
 edx-django-utils==7.1.0
     # via -r requirements/quality.txt
-edx-lint==5.4.1
+edx-lint @ git+https://github.com/eduNEXT/edx-lint.git@MJG/events-code-annotations
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.11.0
     # via

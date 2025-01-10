@@ -3,7 +3,7 @@
 
 -r test.txt               # Core and testing dependencies for this package
 
-edx-lint                  # edX pylint rules and plugins
+git+https://github.com/eduNEXT/edx-lint.git@MJG/events-code-annotations  # edX pylint rules and plugins
 isort                     # to standardize order of imports
 pycodestyle               # PEP 8 compliance validation
 pydocstyle                # PEP 257 compliance validation
