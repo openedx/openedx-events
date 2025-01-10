@@ -63,7 +63,7 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
         field["type"] = field_type
     # Case 2: data_type is a simple type that can be converted directly to an Avro type
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
-        if PYTHON_TYPE_TO_AVRO_MAPPING[data_type] in ["record", "map", "array"]:
+        if PYTHON_TYPE_TO_AVRO_MAPPING[data_type] in ["map", "array"]:
             # pylint: disable-next=broad-exception-raised
             raise Exception("Unable to generate Avro schema for dict or array fields without annotation types.")
         avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[data_type]
