@@ -72,8 +72,6 @@ An :term:`Event Receiver` is simply a function that listens for a specific event
 
 These event receivers are usually implemented independently of the service in an `Open edX Django plugins`_ and are registered in the ``handlers.py`` (according to `OEP-49`_) file of the plugin. You can review the ``handlers.py`` file of the `openedx-events-2-zapier`_ plugin to understand how the event receivers are implemented and connected to the events.
 
-.. TODO: change receivers.py in openedx-events-2-zapier to handlers.py
-
 Consider the following when implementing the event receiver:
 
 - Limit each receiver to a single responsibility to make the code easier to maintain and test.
