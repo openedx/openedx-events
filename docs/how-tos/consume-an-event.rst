@@ -54,7 +54,7 @@ An :term:`Event Receiver` is simply a function that listens for a specific event
         pass
 
 - The Django dispatcher will call the ``send_enrollment_data_to_webhook`` function when the ``COURSE_ENROLLMENT_CREATED`` event is triggered by using the ``receiver`` decorator. In this case, that would be every time a user enrolls in a course.
-- Consider using asynchronous tasks to handle the event processing to avoid blocking the main thread and improve performance. Also, make sure to handle exceptions and errors gracefully to avoid silent failures and improve debugging. You should also consider not creating a tight coupling between receivers and other services, if doing so is necessary consider using the event bus to broadcast the event.
+- Consider using asynchronous tasks to handle the event processing to avoid blocking the main thread and improve performance. Also, make sure to handle exceptions and errors gracefully to avoid silent failures and improve debugging. It is recommended to not create a tight coupling between receivers and other services. If doing so is necessary consider using the event bus to broadcast the event.
 - When implementing the receiver, inspect the event payload to understand the data that is being passed to the event receiver by reviewing the ``data.py`` file of the event you are consuming. For example, the ``COURSE_ENROLLMENT_CREATED`` event has the following payload:
 
 .. code-block:: python
