@@ -57,7 +57,7 @@ Responsibility and Granularity
 
 - Design events with a single responsibility in mind. Each event should represent a single action or fact that happened in the system. If an event contains multiple actions, consider splitting it into multiple events. For instance, if the course grade is updated to pass or fail, there should be two events: one for the pass action and another for the fail action.
 - Manage the granularity of the event so it is not too coarse (generic with too much information) or too fine-grained (specific with too little information). When making a decision on the granularity of the event, start with the minimum required information for consumers to react to the event and add more information as needed with enough justification. If necessary, leverage API calls from the consumer side to retrieve additional information but always consider the trade-offs of adding dependencies with other services.
-- Ensure that the triggering logic is consistent and narrow. For instance, if an event is triggered when a user enrolls in a course, it should be trigger only when the user enrolls in a course in all ways possible to enroll in a course. If the event is triggered when a user enrolls in a course through the API, it should also be triggered when the user enrolls in a course through the UI.
+- Ensure that the triggering logic is consistent and narrow. For instance, if an event is triggered when a user enrolls in a course, it should be triggered when the user enrolls in a course in all ways possible to enroll in a course. If the event is triggered when a user enrolls in a course through the API, it should also be triggered when the user enrolls in a course through the UI.
 
 For instance, consider the following events:
 
@@ -115,6 +115,7 @@ Consumer-Centric Design
 ~~~~~~~~~~~~~~~~~~~~~~~
 
 - When designing an event, consider the consumers that will be using it. What information do they need to react to the event? What data is necessary for them to process the event?
+- You can't always predict the needs of consumers in the future. Ensure your design is discrete, flexible, and well-documented, so new and novel use cases can be developed.
 - Design events carefully from the start to minimize breaking changes for consumers, although it is not always possible to avoid breaking changes.
 
 Some of these practices might not be applicable to all events, but they are a good starting point to ensure that the events are consistent and maintainable over time. So, design the event so it is small, well-defined and only contain relevant information.
