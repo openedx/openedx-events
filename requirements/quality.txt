@@ -161,7 +161,7 @@ pycparser==2.22
     #   cffi
 pydocstyle==6.3.0
     # via -r requirements/quality.in
-pygments==2.19.0
+pygments==2.19.1
     # via
     #   readme-renderer
     #   rich
@@ -247,11 +247,12 @@ typing-extensions==4.12.2
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-urllib3==2.3.0
+urllib3==2.2.3
     # via
+    #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   requests
     #   twine
-wrapt==1.17.0
+wrapt==1.17.1
     # via astroid
 zipp==3.21.0
     # via importlib-metadata
