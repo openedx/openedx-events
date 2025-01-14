@@ -40,7 +40,6 @@ SUBSIDY_REDEMPTION_REVERSED = OpenEdxPublicSignal(
 #      See: https://github.com/openedx/openedx-ledger/tree/main/docs/decisions
 # .. event_data: LedgerTransaction
 # .. event_trigger_repository: openedx/enterprise-subsidy
-# .. event_trigger_path: enterprise_subsidy/apps/core/event_bus.py
 LEDGER_TRANSACTION_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy_ledger_transaction.created.v1",
     data={
@@ -55,7 +54,6 @@ LEDGER_TRANSACTION_CREATED = OpenEdxPublicSignal(
 #      See: https://github.com/openedx/openedx-ledger/tree/main/docs/decisions
 # .. event_data: LedgerTransaction
 # .. event_trigger_repository: openedx/enterprise-subsidy
-# .. event_trigger_path: enterprise_subsidy/apps/core/event_bus.py
 LEDGER_TRANSACTION_COMMITTED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy_ledger_transaction.committed.v1",
     data={
@@ -70,7 +68,6 @@ LEDGER_TRANSACTION_COMMITTED = OpenEdxPublicSignal(
 #      See: https://github.com/openedx/openedx-ledger/tree/main/docs/decisions
 # .. event_data: LedgerTransaction
 # .. event_trigger_repository: openedx/enterprise-subsidy
-# .. event_trigger_path: enterprise_subsidy/apps/core/event_bus.py
 LEDGER_TRANSACTION_FAILED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy_ledger_transaction.failed.v1",
     data={
@@ -85,7 +82,6 @@ LEDGER_TRANSACTION_FAILED = OpenEdxPublicSignal(
 #      See: https://github.com/openedx/openedx-ledger/tree/main/docs/decisions
 # .. event_data: LedgerTransaction
 # .. event_trigger_repository: openedx/enterprise-subsidy
-# .. event_trigger_path: enterprise_subsidy/apps/core/event_bus.py
 LEDGER_TRANSACTION_REVERSED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy_ledger_transaction.reversed.v1",
     data={
@@ -100,7 +96,6 @@ LEDGER_TRANSACTION_REVERSED = OpenEdxPublicSignal(
 #      an enterprise learner unenrolls from a course which was LC-subsidized.
 # .. event_data: LearnerCreditEnterpriseCourseEnrollment
 # .. event_trigger_repository: openedx/edx-enterprise
-# .. event_trigger_path: enterprise/event_bus.py
 LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.learner_credit_course_enrollment.revoked.v1",
     data={
