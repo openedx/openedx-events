@@ -39,6 +39,7 @@ extensions = [
     'code_annotations.contrib.sphinx.extensions.openedx_events',
     'sphinx.ext.intersphinx',
     'code_annotations.contrib.sphinx.extensions.settings',
+    'sphinx.ext.autodoc',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
