@@ -47,9 +47,9 @@ class OpenEdxPublicSignal(Signal):
         Init method for OpenEdxPublicSignal definition class.
 
         Arguments:
-            event_type (str): name of the event.
-            data (dict): attributes passed to the event.
-            minor_version (int): version of the event type.
+            - event_type (str): name of the event.
+            - data (dict): attributes passed to the event.
+            - minor_version (int): version of the event type.
         """
         self.init_data = data
         self.event_type = event_type
@@ -79,10 +79,10 @@ class OpenEdxPublicSignal(Signal):
         Get event identified by type.
 
         Arguments:
-            event_type (str): name of the event.
+            - event_type (str): name of the event.
 
-        Exceptions raised:
-            Raises KeyError if not found.
+        Raises:
+            - Raises KeyError if the event is not found.
         """
         return cls._mapping[event_type]
 
@@ -94,7 +94,7 @@ class OpenEdxPublicSignal(Signal):
         Message defined in the OEP-41.
 
         Arguments:
-            time (datetime): (Optional) Timestamp when the event was sent with
+            - time (datetime): (Optional) Timestamp when the event was sent with
                 UTC timezone. Defaults to current time in UTC. See OEP-41 for
                 details.
 
@@ -102,14 +102,14 @@ class OpenEdxPublicSignal(Signal):
             >>> metadata = \
                 STUDENT_REGISTRATION_COMPLETED.generate_signal_metadata()
                 attr.asdict(metadata)
-            {
-                'event_type': '...learning.student.registration.completed.v1',
-                'minorversion': 0,
-                'time': '2021-06-09T14:12:45.320819Z',
-                'source': 'openedx/lms/web',
-                'sourcehost': 'edx.devstack.lms',
-                'specversion': '1.0',
-                'sourcelib: (0,1,0,),
+            >>> {
+                    'event_type': '...learning.student.registration.completed.v1',
+                    'minorversion': 0,
+                    'time': '2021-06-09T14:12:45.320819Z',
+                    'source': 'openedx/lms/web',
+                    'sourcehost': 'edx.devstack.lms',
+                    'specversion': '1.0',
+                    'sourcelib: (0,1,0,),
             }
         """
         return EventsMetadata(
@@ -125,9 +125,9 @@ class OpenEdxPublicSignal(Signal):
         This method is for internal use only.
 
         Arguments:
-            metadata (EventsMetadata): The metadata to be sent with the signal.
-            send_robust (bool): Defaults to True. See Django signal docs.
-            from_event_bus (bool): Defaults to False. If True, the signal is
+            - metadata (EventsMetadata): The metadata to be sent with the signal.
+            - send_robust (bool): Defaults to True. See Django signal docs.
+            - from_event_bus (bool): Defaults to False. If True, the signal is
                 being sent from the event bus. This is used to prevent infinite
                 loops when the event bus is consuming events. It should not be
                 used when sending events from the application.
@@ -187,14 +187,17 @@ class OpenEdxPublicSignal(Signal):
         Send events to all connected receivers.
 
         Arguments:
-            send_robust (bool): Defaults to True. See Django signal docs.
-            time (datetime): (Optional - see note) Timestamp when the event was
+            - send_robust (bool): Defaults to True. See Django signal docs.
+            - time (datetime): (Optional - see note) Timestamp when the event was
                 sent with UTC timezone. For events requiring a DB create or
                 update, use the timestamp from the DB record. Defaults to
                 current time in UTC. This argument is optional for backward
-                compatability, but ideally would be explicitly set. See OEP-41
+                compatibility, but ideally would be explicitly set. See OEP-41
                 for details.
-            kwargs: Data to be sent to the signal's receivers.
+
+        Keyword Arguments:
+            - kwargs: Data to be sent to the signal's receivers. The keys must
+                match the attributes defined in the event's data.
 
         Used to send events just like Django signals are sent. In addition,
         some validations are executed on the arguments, and then generates relevant
@@ -208,16 +211,15 @@ class OpenEdxPublicSignal(Signal):
             >>> STUDENT_REGISTRATION_COMPLETED.send_event(
                 user=user_data, registration=registration_data,
             )
-            [(<function callback at 0x7f2ce638ef70>, 'callback response')]
+            >>> [(<function callback at 0x7f2ce638ef70>, 'callback response')]
 
         Returns:
-            list: response of each receiver following the format
-            [(receiver, response), ... ]. Empty list if the event is disabled.
+            - list: response of each receiver following the format [(receiver, response), ... ].
+                The list is empty if the event is disabled.
 
-        Exceptions raised:
-            SenderValidationError: raised when there's a mismatch between
-            arguments passed to this method and arguments used to initialize
-            the event.
+        Raises:
+            - SenderValidationError: raised when there's a mismatch between arguments passed
+                to this method and arguments used to initialize the event.
         """
         metadata = self.generate_signal_metadata(time=time)
         return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)
