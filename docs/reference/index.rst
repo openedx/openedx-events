@@ -7,6 +7,7 @@ References
 
    events-tooling
    events
+   events-data
    in-line-code-annotations-for-an-event
    glossary
    event-bus-configurations
