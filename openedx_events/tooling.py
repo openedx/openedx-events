@@ -202,9 +202,9 @@ class OpenEdxPublicSignal(Signal):
         Arguments:
             send_robust (bool): Defaults to True. See Django signal docs.
             time (datetime): (Optional - see note) Timestamp when the event was sent with UTC
-              timezone. For events requiring a DB create or update, use the timestamp from the DB
-              record. Defaults to current time in UTC. This argument is optional for backward
-              compatibility, but ideally would be explicitly set. See OEP-41 for details.
+            timezone. For events requiring a DB create or update, use the timestamp from the DB
+            record. Defaults to current time in UTC. This argument is optional for backward
+            compatibility, but ideally would be explicitly set. See OEP-41 for details.
 
         Keyword Arguments:
             kwargs: Data to be sent to the signal's receivers. The keys must match the attributes defined in
