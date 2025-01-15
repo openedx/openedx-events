@@ -163,6 +163,8 @@ In our example, the event definition and payload for the enrollment event could 
 - Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
 - Use defaults for optional fields in the payload to ensure its consistency in all cases.
 
+.. note:: When defining the payload, enforce event bus compatibility by ensuring that the data types used in the payload align with the event bus schema format. This will help ensure that the event can be sent by the producer and be then re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side, guaranteeing that the data sent and received is the identical. For more information about adding event bus support to an event, refer to :doc:`../how-tos/add-event-bus-support-to-an-event`.
+
 Event Definition
 ****************
 
@@ -190,8 +192,6 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
 - The ``data`` dictionary should contain the payload class that is used to define the data that is included in the event. This will help consumers understand the event and react to it. Try using a descriptive name for the data field, but keep consistency with the payload class name. Avoid using suffixes like ``_data`` or ``_payload`` in the data field name.
 - The event should be an instance of the ``OpenEdxPublicSignal`` class to ensure that the event is consistent with the Open edX event framework.
 - Receivers should be able to access the event payload in their receivers to react to the event.
-
-.. TODO: add reference to how to add event bus support to the event's payload
 
 Step 6: Send the Event
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -321,3 +321,4 @@ For more details on how the contribution flow works, refer to the :doc:`docs.ope
 .. _attrs: https://www.attrs.org/en/stable/
 .. _Tutor: https://docs.tutor.edly.io/
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
+.. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
