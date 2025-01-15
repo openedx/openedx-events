@@ -148,10 +148,12 @@ class EnterpriseCourseEnrollment:
         - id (int): Primary identifier of the record.
         - created (datetime): When the record was created.
         - modified (datetime): When the record was last modified.
-        - enterprise_customer_user (EnterpriseCustomerUser): The enterprise learner to which this enrollment is attached.
+        - enterprise_customer_user (EnterpriseCustomerUser): The enterprise learner to which this enrollment is
+          attached.
         - course_id (CourseKey): The ID of the course in which the learner was enrolled.
         - saved_for_later (bool): Specifies whether a user marked this course as saved for later in the learner portal.
-        - source_slug (str): DB slug for the source of the enrollment, e.g. "enrollment_task", "management_command", etc.
+        - source_slug (str): DB slug for the source of the enrollment, e.g. "enrollment_task", "management_command",
+          etc.
         - unenrolled (bool): Specifies whether the related LMS course enrollment object was unenrolled.
         - unenrolled_at (datetime): Specifies when the related LMS course enrollment object was unenrolled.
     """
@@ -180,7 +182,8 @@ class BaseEnterpriseFulfillment:
         - modified (datetime): When the record was last modified.
         - fulfillment_type (str): Subsidy fulfillment type, typical values: "license", "learner_credit", "coupon_code".
         - enterprise_course_entitlement_uuid (UUID): The course entitlement the associated subsidy is for.
-        - enterprise_course_enrollment (EnterpriseCourseEnrollment): The course enrollment the associated subsidy is for.
+        - enterprise_course_enrollment (EnterpriseCourseEnrollment): The course enrollment the associated subsidy is
+          for.
         - is_revoked (bool): Whether the enterprise subsidy is revoked, e.g., when a user's license is revoked.
     """
 
