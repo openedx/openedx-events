@@ -163,7 +163,7 @@ In our example, the event definition and payload for the enrollment event could 
 - Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
 - Use defaults for optional fields in the payload to ensure its consistency in all cases.
 
-.. note:: When defining the payload, enforce event bus compatibility by ensuring that the data types used in the payload align with the event bus schema format. This will help ensure that the event can be sent by the producer and be then re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side, guaranteeing that the data sent and received is the identical. For more information about adding event bus support to an event, refer to :doc:`../how-tos/add-event-bus-support-to-an-event`.
+.. note:: When defining the payload, enforce :doc:`../concepts/event-bus` compatibility by ensuring that the data types used in the payload align with the event bus schema format. This will help ensure that the event can be sent by the producer and be then re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side, guaranteeing that the data sent and received is the identical. For more information about adding event bus support to an event, refer to :doc:`../how-tos/add-event-bus-support-to-an-event`.
 
 Event Definition
 ****************
