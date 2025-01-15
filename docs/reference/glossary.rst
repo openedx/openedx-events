@@ -41,4 +41,11 @@ An event has multiple components that are used to define, trigger, and handle th
     Topic
       How the event bus implementation groups related events, such as streams in Redis. Producers publish events to topics, and consumers subscribe to topics to receive events.
 
+    Avro Schema
+      A specification describing the expected field names and types in an Avro record dictionary. See `Apache Avro`_ for more information.
+
+    Avro Record Dictionary
+      A dictionary whose structure is determined by an Avro schema. These dictionaries are the entities that are actually serialized to bytes and sent over the wire to the event bus.
+
 .. _Events Payload ADR: :doc: `/decisions/0003-events-payload`
+.. _Apache Avro: https://avro.apache.org/docs/current/spec.html
