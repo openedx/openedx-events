@@ -40,6 +40,7 @@ extensions = [
     'sphinx.ext.intersphinx',
     'code_annotations.contrib.sphinx.extensions.settings',
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
