@@ -1,5 +1,5 @@
-How to add a new concrete implementation of the event bus
-=========================================================
+Add a New Concrete Implementation of the Event Bus
+==================================================
 
 Context
 -------

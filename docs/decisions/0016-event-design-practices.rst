@@ -26,7 +26,7 @@ Event Purpose and Content
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 - An event should describe as accurately as possible what happened (what) and why it happened (why). It must contain enough information for consumers to understand the message. For instance, if an event is about a user enrollment, it should contain the user's data, the course data, and the enrollment status and the event should be named accordingly.
-- Avoid immediately contacting the source service to retrieve additional information. Instead, consider adding the necessary information to the event payload by managing the granularity of the event. If the event requires additional information, consider adding a field to the event that contains the necessary information. This will reduce the number of dependencies between services and make the event more self-contained.
+- Avoid immediately contacting the source service to retrieve additional information from the consumer-side. Instead, consider adding the necessary information to the event payload by managing the granularity of the event. If the event requires additional information, consider adding a field to the event that contains the necessary information. This will reduce the number of dependencies between services and make the event more self-contained.
 - Keep the event size small. Avoid adding unnecessary information to the event. If the information is not necessary for consumers to react to the event, consider removing it.
 - Avoid adding flow-control information or business logic to events. Events should be solely a representation of what took place. If a field is necessary to control the behavior of the consumer, consider moving it to the consumer side. If adding additional data to the event is absolutely necessary document the reasoning behind it and carefully study the use case and implications.
 
@@ -124,6 +124,11 @@ Consumer-Centric Design
 Some of these practices might not be applicable to all events, but they are a good starting point to ensure that the events are consistent and maintainable over time. So, design the event so it is small, well-defined and only contain relevant information.
 
 In addition to these practices, review the Architectural Decision Records (ADRs) related to events to understand the naming, versioning, payload, and other practices that are specific to Open edX events.
+
+Consequences
+------------
+
+Following these practices will help ensure that the events are consistent, maintainable, and reusable. It will also help consumers understand the message and react to the event accordingly. However, it might require additional effort to design the event and ensure that it contains the necessary information for consumers to react to the event, although this effort will pay off in the long run. Having these standards in place will also make the decision process easier when designing new events.
 
 .. _Event-Driven Microservices: https://www.oreilly.com/library/view/building-event-driven-microservices/9781492057888/
 .. _Event-Driven article: https://martinfowler.com/articles/201701-event-driven.html
