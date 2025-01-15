@@ -116,7 +116,7 @@ class AvroSignalSerializer:
         Initialize serializer, creating an Avro schema from signal.
 
         Arguments:
-            - signal: An instance of OpenEdxPublicSignal.
+            signal: An instance of OpenEdxPublicSignal.
         """
         self.signal = signal
         self.serializers = {ext.cls: ext.serialize for ext in self.custom_type_serializers()}

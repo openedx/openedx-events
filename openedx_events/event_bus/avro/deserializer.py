@@ -24,11 +24,12 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
     appropriate signal instance
 
     Arguments:
-        - data: Dictionary representation of an Avro record
-        - data_type: Desired Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`
-        - deserializers: Map of Python data type to deserializer method
+        data: Dictionary representation of an Avro record
+        data_type: Desired Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`
+        deserializers: Map of Python data type to deserializer method
+
     Returns:
-        - An instance of data_type
+        An instance of data_type
     """
     param_deserializers = deserializers or {}
     all_deserializers = {**DEFAULT_DESERIALIZERS, **param_deserializers}
@@ -88,8 +89,8 @@ def deserialize_bytes_to_event_data(bytes_from_wire, signal):
     Deserialize event_bus and Avro-serialized data.
 
     Arguments:
-        - bytes_from_wire: data that was serialized by an Avro serializer
-        - signal: An instance of OpenEdxPublicSignal
+        bytes_from_wire: data that was serialized by an Avro serializer
+        signal: An instance of OpenEdxPublicSignal
     """
     deserializer = AvroSignalDeserializer(signal)
     schema_dict = deserializer.schema
@@ -115,7 +116,7 @@ class AvroSignalDeserializer:
         Initialize deserializer, creating an Avro schema from signal.
 
         Arguments:
-            - signal: An instance of OpenEdxPublicSignal
+            signal: An instance of OpenEdxPublicSignal.
         """
         self.signal = signal
         self.deserializers = {ext.cls: ext.deserialize for ext in self.custom_type_serializers()}

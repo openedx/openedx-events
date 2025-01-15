@@ -13,7 +13,7 @@ class OpenEdxEventException(Exception):
         Init method for OpenEdxEventException base class.
 
         Arguments:
-            - message (str): message describing why the exception was raised.
+            message (str): message describing why the exception was raised.
         """
         super().__init__()
         self.message = message
@@ -23,7 +23,7 @@ class OpenEdxEventException(Exception):
         Show string representation of OpenEdxEventException using its message.
 
         Returns:
-            - str: message describing why the exception was raised.
+            str: message describing why the exception was raised.
         """
         return self.message
 
@@ -42,8 +42,8 @@ class InstantiationError(OpenEdxEventException):
         Init method for InstantiationError custom exception class.
 
         Arguments:
-            - event_type (str): name of the event raising the exception.
-            - message (str): message describing why the exception was raised.
+            event_type (str): name of the event raising the exception.
+            message (str): message describing why the exception was raised.
         """
         super().__init__(
             message="InstantiationError {event_type}: {message}".format(
@@ -62,8 +62,8 @@ class SenderValidationError(OpenEdxEventException):
         Init method for SenderValidationError custom exception class.
 
         Arguments:
-            - event_type (str): name of the event raising the exception.
-            - message (str): message describing why the exception was raised.
+            event_type (str): name of the event raising the exception.
+            message (str): message describing why the exception was raised.
         """
         super().__init__(
             message="SenderValidationError {event_type}: {message}".format(
@@ -82,8 +82,8 @@ class ProducerConfigurationError(OpenEdxEventException):
         Init method for ProducerConfigurationError custom exception class.
 
         Arguments:
-            - event_type (str): name of the event raising the exception.
-            - message (str): message describing why the exception was raised.
+            event_type (str): name of the event raising the exception.
+            message (str): message describing why the exception was raised.
         """
         super().__init__(
             message="ProducerConfigurationError {event_type}: {message}".format(
