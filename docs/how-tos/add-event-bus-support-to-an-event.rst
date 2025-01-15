@@ -6,7 +6,7 @@ Before sending an event across services, you need to ensure that the event is co
 For more details on how the :term:`Event Payload` is structured refer to the :doc:`../decisions/0003-events-payload` decision record.
 
 .. note::
-    This guide assumes that you have already created an Open edX event. If you haven't, refer to the :doc:`../how-tos/creating-new-events` how-to guide.
+    This guide assumes that you have already created an Open edX event. If you haven't, refer to the :doc:`../how-tos/create-a-new-event` how-to guide.
 
 Step 1: Does my Event Need Event Bus Support?
 ----------------------------------------------
@@ -124,7 +124,7 @@ Run ``python manage.py generate_avro_schemas --help`` to see the available optio
 Step 5: Send the Event Across Services with the Event Bus
 ---------------------------------------------------------
 
-To validate that you can consume the event emitted by a service through the event bus, you can send the event across services. Here is an example of how you can send the event across services using the Redis event bus implementation following the `setup instructions in a Tutor environment`_. We recommend also following :doc:`../how-tos/using-the-event-bus` to understand how to use the event bus in your environment.
+To validate that you can consume the event emitted by a service through the event bus, you can send the event across services. Here is an example of how you can send the event across services using the Redis event bus implementation following the `setup instructions in a Tutor environment`_. We recommend also following :doc:`../how-tos/use-the-event-bus` to understand how to use the event bus in your environment.
 
 .. note:: If you implemented a custom serializer for a type in the :term:`Event Payload`, the custom serializer support must be included in both the producer and consumer sides before it can be used.
 

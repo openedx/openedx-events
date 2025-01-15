@@ -1,7 +1,7 @@
 Use the Open edX Event Bus
 ==========================
 
-.. note:: Be sure to check out how to make your Open edX Event event bus compatible in the :doc:`../how-tos/adding-event-bus-support-to-an-event` guide.
+.. note:: Be sure to check out how to make your Open edX Event event bus compatible in the :doc:`../how-tos/add-event-bus-support-to-an-event` guide.
 
 After creating a new Open edX Event, you might need to send it across services instead of just within the same process. For this kind of use-cases, you might want to use the Open edX Event Bus. Here :doc:`../concepts/event-bus`, you can find useful information to start getting familiar with the Open edX Event Bus.
 
