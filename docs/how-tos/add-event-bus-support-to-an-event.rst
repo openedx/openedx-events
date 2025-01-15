@@ -1,5 +1,5 @@
-Adding Event Bus Support to an Open edX Event
-=============================================
+Add Event Bus Support to an Open edX Event
+==========================================
 
 Before sending an event across services, you need to ensure that the event is compatible with the Open edX Event Bus. This involves ensuring that the event, with its corresponding payload, can be emitted by a service through the event bus and that it can be consumed by other services. This guide will walk you through the process of adding event bus support to an Open edX event.
 

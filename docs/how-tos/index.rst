@@ -7,7 +7,7 @@ How-tos
 
    create-a-new-event
    consume-an-event
-   adding-event-bus-support-to-an-event
+   add-event-bus-support-to-an-event
    use-the-event-bus-to-broadcast-and-consume-events
-   using-the-event-bus
+   use-the-event-bus
    add-new-event-bus-concrete-implementation

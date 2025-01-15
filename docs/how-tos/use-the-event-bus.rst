@@ -1,5 +1,5 @@
-Using the Open edX Event Bus
-============================
+Use the Open edX Event Bus
+==========================
 
 .. note:: Be sure to check out how to make your Open edX Event event bus compatible in the :doc:`../how-tos/adding-event-bus-support-to-an-event` guide.
 
