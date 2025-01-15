@@ -15,11 +15,11 @@ from opaque_keys.edx.keys import CourseKey, UsageKey
 @attr.s(frozen=True)
 class UserNonPersonalData:
     """
-    Attributes defined for Open edX user object based on non-PII data.
+    Data related to a user object that does not contain personal information (PII).
 
-    Arguments:
-        id (int): unique identifier for the Django User object.
-        is_active (bool): indicates whether the user is active.
+    Attributes:
+        - id (int): unique identifier for the Django User object.
+        - is_active (bool): indicates whether the user is active.
     """
 
     id = attr.ib(type=int)
@@ -29,12 +29,12 @@ class UserNonPersonalData:
 @attr.s(frozen=True)
 class UserPersonalData:
     """
-    Attributes defined for Open edX user object based on PII data.
+    Data related to a user object that contains personal information (PII).
 
-    Arguments:
-        username (str): username associated with the Open edX user.
-        email (str): email associated with the Open edX user.
-        name (str): name associated with the Open edX user's profile.
+    Attributes:
+        - username (str): username associated with the user.
+        - email (str): email associated with the user.
+        - name (str): name associated with the user's profile.
     """
 
     username = attr.ib(type=str)
@@ -45,13 +45,14 @@ class UserPersonalData:
 @attr.s(frozen=True)
 class UserData(UserNonPersonalData):
     """
-    Attributes defined for Open edX user object.
+    Data related to a user object, including personal information and non-personal information.
 
-    This class extends UserNonPersonalData to include PII data completing the
-    user object.
+    This class extends UserNonPersonalData to include PII data completing the user object.
 
-    Arguments:
-        pii (UserPersonalData): user's Personal Identifiable Information.
+    Attributes:
+        - id (int): unique identifier for the Django User object.
+        - is_active (bool): indicates whether the user is active.
+        - pii (UserPersonalData): user's Personal Identifiable Information.
     """
 
     pii = attr.ib(type=UserPersonalData)
@@ -60,13 +61,16 @@ class UserData(UserNonPersonalData):
 @attr.s(frozen=True)
 class CourseData:
     """
-    Attributes defined for Open edX Course Overview object.
+    Data related to a course object.
 
-    Arguments:
-        course_key (str): identifier of the Course object.
-        display_name (str): display name associated with the course.
-        start (datetime): start date for the course.
-        end (datetime): end date for the course.
+    This data is based on the fields available in the CourseOverview data model
+    defined in the course_overviews app.
+
+    Attributes:
+        - course_key (str): identifier of the course.
+        - display_name (str): display name associated with the course.
+        - start (datetime): start date for the course. Defaults to None.
+        - end (datetime): end date for the course. Defaults to None.
     """
 
     course_key = attr.ib(type=CourseKey)
@@ -81,14 +85,14 @@ class CcxCourseData:
     Represents data for a CCX (Custom Courses for edX) course.
 
     Attributes:
-        ccx_course_key (CCXLocator): The unique identifier for the CCX course.
-        master_course_key (CourseKey): The unique identifier for the original course from which the CCX is derived.
-        display_name (str): The name of the CCX course as it should appear to users.
-        coach_email (str): The email address of the coach (instructor) for the CCX course.
-        start (str, optional): The start date of the CCX course. Defaults to None, indicating no specific start date.
-        end (str, optional): The end date of the CCX course. Defaults to None, indicating no specific end date.
-        max_students_allowed (int, optional): The maximum number of students that can enroll in the CCX course.
-        Defaults to None, indicating no limit.
+        - ccx_course_key (CCXLocator): The unique identifier for the CCX course.
+        - master_course_key (CourseKey): The unique identifier for the original course from which the CCX is derived.
+        - display_name (str): The name of the CCX course as it should appear to users.
+        - coach_email (str): The email address of the coach (instructor) for the CCX course.
+        - start (str, optional): The start date of the CCX course. Defaults to None, indicating no specific start date.
+        - end (str, optional): The end date of the CCX course. Defaults to None, indicating no specific end date.
+        - max_students_allowed (int, optional): The maximum number of students that can enroll in the CCX course.
+          Defaults to None, indicating no limit.
     """
 
     ccx_course_key = attr.ib(type=CCXLocator)
@@ -103,15 +107,18 @@ class CcxCourseData:
 @attr.s(frozen=True)
 class CourseEnrollmentData:
     """
-    Attributes defined for Open edX Course Enrollment object.
+    Data related to a course enrollment object.
 
-    Arguments:
-        user (UserData): user associated with the Course Enrollment.
-        course (CourseData): course where the user is enrolled in.
-        mode (str): course mode associated with the course enrollment.
-        is_active (bool): whether the enrollment is active.
-        creation_date (datetime): creation date of the enrollment.
-        created_by (UserData): if available, who created the enrollment.
+    This data is based on the fields available in the CourseEnrollment data model
+    defined in the student app.
+
+    Attributes:
+        - user (UserData): user associated with the Course Enrollment.
+        - course (CourseData): course where the user is enrolled in.
+        - mode (str): course mode associated with the course enrollment.
+        - is_active (bool): whether the enrollment is active.
+        - creation_date (datetime): creation date of the enrollment.
+        - created_by (UserData): if available, who created the enrollment.
     """
 
     user = attr.ib(type=UserData)
@@ -125,17 +132,20 @@ class CourseEnrollmentData:
 @attr.s(frozen=True)
 class CertificateData:
     """
-    Attributes defined for Open edX Certificate data object.
+    Data related to a certificate object.
 
-    Arguments:
-        user (UserData): user associated with the Certificate.
-        course (CourseData): course where the user obtained the certificate.
-        mode (str): course mode associated with the course enrollment.
-        grade (str): user's grade in this course run.
-        download_url (str): URL where the PDF version of the certificate.
-        name (str): user's name.
-        current_status (str): current certificate status.
-        previous_status (str): if available, pre-event certificate status.
+    This data is based on the GeneratedCertificate data model defined in the
+    certificates app.
+
+    Attributes:
+        - user (UserData): user associated with the Certificate.
+        - course (CourseData): course where the user obtained the certificate.
+        - mode (str): course mode associated with the course enrollment.
+        - grade (str): user's grade in this course run.
+        - download_url (str): URL where the PDF version of the certificate.
+        - name (str): user's name.
+        - current_status (str): current certificate status.
+        - previous_status (str): if available, pre-event certificate status.
     """
 
     user = attr.ib(type=UserData)
@@ -151,12 +161,15 @@ class CertificateData:
 @attr.s(frozen=True)
 class CohortData:
     """
-    Attributes defined for Open edX Cohort Membership object.
+    Attributes defined for cohort membership object.
 
-    Arguments:
-        user (UserData): user assigned to the group.
-        course (CourseData): course associated with the course group.
-        name (str): name of the cohort group.
+    This data is based on the fields available in the CohortMembership data model
+    defined in the cohorts app.
+
+    Attributes:
+        - user (UserData): user assigned to the group.
+        - course (CourseData): course associated with the course group.
+        - name (str): name of the cohort group.
     """
 
     user = attr.ib(type=UserData)
@@ -167,19 +180,19 @@ class CohortData:
 @attr.s(frozen=True)
 class DiscussionTopicContext:
     """
-    Attributes defined for Open edX Discussion Topic Context object.
+    Data related to a discussion topic context.
 
     Context for linking the external id for a discussion topic to its associated usage key.
 
-    Arguments:
-        title (str): title of the discussion. This field is cached to improve the performance, since otherwise we'd
-        need to look it up in the course structure each time.
-        usage_key (str): unit location.
-        group_id (Optional[int]): can be used for providers that don't internally support
-        cohorting but we can emulate that with different contexts for different groups.
-        external_id (str): store the commentable id that is used by cs_comments_service.
-        ordering (int): represent the position of the discussion topic.
-        context (dict): additional structured information about the context in
+    Attributes:
+        - title (str): title of the discussion. This field is cached to improve the performance, since otherwise we'd
+          need to look it up in the course structure each time.
+        - usage_key (str): unit location.
+        - group_id (Optional[int]): can be used for providers that don't internally support
+        - cohorting but we can emulate that with different contexts for different groups.
+        - external_id (str): store the commentable id that is used by cs_comments_service.
+        - ordering (int): represent the position of the discussion topic.
+        - context (dict): additional structured information about the context in
           which this topic is used, such as the section, subsection etc.
     """
 
@@ -194,20 +207,20 @@ class DiscussionTopicContext:
 @attr.s(frozen=True)
 class CourseDiscussionConfigurationData:
     """
-    Attributes defined for Open edX Course Discussion Configuration Data object.
+    Data related to a course discussion configuration object.
 
     Course configuration information for discussions. Contains all the metadata
     needed to configure discussions for a course.
 
-    Arguments:
-        course_key (str): identifier of the course to which the discussion belongs.
-        provider_type (str): provider type from discussion settings.
-        enable_in_context (bool): indicates whether in-context discussion is enabled for the course
-        enable_graded_units (bool): If enabled, discussion topics will be created for graded units as well.
-        unit_level_visibility (bool): visibility for unit level.
-        plugin_configuration (dict): The plugin configuration data for this context/provider.
-        contexts (List[DiscussionTopicContext]): contains all the contexts for which discussion
-        is to be enabled.
+    Attributes:
+        - course_key (str): identifier of the course to which the discussion belongs.
+        - provider_type (str): provider type from discussion settings.
+        - enable_in_context (bool): indicates whether in-context discussion is enabled for the course
+        - enable_graded_units (bool): If enabled, discussion topics will be created for graded units as well.
+        - unit_level_visibility (bool): visibility for unit level.
+        - plugin_configuration (dict): The plugin configuration data for this context/provider.
+        - contexts (List[DiscussionTopicContext]): contains all the contexts for which discussion
+          is to be enabled.
     """
 
     course_key = attr.ib(type=CourseKey)
@@ -222,17 +235,20 @@ class CourseDiscussionConfigurationData:
 @attr.s(frozen=True)
 class PersistentCourseGradeData:
     """
-    Attributes defined for Open edX PersistentCourseGrade data object.
+    Data related to a persistent course grade object.
 
-    Arguments:
-        user_id (int): identifier of the grade to which the grade belongs.
-        course (CourseData): Identifier of the course to which the grade belongs.
-        course_edited_timestamp (datetime): date the course was edited.
-        course_version (str): version of the course.
-        grading_policy_hash (str): grading policy hash of the course.
-        percent_grade (float): percentage of the grade.
-        letter_grade (str): grade in letter
-        passed_timestamp (datetime): date the course was passed.
+    This data is based on the fields available in the PersistentCourseGrade data model
+    defined in the grades app.
+
+    Attributes:
+        - user_id (int): identifier of the grade to which the grade belongs.
+        - course (CourseData): Identifier of the course to which the grade belongs.
+        - course_edited_timestamp (datetime): date the course was edited.
+        - course_version (str): version of the course.
+        - grading_policy_hash (str): grading policy hash of the course.
+        - percent_grade (float): percentage of the grade.
+        - letter_grade (str): grade in letter
+        - passed_timestamp (datetime): date the course was passed.
     """
 
     user_id = attr.ib(type=int)
@@ -248,14 +264,14 @@ class PersistentCourseGradeData:
 @attr.s(frozen=True)
 class XBlockSkillVerificationData:
     """
-    Data needed to update verification count  of tags/skills for an XBlock.
+    Data needed to update verification count of tags/skills for an XBlock.
 
     User feedback on whether tags/skills related to an XBlock are valid.
 
-    Arguments:
-        usage_key (UsageKey): identifier of the XBlock object.
-        verified_skills (List[int]): list of verified skill ids.
-        ignored_skills (List[int]): list of ignored skill ids.
+    Attributes:
+        - usage_key (UsageKey): identifier of the XBlock object.
+        - verified_skills (List[int]): list of verified skill ids.
+        - ignored_skills (List[int]): list of ignored skill ids.
     """
 
     usage_key = attr.ib(type=UsageKey)
@@ -266,15 +282,15 @@ class XBlockSkillVerificationData:
 @attr.s(frozen=True)
 class UserNotificationData:
     """
-    Attributes defined for Open edX User Notification data object.
+    Data related to a user notification object.
 
-    Arguments:
-        user_ids (List(int)): identifier of the users to which the notification belongs.
-        notification_type (str): type of the notification.
-        content_url (str): url of the content.
-        app_name (str): name of the app.
-        course_key (str): identifier of the Course object.
-        context (dict): additional structured information about the context of the notification.
+    Attributes:
+        - user_ids (List(int)): identifier of the users to which the notification belongs.
+        - notification_type (str): type of the notification.
+        - content_url (str): url of the content.
+        - app_name (str): name of the app.
+        - course_key (str): identifier of the Course object.
+        - context (dict): additional structured information about the context of the notification.
     """
 
     user_ids = attr.ib(type=List[int])
@@ -288,12 +304,12 @@ class UserNotificationData:
 @attr.s(frozen=True)
 class ProgramData:
     """
-    Attributes defined for the Open edX Program data object.
+    Data related to a program object.
 
-    Arguments:
-        uuid (str): The UUID of the program (from Course-Discovery)
-        title (str): The title of the program
-        program_type (str): The type slug of the program (e.g. professional, microbachelors, micromasters, etc.)
+    Attributes:
+        - uuid (str): The UUID of the program (from Course-Discovery).
+        - title (str): The title of the program.
+        - program_type (str): The type slug of the program (e.g. professional, microbachelors, micromasters, etc.).
     """
 
     uuid = attr.ib(type=str)
@@ -304,16 +320,16 @@ class ProgramData:
 @attr.s(frozen=True)
 class ProgramCertificateData:
     """
-    Attributes defined for the Open edX Program Certificate data object.
+    Data related to a Program Certificate object.
 
-    Arguments:
-        user (UserData): User associated with the Program Certificate
-        program (ProgramData): Program data associated with the Program Certificate
-        uuid (str): UUID of the UserCredential record in Credentials
-        certificate_available_date (datetime): Optional. A DateTime describing when a learner is allowed to view the
-                                                credential
-        status (str): The status of the credential (e.g. `awarded` or `revoked`)
-        url (str): A URL to the learner's credential
+    Attributes:
+        - user (UserData): User associated with the Program Certificate.
+        - program (ProgramData): Program data associated with the Program Certificate.
+        - uuid (str): UUID of the UserCredential record in Credentials.
+        - certificate_available_date (datetime): Optional. A DateTime describing when a learner is allowed to view the
+          credential.
+        - status (str): The status of the credential (e.g. `awarded` or `revoked`).
+        - url (str): A URL to the learner's credential.
     """
 
     user = attr.ib(type=UserData)
@@ -327,7 +343,7 @@ class ProgramCertificateData:
 @attr.s(frozen=True)
 class ExamAttemptData:
     """
-    Attributes defined for the Open edX Exam downstream effects.
+    Data for the Open edX Exam downstream effects.
 
     Note that events that use this data type:
         A. Pretain to "Special Exams", e.g. Timed or Proctored exams, and not non-timed course
@@ -342,12 +358,12 @@ class ExamAttemptData:
     For more information, please see the ADR relating to this event data:
     https://github.com/openedx/openedx-events/blob/main/docs/decisions/0013-special-exam-submission-and-review-events.rst
 
-    Arguments:
-        student_user (UserData): user object for the student to whom the exam attempt belongs
-        course_key (CourseKey): identifier of the course to which the exam attempt belongs
-        usage_key (UsageKey): identifier of the content that will get a exam attempt
-        exam_type (str): type of exam that was taken (e.g. timed, proctored, etc.)
-        requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
+    Attributes:
+        - student_user (UserData): user object for the student to whom the exam attempt belongs
+        - course_key (CourseKey): identifier of the course to which the exam attempt belongs
+        - usage_key (UsageKey): identifier of the content that will get a exam attempt
+        - exam_type (str): type of exam that was taken (e.g. timed, proctored, etc.)
+        - requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
     """
 
     student_user = attr.ib(type=UserData)
@@ -360,13 +376,13 @@ class ExamAttemptData:
 @attr.s(frozen=True)
 class CourseAccessRoleData:
     """
-    Attributes defined for the Open edX Course Access Role data object.
+    Data related to a user's access role in a course.
 
-    Arguments:
-        user (UserData): user associated with the CourseAccessRole.
-        course_key (CourseKey): identifer of the related course object.
-        org (str): identifier of the organization.
-        role (str): the role of the user in the course.
+    Attributes:
+        - user (UserData): user associated with the CourseAccessRole.
+        - course_key (CourseKey): identifier of the related course object.
+        - org (str): identifier of the organization.
+        - role (str): the role of the user in the course.
     """
 
     user = attr.ib(type=UserData)
@@ -378,32 +394,32 @@ class CourseAccessRoleData:
 @attr.s(frozen=True)
 class DiscussionThreadData:
     """
-    Attributes defined for the Open edX to represent events in the Forum such as comments, responses, and threads.
+    Data related to a discussion thread object, used to represent Forum events such as comments, responses, and threads.
 
     For more details on the data attributes, please see the following documentation:
     https://docs.openedx.org/en/latest/developers/references/internal_data_formats/tracking_logs/student_event_types.html#edx-forum-thread-created
 
-    Arguments:
-        anonymous (bool): indicates whether the user is anonymous.
-        anonymous_to_peers (bool): indicates whether the user is anonymous to peers.
-        body (str): body of the discussion thread.
-        category_id (int): identifier of the category.
-        category_name (str): name of the category.
-        commentable_id (str): identifier of the commentable.
-        group_id (int): identifier of the group.
-        id (int): identifier of the discussion thread.
-        team_id (int): identifier of the team.
-        thread_type (str): type of the thread.
-        title (str): title of the thread.
-        title_truncated (bool): indicates whether the title is truncated.
-        truncated (bool): indicates whether the thread is truncated.
-        url (str): url of the thread.
-        user (UserData): information of the user that authored the thread/comment/response.
-        course_id (CourseKey): identifier of the course.
-        discussion (dict): discussion data. (optional, specific to comments and responses)
-        user_course_roles (List[str]): user course roles.
-        user_forums_roles (List[str]): user forums roles.
-        options (dict): options for the thread.
+    Attributes:
+        - anonymous (bool): indicates whether the user is anonymous.
+        - anonymous_to_peers (bool): indicates whether the user is anonymous to peers.
+        - body (str): body of the discussion thread.
+        - category_id (int): identifier of the category.
+        - category_name (str): name of the category.
+        - commentable_id (str): identifier of the commentable.
+        - group_id (int): identifier of the group.
+        - id (int): identifier of the discussion thread.
+        - team_id (int): identifier of the team.
+        - thread_type (str): type of the thread.
+        - title (str): title of the thread.
+        - title_truncated (bool): indicates whether the title is truncated.
+        - truncated (bool): indicates whether the thread is truncated.
+        - url (str): url of the thread.
+        - user (UserData): information of the user that authored the thread/comment/response.
+        - course_id (CourseKey): identifier of the course.
+        - discussion (dict): discussion data. (optional, specific to comments and responses)
+        - user_course_roles (List[str]): user course roles.
+        - user_forums_roles (List[str]): user forums roles.
+        - options (dict): options for the thread.
     """
 
     anonymous = attr.ib(type=bool)
@@ -431,32 +447,32 @@ class DiscussionThreadData:
 @attr.s(frozen=True)
 class CourseNotificationData:
     """
-    Attributes defined for Open edX Course Notification data object.
+    Data related to a course notification object.
 
-    Arguments:
-        course_key (str): identifier of the Course object.
-        app_name (str): name of the app requesting the course notification.
-        notification_type (str): type of the notification.
-        content_url (str): url of the content the notification will redirect to.
-        content_context (dict): additional information related to the content of the notification.
-            Notification content templates are defined in edx-platform here:
-                https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/base_notification.py#L10
+    Attributes:
+        - course_key (str): identifier of the Course object.
+        - app_name (str): name of the app requesting the course notification.
+        - notification_type (str): type of the notification.
+        - content_url (str): url of the content the notification will redirect to.
+        - content_context (dict): additional information related to the content of the notification.
+          Notification content templates are defined in edx-platform here:
+          https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/base_notification.py#L10
 
         Example of content_context for a discussion notification (new_comment_on_response):
 
-            {
+            >>> {
                 ...,
                 "content_context": {
                     "post_title": "Post Title",
                     "replier_name": "test_user",
             }
 
-        audience_filters (dict): additional information related to the audience of the notification.
-            We can have different filters on course level, such as roles, enrollments, cohorts etc.
+        - audience_filters (dict): additional information related to the audience of the notification.
+          We can have different filters on course level, such as roles, enrollments, cohorts etc.
 
         Example of audience_filters for a discussion notification (new_discussion_post):
 
-            {
+            >>> {
                 ...,
                 "audience_filters": {
                     "enrollment": ["verified", "audit"],
@@ -475,18 +491,18 @@ class CourseNotificationData:
 @attr.s(frozen=True)
 class ORASubmissionAnswer:
     """
-    Attributes defined to represent the answer submitted by the user in an ORA submission.
+    Data related to the answer submitted by the user in an ORA submission.
 
-    Arguments:
-        parts (List[dict]): List with the response text in the ORA submission.
+    Attributes:
+        - parts (List[dict]): List with the response text in the ORA submission.
 
         The following attributes are used to represent the files submitted in the ORA submission:
 
-        file_keys (List[str]): List of file keys in the ORA submission.
-        file_descriptions (List[str]): List of file descriptions in the ORA submission.
-        file_names (List[str]): List of file names in the ORA submission.
-        file_sizes (List[int]): List of file sizes in the ORA submission.
-        file_urls (List[str]): List of file URLs in the ORA submission.
+        - file_keys (List[str]): List of file keys in the ORA submission.
+        - file_descriptions (List[str]): List of file descriptions in the ORA submission.
+        - file_names (List[str]): List of file names in the ORA submission.
+        - file_sizes (List[int]): List of file sizes in the ORA submission.
+        - file_urls (List[str]): List of file URLs in the ORA submission.
     """
 
     parts = attr.ib(type=List[dict], factory=list)
@@ -500,16 +516,16 @@ class ORASubmissionAnswer:
 @attr.s(frozen=True)
 class ORASubmissionData:
     """
-    Attributes defined to represent event when a user submits an ORA assignment.
+    Data associated to the ORA assessment submitted by a user.
 
-    Arguments:
-        uuid (str): The UUID of the ORA submission.
-        anonymous_user_id (str): Optional. Anonymous user ID of the user who submitted the ORA submission.
-        location (str): Optional. Location of the ORA submission.
-        attempt_number (int): Attempt number of the ORA submission.
-        created_at (datetime): Date and time when the ORA submission was created.
-        submitted_at (datetime): Date and time when the ORA submission was submitted.
-        answer (ORASubmissionAnswer): Answer submitted by the user in the ORA submission.
+    Attributes:
+        - uuid (str): The UUID of the ORA submission.
+        - anonymous_user_id (str): Optional. Anonymous user ID of the user who submitted the ORA submission.
+        - location (str): Optional. Location of the ORA submission.
+        - attempt_number (int): Attempt number of the ORA submission.
+        - created_at (datetime): Date and time when the ORA submission was created.
+        - submitted_at (datetime): Date and time when the ORA submission was submitted.
+        - answer (ORASubmissionAnswer): Answer submitted by the user in the ORA submission.
     """
 
     uuid = attr.ib(type=str)
@@ -527,10 +543,10 @@ class CoursePassingStatusData:
     Represents the event data when a user's grade is updated, indicates if current grade is enough for course passing.
 
     Attributes:
-        is_passing (bool): Indicates whether the user's grade is enough to pass the course.
-        user (UserData): An instance of UserData containing information about the user whose grade was updated.
-        course (CourseData): An instance of CourseData containing details about the course
-        in which the grade was updated.
+        - is_passing (bool): Indicates whether the user's grade is enough to pass the course.
+        - user (UserData): An instance of UserData containing information about the user whose grade was updated.
+        - course (CourseData): An instance of CourseData containing details about the course
+          in which the grade was updated.
     """
 
     is_passing = attr.ib(type=bool)
@@ -547,8 +563,9 @@ class CcxCoursePassingStatusData(CoursePassingStatusData):
     providing a custom course attribute suited for CCX course instances.
 
     Attributes:
-        course (CcxCourseData): An instance of CcxCourseData containing details about the CCX course
-        in which the grade threshold was crossed.
+        - course (CcxCourseData): An instance of CcxCourseData containing details about the CCX course
+          in which the grade threshold was crossed.
+
         All other attributes are inherited from CoursePassingStatusData.
     """
 
@@ -558,14 +575,14 @@ class CcxCoursePassingStatusData(CoursePassingStatusData):
 @attr.s(frozen=True)
 class BadgeTemplateData:
     """
-    Attributes defined for Open edX badge template data object.
+    Data related to a badge template object.
 
-    Arguments:
-        uuid (str): UUID of the badge template
-        origin (str): type of badge template
-        name (str): badge name
-        description (str): badge description
-        image_url (str): badge image url
+    Attributes:
+        - uuid (str): UUID of the badge template.
+        - origin (str): type of badge template.
+        - name (str): badge name.
+        - description (str): badge description.
+        - image_url (str): badge image url.
     """
 
     uuid = attr.ib(type=str)
@@ -578,12 +595,12 @@ class BadgeTemplateData:
 @attr.s(frozen=True)
 class BadgeData:
     """
-    Attributes defined for the Open edX badge data object.
+    Data related to a badge object.
 
-    Arguments:
-        uuid (str): the UUID of the badge
-        user (UserData): user associated with the badge
-        template (BadgeTemplateData): badge template data
+    Attributes:
+        - uuid (str): the UUID of the badge.
+        - user (UserData): user associated with the badge.
+        - template (BadgeTemplateData): badge template data.
     """
 
     uuid = attr.ib(type=str)
@@ -594,14 +611,14 @@ class BadgeData:
 @attr.s(frozen=True)
 class VerificationAttemptData:
     """
-    Attributes defined for the Open edX IDV attempt data object.
+    Data related to a IDV attempt object.
 
-    Arguments:
-        attempt_id (int): the id of the verification attempt
-        user (User): the user (usually a learner) performing the verification attempt.
-        status (string): the status of the verification attempt.
-        name (string): the name being ID verified. Defaults to None.
-        expiration_datetime (datetime, optional): When the verification attempt expires. Defaults to None.
+    Attributes:
+        - attempt_id (int): the id of the verification attempt
+        - user (User): the user (usually a learner) performing the verification attempt.
+        - status (string): the status of the verification attempt.
+        - name (string): the name being ID verified. Defaults to None.
+        - expiration_datetime (datetime, optional): When the verification attempt expires. Defaults to None.
     """
 
     attempt_id = attr.ib(type=int)

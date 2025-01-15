@@ -33,7 +33,7 @@ from openedx_events.tooling import OpenEdxPublicSignal
 # .. event_type: org.openedx.learning.student.registration.completed.v1
 # .. event_name: STUDENT_REGISTRATION_COMPLETED
 # .. event_key_field: user.pii.username
-# .. event_description: emitted when the user registration process in the LMS is completed.
+# .. event_description: Emitted when a user completes registration in Open edX.
 # .. event_data: UserData
 # .. event_trigger_repository: openedx/edx-platform
 STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
@@ -47,7 +47,7 @@ STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.auth.session.login.completed.v1
 # .. event_name: SESSION_LOGIN_COMPLETED
 # .. event_key_field: user.pii.username
-# .. event_description: emitted when the user's login process in the LMS is completed.
+# .. event_description: Emitted when a user logs in to Open edX.
 # .. event_data: UserData
 # .. event_trigger_repository: openedx/edx-platform
 SESSION_LOGIN_COMPLETED = OpenEdxPublicSignal(
@@ -61,7 +61,7 @@ SESSION_LOGIN_COMPLETED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.course.enrollment.created.v1
 # .. event_name: COURSE_ENROLLMENT_CREATED
 # .. event_key_field: enrollment.course.course_key
-# .. event_description: emitted when the user's enrollment process is completed.
+# .. event_description: Emitted when the user enrolls in a course.
 # .. event_data: CourseEnrollmentData
 # .. event_trigger_repository: openedx/edx-platform
 COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
@@ -75,7 +75,7 @@ COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.course.enrollment.changed.v1
 # .. event_name: COURSE_ENROLLMENT_CHANGED
 # .. event_key_field: enrollment.course.course_key
-# .. event_description: emitted when the user's enrollment update process is completed.
+# .. event_description: Emitted when the enrollment for a user in a course changes.
 # .. event_data: CourseEnrollmentData
 # .. event_trigger_repository: openedx/edx-platform
 COURSE_ENROLLMENT_CHANGED = OpenEdxPublicSignal(
@@ -89,7 +89,7 @@ COURSE_ENROLLMENT_CHANGED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.course.unenrollment.completed.v1
 # .. event_name: COURSE_UNENROLLMENT_COMPLETED
 # .. event_key_field: enrollment.course.course_key
-# .. event_description: emitted when the user's unenrollment process is completed.
+# .. event_description: Emitted when the user unenrolls from a course.
 # .. event_data: CourseEnrollmentData
 # .. event_trigger_repository: openedx/edx-platform
 COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
@@ -103,7 +103,7 @@ COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.certificate.created.v1
 # .. event_name: CERTIFICATE_CREATED
 # .. event_key_field: certificate.course.course_key
-# .. event_description: emitted when the user's certificate creation process is completed.
+# .. event_description: Emitted when a certificate is created for a user.
 # .. event_data: CertificateData
 # .. event_trigger_repository: openedx/edx-platform
 CERTIFICATE_CREATED = OpenEdxPublicSignal(
@@ -116,7 +116,7 @@ CERTIFICATE_CREATED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.program.certificate.awarded.v1
 # .. event_name: PROGRAM_CERTIFICATE_AWARDED
 # .. event_key_field: program_certificate.program.uuid
-# .. event_description: Emit when a program certificate is awarded to a learner
+# .. event_description: Emitted when a program certificate is awarded to a learner.
 # .. event_data: ProgramCertificateData
 # .. event_trigger_repository: openedx/credentials
 PROGRAM_CERTIFICATE_AWARDED = OpenEdxPublicSignal(
@@ -128,7 +128,7 @@ PROGRAM_CERTIFICATE_AWARDED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.certificate.changed.v1
 # .. event_name: CERTIFICATE_CHANGED
-# .. event_description: emitted when the user's certificate update process is completed.
+# .. event_description: Emitted when the user's certificate changes.
 # .. event_data: CertificateData
 # .. event_trigger_repository: openedx/edx-platform
 CERTIFICATE_CHANGED = OpenEdxPublicSignal(
@@ -142,7 +142,7 @@ CERTIFICATE_CHANGED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.certificate.revoked.v1
 # .. event_name: CERTIFICATE_REVOKED
 # .. event_key_field: certificate.course.course_key
-# .. event_description: emitted when the user's certificate annulation process is completed.
+# .. event_description: Emitted when a certificate is revoked from a user.
 # .. event_data: CertificateData
 # .. event_trigger_repository: openedx/edx-platform
 CERTIFICATE_REVOKED = OpenEdxPublicSignal(
@@ -155,7 +155,7 @@ CERTIFICATE_REVOKED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.program.certificate.revoked.v1
 # .. event_name: PROGRAM_CERTIFICATE_REVOKED
 # .. event_key_field: program_certificate.program.uuid
-# .. event_description: Emit when a program certificate is revoked from a learner
+# .. event_description: Emit when a program certificate is revoked from a learner.
 # .. event_data: ProgramCertificateData
 # .. event_trigger_repository: openedx/credentials
 PROGRAM_CERTIFICATE_REVOKED = OpenEdxPublicSignal(
@@ -167,7 +167,7 @@ PROGRAM_CERTIFICATE_REVOKED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.cohort_membership.changed.v1
 # .. event_name: COHORT_MEMBERSHIP_CHANGED
-# .. event_description: emitted when the user's cohort update is completed.
+# .. event_description: Emitted when a user's cohort membership changes.
 # .. event_data: CohortData
 # .. event_trigger_repository: openedx/edx-platform
 COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
@@ -180,7 +180,7 @@ COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.discussions.configuration.changed.v1
 # .. event_name: COURSE_DISCUSSIONS_CHANGED
-# .. event_description: emitted when the configuration for a course's discussions changes in the course
+# .. event_description: Emitted when the configuration for a course's discussions changes in the course.
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_data: CourseDiscussionConfigurationData
 # .. event_trigger_repository: openedx/edx-platform
@@ -193,7 +193,7 @@ COURSE_DISCUSSIONS_CHANGED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.course.persistent_grade.summary.v1
 # .. event_name: PERSISTENT_GRADE_SUMMARY_CHANGED
-# .. event_description: emitted when a grade changes in the course
+# .. event_description: Emitted when a course's persistent grade summary changes for a user.
 # .. event_data: PersistentCourseGradeData
 # .. event_trigger_repository: openedx/edx-platform
 PERSISTENT_GRADE_SUMMARY_CHANGED = OpenEdxPublicSignal(
@@ -207,7 +207,7 @@ PERSISTENT_GRADE_SUMMARY_CHANGED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.xblock.skill.verified.v1
 # .. event_name: XBLOCK_SKILL_VERIFIED
 # .. event_key_field: xblock_info.usage_key
-# .. event_description: Fired when an XBlock skill is verified.
+# .. event_description: Emitted when an XBlock skill is verified.
 # .. event_data: XBlockSkillVerificationData
 # .. event_trigger_repository: openedx/xblock-skill-tagging
 XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
@@ -219,7 +219,7 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.user.notification.requested.v1
 # .. event_name: USER_NOTIFICATION_REQUESTED
-# .. event_description: Can be fired from apps to send user notifications.
+# .. event_description: Can be emitted from apps to send user notifications.
 # .. event_data: UserNotificationSendListData
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_trigger_repository: openedx/edx-platform openedx/edx-ora2
@@ -317,7 +317,7 @@ COURSE_ACCESS_ROLE_REMOVED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.forum.thread.created.v1
 # .. event_name: FORUM_THREAD_CREATED
-# .. event_description: Emitted when a new thread is created in a discussion
+# .. event_description: Emitted when a new thread is created in a discussion.
 # .. event_data: DiscussionThreadData
 # .. event_trigger_repository: openedx/edx-platform
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
@@ -330,7 +330,7 @@ FORUM_THREAD_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.forum.thread.response.created.v1
 # .. event_name: FORUM_THREAD_RESPONSE_CREATED
-# .. event_description: Emitted when a new response is added to a thread
+# .. event_description: Emitted when a new response is added to a thread.
 # .. event_data: DiscussionThreadData
 # .. event_trigger_repository: openedx/edx-platform
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
@@ -343,7 +343,7 @@ FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.forum.thread.response.comment.created.v1
 # .. event_name: FORUM_RESPONSE_COMMENT_CREATED
-# .. event_description: Emitted when a new comment is added to a response
+# .. event_description: Emitted when a new comment is added to a response.
 # .. event_data: DiscussionThreadData
 # .. event_trigger_repository: openedx/edx-platform
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
@@ -357,7 +357,7 @@ FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.course.notification.requested.v1
 # .. event_name: COURSE_NOTIFICATION_REQUESTED
-# .. event_description: Emitted when a notification is requested for a course
+# .. event_description: Emitted when a notification is requested for a course.
 # .. event_data: CourseNotificationData
 # .. event_trigger_repository: openedx/edx-platform
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
@@ -371,7 +371,7 @@ COURSE_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.ora.submission.created.v1
 # .. event_name: ORA_SUBMISSION_CREATED
-# .. event_description: Emitted when a new ORA submission is created
+# .. event_description: Emitted when a user submits an ORA assignment.
 # .. event_data: ORASubmissionData
 # .. event_trigger_repository: openedx/edx-ora2
 # .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
@@ -411,7 +411,7 @@ CCX_COURSE_PASSING_STATUS_UPDATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.badge.awarded.v1
 # .. event_name: BADGE_AWARDED
-# .. event_description: Emit when a badge is awarded to a learner
+# .. event_description: Emit when a badge is awarded to a learner.
 # .. event_data: BadgeData
 # .. event_trigger_repository: openedx/credentials
 BADGE_AWARDED = OpenEdxPublicSignal(
@@ -424,7 +424,7 @@ BADGE_AWARDED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.badge.revoked.v1
 # .. event_name: BADGE_REVOKED
-# .. event_description: Emit when a badge is revoked for a learner
+# .. event_description: Emit when a badge is revoked for a learner,
 # .. event_data: BadgeData
 # .. event_trigger_repository: openedx/credentials
 BADGE_REVOKED = OpenEdxPublicSignal(
@@ -437,7 +437,7 @@ BADGE_REVOKED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.idv_attempt.created.v1
 # .. event_name: IDV_ATTEMPT_CREATED
-# .. event_description: Emitted when an IDV attempt is created
+# .. event_description: Emitted when an IDV attempt is created.
 # .. event_data: VerificationAttemptData
 # .. event_trigger_repository: openedx/edx-platform
 IDV_ATTEMPT_CREATED = OpenEdxPublicSignal(
@@ -450,7 +450,7 @@ IDV_ATTEMPT_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.idv_attempt.pending.v1
 # .. event_name: IDV_ATTEMPT_PENDING
-# .. event_description: Emitted when an IDV attempt is marked as pending
+# .. event_description: Emitted when an IDV attempt is marked as pending.
 # .. event_data: VerificationAttemptData
 # .. event_trigger_repository: openedx/edx-platform
 IDV_ATTEMPT_PENDING = OpenEdxPublicSignal(
@@ -463,7 +463,7 @@ IDV_ATTEMPT_PENDING = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.idv_attempt.approved.v1
 # .. event_name: IDV_ATTEMPT_APPROVED
-# .. event_description: Emitted when an IDV attempt is approved
+# .. event_description: Emitted when an IDV attempt is approved.
 # .. event_data: VerificationAttemptData
 # .. event_trigger_repository: openedx/edx-platform
 IDV_ATTEMPT_APPROVED = OpenEdxPublicSignal(
@@ -476,7 +476,7 @@ IDV_ATTEMPT_APPROVED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.learning.idv_attempt.denied.v1
 # .. event_name: IDV_ATTEMPT_DENIED
-# .. event_description: Emitted when an IDV attempt is denied
+# .. event_description: Emitted when an IDV attempt is denied.
 # .. event_data: VerificationAttemptData
 # .. event_trigger_repository: openedx/edx-platform
 IDV_ATTEMPT_DENIED = OpenEdxPublicSignal(

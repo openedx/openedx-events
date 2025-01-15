@@ -133,7 +133,7 @@ COURSE_CERTIFICATE_CONFIG_DELETED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.course.created.v1
 # .. event_name: COURSE_CREATED
-# .. event_description: emitted when a course is created
+# .. event_description: Emitted when a course is created.
 # .. event_data: CourseData
 # .. event_trigger_repository: openedx/edx-platform
 COURSE_CREATED = OpenEdxPublicSignal(
@@ -145,7 +145,7 @@ COURSE_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content_library.created.v1
 # .. event_name: CONTENT_LIBRARY_CREATED
-# .. event_description: emitted when a content library is created
+# .. event_description: Emitted when a content library is created.
 # .. event_data: ContentLibraryData
 # .. event_trigger_repository: openedx/edx-platform
 CONTENT_LIBRARY_CREATED = OpenEdxPublicSignal(
@@ -157,7 +157,7 @@ CONTENT_LIBRARY_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content_library.updated.v1
 # .. event_name: CONTENT_LIBRARY_UPDATED
-# .. event_description: emitted when a content library is updated
+# .. event_description: Emitted when a content library is updated.
 # .. event_data: ContentLibraryData
 # .. event_trigger_repository: openedx/edx-platform
 CONTENT_LIBRARY_UPDATED = OpenEdxPublicSignal(
@@ -169,7 +169,7 @@ CONTENT_LIBRARY_UPDATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content_library.deleted.v1
 # .. event_name: CONTENT_LIBRARY_DELETED
-# .. event_description: emitted when a content library is deleted
+# .. event_description: Emitted when a content library is deleted.
 # .. event_data: ContentLibraryData
 # .. event_trigger_repository: openedx/edx-platform
 CONTENT_LIBRARY_DELETED = OpenEdxPublicSignal(
@@ -181,7 +181,7 @@ CONTENT_LIBRARY_DELETED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.library_block.created.v1
 # .. event_name: LIBRARY_BLOCK_CREATED
-# .. event_description: emitted when a library block is created
+# .. event_description: Emitted when a library block is created.
 # .. event_data: LibraryBlockData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_BLOCK_CREATED = OpenEdxPublicSignal(
@@ -193,7 +193,7 @@ LIBRARY_BLOCK_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.library_block.updated.v1
 # .. event_name: LIBRARY_BLOCK_UPDATED
-# .. event_description: emitted when a library block is updated
+# .. event_description: Emitted when a library block is updated.
 # .. event_data: LibraryBlockData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_BLOCK_UPDATED = OpenEdxPublicSignal(
@@ -205,7 +205,7 @@ LIBRARY_BLOCK_UPDATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.library_block.deleted.v1
 # .. event_name: LIBRARY_BLOCK_DELETED
-# .. event_description: emitted when a library block is deleted
+# .. event_description: Emitted when a library block is deleted.
 # .. event_data: LibraryBlockData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
@@ -217,7 +217,7 @@ LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content.object.associations.changed.v1
 # .. event_name: CONTENT_OBJECT_ASSOCIATIONS_CHANGED
-# .. event_description: emitted when an object's associations are changed, e.g tags, collections
+# .. event_description: Emitted when an object's associations are changed, e.g tags, collections.
 # .. event_data: ContentObjectData
 # .. event_trigger_repository: openedx/edx-platform
 CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
@@ -229,9 +229,9 @@ CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content.object.tags.changed.v1
 # .. event_name: CONTENT_OBJECT_TAGS_CHANGED
-# .. event_description: emitted when an object's tags are changed
-#    DEPRECATED: please use CONTENT_OBJECT_ASSOCIATIONS_CHANGED instead.
+# .. event_description: Emitted when an object's tags are changed.
 # .. event_data: ContentObjectData
+# .. event_warning: DEPRECATED: please use CONTENT_OBJECT_ASSOCIATIONS_CHANGED instead.
 CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.tags.changed.v1",
     data={
@@ -241,7 +241,7 @@ CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content_library.collection.created.v1
 # .. event_name: LIBRARY_COLLECTION_CREATED
-# .. event_description: emitted when a content library collection is created
+# .. event_description: Emitted when a content library collection is created.
 # .. event_data: LibraryCollectionData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_COLLECTION_CREATED = OpenEdxPublicSignal(
@@ -253,7 +253,7 @@ LIBRARY_COLLECTION_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content_library.collection.updated.v1
 # .. event_name: LIBRARY_COLLECTION_UPDATED
-# .. event_description: emitted when when a content library collection is updated
+# .. event_description: Emitted when when a content library collection is updated.
 # .. event_data: LibraryCollectionData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_COLLECTION_UPDATED = OpenEdxPublicSignal(
@@ -265,7 +265,7 @@ LIBRARY_COLLECTION_UPDATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content_library.collection.deleted.v1
 # .. event_name: LIBRARY_COLLECTION_DELETED
-# .. event_description: emitted when an when a content library collection is deleted
+# .. event_description: Emitted when an when a content library collection is deleted.
 # .. event_data: LibraryCollectionData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_COLLECTION_DELETED = OpenEdxPublicSignal(

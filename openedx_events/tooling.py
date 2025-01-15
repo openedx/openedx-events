@@ -95,8 +95,7 @@ class OpenEdxPublicSignal(Signal):
 
         Arguments:
             - time (datetime): (Optional) Timestamp when the event was sent with
-                UTC timezone. Defaults to current time in UTC. See OEP-41 for
-                details.
+              UTC timezone. Defaults to current time in UTC. See OEP-41 for more details.
 
         Example usage:
             >>> metadata = \
@@ -128,9 +127,9 @@ class OpenEdxPublicSignal(Signal):
             - metadata (EventsMetadata): The metadata to be sent with the signal.
             - send_robust (bool): Defaults to True. See Django signal docs.
             - from_event_bus (bool): Defaults to False. If True, the signal is
-                being sent from the event bus. This is used to prevent infinite
-                loops when the event bus is consuming events. It should not be
-                used when sending events from the application.
+              being sent from the event bus. This is used to prevent infinite
+              loops when the event bus is consuming events. It should not be
+              used when sending events from the application.
 
         See ``send_event`` docstring for more details on its usage and behavior.
         """
@@ -186,19 +185,6 @@ class OpenEdxPublicSignal(Signal):
         """
         Send events to all connected receivers.
 
-        Arguments:
-            - send_robust (bool): Defaults to True. See Django signal docs.
-            - time (datetime): (Optional - see note) Timestamp when the event was
-                sent with UTC timezone. For events requiring a DB create or
-                update, use the timestamp from the DB record. Defaults to
-                current time in UTC. This argument is optional for backward
-                compatibility, but ideally would be explicitly set. See OEP-41
-                for details.
-
-        Keyword Arguments:
-            - kwargs: Data to be sent to the signal's receivers. The keys must
-                match the attributes defined in the event's data.
-
         Used to send events just like Django signals are sent. In addition,
         some validations are executed on the arguments, and then generates relevant
         metadata that can be used for logging or debugging purposes. Besides this behavior,
@@ -213,13 +199,26 @@ class OpenEdxPublicSignal(Signal):
             )
             >>> [(<function callback at 0x7f2ce638ef70>, 'callback response')]
 
+        Arguments:
+            - send_robust (bool): Defaults to True. See Django signal docs.
+            - time (datetime): (Optional - see note) Timestamp when the event was
+              sent with UTC timezone. For events requiring a DB create or
+              update, use the timestamp from the DB record. Defaults to
+              current time in UTC. This argument is optional for backward
+              compatibility, but ideally would be explicitly set. See OEP-41
+              for details.
+
+        Keyword Arguments:
+            - kwargs: Data to be sent to the signal's receivers. The keys must match the attributes defined in
+              the event's data.
+
         Returns:
             - list: response of each receiver following the format [(receiver, response), ... ].
-                The list is empty if the event is disabled.
+              The list is empty if the event is disabled.
 
         Raises:
             - SenderValidationError: raised when there's a mismatch between arguments passed
-                to this method and arguments used to initialize the event.
+              to this method and arguments used to initialize the event.
         """
         metadata = self.generate_signal_metadata(time=time)
         return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)

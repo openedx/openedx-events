@@ -18,10 +18,10 @@ def _get_non_attrs_serializer(serializers=None):
     Create a method to pass as the value_serializer argument to attr.as_dict to serialize using custom serializers.
 
     Arguments:
-        serializers: A map of Python type to serialization method
+        - serializers: A map of Python type to serialization method.
 
     Returns:
-        A method for serializing non_attrs values
+        - A method for serializing non_attrs values.
     """
     param_serializers = serializers or {}
     all_serializers = {**DEFAULT_SERIALIZERS, **param_serializers}
@@ -59,11 +59,11 @@ def _event_data_to_avro_record_dict(event_data, serializers=None):
     Create an Avro record dictionary from an event data dict.
 
     Arguments:
-        event_data: A dictionary representing an event sent by an instance of OpenEdxPublicSignal
-        serializers: A map of Python type to serialization method
+        - event_data: A dictionary representing an event sent by an instance of OpenEdxPublicSignal.
+        - serializers: A map of Python type to serialization method.
 
     Returns:
-        An Avro record dictionary representation of the event data
+        - An Avro record dictionary representation of the event data.
     """
 
     def value_to_dict(value):
@@ -84,10 +84,11 @@ def serialize_event_data_to_bytes(event_data, signal):
     Serialize event data to bytes.
 
     Arguments:
-        event_data: Event data to be sent via an OpenEdxPublicSignal's send_event method
-        signal: An instance of OpenEdxPublicSignal
+        - event_data: Event data to be sent via an OpenEdxPublicSignal's send_event method.
+        - signal: An instance of OpenEdxPublicSignal.
+
     Returns:
-        bytes: Byte representation of the event_data, to be sent over the wire
+        bytes: Byte representation of the event_data, to be sent over the wire.
     """
     serializer = AvroSignalSerializer(signal)
     schema_dict = serializer.schema
@@ -115,7 +116,7 @@ class AvroSignalSerializer:
         Initialize serializer, creating an Avro schema from signal.
 
         Arguments:
-            signal: An instance of OpenEdxPublicSignal
+            - signal: An instance of OpenEdxPublicSignal.
         """
         self.signal = signal
         self.serializers = {ext.cls: ext.serialize for ext in self.custom_type_serializers()}
@@ -135,6 +136,6 @@ class AvroSignalSerializer:
         Override this method to add custom serializers for unhandled classes.
 
         Returns:
-            A list of subclasses of BaseCustomTypeAvroSerializer
+            - A list of subclasses of BaseCustomTypeAvroSerializer
         """
         return []
