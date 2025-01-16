@@ -39,6 +39,7 @@ SUBSIDY_REDEMPTION_REVERSED = OpenEdxPublicSignal(
 # .. event_description: emitted when an enterprise ledger transaction is created.
 #      See: https://github.com/openedx/openedx-ledger/tree/main/docs/decisions
 # .. event_data: LedgerTransaction
+# .. event_trigger_repository: openedx/enterprise-subsidy
 LEDGER_TRANSACTION_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy_ledger_transaction.created.v1",
     data={
@@ -52,6 +53,7 @@ LEDGER_TRANSACTION_CREATED = OpenEdxPublicSignal(
 # .. event_description: emitted when an enterprise ledger transaction is committed.
 #      See: https://github.com/openedx/openedx-ledger/tree/main/docs/decisions
 # .. event_data: LedgerTransaction
+# .. event_trigger_repository: openedx/enterprise-subsidy
 LEDGER_TRANSACTION_COMMITTED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy_ledger_transaction.committed.v1",
     data={
@@ -65,6 +67,7 @@ LEDGER_TRANSACTION_COMMITTED = OpenEdxPublicSignal(
 # .. event_description: emitted when an enterprise ledger transaction fails.
 #      See: https://github.com/openedx/openedx-ledger/tree/main/docs/decisions
 # .. event_data: LedgerTransaction
+# .. event_trigger_repository: openedx/enterprise-subsidy
 LEDGER_TRANSACTION_FAILED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy_ledger_transaction.failed.v1",
     data={
@@ -78,6 +81,7 @@ LEDGER_TRANSACTION_FAILED = OpenEdxPublicSignal(
 # .. event_description: emitted when an enterprise ledger transaction is reversed.
 #      See: https://github.com/openedx/openedx-ledger/tree/main/docs/decisions
 # .. event_data: LedgerTransaction
+# .. event_trigger_repository: openedx/enterprise-subsidy
 LEDGER_TRANSACTION_REVERSED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy_ledger_transaction.reversed.v1",
     data={
@@ -91,6 +95,7 @@ LEDGER_TRANSACTION_REVERSED = OpenEdxPublicSignal(
 # .. event_description: emitted when a LearnerCreditEnterpriseCourseEnrollment is revoked. This most often happens when
 #      an enterprise learner unenrolls from a course which was LC-subsidized.
 # .. event_data: LearnerCreditEnterpriseCourseEnrollment
+# .. event_trigger_repository: openedx/edx-enterprise
 LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.learner_credit_course_enrollment.revoked.v1",
     data={

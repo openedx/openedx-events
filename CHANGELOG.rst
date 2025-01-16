@@ -17,6 +17,14 @@ Unreleased
 __________
 
 
+[9.15.2] - 2025-01-16
+---------------------
+
+Added
+~~~~~
+
+* Added new inline code annotation to include triggering information about events.
+
 [9.15.1] - 2024-12-20
 ---------------------
 
