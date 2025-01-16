@@ -15,6 +15,8 @@ from openedx_events.tooling import OpenEdxPublicSignal
 # .. event_name: SUBSIDY_REDEEMED
 # .. event_description: emitted when an enterprise subsidy is utilized.
 # .. event_data: SubsidyRedemption
+# .. event_warning: This event is not being currently used in any of the Open edX services. Review
+#      https://github.com/openedx/openedx-events/issues/445 for more information about the future of this event.
 SUBSIDY_REDEEMED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy.redeemed.v1",
     data={
@@ -26,6 +28,8 @@ SUBSIDY_REDEEMED = OpenEdxPublicSignal(
 # .. event_name: SUBSIDY_REDEMPTION_REVERSED
 # .. event_description: emitted when an enterprise subsidy is reversed.
 # .. event_data: SubsidyRedemption
+# .. event_warning: This event is not being currently used in any of the Open edX services. Review
+#      https://github.com/openedx/openedx-events/issues/445 for more information about the future of this event.
 SUBSIDY_REDEMPTION_REVERSED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.subsidy.redemption-reversed.v1",
     data={

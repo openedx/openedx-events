@@ -15,13 +15,13 @@ class TrackingLogData:
     """
     Data related to tracking events.
 
-    Arguments:
-        - name (str): event name
-        - timestamp (datetime): timestamp of the event
-        - data (str): json string representation of a dictionary with extra data (optional), e.g.,
-          {"course_id": "course-v1:edX+DemoX+Demo_Course"}
-        - context (dict): json string representation of a dictionary of context data
-          defined in https://edx.readthedocs.io/projects/devdata/en/latest/internal_data_formats/tracking_logs/
+    Attributes:
+        name (str): event name
+        timestamp (datetime): timestamp of the event
+        data (str): json string representation of a dictionary with extra data (optional), e.g.,
+           >>> {"course_id": "course-v1:edX+DemoX+Demo_Course"}
+        context (dict): json string representation of a dictionary of context data
+           defined in https://edx.readthedocs.io/projects/devdata/en/latest/internal_data_formats/tracking_logs/
     """
 
     name = attr.ib(type=str)

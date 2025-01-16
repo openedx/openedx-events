@@ -110,8 +110,9 @@ XBLOCK_DUPLICATED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.content_authoring.course.certificate_config.changed.v1
 # .. event_name: COURSE_CERTIFICATE_CONFIG_CHANGED
 # .. event_description: Fired when a course certificate configuration changes in Studio.
-# .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_data: CertificateConfigData
+# .. event_warning: This event is not being currently used in any of the Open edX services. Review
+#      https://github.com/openedx/openedx-events/issues/445 for more information about the future of this event.
 COURSE_CERTIFICATE_CONFIG_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.course.certificate_config.changed.v1",
     data={
@@ -122,8 +123,9 @@ COURSE_CERTIFICATE_CONFIG_CHANGED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.content_authoring.course.certificate_config.deleted.v1
 # .. event_name: COURSE_CERTIFICATE_CONFIG_DELETED
 # .. event_description: Fired when a course certificate configuration deletes in Studio.
-# .. event_warning: This event is currently incompatible with the event bus, list/dict cannot be serialized yet
 # .. event_data: CertificateConfigData
+# .. event_warning: This event is not being currently used in any of the Open edX services. Review
+#      https://github.com/openedx/openedx-events/issues/445 for more information about the future of this event.
 COURSE_CERTIFICATE_CONFIG_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.course.certificate_config.deleted.v1",
     data={
@@ -231,7 +233,7 @@ CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
 # .. event_name: CONTENT_OBJECT_TAGS_CHANGED
 # .. event_description: Emitted when an object's tags are changed.
 # .. event_data: ContentObjectData
-# .. event_warning: DEPRECATED: please use CONTENT_OBJECT_ASSOCIATIONS_CHANGED instead.
+# .. event_warning: **DEPRECATED** please use CONTENT_OBJECT_ASSOCIATIONS_CHANGED instead.
 CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.tags.changed.v1",
     data={

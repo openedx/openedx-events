@@ -21,7 +21,7 @@ class CourseData:
     Data related to a course object.
 
     Attributes:
-        - course_key (CourseKey): identifier of the Course object.
+        course_key (CourseKey): identifier of the Course object.
     """
 
     course_key = attr.ib(type=CourseKey)
@@ -33,11 +33,11 @@ class CourseScheduleData:
     Data related to a course schedule.
 
     Attributes:
-        - start (datetime): course start date.
-        - pacing (str): 'instructor' or 'self'.
-        - end (datetime): course end date (optional).
-        - enrollment_start (datetime): start of course enrollment (optional).
-        - enrollment_end (datetime): end of course enrollment (optional).
+        start (datetime): course start date.
+        pacing (str): 'instructor' or 'self'.
+        end (datetime): course end date (optional).
+        enrollment_start (datetime): start of course enrollment (optional).
+        enrollment_end (datetime): end of course enrollment (optional).
     """
 
     start = attr.ib(type=datetime)
@@ -53,11 +53,11 @@ class CourseCatalogData:
     Data related to a course catalog entry.
 
     Attributes:
-        - course_key (CourseKey): identifier of the Course object.
-        - name (str): course name.
-        - schedule_data (CourseScheduleData): scheduling information for the course.
-        - hidden (bool): whether the course is hidden from search (optional).
-        - invitation_only (bool): whether the course requires an invitation to enroll.
+        course_key (CourseKey): identifier of the Course object.
+        name (str): course name.
+        schedule_data (CourseScheduleData): scheduling information for the course.
+        hidden (bool): whether the course is hidden from search (optional).
+        invitation_only (bool): whether the course requires an invitation to enroll.
     """
 
     # basic identifiers
@@ -76,10 +76,10 @@ class XBlockData:
     Data related to an XBlock object.
 
     Attributes:
-        - usage_key (UsageKey): identifier of the XBlock object.
-        - block_type (str): type of block.
-        - version (UsageKey): identifier of the XBlock object with branch and version data (optional). This
-        - could be used to get the exact version of the XBlock object.
+        usage_key (UsageKey): identifier of the XBlock object.
+        block_type (str): type of block.
+        version (UsageKey): identifier of the XBlock object with branch and version data (optional). This
+           could be used to get the exact version of the XBlock object.
     """
 
     usage_key = attr.ib(type=UsageKey)
@@ -95,7 +95,7 @@ class DuplicatedXBlockData(XBlockData):
     This class extends XBlockData to include source_usage_key.
 
     Attributes:
-        - source_usage_key (UsageKey): identifier of the source XBlock object.
+        source_usage_key (UsageKey): identifier of the source XBlock object.
     """
 
     source_usage_key = attr.ib(type=UsageKey)
@@ -107,10 +107,10 @@ class CertificateSignatoryData:
     Data related to a certificate signatory. Subset of CertificateSignatory object from the LMS.
 
     Attributes:
-        - image (BinaryIO): certificate signature image. Take care that the image field is BinaryIO.
-        - name (str): name of signatory.
-        - organization (str): organization that signatory belongs to.
-        - title (str): signatory title.
+        image (BinaryIO): certificate signature image. Take care that the image field is BinaryIO.
+        name (str): name of signatory.
+        organization (str): organization that signatory belongs to.
+        title (str): signatory title.
     """
 
     # Note: Please take care that the image field is BinaryIO, which means
@@ -131,20 +131,20 @@ class CertificateConfigData:
     Data related to a certificate configuration. Subset of CertificateConfig object from the LMS.
 
     Attributes:
-        - certificate_type (str): certificate type. Possible types are certificate relevant course modes:
-            - credit,
-            - verified,
-            - professional,
-            - no-id-professional,
-            - executive-education,
-            - paid-executive-education,
-            - paid-bootcamp,
-            - masters.
-        - course_key (CourseKey): identifier of the Course object.
-        - title (str): certificate title.
-        - signatories (List[CertificateSignatoryData]): contains a collection of signatures
-          that belong to the certificate configuration.
-        - is_active (bool): indicates whether the certifivate configuration is active.
+        certificate_type (str): certificate type. Possible types are certificate relevant course modes:
+           - credit,
+           - verified,
+           - professional,
+           - no-id-professional,
+           - executive-education,
+           - paid-executive-education,
+           - paid-bootcamp,
+           - masters.
+        course_key (CourseKey): identifier of the Course object.
+        title (str): certificate title.
+        signatories (List[CertificateSignatoryData]): contains a collection of signatures
+           that belong to the certificate configuration.
+        is_active (bool): indicates whether the certifivate configuration is active.
     """
 
     certificate_type = attr.ib(type=str)
@@ -160,8 +160,8 @@ class ContentLibraryData:
     Data related to a content library that has changed.
 
     Attributes:
-        - library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
-        - update_blocks (bool): flag that indicates whether the content library blocks indexes should be updated.
+        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        update_blocks (bool): flag that indicates whether the content library blocks indexes should be updated.
     """
 
     library_key = attr.ib(type=LibraryLocatorV2)
@@ -174,8 +174,8 @@ class LibraryBlockData:
     Data related to a library block that has changed.
 
     Attributes:
-        - library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
-        - usage_key (LibraryUsageLocatorV2): a key that represents a XBlock in a Blockstore-based content library.
+        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        usage_key (LibraryUsageLocatorV2): a key that represents a XBlock in a Blockstore-based content library.
     """
 
     library_key = attr.ib(type=LibraryLocatorV2)
@@ -188,9 +188,9 @@ class ContentObjectData:
     Data related to a content object.
 
     Attributes:
-        - object_id (str): identifier of the Content object. This represents the id of the course or library block
-          as a string. For example:
-          >>> block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
+        object_id (str): identifier of the Content object. This represents the id of the course or library block
+           as a string. For example:
+           >>> block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
     """
 
     object_id = attr.ib(type=str)
@@ -202,11 +202,11 @@ class ContentObjectChangedData(ContentObjectData):
     Data related to a content object that has changed.
 
     Attributes:
-        - object_id (str): identifier of the Content object. This represents the id of the course or library block
-          as a string. For example:
-          >>> block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
-        - changes: list of changes made to this ContentObject, e.g. "tags", "collections". If list is empty,
-          assume everything has changed.
+        object_id (str): identifier of the Content object. This represents the id of the course or library block
+           as a string. For example:
+           >>> block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
+        changes: list of changes made to this ContentObject, e.g. "tags", "collections". If list is empty,
+           assume everything has changed.
     """
 
     changes = attr.ib(type=List[str], factory=list)
@@ -218,10 +218,10 @@ class LibraryCollectionData:
     Data related to a library collection that has changed.
 
     Attributes:
-        - library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
-        - collection_key (str): identifies the collection within the library's learning package
-        - background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
-          i.e., the handler can run the task in background. By default it is False.
+        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        collection_key (str): identifies the collection within the library's learning package
+        background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
+           i.e., the handler can run the task in background. By default it is False.
     """
 
     library_key = attr.ib(type=LibraryLocatorV2)
