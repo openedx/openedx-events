@@ -192,7 +192,7 @@ COURSE_DISCUSSIONS_CHANGED = OpenEdxPublicSignal(
     }
 )
 
-# .. event_type: org.openedx.learning.course.persistent_grade.summary.v1
+# .. event_type: org.openedx.learning.course.persistent_grade_summary.changed.v1
 # .. event_name: PERSISTENT_GRADE_SUMMARY_CHANGED
 # .. event_description: Emitted when a course's persistent grade summary changes for a user.
 # .. event_data: PersistentCourseGradeData
