@@ -374,7 +374,7 @@ urllib3==2.2.3
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.28.1
+virtualenv==20.29.1
     # via
     #   -r requirements/ci.txt
     #   tox
