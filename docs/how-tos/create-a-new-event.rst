@@ -159,7 +159,7 @@ In our example, the event definition and payload for the enrollment event could 
 - The payload should be an `attrs`_ class to ensure that the data is immutable by using the ``frozen=True`` argument and to ensure that the data is self-descriptive.
 - Use the ``attr.ib`` decorator to define the fields in the payload with the data type that the field should contain. Try to use the appropriate data type for each field to ensure that the data is consistent and maintainable, you can inspect the triggering logic to review the data that is available at the time the event is triggered.
 - Try using nested data classes to group related data together. This will help maintain consistency and make the event more readable. For instance, in the above example, we have grouped the data into User, Course, and Enrollment data.
-- Try reusing existing data classes if possible to avoid duplicating data classes. This will help maintain consistency and reduce the chances of introducing errors.
+- Try reusing existing data classes if possible to avoid duplicating data classes. This will help maintain consistency and reduce the chances of introducing errors. You can review the existing data classes in :doc:`../reference/events-data` to see if there is a data class that fits your use case.
 - Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
 - Use defaults for optional fields in the payload to ensure its consistency in all cases.
 

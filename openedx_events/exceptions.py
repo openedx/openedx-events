@@ -21,6 +21,9 @@ class OpenEdxEventException(Exception):
     def __str__(self):
         """
         Show string representation of OpenEdxEventException using its message.
+
+        Returns:
+            str: message describing why the exception was raised.
         """
         return self.message
 

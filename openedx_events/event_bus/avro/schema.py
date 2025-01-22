@@ -18,8 +18,11 @@ def schema_from_signal(signal, custom_type_to_avro_type=None):
     Create an Avro schema for events sent by an instance of OpenEdxPublicSignal.
 
     Arguments:
-        signal: An instance of OpenEdxPublicSignal
-        custom_type_to_avro_type: A map of Python class to Avro type
+        - signal: An instance of OpenEdxPublicSignal
+        - custom_type_to_avro_type: A map of Python class to Avro type
+
+    Returns:
+        - An Avro schema definition for the event.
     """
     field_types = custom_type_to_avro_type or {}
     all_custom_field_types = {**DEFAULT_FIELD_TYPES, **field_types}
@@ -46,11 +49,14 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
     Create an Avro schema field definition from an OpenEdxPublicSignal data definition.
 
     Arguments:
-        data_key: Field name, eg `lms_user_id`, `course_id`, `enrollment_status`
-        data_type: Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`
-        previously_seen_types: list of previously-encountered data types
-        custom_type_to_avro_type: map of custom data types to a pre-determined avro field type
-        default_is_none: boolean indicating whether this field has 'None' as a default
+        - data_key: Field name, eg `lms_user_id`, `course_id`, `enrollment_status`.
+        - data_type: Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`.
+        - previously_seen_types: list of previously-encountered data types.
+        - custom_type_to_avro_type: map of custom data types to a pre-determined avro field type.
+        - default_is_none: boolean indicating whether this field has 'None' as a default.
+
+    Returns:
+        - An Avro field definition.
     """
     field = {"name": data_key}
     all_field_type_overrides = custom_type_to_avro_type or {}

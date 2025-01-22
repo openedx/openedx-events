@@ -27,6 +27,7 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
         data: Dictionary representation of an Avro record
         data_type: Desired Python data type, eg `str`, `CourseKey`, `CourseEnrollmentData`
         deserializers: Map of Python data type to deserializer method
+
     Returns:
         An instance of data_type
     """
@@ -72,12 +73,12 @@ def _avro_record_dict_to_event_data(signal, avro_record_dict, deserializers=None
     Convert an Avro record dictionary into event data that can be sent by the given signal.
 
     Arguments:
-        signal: An instance of OpenEdxPublicSignal
-        avro_record_dict: Dictionary representation of an Avro record
-        deserializers: Map of Python data type to deserializer method
+        - signal: An instance of OpenEdxPublicSignal
+        - avro_record_dict: Dictionary representation of an Avro record
+        - deserializers: Map of Python data type to deserializer method
 
     Returns:
-         An event data dictionary that can be sent by the given signal
+        - An event data dictionary that can be sent by the given signal
     """
     return {data_key: _deserialized_avro_record_dict_to_object(avro_record_dict[data_key], data_type, deserializers)
             for data_key, data_type in signal.init_data.items()}
@@ -115,7 +116,7 @@ class AvroSignalDeserializer:
         Initialize deserializer, creating an Avro schema from signal.
 
         Arguments:
-            signal: An instance of OpenEdxPublicSignal
+            signal: An instance of OpenEdxPublicSignal.
         """
         self.signal = signal
         self.deserializers = {ext.cls: ext.deserialize for ext in self.custom_type_serializers()}
@@ -135,6 +136,6 @@ class AvroSignalDeserializer:
         Override this method to add custom serializers for unhandled classes.
 
         Returns:
-            A list of subclasses of BaseCustomTypeAvroSerializer
+            - A list of subclasses of BaseCustomTypeAvroSerializer
         """
         return []

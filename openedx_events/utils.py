@@ -68,13 +68,13 @@ def format_responses(obj, indent=1, width=80, depth=None, *, compact=False, sort
         ]
 
     Arguments:
-        obj (tuple): response object to be formatted.
-        indent (int): specifies the amount of indentation added to each recursive level.
-        width (int): desired output width.
-        depth (int): number of levels to represent.
-        compact (bool): when true, will format as many items as will fit within the width
-        on each output line.
-        sort_dicts (bool): dictionaries will be formatted with their keys sorted.
+        - obj (tuple): response object to be formatted.
+        - indent (int): specifies the amount of indentation added to each recursive level.
+        - width (int): desired output width.
+        - depth (int): number of levels to represent.
+        - compact (bool): when true, will format as many items as will fit within the width
+          on each output line.
+        - sort_dicts (bool): dictionaries will be formatted with their keys sorted.
 
     Same as in https://docs.python.org/3/library/pprint.html#pprint.PrettyPrinter
 

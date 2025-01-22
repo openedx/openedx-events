@@ -58,18 +58,17 @@ class EventsMetadata:
     The attributes defined in this class are a subset of the
     OEP-41: Asynchronous Server Event Message Format.
 
-    Arguments:
-        id (UUID): event identifier.
-        event_type (str): name of the event.
-        minorversion (int): (optional) version of the event type. Defaults to 0.
-        source (str): logical source of an event.
-        sourcehost (str): physical source of the event.
-        time (datetime): (optional) timestamp when the event was sent with
-            UTC timezone. Defaults to current time in UTC. See OEP-41 for
-            details.
-        sourcelib (tuple of ints): Open edX Events library version. A tuple was
-            selected so that version comparisons don't have to worry about
-            lexical ordering of strings (e.g. '0.9.0' vs. '0.10.0').
+    Attributes:
+        - id (UUID): event identifier.
+        - event_type (str): name of the event.
+        - minorversion (int): (optional) version of the event type. Defaults to 0.
+        - source (str): logical source of an event.
+        - sourcehost (str): physical source of the event.
+        - time (datetime): (optional) timestamp when the event was sent with UTC timezone.
+          Defaults to current time in UTC. See OEP-41 fordetails.
+        - sourcelib (tuple of ints): Open edX Events library version. A tuple was
+          selected so that version comparisons don't have to worry about lexical ordering of
+          strings (e.g. '0.9.0' vs. '0.10.0').
     """
 
     event_type = attr.ib(type=str, validator=attr.validators.instance_of(str))

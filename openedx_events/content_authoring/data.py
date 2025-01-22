@@ -18,9 +18,9 @@ from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 @attr.s(frozen=True)
 class CourseData:
     """
-    Attributes defined for Open edX Course object.
+    Data related to a course object.
 
-    Arguments:
+    Attributes:
         course_key (CourseKey): identifier of the Course object.
     """
 
@@ -30,14 +30,14 @@ class CourseData:
 @attr.s(frozen=True)
 class CourseScheduleData:
     """
-    Data describing course scheduling.
+    Data related to a course schedule.
 
-    Arguments:
-        start (datetime): course start date
-        pacing (str): 'instructor' or 'self'
-        end (datetime): course end date (optional)
-        enrollment_start (datetime): start of course enrollment (optional)
-        enrollment_end (datetime): end of course enrollment (optional)
+    Attributes:
+        start (datetime): course start date.
+        pacing (str): 'instructor' or 'self'.
+        end (datetime): course end date (optional).
+        enrollment_start (datetime): start of course enrollment (optional).
+        enrollment_end (datetime): end of course enrollment (optional).
     """
 
     start = attr.ib(type=datetime)
@@ -50,14 +50,14 @@ class CourseScheduleData:
 @attr.s(frozen=True)
 class CourseCatalogData:
     """
-    Data needed for a course catalog entry.
+    Data related to a course catalog entry.
 
-    Arguments:
+    Attributes:
         course_key (CourseKey): identifier of the Course object.
-        name (str): course name
-        schedule_data (CourseScheduleData): scheduling information for the course
-        hidden (bool): whether the course is hidden from search (optional)
-        invitation_only (bool): whether the course requires an invitation to enroll
+        name (str): course name.
+        schedule_data (CourseScheduleData): scheduling information for the course.
+        hidden (bool): whether the course is hidden from search (optional).
+        invitation_only (bool): whether the course requires an invitation to enroll.
     """
 
     # basic identifiers
@@ -73,13 +73,13 @@ class CourseCatalogData:
 @attr.s(frozen=True)
 class XBlockData:
     """
-    Data about changed XBlock.
+    Data related to an XBlock object.
 
-    Arguments:
+    Attributes:
         usage_key (UsageKey): identifier of the XBlock object.
         block_type (str): type of block.
         version (UsageKey): identifier of the XBlock object with branch and version data (optional). This
-        could be used to get the exact version of the XBlock object.
+           could be used to get the exact version of the XBlock object.
     """
 
     usage_key = attr.ib(type=UsageKey)
@@ -90,11 +90,11 @@ class XBlockData:
 @attr.s(frozen=True)
 class DuplicatedXBlockData(XBlockData):
     """
-    Data about duplicated XBlock.
+    Data related to an XBlock object that has been duplicated.
 
     This class extends XBlockData to include source_usage_key.
 
-    Arguments:
+    Attributes:
         source_usage_key (UsageKey): identifier of the source XBlock object.
     """
 
@@ -104,13 +104,13 @@ class DuplicatedXBlockData(XBlockData):
 @attr.s(frozen=True)
 class CertificateSignatoryData:
     """
-    Attributes defined for Open edX CertificateSignatory data object.
+    Data related to a certificate signatory. Subset of CertificateSignatory object from the LMS.
 
-    Arguments:
-        image (BinaryIO): certificate signature image.
+    Attributes:
+        image (BinaryIO): certificate signature image. Take care that the image field is BinaryIO.
         name (str): name of signatory.
         organization (str): organization that signatory belongs to.
-        title (int): signatory title.
+        title (str): signatory title.
     """
 
     # Note: Please take care that the image field is BinaryIO, which means
@@ -128,22 +128,22 @@ class CertificateSignatoryData:
 @attr.s(frozen=True)
 class CertificateConfigData:
     """
-    Attributes defined for Open edX CertificateConfig data object.
+    Data related to a certificate configuration. Subset of CertificateConfig object from the LMS.
 
-    Arguments:
+    Attributes:
         certificate_type (str): certificate type. Possible types are certificate relevant course modes:
-         - credit,
-         - verified,
-         - professional,
-         - no-id-professional,
-         - executive-education,
-         - paid-executive-education,
-         - paid-bootcamp,
-         - masters.
+           - credit,
+           - verified,
+           - professional,
+           - no-id-professional,
+           - executive-education,
+           - paid-executive-education,
+           - paid-bootcamp,
+           - masters.
         course_key (CourseKey): identifier of the Course object.
         title (str): certificate title.
         signatories (List[CertificateSignatoryData]): contains a collection of signatures
-        that belong to the certificate configuration.
+           that belong to the certificate configuration.
         is_active (bool): indicates whether the certifivate configuration is active.
     """
 
@@ -157,11 +157,11 @@ class CertificateConfigData:
 @attr.s(frozen=True)
 class ContentLibraryData:
     """
-    Data about changed ContentLibrary.
+    Data related to a content library that has changed.
 
-    Arguments:
+    Attributes:
         library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
-        update_blocks (bool): flag that indicates whether the content library blocks indexes should be updated
+        update_blocks (bool): flag that indicates whether the content library blocks indexes should be updated.
     """
 
     library_key = attr.ib(type=LibraryLocatorV2)
@@ -171,9 +171,9 @@ class ContentLibraryData:
 @attr.s(frozen=True)
 class LibraryBlockData:
     """
-    Data about changed LibraryBlock.
+    Data related to a library block that has changed.
 
-    Arguments:
+    Attributes:
         library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
         usage_key (LibraryUsageLocatorV2): a key that represents a XBlock in a Blockstore-based content library.
     """
@@ -185,12 +185,12 @@ class LibraryBlockData:
 @attr.s(frozen=True)
 class ContentObjectData:
     """
-    Data about a content object.
+    Data related to a content object.
 
-    Arguments:
+    Attributes:
         object_id (str): identifier of the Content object. This represents the id of the course or library block
-        as a string. For example:
-        block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
+           as a string. For example:
+           >>> block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
     """
 
     object_id = attr.ib(type=str)
@@ -199,15 +199,14 @@ class ContentObjectData:
 @attr.s(frozen=True)
 class ContentObjectChangedData(ContentObjectData):
     """
-    Data about a changed content object.
+    Data related to a content object that has changed.
 
-    Arguments:
+    Attributes:
         object_id (str): identifier of the Content object. This represents the id of the course or library block
-        as a string. For example:
-        block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
-
-        changes: list of changes made to this ContentObject, e.g. "tags", "collections"
-        If list is empty, assume everything has changed.
+           as a string. For example:
+           >>> block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
+        changes: list of changes made to this ContentObject, e.g. "tags", "collections". If list is empty,
+           assume everything has changed.
     """
 
     changes = attr.ib(type=List[str], factory=list)
@@ -216,13 +215,13 @@ class ContentObjectChangedData(ContentObjectData):
 @attr.s(frozen=True)
 class LibraryCollectionData:
     """
-    Data about changed content library Collection.
+    Data related to a library collection that has changed.
 
-    Arguments:
+    Attributes:
         library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
         collection_key (str): identifies the collection within the library's learning package
         background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
-        i.e., the handler can run the task in background. By default it is False.
+           i.e., the handler can run the task in background. By default it is False.
     """
 
     library_key = attr.ib(type=LibraryLocatorV2)

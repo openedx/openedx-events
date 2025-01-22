@@ -12,9 +12,8 @@
 #
 import os
 import re
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
-
+import sys
+sys.path.insert(0, os.path.abspath('..'))
 
 # -- Project information -----------------------------------------------------
 
@@ -39,6 +38,9 @@ extensions = [
     'code_annotations.contrib.sphinx.extensions.openedx_events',
     'sphinx.ext.intersphinx',
     'code_annotations.contrib.sphinx.extensions.settings',
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
+    'sphinx.ext.napoleon',
 ]
 
 # Add any paths that contain templates here, relative to this directory.

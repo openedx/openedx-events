@@ -14,7 +14,7 @@ from openedx_events.tooling import OpenEdxPublicSignal
 # .. event_type: org.openedx.analytics.tracking.event.emitted.v1
 # .. event_name: TRACKING_EVENT_EMITTED
 # .. event_key_field: tracking_log.name
-# .. event_description: emitted when a tracking log is created.
+# .. event_description: Emitted when a tracking log event is emitted.
 # .. event_data: TrackingLogData
 # .. event_trigger_repository: openedx/event-tracking
 TRACKING_EVENT_EMITTED = OpenEdxPublicSignal(
