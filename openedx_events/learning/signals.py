@@ -221,7 +221,7 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.user.notification.requested.v1
 # .. event_name: USER_NOTIFICATION_REQUESTED
 # .. event_description: Can be emitted from apps to send user notifications.
-# .. event_data: UserNotificationSendListData
+# .. event_data: UserNotificationData
 # .. event_warning: This event is currently incompatible with the event bus, list without annotations
 #      are not serializable.
 # .. event_trigger_repository: openedx/edx-platform openedx/edx-ora2
