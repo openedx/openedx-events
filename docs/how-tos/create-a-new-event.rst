@@ -39,6 +39,8 @@ Assumptions
 - You have reviewed the :doc:`../decisions/0016-event-design-practices` ADR.
 - You have identified that you need to create a new event and have a use case for the event.
 
+.. warning:: You only need to create a new event if you have a use case that cannot be implemented using the existing events. Before creating a new event, review the :doc:`existing events <../reference/events>` to see if any of them can be used to implement your use case.
+
 Steps
 -----
 
