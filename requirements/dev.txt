@@ -14,7 +14,7 @@ astroid==2.15.8
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
-attrs==24.3.0
+attrs==25.1.0
     # via -r requirements/quality.txt
 backports-tarfile==1.2.0
     # via
@@ -24,7 +24,7 @@ build==1.2.2.post1
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==5.5.0
+cachetools==5.5.1
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -114,7 +114,7 @@ edx-ccx-keys==2.0.2
     # via -r requirements/quality.txt
 edx-django-utils==7.1.0
     # via -r requirements/quality.txt
-edx-lint==5.4.1
+edx-lint==5.6.0
     # via -r requirements/quality.txt
 edx-opaque-keys[django]==2.11.0
     # via
@@ -122,16 +122,20 @@ edx-opaque-keys[django]==2.11.0
     #   edx-ccx-keys
 fastavro==1.10.0
     # via -r requirements/quality.txt
-filelock==3.16.1
+filelock==3.17.0
     # via
     #   -r requirements/ci.txt
     #   tox
     #   virtualenv
+id==1.5.0
+    # via
+    #   -r requirements/quality.txt
+    #   twine
 idna==3.10
     # via
     #   -r requirements/quality.txt
     #   requests
-importlib-metadata==8.5.0
+importlib-metadata==8.6.1
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -218,10 +222,6 @@ pbr==6.1.0
     #   stevedore
 pip-tools==7.4.1
     # via -r requirements/pip-tools.txt
-pkginfo==1.12.0
-    # via
-    #   -r requirements/quality.txt
-    #   twine
 platformdirs==4.3.6
     # via
     #   -r requirements/ci.txt
@@ -282,7 +282,7 @@ pynacl==1.5.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-pyproject-api==1.8.0
+pyproject-api==1.9.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -315,6 +315,7 @@ readme-renderer==44.0
 requests==2.32.3
     # via
     #   -r requirements/quality.txt
+    #   id
     #   requests-toolbelt
     #   twine
 requests-toolbelt==1.0.0
@@ -360,9 +361,9 @@ tomlkit==0.13.2
     # via
     #   -r requirements/quality.txt
     #   pylint
-tox==4.23.2
+tox==4.24.1
     # via -r requirements/ci.txt
-twine==6.0.1
+twine==6.1.0
     # via -r requirements/quality.txt
 typing-extensions==4.12.2
     # via

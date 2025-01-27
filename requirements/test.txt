@@ -8,7 +8,7 @@ asgiref==3.8.1
     # via
     #   -r requirements/base.txt
     #   django
-attrs==24.3.0
+attrs==25.1.0
     # via -r requirements/base.txt
 cffi==1.17.1
     # via
