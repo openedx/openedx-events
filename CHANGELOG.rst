@@ -16,6 +16,14 @@ Change Log
 Unreleased
 __________
 
+[9.17.0] - 2025-01-30
+---------------------
+
+Added
+~~~~~
+
+* Use edx-lint linter for Open edX Events instances in-line code annotations validation.
+
 [9.16.0] - 2025-01-30
 ---------------------
 
