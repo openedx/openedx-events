@@ -1,14 +1,16 @@
 """Tests for avro.deserializer"""
 import json
 from datetime import datetime
-from typing import List
+from typing import Dict, List
 from unittest import TestCase
 
+import ddt
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
 from openedx_events.event_bus.avro.tests.test_utilities import (
+    ComplexAttrs,
     EventData,
     NestedAttrsWithDefaults,
     NestedNonAttrs,
@@ -23,6 +25,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
 from openedx_events.tests.utils import FreezeSignalCacheMixin
 
 
+@ddt.ddt
 class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
     """Test AvroSignalDeserializer"""
 
@@ -30,36 +33,66 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         super().setUp()
         self.maxDiff = None
 
-    def test_schema_string(self):
+    @ddt.data(
+        (
+            SimpleAttrs,
+            {
+                "name": "CloudEvent",
+                "type": "record",
+                "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+                "namespace": "simple.signal",
+                "fields": [
+                    {
+                        "name": "data",
+                        "type": {
+                            "name": "SimpleAttrs",
+                            "type": "record",
+                            "fields": [
+                                {"name": "boolean_field", "type": "boolean"},
+                                {"name": "int_field", "type": "long"},
+                                {"name": "float_field", "type": "double"},
+                                {"name": "bytes_field", "type": "bytes"},
+                                {"name": "string_field", "type": "string"},
+                            ],
+                        },
+                    },
+                ],
+            }
+        ),
+        (
+            ComplexAttrs,
+            {
+                "name": "CloudEvent",
+                "type": "record",
+                "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+                "namespace": "simple.signal",
+                "fields": [
+                    {
+                        "name": "data",
+                        "type": {
+                            "name": "ComplexAttrs",
+                            "type": "record",
+                            "fields": [
+                                {"name": "list_field", "type": {"type": "array", "items": "long"}},
+                                {"name": "dict_field", "type": {"type": "map", "values": "long"}},
+                            ],
+                        },
+                    },
+                ],
+            }
+        )
+    )
+    @ddt.unpack
+    def test_schema_string(self, data_cls, expected_schema):
         """
         Test JSON round-trip; schema creation is tested more fully in test_schema.py.
         """
         SIGNAL = create_simple_signal({
-            "data": SimpleAttrs
+            "data": data_cls
         })
+
         actual_schema = json.loads(AvroSignalDeserializer(SIGNAL).schema_string())
-        expected_schema = {
-            'name': 'CloudEvent',
-            'type': 'record',
-            'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
-            'namespace': 'simple.signal',
-            'fields': [
-                {
-                    'name': 'data',
-                    'type': {
-                        'name': 'SimpleAttrs',
-                        'type': 'record',
-                        'fields': [
-                            {'name': 'boolean_field', 'type': 'boolean'},
-                            {'name': 'int_field', 'type': 'long'},
-                            {'name': 'float_field', 'type': 'double'},
-                            {'name': 'bytes_field', 'type': 'bytes'},
-                            {'name': 'string_field', 'type': 'string'},
-                        ]
-                    }
-                }
-            ]
-        }
+
         assert actual_schema == expected_schema
 
     def test_convert_dict_to_event_data(self):
@@ -230,6 +263,59 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         deserializer = AvroSignalDeserializer(SIGNAL)
         # Update signal with incomplete type info
         deserializer.signal = LIST_SIGNAL
+        with self.assertRaises(TypeError):
+            deserializer.from_dict(initial_dict)
+
+    def test_deserialization_of_dict_with_annotation(self):
+        """
+        Check that deserialization works as expected when dict data is annotated.
+        """
+        DICT_SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
+        initial_dict = {"dict_input": {"key1": 1, "key2": 3}}
+
+        deserializer = AvroSignalDeserializer(DICT_SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = {"key1": 1, "key2": 3}
+        test_data = event_data["dict_input"]
+
+        self.assertIsInstance(test_data, dict)
+        self.assertEqual(test_data, expected_event_data)
+
+    def test_deserialization_of_dict_without_annotation(self):
+        """
+        Check that deserialization raises error when dict data is not annotated.
+
+        Create dummy signal to bypass schema check while initializing deserializer. Then,
+        update signal with incomplete type info to test whether correct exceptions are raised while deserializing data.
+        """
+        SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
+        DICT_SIGNAL = create_simple_signal({"dict_input": Dict})
+        initial_dict = {"dict_input": {"key1": 1, "key2": 3}}
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        deserializer.signal = DICT_SIGNAL
+
+        with self.assertRaises(TypeError):
+            deserializer.from_dict(initial_dict)
+
+    def test_deserialization_of_dict_with_complex_types_fails(self):
+        SIGNAL = create_simple_signal({"dict_input": Dict[str, list]})
+        with self.assertRaises(TypeError):
+            AvroSignalDeserializer(SIGNAL)
+        initial_dict = {"dict_input": {"key1": [1, 3], "key2": [4, 5]}}
+        # create dummy signal to bypass schema check while initializing deserializer
+        # This allows us to test whether correct exceptions are raised while deserializing data
+        DUMMY_SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
+        deserializer = AvroSignalDeserializer(DUMMY_SIGNAL)
+        # Update signal with incorrect type info
+        deserializer.signal = SIGNAL
+        with self.assertRaises(TypeError):
+            deserializer.from_dict(initial_dict)
+
+    def test_deserialization_of_dicts_with_keys_of_complex_types_fails(self):
+        SIGNAL = create_simple_signal({"dict_input": Dict[CourseKey, int]})
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        initial_dict = {"dict_input": {CourseKey.from_string("course-v1:edX+DemoX.1+2014"): 1}}
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 

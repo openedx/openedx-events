@@ -16,6 +16,13 @@ Change Log
 Unreleased
 __________
 
+[9.16.0] - 2025-01-30
+---------------------
+
+Added
+~~~~~
+
+* Added support for annotated Python dictionaries as Avro Map type.
 
 [9.15.2] - 2025-01-16
 ---------------------

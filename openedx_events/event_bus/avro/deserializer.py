@@ -42,15 +42,26 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         return data
     elif data_type_origin == list:
-        # returns types of list contents
-        # if data_type == List[int], arg_data_type = (int,)
+        # Returns types of list contents.
+        # Example: if data_type == List[int], arg_data_type = (int,)
         arg_data_type = get_args(data_type)
         if not arg_data_type:
             raise TypeError(
                 "List without annotation type is not supported. The argument should be a type, for eg., List[int]"
             )
-        # check whether list items type is in basic types.
+        # Check whether list items type is in basic types.
         if arg_data_type[0] in SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING:
+            return data
+    elif data_type_origin == dict:
+        # Returns types of dict contents.
+        # Example: if data_type == Dict[str, int], arg_data_type = (str, int)
+        arg_data_type = get_args(data_type)
+        if not arg_data_type:
+            raise TypeError(
+                "Dict without annotation type is not supported. The argument should be a type, for eg., Dict[str, int]"
+            )
+        # Check whether dict items type is in basic types.
+        if all(arg in SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING for arg in arg_data_type):
             return data
     elif hasattr(data_type, "__attrs_attrs__"):
         transformed = {}
