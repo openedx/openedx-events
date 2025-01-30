@@ -22,7 +22,7 @@ def create_simple_signal(data_dict, event_type="simple.signal"):
         data_dict: Description of attributes passed to the signal
         event_type: A custom event type string. Defaults to 'simple.signal'
     """
-    return OpenEdxPublicSignal(
+    return OpenEdxPublicSignal(  # pylint: disable=missing-or-incorrect-annotation
         event_type=event_type,
         data=data_dict
     )

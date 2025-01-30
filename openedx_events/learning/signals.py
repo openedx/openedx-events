@@ -192,7 +192,7 @@ COURSE_DISCUSSIONS_CHANGED = OpenEdxPublicSignal(
     }
 )
 
-# .. event_type: org.openedx.learning.course.persistent_grade.summary.v1
+# .. event_type: org.openedx.learning.course.persistent_grade_summary.changed.v1
 # .. event_name: PERSISTENT_GRADE_SUMMARY_CHANGED
 # .. event_description: Emitted when a course's persistent grade summary changes for a user.
 # .. event_data: PersistentCourseGradeData
@@ -221,7 +221,7 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
 # .. event_type: org.openedx.learning.user.notification.requested.v1
 # .. event_name: USER_NOTIFICATION_REQUESTED
 # .. event_description: Can be emitted from apps to send user notifications.
-# .. event_data: UserNotificationSendListData
+# .. event_data: UserNotificationData
 # .. event_warning: This event is currently incompatible with the event bus, list without annotations
 #      are not serializable.
 # .. event_trigger_repository: openedx/edx-platform openedx/edx-ora2

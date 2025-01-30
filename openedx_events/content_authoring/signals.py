@@ -219,8 +219,8 @@ LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content.object.associations.changed.v1
 # .. event_name: CONTENT_OBJECT_ASSOCIATIONS_CHANGED
-# .. event_description: Emitted when an object's associations are changed, e.g tags, collections.
-# .. event_data: ContentObjectData
+# .. event_description: Emitted when an object's associations are changed, e.g tags, collections
+# .. event_data: ContentObjectChangedData
 # .. event_trigger_repository: openedx/edx-platform
 CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.associations.changed.v1",

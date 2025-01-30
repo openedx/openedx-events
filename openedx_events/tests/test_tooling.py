@@ -52,7 +52,7 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
         self.data_attr = {
             "user": Mock,
         }
-        self.public_signal = OpenEdxPublicSignal(
+        self.public_signal = OpenEdxPublicSignal(  # pylint: disable=missing-or-incorrect-annotation
             event_type=self.event_type,
             data=self.data_attr,
         )
