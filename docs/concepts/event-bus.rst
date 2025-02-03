@@ -1,13 +1,13 @@
 Open edX Event Bus
-==================
+####################
 
 Overview
---------
+**********
 
 The suggested strategy for cross-service communication in the Open edX ecosystem is through an event-based architecture implemented via the :term:`Event Bus`. This functionality used for asynchronous communication between services is built on top of sending Open edX Events (Open edX-specific Django signals) within a service.
 
 What is the Open edX Event Bus?
--------------------------------
+********************************
 
 The :term:`Event Bus` implements an event-driven architecture that enables asynchronous communication between services using the `publish/subscribe messaging pattern`_ (pub/sub). In the Open edX ecosystem, the event bus is used to broadcast Open edX Events to multiple services, allowing them to react to changes or actions in the system. The event bus is a key component of the Open edX architecture, enabling services to communicate without direct dependencies on each other.
 
@@ -16,7 +16,7 @@ The :term:`Event Bus` implements an event-driven architecture that enables async
    :align: center
 
 Why use the Open edX Event Bus?
--------------------------------
+**********************************
 
 The :term:`Event Bus` can help us achieve loose coupling between services, replacing blocking requests between services and large sync jobs, leading to a faster, more reliable, and more extensible system. See event messaging architectural goals highlighted in :doc:`openedx-proposals:architectural-decisions/oep-0041-arch-async-server-event-messaging` to read more about its benefits. Here's a brief summary of some key points:
 
@@ -25,7 +25,7 @@ The :term:`Event Bus` can help us achieve loose coupling between services, repla
 * **Reduce the Need for Plugins**: reduce the computational load for plugins that don't need to run in the same process by allowing cross-service communication of lifecycle events.
 
 How Does the Open edX Event Bus Work?
--------------------------------------
+***************************************
 
 The Open edX platform uses the ``OpenEdxPublicSignals`` (Open edX-specific Django Signals) to send events within a service. The event bus extends these signals, allowing them to be broadcasted and handled across multiple services. That's how Open edX Events are used for internal and external communication. For more details on how these Open edX-specific Django Signals are used by the event bus, refer to the :doc:`../decisions/0004-external-event-bus-and-django-signal-events` Architectural Decision Record (ADR).
 
@@ -36,10 +36,10 @@ This abstraction allows for developers to implement their own concrete implement
 Architectural Diagram
 *********************
 
-These diagrams show what happens when an event is sent to the event bus. The event-sending workflow follows the same steps as explained in the :ref:`events-architecture`, with a key difference: when configured, the event bus recognizes events and publishes them to the message broker for consumption by other services.
+These diagrams show what happens when an event is sent to the event bus. The event-sending workflow follows the same steps as explained in the :ref:`events architecture`, with a key difference: when configured, the event bus recognizes events and publishes them to the message broker for consumption by other services.
 
 Components
-=============
+==========
 
 * **Service A (Producer)**: The service that emits the event. Developers may have emitted this event in a key section of the application logic, signaling that a specific action has occurred.
 * **Service B (Consumer)**: The service that listens for the event and executes custom logic in response.
@@ -50,13 +50,14 @@ Components
 * **Event Bus Plugin**: The concrete implementation of the event bus (EventProducer and EventConsumer) based on a specific :term:`message broker <Message Broker>`, such as Pulsar. The plugin handles event production and consumption using technology-specific methods.
 
 Workflow
-==========
+=========
 
 .. image:: ../_images/event-bus-workflow-service-a.png
    :alt: Open edX Event Bus Workflow (Service A)
    :align: center
 
-**From Service A (Producer)**
+From Service A (Producer)
+------------------------------
 
 1. When the event is sent, a registered event receiver `general_signal_handler`_ is called to send the event to the event bus. This receiver is registered by the Django Signal mechanism when the ``openedx-events`` app is installed, and it listens for all Open edX Events.
 2. The receiver checks the ``EVENT_BUS_PRODUCER_CONFIG`` to look for the ``event_type`` of the event that was sent.
@@ -68,7 +69,8 @@ Workflow
    :alt: Open edX Event Bus Workflow (Service B)
    :align: center
 
-**From Service B (Consumer)**
+From Service B (Consumer)
+-------------------------
 
 1. A :term:`Worker` process in Service B runs indefinitely, checking the broker for new messages.
 2. When a new message is found, the ``EventConsumer`` deserializes the message and re-emits it as an event with the data that was transmitted.
@@ -77,7 +79,7 @@ Workflow
 This approach of producing events via settings with the generic handler was chosen to allow for flexibility in the event bus implementation. It allows developers to choose the event bus implementation that best fits their needs, and easily switch between implementations if necessary. See more details in the :doc:`../decisions/0012-producing-to-event-bus-via-settings` Architectural Decision Record (ADR).
 
 Event Bus vs Asynchronous Tasks
--------------------------------
+********************************
 
 Asynchronous tasks are used for long-running, resource-intensive operations that should not block the main thread of a service. The event bus broadcasts messages to multiple services, allowing them to react to changes or actions in the system. Both can be used for asynchronous communication, but they serve different purposes and have different workflows.
 
@@ -115,7 +117,7 @@ Use the Open edX Event bus instead of asynchronous tasks when:
 Use asynchronous tasks when you need to send a message to a particular service and wait for their response for further processing.
 
 How is the Open edX Event Bus Used?
------------------------------------
+************************************
 
 The event bus is used to broadcast Open edX Events to multiple services, allowing them to react to changes or actions in the system.
 
