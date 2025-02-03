@@ -18,17 +18,17 @@ asgiref==3.8.1
     #   django
 attrs==25.1.0
     # via -r requirements/test.txt
-babel==2.16.0
+babel==2.17.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
 backports-tarfile==1.2.0
     # via jaraco-context
-beautifulsoup4==4.12.3
+beautifulsoup4==4.13.0
     # via pydata-sphinx-theme
 build==1.2.2.post1
     # via -r requirements/doc.in
-certifi==2024.12.14
+certifi==2025.1.31
     # via requests
 cffi==1.17.1
     # via
@@ -287,6 +287,7 @@ typing-extensions==4.12.2
     # via
     #   -r requirements/test.txt
     #   anyio
+    #   beautifulsoup4
     #   edx-opaque-keys
     #   pydata-sphinx-theme
 urllib3==2.2.3

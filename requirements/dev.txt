@@ -28,7 +28,7 @@ cachetools==5.5.1
     # via
     #   -r requirements/ci.txt
     #   tox
-certifi==2024.12.14
+certifi==2025.1.31
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -77,7 +77,7 @@ cryptography==44.0.0
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/quality.txt
-diff-cover==9.2.1
+diff-cover==9.2.2
     # via -r requirements/dev.in
 dill==0.3.9
     # via
