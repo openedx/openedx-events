@@ -1,5 +1,5 @@
 Events
-======
+#######
 
 This is the list of Open edX events found in this repository.
 

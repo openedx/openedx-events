@@ -1,5 +1,5 @@
 Event Bus Configuration
-=======================
+########################
 
 Here are the available configurations for the event bus that are used to setup the event bus in the Open edX platform.
 
