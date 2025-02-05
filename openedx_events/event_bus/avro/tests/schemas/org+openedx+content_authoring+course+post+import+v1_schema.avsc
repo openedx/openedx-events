@@ -1,0 +1,21 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "course",
+      "type": {
+        "name": "CourseData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "course_key",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.content_authoring.course.post.import.v1"
+}

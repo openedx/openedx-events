@@ -276,3 +276,16 @@ LIBRARY_COLLECTION_DELETED = OpenEdxPublicSignal(
         "library_collection": LibraryCollectionData
     }
 )
+
+# .. event_type: org.openedx.content_authoring.course.post.import.v1
+# .. event_name: POST_COURSE_IMPORT
+# .. event_key_field: catalog_info.course_key
+# .. event_description: Fired after a course is imported
+# .. event_data: CourseData
+# .. event_trigger_repository: openedx/edx-platform
+POST_COURSE_IMPORT = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.course.post.import.v1",
+    data={
+        "course": CourseData,
+    }
+)
