@@ -6,7 +6,7 @@ Here we document the tooling available for working with Open edX events as a dev
 .. autoclass:: openedx_events.tooling.OpenEdxPublicSignal
    :members:
 
-   
+
 **Maintenance chart**
 
 +--------------+-------------------------------+----------------+--------------------------------+
