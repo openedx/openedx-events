@@ -81,6 +81,20 @@ As mentioned previously, developers can listen to Open edX Events by registering
 
 For more information on using Open edX Events, refer to the :doc:`../how-tos/create-a-new-event` how-to guide. We also encourage you to explore the :doc:`../reference/real-life-use-cases` section for real-life examples of how Open edX Events are used by the community.
 
+**Maintenance chart**
+
+.. list-table::
+:header-rows: 1
+* - Review Date
+  - Working Group Reviewer
+  - Release
+  - Test Situation
+* - 2025-02-05
+  - BTR WG - Maria Grimaldi
+  - Redwood
+  - Pass
+
+
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _triggering the COURSE_ENROLLMENT_CREATED event: https://github.com/openedx/edx-platform/blob/master/common/djangoapps/student/models/course_enrollment.py#L777-L795
 .. _course_enrollment_post_save receiver: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/handlers.py#L38-L53

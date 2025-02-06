@@ -1,4 +1,4 @@
-In-line Code Annotations for An Open edX Event
+In-line Code Annotations for an Open edX Event
 ################################################
 
 When creating a new Open edX Event, you must document the event definition using in-line code annotations. These annotations provide a structured way to document the event's metadata, making it easier for developers to understand the event's purpose and how it should be used.
@@ -32,3 +32,16 @@ Consider the following example:
             "enrollment": CourseEnrollmentData,
         }
     )
+
+**Maintenance chart**
+
+.. list-table::
+:header-rows: 1
+* - Review Date
+  - Working Group Reviewer
+  - Release
+  - Test Situation
+* - 2025-02-05
+  - BTR WG - Maria Grimaldi
+  - Redwood
+  - Pass
