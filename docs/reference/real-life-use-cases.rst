@@ -65,7 +65,7 @@ The Open edX Event Bus can be used not only for communication within the Open ed
 For example, an SIS can subscribe to enrollment events to keep student records updated, while a CRM can track learner engagement using completion events. This setup enables easy data exchange without direct API integrations, simplifying system maintenance.
 
 Communication between Application Components
-********************************************
+==============================================
 
 Open edX Events can also be used to facilitate communication between different application components running in the same process, allowing them to interact and synchronize their actions. Here are some examples of how Open edX Events can be used to coordinate between application components:
 
