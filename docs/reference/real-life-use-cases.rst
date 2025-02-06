@@ -58,7 +58,7 @@ To make event tracking faster and more efficient, tracking logs are optionally s
 More details on: `Real-Time Event Tracking`_.
 
 Communication between Application Components
-********************************************
+==============================================
 
 Open edX Events can also be used to facilitate communication between different application components running in the same process, allowing them to interact and synchronize their actions. Here are some examples of how Open edX Events can be used to coordinate between application components:
 
