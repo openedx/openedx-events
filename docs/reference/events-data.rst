@@ -31,13 +31,8 @@ Enterprise Subdomain
 
 **Maintenance chart**
 
-.. list-table::
-:header-rows: 1
-* - Review Date
-  - Working Group Reviewer
-  - Release
-  - Test Situation
-* - 2025-02-05
-  - BTR WG - Maria Grimaldi
-  - Redwood
-  - Pass
++--------------+-------------------------------+----------------+--------------------------------+
+| Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
++--------------+-------------------------------+----------------+--------------------------------+
+|2025-02-05    | BTR WG - Maria Grimaldi       |Redwood         |Pass.                           |
++--------------+-------------------------------+----------------+--------------------------------+

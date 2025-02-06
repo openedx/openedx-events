@@ -8,18 +8,13 @@ you understand the major decisions made during the library's design.
 
 - The `Asynchronous Server Event Message Format (OEP-41)`_ specifies the header information format sent by the events. For a detailed description at the impact of the OEP-41, please refer to the Events Payload ADR.
 
-**Maintenance chart**
-
-.. list-table::
-:header-rows: 1
-* - Review Date
-  - Working Group Reviewer
-  - Release
-  - Test Situation
-* - 2025-02-05
-  - BTR WG - Maria Grimaldi
-  - Redwood
-  - Pass
-
 .. _Hooks extension framework (OEP-50): https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0050-hooks-extension-framework.html
 .. _Asynchronous Server Event Message Format (OEP-41): https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html
+
+**Maintenance chart**
+
++--------------+-------------------------------+----------------+--------------------------------+
+| Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
++--------------+-------------------------------+----------------+--------------------------------+
+|2025-02-05    | BTR WG - Maria Grimaldi       |Redwood         |Pass.                           |
++--------------+-------------------------------+----------------+--------------------------------+
