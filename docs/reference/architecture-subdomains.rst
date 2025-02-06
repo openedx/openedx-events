@@ -23,18 +23,6 @@ Here we list useful information about Open edX architecture subdomains and their
 - `Subdomains from OEP-41`_
 - `Message Content Data Guidelines`_
 
-**Maintenance chart**
-
-.. list-table::
-:header-rows: 1
-* - Review Date
-  - Working Group Reviewer
-  - Release
-  - Test Situation
-* - 2025-02-05
-  - BTR WG - Maria Grimaldi
-  - Redwood
-  - Pass
 
 .. _Events Naming and Versioning: https://github.com/openedx/openedx-events/blob/main/docs/decisions/0002-events-naming-and-versioning.rst#L1
 .. _edX Domain Driven Design documentation: https://openedx.atlassian.net/wiki/spaces/AC/pages/213910332/Domain-Driven+Design
@@ -42,3 +30,11 @@ Here we list useful information about Open edX architecture subdomains and their
 .. _`Message Content Data Guidelines`: https://docs.openedx.org/projects/openedx-proposals/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html?highlight=subdomain#message-content-data-guidelines
 .. _`Notes on events design and subdomains`: https://github.com/openedx/openedx-events/issues/72#issuecomment-1179291340
 .. _architecture subdomains: https://microservices.io/patterns/decomposition/decompose-by-subdomain.html
+
+**Maintenance chart**
+
++--------------+-------------------------------+----------------+--------------------------------+
+| Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
++--------------+-------------------------------+----------------+--------------------------------+
+|2025-02-05    | BTR WG - Maria Grimaldi       |Redwood         |Pass.                           |
++--------------+-------------------------------+----------------+--------------------------------+

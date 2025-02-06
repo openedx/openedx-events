@@ -123,22 +123,17 @@ The event bus is used to broadcast Open edX Events to multiple services, allowin
 
 We encourage you to review the :doc:`../reference/real-life-use-cases` page for examples of how the community uses the event bus in the Open edX ecosystem. Also, see the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events` guide to start sending events to the event bus.
 
-**Maintenance chart**
-
-.. list-table::
-:header-rows: 1
-* - Review Date
-  - Working Group Reviewer
-  - Release
-  - Test Situation
-* - 2025-02-05
-  - BTR WG - Maria Grimaldi
-  - Redwood
-  - Pass
-
 .. _general_signal_handler: https://github.com/openedx/openedx-events/blob/main/openedx_events/apps.py#L16-L44
 .. _EventProducer: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/__init__.py#L71-L91
 .. _EventConsumer: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/__init__.py#L128-L139
 .. _publish/subscribe messaging pattern: https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
 .. _event-bus-redis: https://github.com/openedx/event-bus-redis/
 .. _event-bus-kafka: https://github.com/openedx/event-bus-kafka/
+
+**Maintenance chart**
+
++--------------+-------------------------------+----------------+--------------------------------+
+| Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
++--------------+-------------------------------+----------------+--------------------------------+
+|2025-02-05    | BTR WG - Maria Grimaldi       |Redwood         |Pass.                           |
++--------------+-------------------------------+----------------+--------------------------------+

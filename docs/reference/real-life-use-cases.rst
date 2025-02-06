@@ -130,19 +130,6 @@ Here are some additional use cases that can be implemented using Open edX Events
 
 .. note:: If you have implemented a solution using Open edX Events and would like to share it with the community, please submit a pull request to add it to this list!
 
-**Maintenance chart**
-
-.. list-table::
-:header-rows: 1
-* - Review Date
-  - Working Group Reviewer
-  - Release
-  - Test Situation
-* - 2025-02-05
-  - BTR WG - Maria Grimaldi
-  - Redwood
-  - Pass
-
 .. _edx-exams: https://github.com/edx/edx-exams
 .. _edx-proctoring: https://github.com/openedx/edx-proctoring
 .. _ADR Implementation of Event Driven Architecture for Exam Downstream Effects: https://github.com/edx/edx-exams/blob/main/docs/decisions/0004-downstream-effect-events.rst
@@ -170,3 +157,11 @@ Here are some additional use cases that can be implemented using Open edX Events
 .. _Link User to Invite: https://github.com/academic-innovation/mogc-partnerships/blob/main/mogc_partnerships/receivers.py#L9
 .. _Enterprise Unenrollment Sync: https://github.com/openedx/edx-enterprise/pull/1754
 .. _IDV Integration with new Vendors: https://openedx.atlassian.net/wiki/spaces/OEPM/pages/4307386369/Proposal+Add+Extensibility+Mechanisms+to+IDV+to+Enable+Integration+of+New+IDV+Vendor+Persona#Event-Hooks
+
+**Maintenance chart**
+
++--------------+-------------------------------+----------------+--------------------------------+
+| Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
++--------------+-------------------------------+----------------+--------------------------------+
+|2025-02-05    | BTR WG - Maria Grimaldi       |Redwood         |Pass.                           |
++--------------+-------------------------------+----------------+--------------------------------+
