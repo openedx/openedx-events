@@ -17,5 +17,5 @@
       }
     }
   ],
-  "namespace": "org.openedx.content_authoring.course.post.import.v1"
+  "namespace": "org.openedx.content_authoring.course.import.completed.v1"
 }

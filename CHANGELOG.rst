@@ -22,7 +22,7 @@ __________
 Added
 ~~~~~
 
-* Added new course_authoring signal: ``POST_COURSE_IMPORT``.
+* Added new course_authoring signal: ``COURSE_IMPORT_COMPLETED``.
 
 [9.17.0] - 2025-01-30
 ---------------------
