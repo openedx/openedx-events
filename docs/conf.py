@@ -13,7 +13,12 @@
 import os
 import re
 import sys
-sys.path.insert(0, os.path.abspath('..'))
+
+import git
+
+root = os.path.abspath('..')
+
+sys.path.insert(0, root)
 
 # -- Project information -----------------------------------------------------
 
@@ -141,3 +146,14 @@ intersphinx_mapping = {
         None,
     ),
 }
+
+# Code Annotations Related Configurations
+
+try:
+    openedx_event_version = git.Repo(search_parent_directories=True).head.object.hexsha
+except git.InvalidGitRepositoryError:
+    openedx_event_version = "master"
+
+settings_source_path = str(root)
+settings_repo_url = "https://github.com/openedx/openedx-events"
+settings_repo_version = openedx_event_version

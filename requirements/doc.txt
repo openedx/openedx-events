@@ -18,17 +18,17 @@ asgiref==3.8.1
     #   django
 attrs==25.1.0
     # via -r requirements/test.txt
-babel==2.16.0
+babel==2.17.0
     # via
     #   pydata-sphinx-theme
     #   sphinx
 backports-tarfile==1.2.0
     # via jaraco-context
-beautifulsoup4==4.12.3
+beautifulsoup4==4.13.3
     # via pydata-sphinx-theme
 build==1.2.2.post1
     # via -r requirements/doc.in
-certifi==2024.12.14
+certifi==2025.1.31
     # via requests
 cffi==1.17.1
     # via
@@ -47,7 +47,7 @@ code-annotations==2.2.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.6.10
+coverage[toml]==7.6.11
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -55,7 +55,7 @@ cryptography==44.0.0
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
-django==4.2.18
+django==4.2.19
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -93,6 +93,10 @@ edx-opaque-keys[django]==2.11.0
     #   edx-ccx-keys
 fastavro==1.10.0
     # via -r requirements/test.txt
+gitdb==4.0.12
+    # via gitpython
+gitpython==3.1.44
+    # via -r requirements/doc.in
 h11==0.14.0
     # via uvicorn
 id==1.5.0
@@ -138,7 +142,7 @@ more-itertools==10.6.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.5.0
+newrelic==10.6.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -151,7 +155,7 @@ packaging==24.2
     #   pytest
     #   sphinx
     #   twine
-pbr==6.1.0
+pbr==6.1.1
     # via
     #   -r requirements/test.txt
     #   stevedore
@@ -227,6 +231,8 @@ six==1.17.0
     # via
     #   -r requirements/test.txt
     #   edx-ccx-keys
+smmap==5.0.2
+    # via gitdb
 sniffio==1.3.1
     # via anyio
 snowballstemmer==2.2.0
@@ -287,6 +293,7 @@ typing-extensions==4.12.2
     # via
     #   -r requirements/test.txt
     #   anyio
+    #   beautifulsoup4
     #   edx-opaque-keys
     #   pydata-sphinx-theme
 urllib3==2.2.3
@@ -302,3 +309,6 @@ websockets==14.2
     # via sphinx-autobuild
 zipp==3.21.0
     # via importlib-metadata
+
+# The following packages are considered to be unsafe in a requirements file:
+# setuptools

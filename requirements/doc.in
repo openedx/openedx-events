@@ -13,3 +13,4 @@ sphinx-copybutton
 sphinx-autobuild
 sphinxcontrib-mermaid
 sphinxcontrib-contentui
+gitpython                 # fetch git repo information
