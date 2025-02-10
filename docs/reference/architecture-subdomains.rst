@@ -36,5 +36,5 @@ Here we list useful information about Open edX architecture subdomains and their
 +--------------+-------------------------------+----------------+--------------------------------+
 | Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
 +--------------+-------------------------------+----------------+--------------------------------+
-|2025-02-05    | BTR WG - Maria Grimaldi       |Redwood         |Pass.                           |
+|2025-02-05    | BTR WG - Maria Grimaldi       |   Sumac        |Pass.                           |
 +--------------+-------------------------------+----------------+--------------------------------+
