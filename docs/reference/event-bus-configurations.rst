@@ -11,5 +11,6 @@ Here are the available configurations for the event bus that are used to setup t
 +--------------+-------------------------------+----------------+--------------------------------+
 | Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
 +--------------+-------------------------------+----------------+--------------------------------+
-|2025-02-05    | BTR WG - Maria Grimaldi       |Redwood         |Pass.                           |
+|2025-02-05    | BTR WG - Maria Grimaldi       |   Sumac        |Pass.                           |
 +--------------+-------------------------------+----------------+--------------------------------+
+
