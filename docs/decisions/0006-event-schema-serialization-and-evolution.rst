@@ -23,7 +23,7 @@ However, for the event bus, we will be introducing more rigorous event evolution
 
 Event schemas can evolve in various ways and each implementation of an event bus should choose a schema evolution configuration. The choices include how data can change, as well as the order in which producer and consumer needs to be deployed with new changes.
 
-Event bus technologies support various schema evolutions (`source <https://docs.confluent.io/platform/current/schema-registry/avro.html>`_)::
+Event bus technologies support various schema evolutions (`source <https://docs.confluent.io/platform/current/schema-registry/avro.html>`_):
 
 - Backward / Backward Transitive: Allows you to delete fields and add optional fields. The consumer of the messages must upgrade to handle new schema before producer.
 
