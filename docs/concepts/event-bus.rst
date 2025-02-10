@@ -22,7 +22,7 @@ The :term:`Event Bus` can help us achieve loose coupling between services, repla
 
 * **Eliminate Blocking, Synchronous Requests**: reduce site outages when services become overloaded with requests by replacing synchronous calls with asynchronous communication.
 * **Eliminate Expensive, Delayed, Batch Synchronization**: replace expensive batch processing with near real-time data updates.
-* **Reduce the Need for Plugins**: reduce the computational load for plugins that don't need to run in the same process by allowing cross-service communication of lifecycle events.
+* **Reduce the need for Plugins**: reduce the computational load for plugins that don't need to run in the same process by allowing cross-service communication of lifecycle events.
 
 How Does the Open edX Event Bus Work?
 ***************************************
