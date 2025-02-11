@@ -16,6 +16,14 @@ Change Log
 Unreleased
 __________
 
+[9.18.0] - 2025-02-06
+---------------------
+
+Added
+~~~~~
+
+* Added new course_authoring signal: ``COURSE_IMPORT_COMPLETED``.
+
 [9.17.0] - 2025-01-30
 ---------------------
 
