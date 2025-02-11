@@ -68,7 +68,7 @@ class TestGenerateAvroCommand(FreezeSignalCacheMixin, TestCase):
     @patch('os.path.exists', lambda path: path == TestGenerateAvroCommand.folder_path)
     def test_generate_all(self):
         load_all_signals()
-        expected_files = [f"{TestGenerateAvroCommand.folder_path}/{signal.event_type.replace('.','+')}_schema.avsc"
+        expected_files = [f"{TestGenerateAvroCommand.folder_path}/{signal.event_type.replace('.', '+')}_schema.avsc"
                           for signal in OpenEdxPublicSignal.all_events() if signal.event_type
                           not in KNOWN_UNSERIALIZABLE_SIGNALS]
         with patch("builtins.open", mock_open()) as mock_file:
