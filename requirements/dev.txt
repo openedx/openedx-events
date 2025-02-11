@@ -8,9 +8,8 @@ asgiref==3.8.1
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==2.15.8
+astroid==3.3.8
     # via
-    #   -c requirements/constraints.txt
     #   -r requirements/quality.txt
     #   pylint
     #   pylint-celery
@@ -67,11 +66,11 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.6.11
+coverage[toml]==7.6.12
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
-cryptography==44.0.0
+cryptography==44.0.1
     # via
     #   -r requirements/quality.txt
     #   secretstorage
@@ -143,7 +142,7 @@ iniconfig==2.0.0
     # via
     #   -r requirements/quality.txt
     #   pytest
-isort==5.13.2
+isort==6.0.0
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -173,10 +172,6 @@ keyring==25.6.0
     # via
     #   -r requirements/quality.txt
     #   twine
-lazy-object-proxy==1.10.0
-    # via
-    #   -r requirements/quality.txt
-    #   astroid
 markdown-it-py==3.0.0
     # via
     #   -r requirements/quality.txt
@@ -254,7 +249,7 @@ pygments==2.19.1
     #   diff-cover
     #   readme-renderer
     #   rich
-pylint==2.17.7
+pylint==3.3.4
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -265,7 +260,7 @@ pylint-celery==0.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-pylint-django==2.5.5
+pylint-django==2.6.1
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -274,7 +269,7 @@ pylint-plugin-utils==0.8.2
     #   -r requirements/quality.txt
     #   pylint-celery
     #   pylint-django
-pymongo==4.11
+pymongo==4.11.1
     # via
     #   -r requirements/quality.txt
     #   edx-opaque-keys
@@ -298,7 +293,7 @@ pytest==8.3.4
     #   pytest-django
 pytest-cov==6.0.0
     # via -r requirements/quality.txt
-pytest-django==4.9.0
+pytest-django==4.10.0
     # via -r requirements/quality.txt
 python-slugify==8.0.4
     # via
@@ -375,7 +370,7 @@ urllib3==2.2.3
     #   -r requirements/quality.txt
     #   requests
     #   twine
-virtualenv==20.29.1
+virtualenv==20.29.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -383,10 +378,6 @@ wheel==0.45.1
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-wrapt==1.17.2
-    # via
-    #   -r requirements/quality.txt
-    #   astroid
 zipp==3.21.0
     # via
     #   -r requirements/quality.txt
