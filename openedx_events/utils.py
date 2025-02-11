@@ -13,7 +13,7 @@ class ResponsePrettyPrinter(PrettyPrinter):
     This class pretty-prints the response of common Django Signals.
     """
 
-    def _format(self, obj, stream, indent, allowance, context, level):  # pylint: disable=arguments-renamed
+    def _format(self, obj, stream, indent, allowance, context, level):  # pylint: disable=arguments-renamed, too-many-positional-arguments
         """
         Override format method exposing more information about functions/exceptions.
 
