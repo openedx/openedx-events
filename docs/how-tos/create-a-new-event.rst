@@ -3,11 +3,11 @@ Create a New Open edX Event with Long-Term Support
 
 Open edX Events are supported and maintained by the Open edX community. This mechanism is designed to be extensible and flexible, allowing developers to create new events that other services can consume. This guide describes how to create a new Open edX event with long-term support by following the practices outlined in the :doc:`../decisions/0016-event-design-practices` ADR.
 
-Events designed with long support closely follow the practices described in the ADR to minimize breaking changes and maximize compatibility and support for future versions of Open edX.
+Events designed with long-term support closely follow the practices described in the ADR to minimize breaking changes and maximize compatibility and support for future Open edX versions.
 
 .. note:: Before starting, ensure you have reviewed the documentation on :doc:`docs.openedx.org:developers/concepts/hooks_extension_framework`, this documentation helps you decide if creating a new event is necessary. You should also review the documentation on :doc:`../decisions/0016-event-design-practices` to understand the practices that should be followed when creating a new event.
 
-Throughout this guide, we will use an example of creating a new event that will be triggered when a user enrolls in a course from the course about page to illustrate better the steps involved in creating a new event.
+Throughout this guide, we will use an example of creating a new event that will be triggered when a user enrolls in a course from the course about page to better illustrate the steps involved in creating a new event.
 
 Key Outlines from Event Design Practices
 ******************************************
@@ -47,7 +47,7 @@ To create a new Open edX Event with long-term support, follow these steps:
 Step 1: Propose the Use Case to the Community
 =================================================
 
-Before contributing to a new event, it is important to propose the event to the community to get feedback on the event's design and use case. For instance, you could create a post in the Open edX Discuss Forum or create a new issue in the repository's issue tracker describing your use case for the new event. Here are some examples of community members who have taken this step:
+Before contributing a new event, it is important to propose the event to the community to get feedback on the event's design and use case. For instance, you could create a post in the Open edX Discuss Forum or create a new issue in the repository's issue tracker describing your use case for the new event. Here are some examples of community members who have taken this step:
 
 - `Add Extensibility Mechanism to IDV to Enable Integration of New IDV Vendor Persona`_
 - `Add Program Certificate events`_
@@ -108,7 +108,7 @@ As a rule of thumb, the event should contain the minimum amount of data required
 
 This will help ensure that the event is self-descriptive and self-contained as much as possible.
 
-.. note:: There have been cases where events also carry other contextual data that is not directly related to the event but useful for consumers Although this is not recommended, if you need to include such data, ensure that the reasoning behind it is documented and does not introduce ambiguity.
+.. note:: There have been cases where events also carry other contextual data that is not directly related to the event but useful for consumers. Although this is not recommended, if you need to include such data, ensure that the reasoning behind it is documented and does not introduce ambiguity.
 
 .. note:: Also, consider how relevant the data is to where the event is triggered. Consider whether it could be removed or deprecated in the future so that the event remains consistent and maintainable over time.
 
@@ -138,7 +138,7 @@ In our example, the event definition and payload for the enrollment event could 
     @attr.s(frozen=True)
     class CourseEnrollmentData:
         """
-        Attributes defined for Open edX Course Enrollment Object.
+        Attributes defined for Open edX Course Enrollment object.
 
         Arguments:
             user (UserData): user associated with the Course Enrollment.
@@ -196,7 +196,7 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
 Step 6: Send the Event
 =========================
 
-After defining the event, you should trigger the event in the places we identified in the triggering logic. In our example, we identified that the event should be triggered when a user enrolls in a course, so it should be triggered when the enrollment process completes, successfully independent of the method of enrollment used. Therefore, we should trigger the event in the ``enroll`` method in the enrollment model in the LMS service when the enrollment process is complete successfully, i.e., at the end of the method.
+After defining the event, you should trigger the event in the places we identified in the triggering logic. In our example, we identified that the event should be triggered when a user enrolls in a course, so it should be triggered when the enrollment process successfully completes, independent of the method of enrollment used. Therefore, we should trigger the event in the ``enroll`` method in the enrollment model in the LMS service when the enrollment process is successfully completed, i.e., at the end of the method.
 
 Here is how the integration could look like:
 
@@ -240,7 +240,7 @@ You should test the event to ensure it triggers consistently and that its payloa
 
 To ensure that our example is tested thoroughly, we should:
 
-- Add unit tests to the ``enroll`` method to ensure that the event is triggered when a user enrolls in a course. This means testing the event is triggered when the enrollment process is completed successfully.
+- Add unit tests to the ``enroll`` method to ensure that the event is triggered when a user enrolls in a course. This means testing the event is triggered when the enrollment process completes successfully.
 - Add checks to ensure that the event is triggered consistently and only when the event should be triggered.
 - Verify that the payload contains the necessary information for consumers to react to the event, such as user information, course information, enrollment mode, and other relevant data.
 
@@ -328,5 +328,5 @@ For more details on how the contribution flow works, refer to the :doc:`docs.ope
 +--------------+-------------------------------+----------------+--------------------------------+
 | Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
 +--------------+-------------------------------+----------------+--------------------------------+
-|2025-02-05    | BTR WG - Maria Grimaldi       |Redwood         |Pass.                           |
+|2025-02-05    | BTR WG - Maria Grimaldi       |   Sumac        |Pass.                           |
 +--------------+-------------------------------+----------------+--------------------------------+
