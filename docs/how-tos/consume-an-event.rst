@@ -39,7 +39,7 @@ First, add the ``openedx-events`` plugin into your dependencies so the library's
 This will mainly make the events available for your CI/CD pipeline and local development environment. If you are using the Open edX platform, the library should already be installed in the environment, so there is no need to install it.
 
 Step 3: Create an Event Receiver and Connect it to the Event
-===========================================================
+=============================================================
 
 An :term:`Event Receiver` is simply a function that listens for a specific event and executes custom logic in response to the event being triggered. You can create an event receiver by using the decorator of the Django signal receivers. Here's an example of an event receiver that listens for the ``COURSE_ENROLLMENT_CREATED`` event and creates a notification preference for the user:
 
