@@ -7,3 +7,4 @@ attrs
 fastavro
 edx-opaque-keys[django]
 edx-ccx-keys
+setuptools
