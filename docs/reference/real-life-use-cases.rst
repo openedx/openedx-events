@@ -57,6 +57,13 @@ To make event tracking faster and more efficient, tracking logs are optionally s
 
 More details on: `Real-Time Event Tracking`_.
 
+External Services Integration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The Open edX Event Bus can be used not only for communication within the Open edX ecosystem but also to integrate with external systems. Using Kafka, third-party services like Student Information Systems (SIS) or Customer Relationship Management (CRM) platforms can receive event data. These systems can track events like enrollments, course completions, or certificate generation to update records, trigger workflows, or improve reporting.
+
+For example, an SIS can subscribe to enrollment events to keep student records updated, while a CRM can track learner engagement using completion events. This setup enables easy data exchange without direct API integrations, simplifying system maintenance.
+
 Communication between Application Components
 ********************************************
 
