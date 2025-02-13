@@ -41,7 +41,7 @@ This will mainly make the events available for your CI/CD pipeline and local dev
 Step 3: Create an Event Receiver and Connect it to the Event
 =============================================================
 
-An :term:`Event Receiver` is simply a function that listens for a specific event and executes custom logic in response to the event being triggered. You can create an event receiver by using the decorator of the Django signal receivers. Here's an example of an event receiver that listens for the ``COURSE_ENROLLMENT_CREATED`` event and creates a notification preference for the user:
+An :term:`Event Receiver` is simply a function that listens for a specific event and executes custom logic in response to the event being triggered. You can create an event receiver by using the Django signals `receiver`_ decorator. Here's an example of an event receiver that listens for the ``COURSE_ENROLLMENT_CREATED`` event and creates a notification preference for the user:
 
 .. code-block:: python
 
@@ -70,7 +70,7 @@ An :term:`Event Receiver` is simply a function that listens for a specific event
 - This event has a single field called ``enrollment``, which is an instance of the ``CourseEnrollmentData`` class. You can review the ``CourseEnrollmentData`` class to understand the data that is available to you and how you can use it to implement the custom logic.
 - The ``metadata`` parameter contains the Open edX-specific metadata for the event, such as the event version and timestamp when the event was sent. You can use this metadata to understand more about the event and its context.
 
-These event receivers are usually implemented independently of the service in an `Open edX Django plugins`_ and are registered in the ``handlers.py`` (according to `OEP-49`_) file of the plugin. You can review the ``handlers.py`` file of the `openedx-events-2-zapier`_ plugin to understand how the event receivers are implemented and connected to the events.
+These event receivers are usually implemented independently of the service in an `Open edX Django plugin`_ and are registered in the ``handlers.py`` (according to `OEP-49`_) file of the plugin. You can review the ``handlers.py`` file of the `openedx-events-2-zapier`_ plugin to understand how the event receivers are implemented and connected to the events.
 
 Consider the following when implementing the event receiver:
 
@@ -115,7 +115,7 @@ Given the design of Open edX Events, you can include the events' definitions in 
 
         # Assert that the request was sent to the webhook with the correct data
 
-- In the test suite, you can use the ``send_event`` method to trigger the event and pass the necessary data to the event receiver.  In this case, we pass the user, course, and enrollment data to the event receiver as the triggering logic would.
+- In the test suite, you can use the ``send_event`` method to trigger the event and pass the necessary data to the event receiver. In this case, we pass the user, course, and enrollment data to the event receiver as the triggering logic would.
 - After triggering the event, you can assert that the event receiver executed the custom logic as expected. In this case, we check that the request was sent to the webhook with the correct data.
 
 You can review this example to understand how you can test the event receiver and ensure that the custom logic is executed when the event is triggered in the `openedx-events-2-zapier`_ plugin.
@@ -125,14 +125,15 @@ This way you can ensure that the event receiver is working as expected and that 
 .. _Tutor: https://docs.tutor.edly.io/
 .. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _openedx-events-2-zapier: https://github.com/eduNEXT/openedx-events-2-zapier
-.. _Open edX Django plugins: https://docs.openedx.org/en/latest/developers/concepts/platform_overview.html#new-plugin
+.. _Open edX Django plugin: https://docs.openedx.org/en/latest/developers/concepts/platform_overview.html#new-plugin
 .. _OEP-49: https://docs.openedx.org/projects/openedx-proposals/en/latest/best-practices/oep-0049-django-app-patterns.html#signals
 .. _list of events: https://docs.openedx.org/projects/openedx-events/en/latest/reference/events.html
+.. _reciver: https://docs.djangoproject.com/en/4.2/topics/signals/#django.dispatch.receiver
 
 **Maintenance chart**
 
 +--------------+-------------------------------+----------------+--------------------------------+
-| Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
+| Review Date  | Reviewer                      |   Release      |Test situation                  |
 +--------------+-------------------------------+----------------+--------------------------------+
-|2025-02-10    | BTR WG - Maria Grimaldi       |   Sumac        |Pass.                           |
+|2025-02-10    | Maria Grimaldi                |   Sumac        |Pass.                           |
 +--------------+-------------------------------+----------------+--------------------------------+
