@@ -66,6 +66,12 @@ Here's an example of the producer configuration which will publish events for XB
         },
    }
 
+Where:
+
+- ``org.openedx.content_authoring.xblock.published.v1`` and ``org.openedx.content_authoring.xblock.deleted.v1`` are the event types.
+- ``content-authoring-xblock-lifecycle`` and ``content-authoring-xblock-published`` are the topics to which the events will be published. The topic names can take any value, but it is recommended to use a meaningful name.
+- ``event_key_field`` is the path to the field in the event data that will be used as the event key.
+
 The ``EVENT_BUS_PRODUCER_CONFIG`` is read by ``openedx_events`` and a handler (`general_signal_handler`_) is attached which does the leg work of reading the configuration again and pushing to appropriate handlers.
 
 Step 4: Consume the Event

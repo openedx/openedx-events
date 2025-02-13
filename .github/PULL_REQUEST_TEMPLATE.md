@@ -8,7 +8,7 @@ Use this template as a guide. Omit sections that don't apply.
 You may link to information rather than copy it, but only if the link is publicly readable.
 If the linked information must be private (because it contains secrets), clearly label the link as private.
 
-Fore more details on the Hooks Extension Framework contribution process, see:
+For more details on the Hooks Extension Framework contribution process, see:
 
 https://docs.openedx.org/en/latest/developers/concepts/hooks_extension_framework.html
 
@@ -58,7 +58,7 @@ Check off if complete *or* not applicable:
 - [ ] Version bumped
 - [ ] Changelog record added with short description of the change and current date
 - [ ] Documentation updated (not only docstrings)
-- [ ] Code dependencies reviewed
+- [ ] Integration with other services reviewed
 - [ ] Fixup commits are squashed away
 - [ ] Unit tests added/updated
 - [ ] Noted any: Concerns, dependencies, migration issues, deadlines, tickets
