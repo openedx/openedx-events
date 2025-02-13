@@ -161,8 +161,8 @@ Here are some additional use cases that can be implemented using Open edX Events
 **Maintenance chart**
 
 +--------------+-------------------------------+----------------+--------------------------------+
-| Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
+| Review Date  | Reviewer                      |   Release      |Test situation                  |
 +--------------+-------------------------------+----------------+--------------------------------+
-|2025-02-05    | BTR WG - Maria Grimaldi       |   Sumac        |Pass.                           |
+|2025-02-05    | Maria Grimaldi                |  Sumac         |Pass.                           |
 +--------------+-------------------------------+----------------+--------------------------------+
 

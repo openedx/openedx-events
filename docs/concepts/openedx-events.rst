@@ -96,7 +96,7 @@ For more information on using Open edX Events, refer to the :doc:`../how-tos/cre
 **Maintenance chart**
 
 +--------------+-------------------------------+----------------+--------------------------------+
-| Review Date  | Working Group Reviewer        |   Release      |Test situation                  |
+| Review Date  | Reviewer                      |   Release      |Test situation                  |
 +--------------+-------------------------------+----------------+--------------------------------+
-|2025-02-05    | BTR WG - Maria Grimaldi       |   Sumac        |Pass.                           |
+|2025-02-05    | Maria Grimaldi                |  Sumac         |Pass.                           |
 +--------------+-------------------------------+----------------+--------------------------------+
