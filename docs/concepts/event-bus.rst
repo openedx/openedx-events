@@ -31,7 +31,7 @@ The Open edX platform uses the ``OpenEdxPublicSignals`` (Open edX-specific Djang
 
 Open edX Events provides an abstract implementation of the `publish/subscribe messaging pattern`_ (pub/sub), which is the chosen pattern for the event bus implementation, as explained in :doc:`openedx-proposals:architectural-decisions/oep-0052-arch-event-bus-architecture`. It implements two abstract classes, `EventProducer`_ and `EventConsumer`_, which allow concrete implementations of the event bus based on different message brokers, such as Pulsar.
 
-This abstraction allows for developers to implement their own concrete implementations of the event bus in their own plugins. There are currently two implementations of the event bus, Redis (`event-bus-redis`_) and Kafka (`event-bus-kafka`_). Redis streams is a data structure that acts like an append-only log, and Kafka is a distributed event streaming application. Both implementations handle event production and consumption using technology-specific methods..
+This abstraction allows for developers to implement their own concrete implementations of the event bus in their own plugins. There are currently two implementations of the event bus, Redis (`event-bus-redis`_) and Kafka (`event-bus-kafka`_). Redis streams is a data structure that acts like an append-only log, and Kafka is a distributed event streaming application. Both implementations handle event production and consumption using technology-specific methods.
 
 Architectural Diagram
 *********************
