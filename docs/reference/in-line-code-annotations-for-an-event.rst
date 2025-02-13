@@ -21,17 +21,43 @@ Consider the following example:
 
 .. code-block:: python
 
-    # Location openedx_events/learning/signals.py
     # .. event_type: org.openedx.learning.course.enrollment.created.v1
     # .. event_name: COURSE_ENROLLMENT_CREATED
-    # .. event_description: emitted when the user's enrollment process is completed.
+    # .. event_key_field: enrollment.course.course_key
+    # .. event_description: Emitted when the user enrolls in a course.
     # .. event_data: CourseEnrollmentData
+    # .. event_trigger_repository: openedx/edx-platform
     COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
         event_type="org.openedx.learning.course.enrollment.created.v1",
         data={
             "enrollment": CourseEnrollmentData,
         }
     )
+
+When integrating this event into the service, add the following in-line code annotations to help developers find and understand the event:
+
+.. code-block:: python
+
+    # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
+        COURSE_ENROLLMENT_CREATED.send_event(
+            enrollment=CourseEnrollmentData(
+                user=UserData(
+                    pii=UserPersonalData(
+                        username=user.username,
+                        email=user.email,
+                        name=user.profile.name,
+                    ),
+                    id=user.id,
+                    is_active=user.is_active,
+                ),
+                course=course_data,
+                mode=enrollment.mode,
+                is_active=enrollment.is_active,
+                creation_date=enrollment.created,
+            )
+        )
+
+Developers can refer to the in-line code annotations to understand the event's purpose and how it should be used. This makes it easier to work with the event and ensures that it is used correctly across services.
 
 **Maintenance chart**
 
@@ -40,4 +66,3 @@ Consider the following example:
 +--------------+-------------------------------+----------------+--------------------------------+
 |2025-02-05    | Maria Grimaldi                |  Sumac         |Pass.                           |
 +--------------+-------------------------------+----------------+--------------------------------+
-

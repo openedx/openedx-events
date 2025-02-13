@@ -88,7 +88,8 @@ Given the design of Open edX Events, you can include the events' definitions in 
 
 .. code-block:: python
 
-    from openedx_events import send_event, COURSE_ENROLLMENT_CREATED
+    from openedx_events.learning.signals import COURSE_ENROLLMENT_CREATED
+    from openedx_events.learning.data import CourseData, CourseEnrollmentData, UserData, UserPersonalData
 
     def test_send_enrollment_data_to_webhook(self):
         # Trigger the event

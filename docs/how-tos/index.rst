@@ -9,5 +9,4 @@ How-tos
    consume-an-event
    add-event-bus-support-to-an-event
    use-the-event-bus-to-broadcast-and-consume-events
-   use-the-event-bus
    add-new-event-bus-concrete-implementation
