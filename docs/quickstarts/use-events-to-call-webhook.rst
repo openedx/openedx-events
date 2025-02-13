@@ -13,23 +13,21 @@ Let's see it working!
 Setup Your Environment
 *************************
 
-This tutorial assumes you're using `Tutor`_ > 18.x and its default services are already provisioned.
+This tutorial assumes you are using `Tutor`_ > 18.x and its default services are already provisioned.
 
 Installation
 ==============
 
-For this tutorial to work, you'll need a ``openedx`` image with the following package installed:
+For this tutorial to work, you will need a ``openedx`` image with the following package installed:
 
 - `openedx-events-2-zapier`_
 
-You can use your preferred method to install new packages in Tutor.
+You can use your preferred method to `install extra requirements in Tutor`_.
 
 Configuration
 ==============
 
-The package we just installed is a `Django plugin`_, which adds additional
-configurations to our working environment thanks to the extension mechanisms that were put in place. Now,
-:term:`event receivers <Event Receiver>` are listening to the registration and enrollment events sent within the LMS service.
+The package we just installed is a `Django plugin`_, which adds additional configurations to our working environment thanks to the extension mechanisms that were put in place. Now, :term:`event receivers <Event Receiver>` are listening to the registration and enrollment events sent within the LMS service.
 
 The following is the implementation for the :term:`event receivers <Event Receiver>` listening for the event ``STUDENT_REGISTRATION_COMPLETED``:
 
@@ -90,6 +88,7 @@ Now that you have configured both :term:`event receivers <Event Receiver>`, you'
 
 .. _Django plugin: https://github.com/openedx/edx-django-utils/blob/master/edx_django_utils/plugins/README.rst
 .. _documentation: https://edunext.github.io/openedx-events-2-zapier/
+.. _install extra requirements in Tutor: https://docs.tutor.edly.io/configuration.html#installing-extra-xblocks-and-requirements
 
 **Maintenance chart**
 
