@@ -1,39 +1,39 @@
 .. include:: ../common_refs.rst
 
-Using Open edX Events in the LMS service
-========================================
+Using Open edX Events in the LMS Service
+##########################################
 
-Live example
-------------
+Live Example
+**************
 
-For a complete and detailed example you can see the `openedx-events-2-zapier`_
+For a complete and detailed example, you can see the `openedx-events-2-zapier`_
 plugin. This is a fully functional plugin that connects to
 ``STUDENT_REGISTRATION_COMPLETED`` and ``COURSE_ENROLLMENT_CREATED`` and sends
 the relevant information to zapier.com using a webhook.
 
 Let's see it working!
 
-Setup your environment
-----------------------
+Setup Your Environment
+*************************
 
-This tutorial assumes you're using `Tutor`_ > 13.x and its default services are
+This tutorial assumes you are using `Tutor`_ > 13.x and its default services are
 already provisioned.
 
 Installation
-------------
+==============
 
-For this tutorial to work, you'll need a openedx image with the following package
+For this tutorial to work, you will need an Open edX image with the following package
 installed:
 
 - `openedx-events-2-zapier`_
 
-You can use your preferred method for installing new packages in Tutor.
+You can use your preferred method to install new packages in Tutor.
 
 Configuration
--------------
+==============
 
 The package we just installed is a `Django plugin`_, which adds additional
-configurations to our working environment thanks to the extension mechanisms put in place. Now,
+configurations to our working environment thanks to the extension mechanisms that were put in place. Now,
 :term:`event receivers <Event Receiver>` are listening to the registration and enrollment events sent within the LMS service.
 
 The following is the implementation for the :term:`event receivers <Event Receiver>` listening for the event ``STUDENT_REGISTRATION_COMPLETED``:
@@ -109,7 +109,7 @@ go to ``env/apps/openedx/settings/development.py`` and add your Zapier configura
     ZAPIER_ENROLLMENT_WEBHOOK = "https://hooks.zapier.com/hooks/catch/<account>/<webhook>/"
 
 Getting data from Zapier
-------------------------
+========================
 
 Now that you have configured both :term:`event receivers <Event Receiver>`, you'll need to trigger the events
 so you receive the events data in Zapier. Try it out!
@@ -119,3 +119,11 @@ so you receive the events data in Zapier. Try it out!
 .. warning::
     The :term:`event receiver <Event Receiver>` function implemented in this tutorial was intended to be lightweight, just to serve as an example for event receivers. However, in production
     settings, we encourage the use of asynchronous tasks to avoid creating bottlenecks.
+
+**Maintenance chart**
+
++--------------+-------------------------------+----------------+--------------------------------+
+| Review Date  | Reviewer                      |   Release      |Test situation                  |
++--------------+-------------------------------+----------------+--------------------------------+
+|2025-13-05    |  Maria Grimaldi               |   Sumac        |Pass.                           |
++--------------+-------------------------------+----------------+--------------------------------+
