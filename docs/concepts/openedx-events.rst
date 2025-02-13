@@ -12,7 +12,7 @@ What Are Open edX Events?
 
 Open edX Events are signals emitted by a service (e.g., LMS, CMS, or others) within the Open edX ecosystem to notify that an action has occurred. For example, a user may have registered, logged in, or created a course.
 
-These events are built on top of Django signals, inheriting their behavior while also incorporating metadata and actions specific to the Open edX ecosystem, making them uniquely suited for Open edX. Since they are essentially Django signals tailored to Open edX's specific needs, we can refer to `Django Signals Documentation`_ for a more detailed understanding of Open edX Events.
+These events are built on top of Django signals, inheriting their behavior while also incorporating metadata and actions specific to the Open edX ecosystem, making them uniquely suited for the Open edX use cases. Since they are essentially Django signals tailored to the Open edX platform's specific needs, we can refer to `Django Signals Documentation`_ for a more detailed understanding of Open edX Events.
 
 .. note:: Django includes a "signal dispatcher", which helps decoupled applications get notified when actions occur elsewhere in the framework. In a nutshell, signals allow certain senders to notify a set of receivers that some action has taken place. They're especially useful when many pieces of code may be interested in the same events.
 
