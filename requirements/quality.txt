@@ -8,9 +8,8 @@ asgiref==3.8.1
     # via
     #   -r requirements/test.txt
     #   django
-astroid==2.15.8
+astroid==3.3.8
     # via
-    #   -c requirements/constraints.txt
     #   pylint
     #   pylint-celery
 attrs==25.1.0
@@ -39,11 +38,11 @@ code-annotations==2.2.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.6.11
+coverage[toml]==7.6.12
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==44.0.0
+cryptography==44.0.1
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
@@ -92,7 +91,7 @@ iniconfig==2.0.0
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==5.13.2
+isort==6.0.0
     # via
     #   -r requirements/quality.in
     #   pylint
@@ -112,8 +111,6 @@ jinja2==3.1.5
     #   code-annotations
 keyring==25.6.0
     # via twine
-lazy-object-proxy==1.10.0
-    # via astroid
 markdown-it-py==3.0.0
     # via rich
 markupsafe==3.0.2
@@ -165,7 +162,7 @@ pygments==2.19.1
     # via
     #   readme-renderer
     #   rich
-pylint==2.17.7
+pylint==3.3.4
     # via
     #   edx-lint
     #   pylint-celery
@@ -173,13 +170,13 @@ pylint==2.17.7
     #   pylint-plugin-utils
 pylint-celery==0.3
     # via edx-lint
-pylint-django==2.5.5
+pylint-django==2.6.1
     # via edx-lint
 pylint-plugin-utils==0.8.2
     # via
     #   pylint-celery
     #   pylint-django
-pymongo==4.11
+pymongo==4.11.1
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -194,7 +191,7 @@ pytest==8.3.4
     #   pytest-django
 pytest-cov==6.0.0
     # via -r requirements/test.txt
-pytest-django==4.9.0
+pytest-django==4.10.0
     # via -r requirements/test.txt
 python-slugify==8.0.4
     # via
@@ -253,8 +250,6 @@ urllib3==2.2.3
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   requests
     #   twine
-wrapt==1.17.2
-    # via astroid
 zipp==3.21.0
     # via importlib-metadata
 

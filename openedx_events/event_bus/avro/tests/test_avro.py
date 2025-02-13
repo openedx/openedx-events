@@ -212,7 +212,7 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
 
             # get stored schema
             schema_filename = f"{os.path.dirname(os.path.abspath(__file__))}/schemas/" \
-                              f"{signal.event_type.replace('.','+')}_schema.avsc"
+                              f"{signal.event_type.replace('.', '+')}_schema.avsc"
             try:
                 stored_schema = load_schema(schema_filename)
             except SchemaRepositoryError:  # pragma: no cover
@@ -243,7 +243,7 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
 
             # get stored schema
             schema_filename = f"{os.path.dirname(os.path.abspath(__file__))}/schemas/" \
-                              f"{signal.event_type.replace('.','+')}_schema.avsc"
+                              f"{signal.event_type.replace('.', '+')}_schema.avsc"
             try:
                 old_schema = load_schema(schema_filename)
             except SchemaRepositoryError:  # pragma: no cover

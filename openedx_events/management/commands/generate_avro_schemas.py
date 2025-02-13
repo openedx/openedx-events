@@ -73,7 +73,7 @@ class Command(BaseCommand):
                 continue
             serializer = AvroSignalSerializer(signal)
             schema_dict = serializer.schema
-            filename = f"{signal.event_type.replace('.','+')}_schema.avsc"
+            filename = f"{signal.event_type.replace('.', '+')}_schema.avsc"
             root_path = import_module('openedx_events').__path__[0]
             folder_path = f"{root_path}/event_bus/avro/tests/schemas"
             full_file_name = f"{folder_path}/{filename}"
