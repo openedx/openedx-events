@@ -152,7 +152,7 @@ intersphinx_mapping = {
 try:
     openedx_event_version = git.Repo(search_parent_directories=True).head.object.hexsha
 except git.InvalidGitRepositoryError:
-    openedx_event_version = "master"
+    openedx_event_version = "main"
 
 settings_source_path = str(root)
 settings_repo_url = "https://github.com/openedx/openedx-events"
