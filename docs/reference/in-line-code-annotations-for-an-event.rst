@@ -3,19 +3,23 @@ In-line Code Annotations for an Open edX Event
 
 When creating a new Open edX Event, you must document the event definition using in-line code annotations. These annotations provide a structured way to document the event's metadata, making it easier for developers to understand the event's purpose and how it should be used.
 
-+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-| Annotation                       | Description                                                                                                                      |
-+==================================+==================================================================================================================================+
-| event_type (Required)            | Identifier across services of the event. Should follow the :doc:`../decisions/0002-events-naming-and-versioning` standard.       |
-+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-| event_name (Required)            | Name of the variable storing the event instance.                                                                                 |
-+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-| event_description (Required)     | General description which includes when the event should be emitted.                                                             |
-+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-| event_data (Required)            | What type of class attribute the event sends.                                                                                    |
-+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------+
-| event_warnings (Optional)        | Any warnings or considerations that should be taken into account when using the event.                                           |
-+----------------------------------+----------------------------------------------------------------------------------------------------------------------------------+
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+| Annotation                          | Description                                                                                                                |
++=====================================+============================================================================================================================+
+| event_type (Required)               | Identifier across services of the event. Should follow the :doc:`../decisions/0002-events-naming-and-versioning` standard. |
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+| event_name (Required)               | Name of the variable storing the event instance.                                                                           |
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+| event_key_field (Optional)          | The field in the event data that uniquely identifies the event.                                                            |
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+| event_description (Required)        | General description which includes when the event should be emitted.                                                       |
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+| event_data (Required)               | What type of class attribute the event sends.                                                                              |
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+| event_trigger_repository (Required) | The repository that triggers the event. This is useful to find the source of the event.                                    |
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+| event_warnings (Optional)           | Any warnings or considerations that should be taken into account when using the event.                                     |
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
 
 Consider the following example:
 
