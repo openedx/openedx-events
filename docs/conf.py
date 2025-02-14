@@ -160,6 +160,7 @@ except git.InvalidGitRepositoryError:
 settings_source_path = str(root)
 settings_repo_url = "https://github.com/openedx/openedx-events"
 settings_repo_version = openedx_event_version
+openedxevents_repo_url = settings_repo_url
 
 # Linkcode Extension Configuration
 
