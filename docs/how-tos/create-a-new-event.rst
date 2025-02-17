@@ -188,7 +188,7 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
         }
     )
 
-- The event definition should be documented using in-line documentation with at lest ``event_type``, ``event_name``, ``event_key_field``, ``event_description``, ``event_data`` and ``event_trigger_repository``. This will help consumers understand the event and react to it. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
+- The event definition should be documented using in-line documentation with at least ``event_type``, ``event_name``, ``event_key_field``, ``event_description``, ``event_data`` and ``event_trigger_repository``. This will help consumers understand the event and react to it. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
 - The :term:`Event Type` should be unique and follow the naming convention for event types specified in the :doc:`../decisions/0002-events-naming-and-versioning` ADR. This is used by consumers to identify the event.
 - The ``event_name`` should be a constant that is used to identify the event in the code.
 - The ``event_key_field`` should be a field in the payload that uniquely identifies the event. This is used by consumers to identify the event.

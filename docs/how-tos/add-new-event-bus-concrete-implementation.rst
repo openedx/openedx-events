@@ -25,7 +25,7 @@ At a high level, the consumer should be a process that takes the signals and eve
 
 The consumer class then needs to implement ``consume_indefinitely`` loop, which will stay running and listen to events as they come in.
 
-We have included an utility function called `prepare_for_new_work_cycle <https://github.com/openedx/openedx-events/blob/26d1d3b87c8ba56f159ab20072cd231264e870f9/openedx_events/tooling.py#L332-L346>`_ in openedx-events which needs to be called before processing any signal. Currently, it reconnects the db connection if required as well as clears RequestCache and there may be later, more comprehensive changes. These steps mimic some setup/teardown that is normally performed by Django in its request/response based architecture.
+We have included a utility function called `prepare_for_new_work_cycle <https://github.com/openedx/openedx-events/blob/26d1d3b87c8ba56f159ab20072cd231264e870f9/openedx_events/tooling.py#L332-L346>`_ in openedx-events which needs to be called before processing any signal. Currently, it reconnects the db connection if required as well as clears RequestCache and there may be later, more comprehensive changes. These steps mimic some setup/teardown that is normally performed by Django in its request/response based architecture.
 
 Check out `consumer.py <https://github.com/openedx/event-bus-redis/blob/main/edx_event_bus_redis/internal/consumer.py>`_ in the event bus redis implementation.
 
