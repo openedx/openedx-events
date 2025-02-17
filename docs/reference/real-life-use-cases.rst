@@ -1,3 +1,5 @@
+.. include:: ../common_refs.rst
+
 Real-Life Use Cases for Open edX Events
 ########################################
 
@@ -155,7 +157,6 @@ Here are some additional use cases that can be implemented using Open edX Events
 .. _Forum Emails Notifier: https://github.com/eduNEXT/platform-plugin-forum-email-notifier
 .. _Webhooks: https://github.com/aulasneo/openedx-webhooks?tab=readme-ov-file#introduction
 .. _Open edX Events Sender: https://github.com/open-craft/openedx-events-sender:
-.. _Open edX Events To Zapier: https://github.com/eduNEXT/openedx-events-2-zapier:
 .. _Send ORA Submissions to Third-Party Plagiarism Services: https://github.com/eduNEXT/platform-plugin-turnitin/blob/main/platform_plugin_turnitin/handlers.py#L9-L26
 .. _Linking In-Context Discussions to Units: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/discussions/docs/decisions/0004-in-context-discussions-linking.rst
 .. _Send Staff Notification: https://github.com/openedx/edx-ora2/pull/2201

@@ -1,3 +1,5 @@
+.. include:: ../common_refs.rst
+
 Create a New Open edX Event with Long-Term Support
 ####################################################
 
@@ -320,7 +322,6 @@ For more details on how the contribution flow works, refer to the :doc:`docs.ope
 .. _Add Program Certificate events: https://github.com/openedx/openedx-events/issues/250
 .. _attrs: https://www.attrs.org/en/stable/
 .. _Tutor: https://docs.tutor.edly.io/
-.. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
 
 **Maintenance chart**
