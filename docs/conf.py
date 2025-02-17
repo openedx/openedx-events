@@ -203,14 +203,16 @@ def linkcode_resolve(domain: str, info: dict[str, str]) -> str | None:
     while hasattr(obj, "__wrapped__"):
         obj = obj.__wrapped__
 
+    # Get the file path where the object is defined
     try:
+        # Try to get the file path of the object directly
         file_path = inspect.getsourcefile(obj)
     except Exception:
-        file_path = None
-    if not file_path:
         try:
+            # If that fails, try to get the file path of the module where the object is defined
             file_path = inspect.getsourcefile(sys.modules[obj.__module__])
         except Exception:
+            # If both attempts fail, set file_path to None
             file_path = None
     if not file_path:
         return None
