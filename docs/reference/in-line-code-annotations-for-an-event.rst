@@ -38,11 +38,19 @@ Consider the following example:
         }
     )
 
-When integrating this event into the service, add the following in-line code annotations to help developers find and understand the event:
+In-line code annotations are also used when integrating the event into the service.
+
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+| Annotation                          | Description                                                                                                                |
++=====================================+============================================================================================================================+
+| event_implemented_name (Required)   | Name of the event that is being implemented. Use the variable name of the event instance.                                  |
++-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
+
+Consider the following example:
 
 .. code-block:: python
 
-    # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
+        # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
         COURSE_ENROLLMENT_CREATED.send_event(
             enrollment=CourseEnrollmentData(
                 user=UserData(
