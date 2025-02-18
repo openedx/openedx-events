@@ -1,3 +1,5 @@
+.. include:: ../common_refs.rst
+
 Consume an Open edX Event
 ##########################
 
@@ -122,9 +124,6 @@ You can review this example to understand how you can test the event receiver an
 
 This way you can ensure that the event receiver is working as expected and that the custom logic is executed when the event is triggered. If the event definition or payload changes in any way, you can catch the error in the test suite instead of in production.
 
-.. _Tutor: https://docs.tutor.edly.io/
-.. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
-.. _openedx-events-2-zapier: https://github.com/eduNEXT/openedx-events-2-zapier
 .. _Open edX Django plugin: https://docs.openedx.org/en/latest/developers/concepts/platform_overview.html#new-plugin
 .. _OEP-49: https://docs.openedx.org/projects/openedx-proposals/en/latest/best-practices/oep-0049-django-app-patterns.html#signals
 .. _list of events: https://docs.openedx.org/projects/openedx-events/en/latest/reference/events.html

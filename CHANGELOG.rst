@@ -16,6 +16,15 @@ Change Log
 Unreleased
 __________
 
+[9.18.2] - 2025-02-18
+---------------------
+
+Changed
+~~~~~~~
+
+* Added linkcode Sphinx extension to the documentation.
+* Added common_refs.rst file to reuse common references in the documentation.
+
 [9.18.1] - 2025-02-13
 ---------------------
 

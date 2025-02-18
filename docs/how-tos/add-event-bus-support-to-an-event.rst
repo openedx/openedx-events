@@ -1,3 +1,5 @@
+.. include:: ../common_refs.rst
+
 Add Event Bus Support to an Open edX Event
 ############################################
 
@@ -30,7 +32,7 @@ Step 2: Define the Event Payload
 
 An Open edX Event is compatible with the event bus when its payload can be serialized, sent, and deserialized by other services. The payload, structured as `attrs data classes`_, must align with the event bus schema format, which in this case is the :term:`Avro Schema`. This schema is used to serialize and deserialize the :term:`Event Payload` when sending it across services.
 
-This ensures the event can be sent by the producer and then re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side, guaranteeing that the data sent and received is identical. Serializing this way should prevent data inconsistencies between services, e.g., timezone issues and precision loss. For more information on the event bus schema format, refer to the :doc:`../decisions/0004-external-event-bus-and-django-signal-events` and :doc:`../decisions/0005-external-event-schema-format` decision records.
+This ensures the event can be sent by the producer and then re-emitted by the same instance of |OpenEdxPublicSignal| on the consumer side, guaranteeing that the data sent and received is identical. Serializing this way should prevent data inconsistencies between services, e.g., timezone issues and precision loss. For more information on the event bus schema format, refer to the :doc:`../decisions/0004-external-event-bus-and-django-signal-events` and :doc:`../decisions/0005-external-event-schema-format` decision records.
 
 The data types used in the attrs classes that the current Open edX Event Bus with the chosen schema are:
 
@@ -129,7 +131,6 @@ To validate that you can consume the event emitted by a service through the even
 .. note:: If you implemented a custom serializer for a type in the :term:`Event Payload`, the custom serializer support must be included in both the producer and consumer sides before it can be used.
 
 .. _Avro: https://avro.apache.org/
-.. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
 .. _attrs data classes: https://www.attrs.org/en/stable/overview.html
 .. _serialize_event_data_to_bytes: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/avro/serializer.py#L82-L98
 .. _deserialize_bytes_to_event_data: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/avro/deserializer.py#L86-L98
