@@ -71,7 +71,7 @@ The following is the implementation for the :term:`event receivers <Event Receiv
         }
         send_data_to_zapier.delay(settings.ZAPIER_REGISTRATION_WEBHOOK, zapier_payload)
 
-Those `event receivers <Event Receiver>` work out of the box after the plugin installation. Now, we must set the plugin settings which indicate where to send the events data. For this, go to ``env/apps/openedx/settings/development.py`` and add your Zapier configuration:
+Those :term:`event receivers <Event Receiver>` work out of the box after the plugin installation. Now, we must set the plugin settings which indicate where to send the events data. For this, go to ``env/apps/openedx/settings/development.py`` and add your Zapier configuration:
 
 .. code-block:: python
 
