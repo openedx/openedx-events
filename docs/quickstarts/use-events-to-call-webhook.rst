@@ -33,7 +33,7 @@ The following is the implementation for the :term:`event receivers <Event Receiv
 
 .. code-block:: python
 
-    # File openedx_events_2_zapier/receivers.py
+    # File openedx_events_2_zapier/apps.py
     class OpenedxEvents2ZapierConfig(AppConfig):
         """
         Configuration for the openedx_events_2_zapier Django application.
@@ -60,7 +60,7 @@ The following is the implementation for the :term:`event receivers <Event Receiv
             """Perform initialization tasks required for the plugin."""
             from openedx_events_2_zapier import handlers
 
-    # File openedx_events_2_zapier/receivers.py
+    # File openedx_events_2_zapier/handlers.py
     @receiver(STUDENT_REGISTRATION_COMPLETED)
     def send_user_data_to_webhook(
         signal, sender, user, metadata, **kwargs  # pylint: disable=unused-argument
