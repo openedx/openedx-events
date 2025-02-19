@@ -177,8 +177,10 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
     # Location openedx_events/learning/signals.py
     # .. event_type: org.openedx.learning.course.enrollment.created.v1
     # .. event_name: COURSE_ENROLLMENT_CREATED
-    # .. event_description: emitted when the user's enrollment process is completed.
+    # .. event_key_field: enrollment.course.course_key
+    # .. event_description: Emitted when the user enrolls in a course.
     # .. event_data: CourseEnrollmentData
+    # .. event_trigger_repository: openedx/edx-platform
     COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
         event_type="org.openedx.learning.course.enrollment.created.v1",
         data={
@@ -186,11 +188,13 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
         }
     )
 
-- The event definition should be documented using in-line documentation with at least ``event_type``, ``event_name``, ``event_description``, and ``event_data``. This will help consumers understand the event and react to it. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
+- The event definition should be documented using in-line documentation with at least ``event_type``, ``event_name``, ``event_key_field``, ``event_description``, ``event_data`` and ``event_trigger_repository``. This will help consumers understand the event and react to it. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
 - The :term:`Event Type` should be unique and follow the naming convention for event types specified in the :doc:`../decisions/0002-events-naming-and-versioning` ADR. This is used by consumers to identify the event.
-- The ``event_name`` should be a constant that is used to identify the event in the code. See :doc:`../reference/naming-suggestions` for more information on naming events.
+- The ``event_name`` should be the variable name storing the event instance used to trigger the event. The name of the variable usually matches the ``{Subject}_{Action}`` of the event type. See more about the name in the :doc:`../decisions/0002-events-naming-and-versioning` ADR.
+- The ``event_key_field`` should be a field in the payload that uniquely identifies the event. This is used by consumers to identify the event.
 - The ``event_description`` should describe what the event is about and why it is triggered.
 - The ``event_data`` should be the payload class that is used to define the data that is included in the event.
+- The ``event_trigger_repository`` should be the repository where the event is triggered.
 - The ``data`` dictionary should contain the payload class that is used to define the data that is included in the event. This will help consumers understand the event and react to it. Try using a descriptive name for the data field, but keep consistency with the payload class name. Avoid using suffixes like ``_data`` or ``_payload`` in the data field name.
 - The event should be an instance of the ``OpenEdxPublicSignal`` class to ensure that the event is consistent with the Open edX event framework.
 - Receivers should be able to access the event payload in their receivers to react to the event.
@@ -204,7 +208,8 @@ Here is how the integration could look like:
 
 .. code-block:: python
 
-    # Location common/djangoapps/student/models.py
+    # Location common/djangoapps/student/models/course_enrollment.py
+    from openedx_events.learning.data import CourseData, CourseEnrollmentData, UserData, UserPersonalData
     from openedx_events.learning.signals import COURSE_ENROLLMENT_CREATED
 
     def enroll(cls, user, course_key, mode=None, **kwargs):
@@ -214,6 +219,7 @@ Here is how the integration could look like:
         # Enrollment logic here
         ...
         # .. event_implemented_name: COURSE_ENROLLMENT_CREATED
+        # .. event_type: org.openedx.learning.course.enrollment.created.v1
         COURSE_ENROLLMENT_CREATED.send_event(
             enrollment=CourseEnrollmentData(
                 user=UserData(
