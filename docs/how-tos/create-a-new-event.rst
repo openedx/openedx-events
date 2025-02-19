@@ -1,3 +1,5 @@
+.. include:: ../common_refs.rst
+
 Create a New Open edX Event with Long-Term Support
 ####################################################
 
@@ -186,7 +188,7 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
 
 - The event definition should be documented using in-line documentation with at least ``event_type``, ``event_name``, ``event_description``, and ``event_data``. This will help consumers understand the event and react to it. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
 - The :term:`Event Type` should be unique and follow the naming convention for event types specified in the :doc:`../decisions/0002-events-naming-and-versioning` ADR. This is used by consumers to identify the event.
-- The ``event_name`` should be a constant that is used to identify the event in the code.
+- The ``event_name`` should be a constant that is used to identify the event in the code. See :doc:`../reference/naming-suggestions` for more information on naming events.
 - The ``event_description`` should describe what the event is about and why it is triggered.
 - The ``event_data`` should be the payload class that is used to define the data that is included in the event.
 - The ``data`` dictionary should contain the payload class that is used to define the data that is included in the event. This will help consumers understand the event and react to it. Try using a descriptive name for the data field, but keep consistency with the payload class name. Avoid using suffixes like ``_data`` or ``_payload`` in the data field name.
@@ -320,7 +322,6 @@ For more details on how the contribution flow works, refer to the :doc:`docs.ope
 .. _Add Program Certificate events: https://github.com/openedx/openedx-events/issues/250
 .. _attrs: https://www.attrs.org/en/stable/
 .. _Tutor: https://docs.tutor.edly.io/
-.. _Django Signals Documentation: https://docs.djangoproject.com/en/4.2/topics/signals/
 .. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
 
 **Maintenance chart**

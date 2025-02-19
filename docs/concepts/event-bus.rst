@@ -1,3 +1,5 @@
+.. include:: ../common_refs.rst
+
 Open edX Event Bus
 ####################
 
@@ -127,8 +129,6 @@ We encourage you to review the :doc:`../reference/real-life-use-cases` page for 
 .. _EventProducer: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/__init__.py#L71-L91
 .. _EventConsumer: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/__init__.py#L128-L139
 .. _publish/subscribe messaging pattern: https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
-.. _event-bus-redis: https://github.com/openedx/event-bus-redis/
-.. _event-bus-kafka: https://github.com/openedx/event-bus-kafka/
 
 **Maintenance chart**
 

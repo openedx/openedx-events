@@ -1,3 +1,5 @@
+.. include:: ../common_refs.rst
+
 Use the Open edX Event Bus to Broadcast and Consume Events
 ==========================================================
 
@@ -94,10 +96,7 @@ To consume events, Open edX Events provides a management command called `consume
 You can find more a concrete example of how to produce and consume events in the `event-bus-redis`_ documentation.
 
 .. _consume_events: https://github.com/openedx/openedx-events/blob/main/openedx_events/management/commands/consume_events.py
-.. _event-bus-redis: https://github.com/openedx/event-bus-redis
-.. _event-bus-kafka: https://github.com/openedx/event-bus-kafka
 .. _run the consumer locally without tutor: https://github.com/openedx/event-bus-redis/?tab=readme-ov-file#testing-locally
 .. _run the consumer locally with tutor: https://github.com/openedx/event-bus-redis/blob/main/docs/tutor_installation.rst#setup-example-with-openedx-course-discovery-and-tutor
 .. _general_signal_handler: https://github.com/openedx/openedx-events/blob/main/openedx_events/apps.py#L16-L44
 .. _consumer using Tutor hosted in Kubernetes: https://github.com/openedx/tutor-contrib-aspects/blob/master/tutoraspects/patches/k8s-deployments#L535-L588
-.. _Tutor: https://docs.tutor.edly.io/

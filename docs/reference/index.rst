@@ -14,3 +14,4 @@ References
    oeps
    architecture-subdomains
    real-life-use-cases
+   naming-suggestions

@@ -10,9 +10,11 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
+import inspect
 import os
 import re
 import sys
+from os.path import dirname, relpath
 
 import git
 
@@ -46,6 +48,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.napoleon',
+    'sphinx.ext.linkcode',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -157,3 +160,76 @@ except git.InvalidGitRepositoryError:
 settings_source_path = str(root)
 settings_repo_url = "https://github.com/openedx/openedx-events"
 settings_repo_version = openedx_event_version
+openedxevents_repo_url = settings_repo_url
+
+# Linkcode Extension Configuration
+
+REPO_URL = "https://github.com/openedx/openedx-events/blob/main"
+
+def linkcode_resolve(domain: str, info: dict[str, str]) -> str | None:
+    """
+    Resolves source code links for Python objects in Sphinx documentation.
+    This function is based on the `linkcode_resolve` function in the SciPy project.
+
+    Args:
+        domain (str): The language domain of the object. Only processes Python objects ('py')
+        info (dict[str, str]): Dictionary containing information about the object to link.
+            Must contain:
+                - 'module': Name of the module containing the object
+                - 'fullname': Complete name of the object including its path
+
+    Returns:
+        str | None: URL to the source code on GitHub with specific line numbers,
+            or None if the link cannot be resolved
+    """
+    if domain != "py":
+        return None
+
+    modname = info["module"]
+    fullname = info["fullname"]
+
+    submod = sys.modules.get(modname)
+    if submod is None:
+        return None
+
+    obj = submod
+    for part in fullname.split("."):
+        try:
+            obj = getattr(obj, part)
+        except Exception:
+            return None
+
+    # Use the original function object if it is wrapped.
+    while hasattr(obj, "__wrapped__"):
+        obj = obj.__wrapped__
+
+    # Get the file path where the object is defined
+    try:
+        # Try to get the file path of the object directly
+        file_path = inspect.getsourcefile(obj)
+    except Exception:
+        try:
+            # If that fails, try to get the file path of the module where the object is defined
+            file_path = inspect.getsourcefile(sys.modules[obj.__module__])
+        except Exception:
+            # If both attempts fail, set file_path to None
+            file_path = None
+    if not file_path:
+        return None
+
+    try:
+        source, start_line = inspect.getsourcelines(obj)
+    except Exception:
+        start_line = None
+
+    if start_line:
+        linespec = f"#L{start_line}-L{start_line + len(source) - 1}"
+    else:
+        linespec = ""
+
+    import openedx_events
+
+    start_dir = os.path.abspath(os.path.join(dirname(openedx_events.__file__), ".."))
+    file_path = relpath(file_path, start=start_dir).replace(os.path.sep, "/")
+
+    return f"{REPO_URL}/{file_path}{linespec}"

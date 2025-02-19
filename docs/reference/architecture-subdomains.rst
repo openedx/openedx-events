@@ -26,9 +26,9 @@ Here we list useful information about Open edX architecture subdomains and their
 
 .. _Events Naming and Versioning: https://github.com/openedx/openedx-events/blob/main/docs/decisions/0002-events-naming-and-versioning.rst#L1
 .. _edX Domain Driven Design documentation: https://openedx.atlassian.net/wiki/spaces/AC/pages/213910332/Domain-Driven+Design
-.. _`Subdomains from OEP-41`: https://docs.openedx.org/projects/openedx-proposals/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#subdomain-from-domain-driven-design
-.. _`Message Content Data Guidelines`: https://docs.openedx.org/projects/openedx-proposals/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html?highlight=subdomain#message-content-data-guidelines
-.. _`Notes on events design and subdomains`: https://github.com/openedx/openedx-events/issues/72#issuecomment-1179291340
+.. _Subdomains from OEP-41: https://docs.openedx.org/projects/openedx-proposals/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html#subdomain-from-domain-driven-design
+.. _Message Content Data Guidelines: https://docs.openedx.org/projects/openedx-proposals/en/latest/architectural-decisions/oep-0041-arch-async-server-event-messaging.html?highlight=subdomain#message-content-data-guidelines
+.. _Notes on events design and subdomains: https://github.com/openedx/openedx-events/issues/72#issuecomment-1179291340
 .. _architecture subdomains: https://microservices.io/patterns/decomposition/decompose-by-subdomain.html
 
 **Maintenance chart**
