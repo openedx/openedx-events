@@ -84,7 +84,7 @@ Getting data from Zapier
 Now that you have configured both :term:`event receivers <Event Receiver>`, you'll need to trigger the events so you receive the events data in Zapier. Try it out!
 
 .. warning::
-    The `event receiver <Event Receiver>` function in this tutorial is designed to be lightweight, serving as a basic example of event receivers. However, it has not been tested in a production environment. When implementing an event receiver for real-world use, consider additional factors such as error handling, logging, and performance.
+    The :term:`event receiver <Event Receiver>` function in this tutorial is designed to be lightweight, serving as a basic example of event receivers. However, it has not been tested in a production environment. When implementing an event receiver for real-world use, consider additional factors such as error handling, logging, and performance.
 
 .. _Django plugin: https://github.com/openedx/edx-django-utils/blob/master/edx_django_utils/plugins/README.rst
 .. _documentation: https://edunext.github.io/openedx-events-2-zapier/
