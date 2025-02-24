@@ -54,10 +54,12 @@ click==8.1.8
     #   edx-django-utils
     #   edx-lint
     #   pip-tools
+    #   scriv
 click-log==0.4.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
+    #   scriv
 code-annotations==2.2.0
     # via
     #   -r requirements/quality.txt
@@ -168,6 +170,7 @@ jinja2==3.1.6
     #   -r requirements/quality.txt
     #   code-annotations
     #   diff-cover
+    #   scriv
 keyring==25.6.0
     # via
     #   -r requirements/quality.txt
@@ -176,6 +179,7 @@ markdown-it-py==3.0.0
     # via
     #   -r requirements/quality.txt
     #   rich
+    #   scriv
 markupsafe==3.0.2
     # via
     #   -r requirements/quality.txt
@@ -310,6 +314,7 @@ requests==2.32.3
     #   -r requirements/quality.txt
     #   id
     #   requests-toolbelt
+    #   scriv
     #   twine
 requests-toolbelt==1.0.0
     # via
@@ -325,6 +330,8 @@ rich==13.9.4
     #   twine
 ruff==0.9.8
     # via -r requirements/quality.txt
+scriv==1.5.1
+    # via -r requirements/dev.in
 secretstorage==3.3.3
     # via
     #   -r requirements/quality.txt
