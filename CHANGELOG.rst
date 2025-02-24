@@ -32,7 +32,7 @@ See the fragment files in the `changelog.d directory`_.
 
 .. _changelog-9.19.0:
 
-[9.19.0] - 2025-02-24
+[v9.19.0] - 2025-02-24
 _____________________
 
 Added
