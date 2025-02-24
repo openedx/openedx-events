@@ -32,6 +32,12 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	tox -e docs
 	$(BROWSER)docs/_build/html/index.html
 
+changelog-entry: ## Create a new changelog entry
+	scriv create
+
+changelog: ## Collect changelog entries in the CHANGELOG.md file
+	scriv collect
+
 # Define PIP_COMPILE_OPTS=-v to get more information during make upgrade.
 PIP_COMPILE = pip-compile --upgrade $(PIP_COMPILE_OPTS)
 
