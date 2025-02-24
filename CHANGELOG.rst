@@ -24,6 +24,8 @@ Change Log
 Unreleased
 __________
 
+See the fragment files in the `changelog.d directory`_.
+
 .. _changelog.d directory: https://github.com/openedx/openedx-events/tree/master/changelog.d
 
 .. scriv-insert-here
