@@ -3,7 +3,7 @@ Change Log
 
 ..
    All enhancements and patches to openedx_events will be documented
-   in this file.  It adheres to the structure of https://keepachangelog.com/ ,
+   in this file. It adheres to the structure of https://keepachangelog.com/,
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
 
@@ -11,10 +11,24 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+..
+   ⚠️ DO NOT ADD YOUR CHANGES TO THIS FILE! (unless you want to modify existing
+   changelog entries in this file) Changelog entries are managed by scriv.
+   After you have made some changes to openedx-events, create a changelog entry
+   with:
 
+      make changelog-entry
+
+   Edit and commit the newly-created file in changelog.d.
 
 Unreleased
 __________
+
+See the fragment files in the `changelog.d directory`_.
+
+.. _changelog.d directory: https://github.com/openedx/openedx-events/tree/master/changelog.d
+
+.. scriv-insert-here
 
 [9.18.2] - 2025-02-18
 ---------------------
