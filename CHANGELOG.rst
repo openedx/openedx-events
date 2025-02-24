@@ -3,7 +3,7 @@ Change Log
 
 ..
    All enhancements and patches to openedx_events will be documented
-   in this file.  It adheres to the structure of https://keepachangelog.com/ ,
+   in this file. It adheres to the structure of https://keepachangelog.com/,
    but in reStructuredText instead of Markdown (for ease of incorporation into
    Sphinx documentation and the PyPI description).
 
@@ -11,10 +11,32 @@ Change Log
 
 .. There should always be an "Unreleased" section for changes pending release.
 
+..
+   ⚠️ PLEASE, DO NOT ADD YOUR CHANGES TO THIS FILE! (unless you want to modify
+   existing changelog entries in this file) Changelog entries are managed by
+   scriv.
 
+   If you need to add a changelog entry:
+
+   - Run `make changelog-entry` to create a new changelog entry.
+   - Edit and commit the newly-created file in the `changelog.d` folder
+     following the instructions in the file.
+
+   If you need to create a new release:
+
+   - There is a `relese.yml` workflow to create a new release. You can trigger
+     it manually in the Actions tab in GitHub. The workflow will bump the
+     version, update the changelog, create a tag, and create a new GitHub
+     release! 🚀
 
 Unreleased
 __________
+
+See the fragment files in the `changelog.d directory`_.
+
+.. _changelog.d directory: https://github.com/openedx/openedx-events/tree/master/changelog.d
+
+.. scriv-insert-here
 
 [10.5.0] - 2025-08-19
 ---------------------
@@ -32,7 +54,6 @@ Added
 ~~~~~
 
 * Added new ``ENTERPRISE_GROUP_DELETED`` event in enterprise.
-
 
 [10.3.0] - 2025-05-23
 ---------------------
@@ -76,10 +97,13 @@ Added
 * Added new ``EXTERNAL_GRADER_SCORE_SUBMITTED`` event in learning.
 * Add ``ExternalGraderScoreData`` to support this event
 
+
 [10.0.0] - 2024-04-04
 ---------------------
+
 Changed
 ~~~~~~~
+
 * **Breaking change**: LibraryCollectionData now takes only a LibraryCollectionLocator.
 * **Breaking change**: LibraryContainerData now takes only a LibraryContainerLocator.
 
