@@ -12,14 +12,24 @@ Change Log
 .. There should always be an "Unreleased" section for changes pending release.
 
 ..
-   ⚠️ DO NOT ADD YOUR CHANGES TO THIS FILE! (unless you want to modify existing
-   changelog entries in this file) Changelog entries are managed by scriv.
-   After you have made some changes to openedx-events, create a changelog entry
-   with:
+   ⚠️ PLEASE, DO NOT ADD YOUR CHANGES TO THIS FILE! (unless you want to modify
+   existing changelog entries in this file) Changelog entries are managed by
+   scriv.
 
-      make changelog-entry
+   If you need to add a changelog entry:
 
-   Edit and commit the newly-created file in changelog.d.
+   - Run `make changelog-entry` to create a new changelog entry.
+   - Edit and commit the newly-created file in the `changelog.d` folder
+     following the instructions in the file.
+
+   If you need to create a new release:
+
+   - Run `make changelog` to collect changelog entries.
+   - The commit message should be in the format "chore: vX.Y.Z"
+   - Create a new tag with `git tag vX.Y.Z`
+   - Push the tag to the remote repository with `git push origin vX.Y.Z`
+
+   The release will be automatically created on GitHub! \o/
 
 Unreleased
 __________
