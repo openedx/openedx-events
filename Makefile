@@ -1,6 +1,7 @@
 .PHONY: clean clean_tox compile_translations coverage diff_cover docs dummy_translations \
         extract_translations fake_translations help pull_translations push_translations \
-        quality requirements selfcheck test test-all upgrade validate install_transifex_client
+        quality requirements selfcheck test test-all upgrade validate install_transifex_client \
+		changelog-entry changelog
 
 .DEFAULT_GOAL := help
 
