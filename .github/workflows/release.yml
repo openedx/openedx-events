@@ -27,6 +27,6 @@ jobs:
         run: make requirements
 
       - name: Create or update GitHub release
-        run: scriv github-release --repo=bryanttv/openedx-events
+        run: scriv github-release --repo=openedx/openedx-events
         env:
           GITHUB_TOKEN: ${{ github.token }}
