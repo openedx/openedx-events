@@ -40,16 +40,6 @@ See the fragment files in the `changelog.d directory`_.
 
 .. scriv-insert-here
 
-.. _changelog-9.19.0:
-
-[v9.19.0] - 2025-02-25
-----------------------
-
-Added
-~~~~~
-
-* Migrate to scriv to manage changelog. (by @bryanttv)
-
 [9.18.2] - 2025-02-18
 ---------------------
 
