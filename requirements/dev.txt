@@ -325,6 +325,8 @@ rich==13.9.4
     # via
     #   -r requirements/quality.txt
     #   twine
+ruff==0.9.8
+    # via -r requirements/quality.txt
 secretstorage==3.3.3
     # via
     #   -r requirements/quality.txt
