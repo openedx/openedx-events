@@ -1,6 +1,8 @@
 [lint]
-# D: pydocstyle
-select = ["D"]
+select = [
+    "D", # pydocstyle
+]
+
 ignore = [
     "D101", # Missing docstring in public class
     "D200", # One-line docstring should fit on one line
@@ -10,6 +12,17 @@ ignore = [
     "D411", # Missing blank line before section
     "D412", # No blank lines allowed between a section header and its content
     "D414", # Section has no content
+
+    # Ignore all other pydocstyle errors
+    "D102", # Missing docstring in public method
+    "D103", # Missing docstring in public function
+    "D105", # Missing docstring in magic method
+    "D107", # Missing docstring in `__init__`
+    "D202", # No blank lines allowed after function docstring
+    "D205", # 1 blank line required between summary line and description
+    "D210", # No whitespaces allowed surrounding docstring text
+    "D415", # First line should end with a period, question mark, or exclamation point
+    "D417", # Missing argument descriptions in the docstring
 ]
 
 [lint.pydocstyle]
