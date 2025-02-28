@@ -86,8 +86,8 @@ For more information on using Open edX Events, refer to the :doc:`../how-tos/cre
 .. _triggering the COURSE_ENROLLMENT_CREATED event: https://github.com/openedx/edx-platform/blob/master/common/djangoapps/student/models/course_enrollment.py#L777-L795
 .. _course_enrollment_post_save receiver: https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/handlers.py#L38-L53
 .. _Django signals registry mechanism: https://docs.djangoproject.com/en/4.2/topics/signals/#listening-to-signals
-.. _signal receivers in their plugins: https://edx.readthedocs.io/projects/edx-django-utils/en/latest/edx_django_utils.plugins.html#edx_django_utils.plugins.constants.PluginSignals
-.. _Open edX Django plugins: https://edx.readthedocs.io/projects/edx-django-utils/en/latest/plugins/readme.html
+.. _signal receivers in their plugins: https://docs.openedx.org/projects/edx-django-utils/en/latest/edx_django_utils.plugins.html#edx_django_utils.plugins.constants.PluginSignals
+.. _Open edX Django plugins: https://docs.openedx.org/projects/edx-django-utils/en/latest/plugins/readme.html
 .. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
 .. _Django's Signals class: https://docs.djangoproject.com/en/4.2/topics/signals/#defining-and-sending-signals
 .. _send_event: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L185
