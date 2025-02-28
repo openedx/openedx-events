@@ -21,7 +21,7 @@ class TrackingLogData:
         data (str): json string representation of a dictionary with extra data (optional), e.g.,
            >>> {"course_id": "course-v1:edX+DemoX+Demo_Course"}
         context (dict): json string representation of a dictionary of context data
-           defined in https://edx.readthedocs.io/projects/devdata/en/latest/internal_data_formats/tracking_logs/
+           defined in https://docs.openedx.org/en/latest/developers/references/internal_data_formats/index.html
     """
 
     name = attr.ib(type=str)
