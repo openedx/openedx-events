@@ -23,7 +23,7 @@ build==1.2.2.post1
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==5.5.1
+cachetools==5.5.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -70,13 +70,13 @@ coverage[toml]==7.6.12
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
-cryptography==44.0.1
+cryptography==44.0.2
     # via
     #   -r requirements/quality.txt
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/quality.txt
-diff-cover==9.2.2
+diff-cover==9.2.3
     # via -r requirements/dev.in
 dill==0.3.9
     # via
@@ -111,7 +111,7 @@ docutils==0.21.2
     #   readme-renderer
 edx-ccx-keys==2.0.2
     # via -r requirements/quality.txt
-edx-django-utils==7.1.0
+edx-django-utils==7.2.0
     # via -r requirements/quality.txt
 edx-lint==5.6.0
     # via -r requirements/quality.txt
@@ -142,7 +142,7 @@ iniconfig==2.0.0
     # via
     #   -r requirements/quality.txt
     #   pytest
-isort==6.0.0
+isort==6.0.1
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -158,7 +158,7 @@ jaraco-functools==4.1.0
     # via
     #   -r requirements/quality.txt
     #   keyring
-jeepney==0.8.0
+jeepney==0.9.0
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -197,7 +197,7 @@ newrelic==10.6.0
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-nh3==0.2.20
+nh3==0.2.21
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
@@ -286,7 +286,7 @@ pyproject-hooks==1.2.0
     #   -r requirements/pip-tools.txt
     #   build
     #   pip-tools
-pytest==8.3.4
+pytest==8.3.5
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -342,7 +342,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==5.4.0
+stevedore==5.4.1
     # via
     #   -r requirements/quality.txt
     #   code-annotations
