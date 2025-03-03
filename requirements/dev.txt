@@ -14,7 +14,9 @@ astroid==3.3.8
     #   pylint
     #   pylint-celery
 attrs==25.1.0
-    # via -r requirements/quality.txt
+    # via
+    #   -r requirements/quality.txt
+    #   scriv
 backports-tarfile==1.2.0
     # via
     #   -r requirements/quality.txt
@@ -23,7 +25,7 @@ build==1.2.2.post1
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==5.5.1
+cachetools==5.5.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -54,10 +56,12 @@ click==8.1.8
     #   edx-django-utils
     #   edx-lint
     #   pip-tools
+    #   scriv
 click-log==0.4.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
+    #   scriv
 code-annotations==2.2.0
     # via
     #   -r requirements/quality.txt
@@ -76,7 +80,7 @@ cryptography==44.0.1
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/quality.txt
-diff-cover==9.2.2
+diff-cover==9.2.3
     # via -r requirements/dev.in
 dill==0.3.9
     # via
@@ -168,6 +172,7 @@ jinja2==3.1.5
     #   -r requirements/quality.txt
     #   code-annotations
     #   diff-cover
+    #   scriv
 keyring==25.6.0
     # via
     #   -r requirements/quality.txt
@@ -176,6 +181,7 @@ markdown-it-py==3.0.0
     # via
     #   -r requirements/quality.txt
     #   rich
+    #   scriv
 markupsafe==3.0.2
     # via
     #   -r requirements/quality.txt
@@ -312,6 +318,7 @@ requests==2.32.3
     #   -r requirements/quality.txt
     #   id
     #   requests-toolbelt
+    #   scriv
     #   twine
 requests-toolbelt==1.0.0
     # via
@@ -325,6 +332,8 @@ rich==13.9.4
     # via
     #   -r requirements/quality.txt
     #   twine
+scriv==1.5.1
+    # via -r requirements/dev.in
 secretstorage==3.3.3
     # via
     #   -r requirements/quality.txt
@@ -342,7 +351,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==5.4.0
+stevedore==5.4.1
     # via
     #   -r requirements/quality.txt
     #   code-annotations
