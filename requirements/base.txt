@@ -27,7 +27,7 @@ dnspython==2.7.0
     # via pymongo
 edx-ccx-keys==2.0.2
     # via -r requirements/base.in
-edx-django-utils==7.1.0
+edx-django-utils==7.2.0
     # via -r requirements/base.in
 edx-opaque-keys[django]==2.11.0
     # via
@@ -51,7 +51,7 @@ six==1.17.0
     # via edx-ccx-keys
 sqlparse==0.5.3
     # via django
-stevedore==5.4.0
+stevedore==5.4.1
     # via
     #   edx-django-utils
     #   edx-opaque-keys
