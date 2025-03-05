@@ -1,0 +1,32 @@
+name: Create a new GitHub Release
+
+on:
+  push:
+    tags:
+      - "*"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+          cache: 'pip'
+          cache-dependency-path: requirements/dev.txt
+
+      - name: Install pandoc
+        run: sudo apt-get install -y pandoc
+
+      - name: Install requirements
+        run: make requirements
+
+      - name: Create or update GitHub release
+        run: scriv github-release --repo=openedx/openedx-events
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
