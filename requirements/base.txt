@@ -12,7 +12,7 @@ cffi==1.17.1
     # via pynacl
 click==8.1.8
     # via edx-django-utils
-django==4.2.19
+django==4.2.20
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -35,7 +35,7 @@ edx-opaque-keys[django]==2.11.0
     #   edx-ccx-keys
 fastavro==1.10.0
     # via -r requirements/base.in
-newrelic==10.6.0
+newrelic==10.7.0
     # via edx-django-utils
 pbr==6.1.1
     # via stevedore
@@ -43,7 +43,7 @@ psutil==7.0.0
     # via edx-django-utils
 pycparser==2.22
     # via cffi
-pymongo==4.11.1
+pymongo==4.11.2
     # via edx-opaque-keys
 pynacl==1.5.0
     # via edx-django-utils
