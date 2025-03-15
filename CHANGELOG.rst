@@ -16,6 +16,14 @@ Change Log
 Unreleased
 __________
 
+[9.19.0] - 2025-03-14
+---------------------
+
+Changed
+~~~~~~~
+
+* When ``EVENT_BUS_CONSUMER`` setting is missing or unusable, calling ``consume_indefinitely`` will raise an exception instead of silently exiting.
+
 [9.18.2] - 2025-02-18
 ---------------------
 

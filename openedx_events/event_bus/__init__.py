@@ -145,7 +145,10 @@ class NoEventBusConsumer(EventBusConsumer):
     """
 
     def consume_indefinitely(self) -> None:
-        """Do nothing."""
+        """
+        Raise an error, because we tried to consume events but nothing was configured.
+        """
+        raise Exception("Cannot consume events; no consumer configured.")
 
 
 # .. setting_name: EVENT_BUS_CONSUMER
