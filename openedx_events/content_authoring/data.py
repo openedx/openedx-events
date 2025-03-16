@@ -218,7 +218,7 @@ class LibraryCollectionData:
     Data related to a library collection that has changed.
 
     Attributes:
-        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        library_key (LibraryLocatorV2): a key that represents a content library.
         collection_key (str): identifies the collection within the library's learning package
         background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
            i.e., the handler can run the task in background. By default it is False.
@@ -226,4 +226,21 @@ class LibraryCollectionData:
 
     library_key = attr.ib(type=LibraryLocatorV2)
     collection_key = attr.ib(type=str)
+    background = attr.ib(type=bool, default=False)
+
+
+@attr.s(frozen=True)
+class LibraryContainerData:
+    """
+    Data related to a library container that has changed.
+
+    Attributes:
+        library_key (LibraryLocatorV2): a key that represents a content library.
+        container_key (str): identifies the container within the library's learning package (e.g.  unit, section)
+        background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
+           i.e., the handler can run the task in background. By default it is False.
+    """
+
+    library_key = attr.ib(type=LibraryLocatorV2)
+    container_key = attr.ib(type=str)
     background = attr.ib(type=bool, default=False)
