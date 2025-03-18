@@ -17,6 +17,7 @@ from openedx_events.content_authoring.data import (
     DuplicatedXBlockData,
     LibraryBlockData,
     LibraryCollectionData,
+    LibraryContainerData,
     XBlockData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -274,6 +275,42 @@ LIBRARY_COLLECTION_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.collection.deleted.v1",
     data={
         "library_collection": LibraryCollectionData
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.content_library.container.created.v1
+# .. event_name: LIBRARY_CONTAINER_CREATED
+# .. event_description: Emitted when a content library container is created.
+# .. event_data: LibraryContainerData
+# .. event_trigger_repository: openedx/edx-platform
+LIBRARY_CONTAINER_CREATED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content_library.container.created.v1",
+    data={
+        "library_container": LibraryContainerData
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.content_library.container.updated.v1
+# .. event_name: LIBRARY_CONTAINER_UPDATED
+# .. event_description: Emitted when when a content library container is updated.
+# .. event_data: LibraryContainerData
+# .. event_trigger_repository: openedx/edx-platform
+LIBRARY_CONTAINER_UPDATED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content_library.container.updated.v1",
+    data={
+        "library_container": LibraryContainerData
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.content_library.container.deleted.v1
+# .. event_name: LIBRARY_CONTAINER_DELETED
+# .. event_description: Emitted when an when a content library container is deleted.
+# .. event_data: LibraryContainerData
+# .. event_trigger_repository: openedx/edx-platform
+LIBRARY_CONTAINER_DELETED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content_library.container.deleted.v1",
+    data={
+        "library_container": LibraryContainerData
     }
 )
 

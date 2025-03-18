@@ -16,6 +16,15 @@ Change Log
 Unreleased
 __________
 
+[9.20.0] - 2025-03-15
+---------------------
+
+Added
+~~~~~
+
+* Added new ``LIBRARY_CONTAINER_CREATED``, ``LIBRARY_CONTAINER_UPDATED`` and ``LIBRARY_CONTAINER_DELETED`` events in content_authoring.
+* Adds ``LibraryContainerData`` to support these events
+
 [9.19.0] - 2025-03-14
 ---------------------
 
