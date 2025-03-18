@@ -15,6 +15,7 @@ from openedx_events.content_authoring.data import (
     CourseCatalogData,
     CourseData,
     DuplicatedXBlockData,
+    ExternalGraderScoreData,
     LibraryBlockData,
     LibraryCollectionData,
     LibraryContainerData,
@@ -324,5 +325,16 @@ COURSE_IMPORT_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.course.import.completed.v1",
     data={
         "course": CourseData,
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.external_grader.score.submitted.v1
+# .. event_name: EXTERNAL_GRADER_SCORE_SUBMITTED
+# .. event_description: emitted when an external grader provides a score for a submission
+# .. event_data: ExternalGraderScoreData
+EXTERNAL_GRADER_SCORE_SUBMITTED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.external_grader.score.submitted.v1",
+    data={
+        "score": ExternalGraderScoreData,
     }
 )
