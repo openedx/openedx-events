@@ -16,6 +16,15 @@ Change Log
 Unreleased
 __________
 
+[10.1.0] - 2024-05-01
+---------------------
+
+Added
+~~~~~
+
+* Added new ``EXTERNAL_GRADER_SCORE_SUBMITTED`` event in learning.
+* Add ``ExternalGraderScoreData`` to support this event
+
 [10.0.0] - 2024-04-04
 ---------------------
 Changed

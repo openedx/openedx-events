@@ -20,6 +20,7 @@ from openedx_events.learning.data import (
     CoursePassingStatusData,
     DiscussionThreadData,
     ExamAttemptData,
+    ExternalGraderScoreData,
     ORASubmissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
@@ -489,5 +490,17 @@ IDV_ATTEMPT_DENIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.denied.v1",
     data={
         "idv_attempt": VerificationAttemptData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.external_grader.score.submitted.v1
+# .. event_name: EXTERNAL_GRADER_SCORE_SUBMITTED
+# .. event_description: emitted when an external grader provides a score for a submission
+# .. event_data: ExternalGraderScoreData
+EXTERNAL_GRADER_SCORE_SUBMITTED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.external_grader.score.submitted.v1",
+    data={
+        "score": ExternalGraderScoreData,
     }
 )
