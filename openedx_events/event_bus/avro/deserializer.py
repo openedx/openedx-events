@@ -41,7 +41,7 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
         return deserializer(data)
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         return data
-    elif data_type_origin == list:
+    elif data_type_origin is list:
         # Returns types of list contents.
         # Example: if data_type == List[int], arg_data_type = (int,)
         arg_data_type = get_args(data_type)
@@ -52,7 +52,11 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
         # Check whether list items type is in basic types.
         if arg_data_type[0] in SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING:
             return data
-    elif data_type_origin == dict:
+
+        # Complex nested types like List[List[...]], List[Dict[...]], etc.
+        item_type = arg_data_type[0]
+        return [_deserialized_avro_record_dict_to_object(sub_data, item_type, deserializers) for sub_data in data]
+    elif data_type_origin is dict:
         # Returns types of dict contents.
         # Example: if data_type == Dict[str, int], arg_data_type = (str, int)
         arg_data_type = get_args(data_type)
@@ -63,6 +67,17 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
         # Check whether dict items type is in basic types.
         if all(arg in SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING for arg in arg_data_type):
             return data
+
+        # Complex dict values that need recursive deserialization
+        key_type, value_type = arg_data_type
+        if key_type is not str:
+            raise TypeError("Avro maps only support string keys. The key type must be 'str'.")
+
+        # Complex nested types like Dict[str, Dict[...]], Dict[str, List[...]], etc.
+        return {
+            key: _deserialized_avro_record_dict_to_object(value, value_type, deserializers)
+            for key, value in data.items()
+        }
     elif hasattr(data_type, "__attrs_attrs__"):
         transformed = {}
         for attribute in data_type.__attrs_attrs__:
