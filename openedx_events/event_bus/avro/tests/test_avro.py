@@ -32,7 +32,7 @@ from openedx_events.tests.utils import FreezeSignalCacheMixin
 from openedx_events.tooling import KNOWN_UNSERIALIZABLE_SIGNALS, OpenEdxPublicSignal, load_all_signals
 
 
-def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:
+def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no cover
     """
     Generates test data dict for the given schema.
 
