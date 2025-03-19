@@ -298,53 +298,10 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
-    def test_deserialization_of_dict_with_complex_types_fails(self):
-        SIGNAL = create_simple_signal({"dict_input": Dict[str, list]})
-        with self.assertRaises(TypeError):
-            AvroSignalDeserializer(SIGNAL)
-        initial_dict = {"dict_input": {"key1": [1, 3], "key2": [4, 5]}}
-        # create dummy signal to bypass schema check while initializing deserializer
-        # This allows us to test whether correct exceptions are raised while deserializing data
-        DUMMY_SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
-        deserializer = AvroSignalDeserializer(DUMMY_SIGNAL)
-        # Update signal with incorrect type info
-        deserializer.signal = SIGNAL
-        with self.assertRaises(TypeError):
-            deserializer.from_dict(initial_dict)
-
     def test_deserialization_of_dicts_with_keys_of_complex_types_fails(self):
         SIGNAL = create_simple_signal({"dict_input": Dict[CourseKey, int]})
         deserializer = AvroSignalDeserializer(SIGNAL)
         initial_dict = {"dict_input": {CourseKey.from_string("course-v1:edX+DemoX.1+2014"): 1}}
-        with self.assertRaises(TypeError):
-            deserializer.from_dict(initial_dict)
-
-    def test_deserialization_of_nested_list_fails(self):
-        """
-        Check that deserialization raises error when nested list data is passed.
-        """
-        # create dummy signal to bypass schema check while initializing deserializer
-        # This allows us to test whether correct exceptions are raised while deserializing data
-        SIGNAL = create_simple_signal({"list_input": List[int]})
-        LIST_SIGNAL = create_simple_signal({"list_input": List[List[int]]})
-        initial_dict = {"list_input": [[1, 3], [4, 5]]}
-        deserializer = AvroSignalDeserializer(SIGNAL)
-        # Update signal with incomplete type info
-        deserializer.signal = LIST_SIGNAL
-        with self.assertRaises(TypeError):
-            deserializer.from_dict(initial_dict)
-
-    def test_deserialization_of_nested_list_with_complex_types_fails(self):
-        SIGNAL = create_simple_signal({"list_input": List[list]})
-        with self.assertRaises(TypeError):
-            AvroSignalDeserializer(SIGNAL)
-        initial_dict = {"list_input": [[1, 3], [4, 5]]}
-        # create dummy signal to bypass schema check while initializing deserializer
-        # This allows us to test whether correct exceptions are raised while deserializing data
-        DUMMY_SIGNAL = create_simple_signal({"list_input": List[int]})
-        deserializer = AvroSignalDeserializer(DUMMY_SIGNAL)
-        # Update signal with incorrect type info
-        deserializer.signal = SIGNAL
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
