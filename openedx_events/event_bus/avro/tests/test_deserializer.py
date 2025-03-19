@@ -409,6 +409,33 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
+    def test_deserialization_of_unsupported_data_type(self):
+        """
+        Check that deserialization raises TypeError when encountering an unsupported data type.
+
+        Create a dummy signal with a custom class that isn't in the deserializers dictionary
+        and doesn't have __attrs_attrs__ to test the final TypeError case.
+        """
+        # Create a custom class that isn't in the deserializers and doesn't have __attrs_attrs__
+        class CustomUnsupportedType:
+            pass
+
+        # Create a signal with a valid type first to avoid schema validation errors
+        VALID_SIGNAL = create_simple_signal({"list_input": List[int]})
+        INVALID_SIGNAL = create_simple_signal({"list_input": List[CustomUnsupportedType]})
+        initial_dict = {"list_input": [1, 2, 3]}
+        deserializer = AvroSignalDeserializer(VALID_SIGNAL)
+        # Update signal with invalid type
+        deserializer.signal = INVALID_SIGNAL
+
+        # Test that it raises TypeError with appropriate message
+        with self.assertRaises(TypeError) as context:
+            deserializer.from_dict(initial_dict)
+
+        # Verify the error message mentions the unsupported type
+        self.assertIn("Unable to deserialize", str(context.exception))
+        self.assertIn("CustomUnsupportedType", str(context.exception))
+
     def test_deserialize_bytes_to_event_data(self):
         """
         Test deserialize_bytes_to_event_data utility function.
