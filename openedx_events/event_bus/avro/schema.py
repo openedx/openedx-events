@@ -173,11 +173,12 @@ def _get_avro_type_for_dict_item(
     # Case 3: Unannotated containers (raise specific errors)
     if value_type is dict:
         raise TypeError("A Dictionary as a dictionary value should have a type annotation.")
-    elif value_type is list:
+    if value_type is list:
         raise TypeError("A List as a dictionary value should have a type annotation.")
 
     # Case 4: Unsupported types
     raise TypeError(f"Type {value_type} is not supported for dict values.")
+
 
 def _get_avro_type_for_list_item(
     data_type: Type[list], previously_seen_types: set, type_overrides: dict[Any, str]
@@ -236,7 +237,7 @@ def _get_avro_type_for_list_item(
     # Case 3: Unannotated containers (raise specific errors)
     if item_type is dict:
         raise TypeError("A Dictionary as a list item should have a type annotation.")
-    elif item_type is list:
+    if item_type is list:
         raise TypeError("A List as a list item should have a type annotation.")
 
     # Case 4: Unsupported types

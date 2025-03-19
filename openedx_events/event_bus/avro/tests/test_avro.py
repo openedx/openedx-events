@@ -131,7 +131,7 @@ def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:
                 dict, or list
 
         Returns:
-            An appropriate test value for the specified type
+           Any: An appropriate test value for the specified type
         """
         # Primitive types like string, long, boolean, etc.
         if isinstance(type_spec, str):
@@ -336,7 +336,7 @@ def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: n
                     attr_data = generate_test_event_data_for_data_type(attribute.type)
                     data_dict.update({attribute.name: attr_data})
 
-        return data_type(**data_dict)
+    return data_type(**data_dict)
 
 
 def generate_test_data_for_signal(signal: OpenEdxPublicSignal) -> dict:
