@@ -127,8 +127,7 @@ def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no
         defined types.
 
         Args:
-            type_spec (Any): A type specification which might be a string,
-                dict, or list
+            type_spec (Any): A type specification which might be a str, dict, or list
 
         Returns:
            Any: An appropriate test value for the specified type
@@ -171,7 +170,7 @@ def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no
             # Array type (list)
             elif type_name == "array":
                 items = type_spec.get("items")
-                # We crate a list with a single element
+                # We create a list with a single element
                 return [process_type(items)]
 
             # Map type (dictionary/object)
@@ -267,6 +266,10 @@ def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: n
 
             item_type = args[0]
 
+            # Handle List of simple types, e.g. List[str]
+            if item_type in defaults_per_type:
+                return [defaults_per_type[item_type]]
+
             # Handle List of Dicts, e.g. List[Dict[str, str]]
             if get_origin(item_type) is dict:
                 dict_key_type, dict_value_type = get_args(item_type)
@@ -284,10 +287,6 @@ def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: n
                     sample_dict = {"key": default_value}
 
                 return [sample_dict]
-
-            # Handle List of simple types, e.g. List[str]
-            if item_type in defaults_per_type:
-                return [defaults_per_type[item_type]]
 
             # Handle List of attrs classes, e.g. List[EventData]
             item_data = generate_test_event_data_for_data_type(item_type)
