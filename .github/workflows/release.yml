@@ -58,6 +58,6 @@ jobs:
           tagging_message: "v${{ steps.version.outputs.NEW_VERSION }}"
 
       - name: Create GitHub release
-        run: scriv github-release --repo=openedx/openedx-filters
+        run: scriv github-release --repo=openedx/openedx-events
         env:
           GITHUB_TOKEN: ${{ github.token }}
