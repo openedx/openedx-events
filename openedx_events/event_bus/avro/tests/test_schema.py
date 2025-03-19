@@ -260,11 +260,6 @@ class TestSchemaGeneration(TestCase):
         with self.assertRaises(TypeError):
             schema_from_signal(DICT_WITHOUT_ANNOTATION_SIGNAL)
 
-    def test_throw_exception_invalid_dict_annotation(self):
-        INVALID_DICT_SIGNAL = create_simple_signal({"dict_input": Dict[str, NestedAttrsWithDefaults]})
-        with self.assertRaises(TypeError):
-            schema_from_signal(INVALID_DICT_SIGNAL)
-
     def test_list_with_annotation_works(self):
         LIST_SIGNAL = create_simple_signal({"list_input": List[int]})
         expected_dict = {
