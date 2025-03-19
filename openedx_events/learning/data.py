@@ -5,7 +5,7 @@ These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
 """
 from datetime import datetime
-from typing import List, Optional
+from typing import List
 
 import attr
 from ccx_keys.locator import CCXLocator
@@ -198,10 +198,10 @@ class DiscussionTopicContext:
 
     title = attr.ib(type=str)
     usage_key = attr.ib(type=UsageKey, default=None)
-    group_id = attr.ib(type=Optional[int], default=None)
+    group_id = attr.ib(type=int, default=None)
     external_id = attr.ib(type=str, default=None)
     ordering = attr.ib(type=int, default=None)
-    context = attr.ib(type=dict, factory=dict)
+    context = attr.ib(type=dict[str, str], factory=dict)
 
 
 @attr.s(frozen=True)
@@ -227,7 +227,7 @@ class CourseDiscussionConfigurationData:
     enable_in_context = attr.ib(type=bool, default=True)
     enable_graded_units = attr.ib(type=bool, default=False)
     unit_level_visibility = attr.ib(type=bool, default=False)
-    plugin_configuration = attr.ib(type=dict, default={})
+    plugin_configuration = attr.ib(type=dict[str, bool], default={})
     contexts = attr.ib(type=List[DiscussionTopicContext], factory=list)
 
 
@@ -284,12 +284,12 @@ class UserNotificationData:
     Data related to a user notification object.
 
     Attributes:
-        user_ids (List(int)): identifier of the users to which the notification belongs.
+        user_ids (List[int]): identifier of the users to which the notification belongs.
         notification_type (str): type of the notification.
         content_url (str): url of the content.
         app_name (str): name of the app.
-        course_key (str): identifier of the Course object.
-        context (dict): additional structured information about the context of the notification.
+        course_key (CourseKey): identifier of the Course object.
+        context (dict[str, str]): additional structured information about the context of the notification.
     """
 
     user_ids = attr.ib(type=List[int])
@@ -297,7 +297,7 @@ class UserNotificationData:
     content_url = attr.ib(type=str)
     app_name = attr.ib(type=str)
     course_key = attr.ib(type=CourseKey)
-    context = attr.ib(type=dict, factory=dict)
+    context = attr.ib(type=dict[str, str], factory=dict)
 
 
 @attr.s(frozen=True)
@@ -421,26 +421,26 @@ class DiscussionThreadData:
         options (dict): options for the thread.
     """
 
-    anonymous = attr.ib(type=bool)
-    anonymous_to_peers = attr.ib(type=bool)
     body = attr.ib(type=str)
-    category_id = attr.ib(type=int)
-    category_name = attr.ib(type=str)
     commentable_id = attr.ib(type=str)
-    group_id = attr.ib(type=int)
-    id = attr.ib(type=int)
-    team_id = attr.ib(type=int)
-    thread_type = attr.ib(type=str)
-    title = attr.ib(type=str)
-    title_truncated = attr.ib(type=bool)
+    id = attr.ib(type=str)
     truncated = attr.ib(type=bool)
     url = attr.ib(type=str)
     user = attr.ib(type=UserData)
     course_id = attr.ib(type=CourseKey)
-    discussion = attr.ib(type=dict, factory=dict)
+    thread_type = attr.ib(type=str, default=None)
+    anonymous = attr.ib(type=bool, default=None)
+    anonymous_to_peers = attr.ib(type=bool, default=None)
+    title = attr.ib(type=str, default=None)
+    title_truncated = attr.ib(type=bool, default=None)
+    group_id = attr.ib(type=int, default=None)
+    team_id = attr.ib(type=int, default=None)
+    category_id = attr.ib(type=int, default=None)
+    category_name = attr.ib(type=str, default=None)
+    discussion = attr.ib(type=dict[str, str], default=None)
     user_course_roles = attr.ib(type=List[str], factory=list)
     user_forums_roles = attr.ib(type=List[str], factory=list)
-    options = attr.ib(type=dict, factory=dict)
+    options = attr.ib(type=dict[str, bool], factory=dict)
 
 
 @attr.s(frozen=True)
@@ -453,10 +453,10 @@ class CourseNotificationData:
         app_name (str): name of the app requesting the course notification.
         notification_type (str): type of the notification.
         content_url (str): url of the content the notification will redirect to.
-        content_context (dict): additional information related to the content of the notification.
+        content_context (dict[str, str]): additional information related to the content of the notification.
            Notification content templates are defined in edx-platform here:
            https://github.com/openedx/edx-platform/blob/master/openedx/core/djangoapps/notifications/base_notification.py#L10
-        audience_filters (dict): additional information related to the audience of the notification.
+        audience_filters (dict[str, list[str]]): additional information related to the audience of the notification.
            We can have different filters on course level, such as roles, enrollments, cohorts etc.
 
     Example of content_context for a discussion notification:
@@ -483,8 +483,8 @@ class CourseNotificationData:
     app_name = attr.ib(type=str)
     notification_type = attr.ib(type=str)
     content_url = attr.ib(type=str)
-    content_context = attr.ib(type=dict, factory=dict)
-    audience_filters = attr.ib(type=dict, factory=dict)
+    content_context = attr.ib(type=dict[str, str], factory=dict)
+    audience_filters = attr.ib(type=dict[str, list[str]], factory=dict)
 
 
 @attr.s(frozen=True)
@@ -504,7 +504,7 @@ class ORASubmissionAnswer:
         file_urls (List[str]): List of file URLs in the ORA submission.
     """
 
-    parts = attr.ib(type=List[dict], factory=list)
+    parts = attr.ib(type=List[dict[str, str]], factory=list)
     file_keys = attr.ib(type=List[str], factory=list)
     file_descriptions = attr.ib(type=List[str], factory=list)
     file_names = attr.ib(type=List[str], factory=list)
