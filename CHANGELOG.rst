@@ -24,12 +24,10 @@ Change Log
 
    If you need to create a new release:
 
-   - Run `make changelog` to collect changelog entries.
-   - The commit message should be in the format "chore: vX.Y.Z"
-   - Create a new tag with `git tag vX.Y.Z`
-   - Push the tag to the remote repository with `git push origin vX.Y.Z`
-
-   The release will be automatically created on GitHub! \o/
+   - There is a `relese.yml` workflow to create a new release. You can trigger
+     it manually in the Actions tab in GitHub. The workflow will bump the
+     version, update the changelog, create a tag, and create a new GitHub
+     release! 🚀
 
 Unreleased
 __________
