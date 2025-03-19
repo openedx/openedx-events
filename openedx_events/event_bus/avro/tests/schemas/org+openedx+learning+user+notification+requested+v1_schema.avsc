@@ -1,0 +1,47 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "notification_data",
+      "type": {
+        "name": "UserNotificationData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "user_ids",
+            "type": {
+              "type": "array",
+              "items": "long"
+            }
+          },
+          {
+            "name": "notification_type",
+            "type": "string"
+          },
+          {
+            "name": "content_url",
+            "type": "string"
+          },
+          {
+            "name": "app_name",
+            "type": "string"
+          },
+          {
+            "name": "course_key",
+            "type": "string"
+          },
+          {
+            "name": "context",
+            "type": {
+              "type": "map",
+              "values": "string"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.user.notification.requested.v1"
+}
