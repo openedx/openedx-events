@@ -281,6 +281,110 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         self.assertIsInstance(test_data, dict)
         self.assertEqual(test_data, expected_event_data)
 
+    def test_deserialization_of_dict_of_lists(self):
+        SIGNAL = create_simple_signal({"dict_input": dict[str, List[int]]})
+        initial_dict = {"dict_input": {"key1": [1, 2], "key2": [3, 4]}}
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = {"key1": [1, 2], "key2": [3, 4]}
+        test_data = event_data["dict_input"]
+
+        self.assertIsInstance(test_data, dict)
+        self.assertEqual(test_data, expected_event_data)
+
+    def test_deserialization_of_dict_of_event_data(self):
+        SIGNAL = create_simple_signal({"dict_input": dict[str, EventData]})
+        initial_dict = {
+            "dict_input": {
+                "key1": {
+                    "course_id": "bar",
+                    "sub_name": "bar.name",
+                    "sub_test_0": {"course_id": "bar1.course", "sub_name": "bar1.name"},
+                    "sub_test_1": {"course_id": "bar2.course", "sub_name": "bar2.name"},
+                },
+                "key2": {
+                    "course_id": "foo",
+                    "sub_name": "foo.name",
+                    "sub_test_0": {"course_id": "foo1.course", "sub_name": "foo1.name"},
+                    "sub_test_1": {"course_id": "foo2.course", "sub_name": "foo2.name"},
+                },
+            }
+        }
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = {
+            "key1": EventData(
+                sub_name="bar.name",
+                course_id="bar",
+                sub_test_0=SubTestData0(sub_name="bar1.name", course_id="bar1.course"),
+                sub_test_1=SubTestData1(sub_name="bar2.name", course_id="bar2.course"),
+            ),
+            "key2": EventData(
+                sub_name="foo.name",
+                course_id="foo",
+                sub_test_0=SubTestData0(sub_name="foo1.name", course_id="foo1.course"),
+                sub_test_1=SubTestData1(sub_name="foo2.name", course_id="foo2.course"),
+            ),
+        }
+        test_data = event_data["dict_input"]
+
+        self.assertIsInstance(test_data, dict)
+        self.assertEqual(test_data, expected_event_data)
+
+    def test_deserialization_of_list_of_dicts(self):
+        SIGNAL = create_simple_signal({"list_input": List[dict[str, int]]})
+        initial_dict = {"list_input": [{"key1": 1, "key2": 2}, {"key1": 3, "key2": 4}]}
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = [{"key1": 1, "key2": 2}, {"key1": 3, "key2": 4}]
+        test_data = event_data["list_input"]
+
+        self.assertIsInstance(test_data, list)
+        self.assertEqual(test_data, expected_event_data)
+
+    def test_deserialization_of_list_of_event_data(self):
+        SIGNAL = create_simple_signal({"list_input": List[EventData]})
+        initial_dict = {
+            "list_input": [
+                {
+                    "course_id": "bar",
+                    "sub_name": "bar.name",
+                    "sub_test_0": {"course_id": "bar1.course", "sub_name": "bar1.name"},
+                    "sub_test_1": {"course_id": "bar2.course", "sub_name": "bar2.name"},
+                },
+                {
+                    "course_id": "foo",
+                    "sub_name": "foo.name",
+                    "sub_test_0": {"course_id": "foo1.course", "sub_name": "foo1.name"},
+                    "sub_test_1": {"course_id": "foo2.course", "sub_name": "foo2.name"},
+                },
+            ]
+        }
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = [
+            EventData(
+                sub_name="bar.name",
+                course_id="bar",
+                sub_test_0=SubTestData0(sub_name="bar1.name", course_id="bar1.course"),
+                sub_test_1=SubTestData1(sub_name="bar2.name", course_id="bar2.course"),
+            ),
+            EventData(
+                sub_name="foo.name",
+                course_id="foo",
+                sub_test_0=SubTestData0(sub_name="foo1.name", course_id="foo1.course"),
+                sub_test_1=SubTestData1(sub_name="foo2.name", course_id="foo2.course"),
+            ),
+        ]
+        test_data = event_data["list_input"]
+
+        self.assertIsInstance(test_data, list)
+        self.assertEqual(test_data, expected_event_data)
+
     def test_deserialization_of_dict_without_annotation(self):
         """
         Check that deserialization raises error when dict data is not annotated.
