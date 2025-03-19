@@ -1,0 +1,63 @@
+name: Create a new GitHub Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "The type of version bump"
+        required: true
+        type: choice
+        options:
+          - "major"
+          - "minor"
+          - "patch"
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    env:
+      TAG: ${{ github.event.inputs.tag }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install requirements
+        run: pip install scriv bump-my-version
+
+      - name: Install pandoc for scriv
+        run: sudo apt install -y pandoc
+
+      - name: Set up Git
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Get current and new version
+        id: version
+        run: |
+          echo "CURRENT_VERSION=$(bump-my-version show current_version)" >> $GITHUB_OUTPUT
+          echo "NEW_VERSION=$(bump-my-version show --increment $TAG new_version)" >> $GITHUB_OUTPUT
+
+      - name: Bump version
+        run: bump-my-version bump $TAG
+
+      - name: Collect changelog
+        run: make changelog
+
+      - name: Commit changes and create tag
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          branch: ${{ github.ref }}
+          commit_message: "chore: bump version ${{ steps.version.outputs.CURRENT_VERSION }} → ${{ steps.version.outputs.NEW_VERSION }}"
+          tagging_message: "v${{ steps.version.outputs.NEW_VERSION }}"
+
+      - name: Create GitHub release
+        run: scriv github-release --repo=openedx/openedx-events
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
