@@ -13,6 +13,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     ComplexAttrs,
     EventData,
     NestedAttrsWithDefaults,
+    NestedComplexAttrs,
     NestedNonAttrs,
     NonAttrs,
     SimpleAttrs,
@@ -57,7 +58,7 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
                         },
                     },
                 ],
-            }
+            },
         ),
         (
             ComplexAttrs,
@@ -79,8 +80,54 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
                         },
                     },
                 ],
-            }
-        )
+            },
+        ),
+        (
+            NestedComplexAttrs,
+            {
+                "name": "CloudEvent",
+                "type": "record",
+                "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+                "namespace": "simple.signal",
+                "fields": [
+                    {
+                        "name": "data",
+                        "type": {
+                            "name": "NestedComplexAttrs",
+                            "type": "record",
+                            "fields": [
+                                {
+                                    "name": "list_of_attr_field",
+                                    "type": {
+                                        "type": "array",
+                                        "items": {
+                                            "name": "SimpleAttrs",
+                                            "type": "record",
+                                            "fields": [
+                                                {"name": "boolean_field", "type": "boolean"},
+                                                {"name": "int_field", "type": "long"},
+                                                {"name": "float_field", "type": "double"},
+                                                {"name": "bytes_field", "type": "bytes"},
+                                                {"name": "string_field", "type": "string"},
+                                            ],
+                                        },
+                                    },
+                                },
+                                {"name": "dict_of_attr_field", "type": {"type": "map", "values": "SimpleAttrs"}},
+                                {
+                                    "name": "list_of_dict_field",
+                                    "type": {"type": "array", "items": {"type": "map", "values": "long"}},
+                                },
+                                {
+                                    "name": "dict_of_list_field",
+                                    "type": {"type": "map", "values": {"type": "array", "items": "long"}},
+                                },
+                            ],
+                        },
+                    }
+                ],
+            },
+        ),
     )
     @ddt.unpack
     def test_schema_string(self, data_cls, expected_schema):

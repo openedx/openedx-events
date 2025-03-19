@@ -47,6 +47,15 @@ class ComplexAttrs:
 
 
 @attr.s(auto_attribs=True)
+class NestedComplexAttrs:
+    """Class with nested complex type fields"""
+    list_of_attr_field: list[SimpleAttrs]
+    dict_of_attr_field: dict[str, SimpleAttrs]
+    list_of_dict_field: list[dict[str, int]]
+    dict_of_list_field: dict[str, list[int]]
+
+
+@attr.s(auto_attribs=True)
 class SubTestData0:
     """Subclass for testing nested attrs"""
     sub_name: str
