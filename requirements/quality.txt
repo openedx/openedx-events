@@ -156,8 +156,6 @@ pycparser==2.22
     # via
     #   -r requirements/test.txt
     #   cffi
-pydocstyle==6.3.0
-    # via -r requirements/quality.in
 pygments==2.19.1
     # via
     #   readme-renderer
@@ -214,6 +212,8 @@ rfc3986==2.0.0
     # via twine
 rich==13.9.4
     # via twine
+ruff==0.9.8
+    # via -r requirements/quality.in
 secretstorage==3.3.3
     # via keyring
 six==1.17.0
@@ -221,8 +221,6 @@ six==1.17.0
     #   -r requirements/test.txt
     #   edx-ccx-keys
     #   edx-lint
-snowballstemmer==2.2.0
-    # via pydocstyle
 sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
