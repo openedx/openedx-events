@@ -105,8 +105,8 @@ Please do not report security issues in public. Please email security@openedx.or
     :target: https://pypi.python.org/pypi/openedx-events/
     :alt: PyPI
 
-.. |ci-badge| image:: https://github.com/openedx/openedx-events/workflows/Python%20CI/badge.svg?branch=main
-    :target: https://github.com/openedx/openedx-events/actions
+.. |ci-badge| image:: https://github.com/openedx/openedx-events/actions/workflows/ci.yml/badge.svg?branch=main
+    :target: https://github.com/openedx/openedx-events/actions/workflows/ci.yml
     :alt: CI
 
 .. |codecov-badge| image:: https://codecov.io/github/openedx/openedx-events/coverage.svg?branch=main
