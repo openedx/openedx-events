@@ -35,7 +35,7 @@ edx-opaque-keys[django]==2.12.0
     #   edx-ccx-keys
 fastavro==1.10.0
     # via -r requirements/base.in
-newrelic==10.7.0
+newrelic==10.8.0
     # via edx-django-utils
 pbr==6.1.1
     # via stevedore
@@ -55,7 +55,7 @@ stevedore==5.4.1
     # via
     #   edx-django-utils
     #   edx-opaque-keys
-typing-extensions==4.12.2
+typing-extensions==4.13.0
     # via edx-opaque-keys
 
 # The following packages are considered to be unsafe in a requirements file:
