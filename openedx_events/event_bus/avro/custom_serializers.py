@@ -8,7 +8,7 @@ from uuid import UUID
 
 from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
-from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
+from opaque_keys.edx.locator import LibraryCollectionLocator, LibraryLocatorV2, LibraryUsageLocatorV2
 
 from openedx_events.event_bus.avro.types import PYTHON_TYPE_TO_AVRO_MAPPING
 
@@ -112,6 +112,25 @@ class UsageKeyAvroSerializer(BaseCustomTypeAvroSerializer):
         return UsageKey.from_string(data)
 
 
+class LibraryCollectionLocatorAvroSerializer(BaseCustomTypeAvroSerializer):
+    """
+    CustomTypeAvroSerializer for LibraryCollectionLocator class.
+    """
+
+    cls = LibraryCollectionLocator
+    field_type = PYTHON_TYPE_TO_AVRO_MAPPING[str]
+
+    @staticmethod
+    def serialize(obj) -> str:
+        """Serialize obj into string."""
+        return str(obj)
+
+    @staticmethod
+    def deserialize(data: str):
+        """Deserialize string into obj."""
+        return LibraryCollectionLocator.from_string(data)
+
+
 class LibraryLocatorV2AvroSerializer(BaseCustomTypeAvroSerializer):
     """
     CustomTypeAvroSerializer for LibraryLocatorV2 class.
@@ -175,6 +194,7 @@ DEFAULT_CUSTOM_SERIALIZERS = [
     CourseKeyAvroSerializer,
     CcxCourseLocatorAvroSerializer,
     DatetimeAvroSerializer,
+    LibraryCollectionLocatorAvroSerializer,
     LibraryLocatorV2AvroSerializer,
     LibraryUsageLocatorV2AvroSerializer,
     UsageKeyAvroSerializer,
