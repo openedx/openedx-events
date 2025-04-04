@@ -16,6 +16,13 @@ Change Log
 Unreleased
 __________
 
+[10.0.0] - 2024-04-04
+---------------------
+Changed
+~~~~~~~
+* **Breaking change**: LibraryCollectionData now takes only a LibraryCollectionLocator.
+* **Breaking change**: LibraryContainerData now takes only a LibraryContainerLocator.
+
 [9.20.0] - 2025-03-15
 ---------------------
 
