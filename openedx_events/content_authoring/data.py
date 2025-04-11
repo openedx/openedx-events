@@ -12,7 +12,12 @@ from typing import BinaryIO, List
 
 import attr
 from opaque_keys.edx.keys import CourseKey, UsageKey
-from opaque_keys.edx.locator import LibraryLocatorV2, LibraryUsageLocatorV2
+from opaque_keys.edx.locator import (
+    LibraryCollectionLocator,
+    LibraryContainerLocator,
+    LibraryLocatorV2,
+    LibraryUsageLocatorV2,
+)
 
 
 @attr.s(frozen=True)
@@ -218,14 +223,12 @@ class LibraryCollectionData:
     Data related to a library collection that has changed.
 
     Attributes:
-        library_key (LibraryLocatorV2): a key that represents a content library.
-        collection_key (str): identifies the collection within the library's learning package
+        collection_key (LibraryCollectionLocator): identifies the collection within the library's learning package
         background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
            i.e., the handler can run the task in background. By default it is False.
     """
 
-    library_key = attr.ib(type=LibraryLocatorV2)
-    collection_key = attr.ib(type=str)
+    collection_key = attr.ib(type=LibraryCollectionLocator)
     background = attr.ib(type=bool, default=False)
 
 
@@ -235,12 +238,10 @@ class LibraryContainerData:
     Data related to a library container that has changed.
 
     Attributes:
-        library_key (LibraryLocatorV2): a key that represents a content library.
-        container_key (str): identifies the container within the library's learning package (e.g.  unit, section)
+        container_key (LibraryContainerLocator): identifies the container (e.g.  unit, section)
         background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
            i.e., the handler can run the task in background. By default it is False.
     """
 
-    library_key = attr.ib(type=LibraryLocatorV2)
-    container_key = attr.ib(type=str)
+    container_key = attr.ib(type=LibraryContainerLocator)
     background = attr.ib(type=bool, default=False)

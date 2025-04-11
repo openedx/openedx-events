@@ -10,10 +10,6 @@
         "type": "record",
         "fields": [
           {
-            "name": "library_key",
-            "type": "string"
-          },
-          {
             "name": "collection_key",
             "type": "string"
           },
