@@ -29,6 +29,7 @@ KNOWN_UNSERIALIZABLE_SIGNALS = [
     "org.openedx.learning.forum.thread.response.comment.created.v1",
     "org.openedx.learning.course.notification.requested.v1",
     "org.openedx.learning.ora.submission.created.v1",
+    "org.openedx.learning.external_grader.score.submitted.v1",
 ]
 
 SIGNAL_PROCESSED_FROM_EVENT_BUS = "from_event_bus"
