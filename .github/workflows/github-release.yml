@@ -1,0 +1,45 @@
+name: Create a new GitHub Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  github-release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install release requirements
+        run: pip install scriv bump-my-version
+
+      - name: Install pandoc for scriv
+        run: sudo apt install -y pandoc
+
+      - name: Configure Git user
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Read current version
+        id: version
+        run: |
+          echo "CURRENT_VERSION=$(bump-my-version show current_version)" >> $GITHUB_OUTPUT
+
+      - name: Create and push Git tag
+        env:
+          CURRENT_VERSION: ${{ steps.version.outputs.CURRENT_VERSION }}
+        run: |
+          git tag -a "v$CURRENT_VERSION" -m "Release v$CURRENT_VERSION"
+          git push origin "v$CURRENT_VERSION"
+
+      - name: Create GitHub release
+        run: scriv github-release --repo=openedx/openedx-events
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
