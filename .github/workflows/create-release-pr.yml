@@ -1,0 +1,61 @@
+name: Create a Release Pull Request
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump-type:
+        description: "The type of version bump"
+        required: true
+        type: choice
+        options:
+          - "major"
+          - "minor"
+          - "patch"
+
+jobs:
+  create-release-pr:
+    runs-on: ubuntu-latest
+    env:
+      BUMP_TYPE: ${{ github.event.inputs.bump-type }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.11
+
+      - name: Install release requirements
+        run: pip install scriv bump-my-version
+
+      - name: Configure Git user
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Compute version bump
+        id: version
+        run: |
+          echo "CURRENT_VERSION=$(bump-my-version show current_version)" >> $GITHUB_OUTPUT
+          echo "NEW_VERSION=$(bump-my-version show --increment $BUMP_TYPE new_version)" >> $GITHUB_OUTPUT
+
+      - name: Bump version
+        run: bump-my-version bump $BUMP_TYPE
+
+      - name: Collect changelog
+        run: make changelog
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "chore: bump version ${{ steps.version.outputs.CURRENT_VERSION }} → ${{ steps.version.outputs.NEW_VERSION }}"
+          title: "v${{ steps.version.outputs.NEW_VERSION }} Release"
+          body: |
+            ### Description
+
+            This PR bumps the version from `${{ steps.version.outputs.CURRENT_VERSION }}` to `${{ steps.version.outputs.NEW_VERSION }}`.
+
+            The changelog has been automatically generated using `scriv`.
+          branch: "release-${{ steps.version.outputs.NEW_VERSION }}"
