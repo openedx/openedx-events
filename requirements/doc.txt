@@ -24,7 +24,7 @@ babel==2.17.0
     #   sphinx
 backports-tarfile==1.2.0
     # via jaraco-context
-beautifulsoup4==4.13.3
+beautifulsoup4==4.13.4
     # via pydata-sphinx-theme
 build==1.2.2.post1
     # via -r requirements/doc.in
@@ -43,11 +43,11 @@ click==8.1.8
     #   code-annotations
     #   edx-django-utils
     #   uvicorn
-code-annotations==2.2.0
+code-annotations==2.3.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.7.1
+coverage[toml]==7.8.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -85,7 +85,7 @@ docutils==0.21.2
     #   sphinx
 edx-ccx-keys==2.0.2
     # via -r requirements/test.txt
-edx-django-utils==7.2.0
+edx-django-utils==7.4.0
     # via -r requirements/test.txt
 edx-opaque-keys[django]==2.12.0
     # via
@@ -142,13 +142,13 @@ more-itertools==10.6.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-newrelic==10.7.0
+newrelic==10.9.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
 nh3==0.2.21
     # via readme-renderer
-packaging==24.2
+packaging==25.0
     # via
     #   -r requirements/test.txt
     #   build
@@ -182,7 +182,7 @@ pygments==2.19.1
     #   readme-renderer
     #   rich
     #   sphinx
-pymongo==4.11.3
+pymongo==4.12.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -197,9 +197,9 @@ pytest==8.3.5
     #   -r requirements/test.txt
     #   pytest-cov
     #   pytest-django
-pytest-cov==6.0.0
+pytest-cov==6.1.1
     # via -r requirements/test.txt
-pytest-django==4.10.0
+pytest-django==4.11.1
     # via -r requirements/test.txt
 python-slugify==8.0.4
     # via
@@ -224,7 +224,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==13.9.4
+rich==14.0.0
     # via twine
 roman-numerals-py==3.1.0
     # via sphinx
@@ -240,7 +240,7 @@ sniffio==1.3.1
     # via anyio
 snowballstemmer==2.2.0
     # via sphinx
-soupsieve==2.6
+soupsieve==2.7
     # via beautifulsoup4
 sphinx==8.2.3
     # via
@@ -277,7 +277,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
     #   django
-starlette==0.46.1
+starlette==0.46.2
     # via sphinx-autobuild
 stevedore==5.4.1
     # via
@@ -292,7 +292,7 @@ text-unidecode==1.3
     #   python-slugify
 twine==6.1.0
     # via -r requirements/doc.in
-typing-extensions==4.12.2
+typing-extensions==4.13.2
     # via
     #   -r requirements/test.txt
     #   anyio
@@ -304,9 +304,9 @@ urllib3==2.2.3
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   requests
     #   twine
-uvicorn==0.34.0
+uvicorn==0.34.2
     # via sphinx-autobuild
-watchfiles==1.0.4
+watchfiles==1.0.5
     # via sphinx-autobuild
 websockets==15.0.1
     # via sphinx-autobuild
