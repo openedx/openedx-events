@@ -21,3 +21,4 @@ Architectural Decision Records (ADRs)
    0014-new-event-bus-producer-config
    0015-outbox-pattern-and-production-modes
    0016-event-design-practices
+   0017-event-signal-for-external-grader-score-submission
