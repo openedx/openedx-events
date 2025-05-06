@@ -16,6 +16,19 @@ Change Log
 Unreleased
 __________
 
+
+Added
+~~~~~
+
+* Added new ``LIBRARY_BLOCK_PUBLISHED`` event in authoring.
+* Added new ``LIBRARY_CONTAINER_PUBLISHED`` event in authoring.
+
+Changed
+~~~~~~~
+* Deprecated the ``update_blocks`` and ``background`` attributes of various
+  content library events in authoring.
+* Clarified the use case of various content library events in authoring.
+
 [10.1.0] - 2024-05-01
 ---------------------
 

@@ -160,7 +160,12 @@ CONTENT_LIBRARY_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.content_library.updated.v1
 # .. event_name: CONTENT_LIBRARY_UPDATED
-# .. event_description: Emitted when a content library is updated.
+# .. event_description: Emitted when a content library is updated, such as its
+#       name is changed. This is NOT sent when the only changes are to items
+#       within the library, even though that affects the "last updated" and
+#       potentially "last published" or "has unpublished changes" aspects of the
+#       library overall. To detect those, subscribe to the detailed LIBRARY_*
+#       events.
 # .. event_data: ContentLibraryData
 # .. event_trigger_repository: openedx/edx-platform
 CONTENT_LIBRARY_UPDATED = OpenEdxPublicSignal(
@@ -184,7 +189,7 @@ CONTENT_LIBRARY_DELETED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.library_block.created.v1
 # .. event_name: LIBRARY_BLOCK_CREATED
-# .. event_description: Emitted when a library block is created.
+# .. event_description: Emitted when a library XBlock is created.
 # .. event_data: LibraryBlockData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_BLOCK_CREATED = OpenEdxPublicSignal(
@@ -196,7 +201,7 @@ LIBRARY_BLOCK_CREATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.library_block.updated.v1
 # .. event_name: LIBRARY_BLOCK_UPDATED
-# .. event_description: Emitted when a library block is updated.
+# .. event_description: Emitted when a library XBlock (draft) is updated.
 # .. event_data: LibraryBlockData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_BLOCK_UPDATED = OpenEdxPublicSignal(
@@ -208,11 +213,24 @@ LIBRARY_BLOCK_UPDATED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.content_authoring.library_block.deleted.v1
 # .. event_name: LIBRARY_BLOCK_DELETED
-# .. event_description: Emitted when a library block is deleted.
+# .. event_description: Emitted when a library XBlock (draft) is deleted.
 # .. event_data: LibraryBlockData
 # .. event_trigger_repository: openedx/edx-platform
 LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.library_block.deleted.v1",
+    data={
+        "library_block": LibraryBlockData,
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.library_block.published.v1
+# .. event_name: LIBRARY_BLOCK_PUBLISHED
+# .. event_description: Emitted when a library XBlock is published. Also when a
+#       library block draft is deleted and then the deletion is published.
+# .. event_data: LibraryBlockData
+# .. event_trigger_repository: openedx/edx-platform
+LIBRARY_BLOCK_PUBLISHED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.library_block.published.v1",
     data={
         "library_block": LibraryBlockData,
     }
@@ -226,7 +244,7 @@ LIBRARY_BLOCK_DELETED = OpenEdxPublicSignal(
 CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.associations.changed.v1",
     data={
-        "content_object": ContentObjectChangedData
+        "content_object": ContentObjectChangedData,
     }
 )
 
@@ -238,7 +256,7 @@ CONTENT_OBJECT_ASSOCIATIONS_CHANGED = OpenEdxPublicSignal(
 CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content.object.tags.changed.v1",
     data={
-        "content_object": ContentObjectData
+        "content_object": ContentObjectData,
     }
 )
 
@@ -250,7 +268,7 @@ CONTENT_OBJECT_TAGS_CHANGED = OpenEdxPublicSignal(
 LIBRARY_COLLECTION_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.collection.created.v1",
     data={
-        "library_collection": LibraryCollectionData
+        "library_collection": LibraryCollectionData,
     }
 )
 
@@ -262,7 +280,7 @@ LIBRARY_COLLECTION_CREATED = OpenEdxPublicSignal(
 LIBRARY_COLLECTION_UPDATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.collection.updated.v1",
     data={
-        "library_collection": LibraryCollectionData
+        "library_collection": LibraryCollectionData,
     }
 )
 
@@ -274,7 +292,7 @@ LIBRARY_COLLECTION_UPDATED = OpenEdxPublicSignal(
 LIBRARY_COLLECTION_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.collection.deleted.v1",
     data={
-        "library_collection": LibraryCollectionData
+        "library_collection": LibraryCollectionData,
     }
 )
 
@@ -286,7 +304,7 @@ LIBRARY_COLLECTION_DELETED = OpenEdxPublicSignal(
 LIBRARY_CONTAINER_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.container.created.v1",
     data={
-        "library_container": LibraryContainerData
+        "library_container": LibraryContainerData,
     }
 )
 
@@ -298,7 +316,7 @@ LIBRARY_CONTAINER_CREATED = OpenEdxPublicSignal(
 LIBRARY_CONTAINER_UPDATED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.container.updated.v1",
     data={
-        "library_container": LibraryContainerData
+        "library_container": LibraryContainerData,
     }
 )
 
@@ -310,7 +328,20 @@ LIBRARY_CONTAINER_UPDATED = OpenEdxPublicSignal(
 LIBRARY_CONTAINER_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.content_authoring.content_library.container.deleted.v1",
     data={
-        "library_container": LibraryContainerData
+        "library_container": LibraryContainerData,
+    }
+)
+
+# .. event_type: org.openedx.content_authoring.content_library.container.published.v1
+# .. event_name: LIBRARY_CONTAINER_PUBLISHED
+# .. event_description: Emitted when a library container is published. Also when
+#       a library container draft is deleted and then the deletion is published.
+# .. event_data: LibraryContainerData
+# .. event_trigger_repository: openedx/edx-platform
+LIBRARY_CONTAINER_PUBLISHED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.content_library.container.published.v1",
+    data={
+        "library_container": LibraryContainerData,
     }
 )
 
