@@ -165,8 +165,9 @@ class ContentLibraryData:
     Data related to a content library that has changed.
 
     Attributes:
-        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
-        update_blocks (bool): flag that indicates whether the content library blocks indexes should be updated.
+        library_key (LibraryLocatorV2): a key that represents a v2 content library.
+        update_blocks (bool): DEPRECATED flag to indicate whether the content library blocks indexes should be updated.
+            Now we send individual events for each updated item instead.
     """
 
     library_key = attr.ib(type=LibraryLocatorV2)
@@ -179,7 +180,7 @@ class LibraryBlockData:
     Data related to a library block that has changed.
 
     Attributes:
-        library_key (LibraryLocatorV2): a key that represents a Blockstore-based content library.
+        library_key (LibraryLocatorV2): a key that represents a v2 content library.
         usage_key (LibraryUsageLocatorV2): a key that represents a XBlock in a Blockstore-based content library.
     """
 
@@ -224,8 +225,9 @@ class LibraryCollectionData:
 
     Attributes:
         collection_key (LibraryCollectionLocator): identifies the collection within the library's learning package
-        background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
-           i.e., the handler can run the task in background. By default it is False.
+        background (bool): **DEPRECATED** field. Indicated the sender doesn't want to wait for handler to finish
+           execution. Now instead we recommend that simple handlers are synchronous and the _sender_ of the event should
+           send the event(s) from an async celery task if it is expected to result in a lot of handlers being called.
     """
 
     collection_key = attr.ib(type=LibraryCollectionLocator)
@@ -239,8 +241,9 @@ class LibraryContainerData:
 
     Attributes:
         container_key (LibraryContainerLocator): identifies the container (e.g.  unit, section)
-        background (bool): indicate whether the sender doesn't want to wait for handler to finish execution,
-           i.e., the handler can run the task in background. By default it is False.
+        background (bool): **DEPRECATED** field. Indicated the sender doesn't want to wait for handler to finish
+           execution. Now instead we recommend that simple handlers are synchronous and the _sender_ of the event should
+           send the event(s) from an async celery task if it is expected to result in a lot of handlers being called.
     """
 
     container_key = attr.ib(type=LibraryContainerLocator)
