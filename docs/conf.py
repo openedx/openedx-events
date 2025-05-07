@@ -11,6 +11,7 @@
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
 import os
+import re
 # import sys
 # sys.path.insert(0, os.path.abspath('.'))
 
@@ -36,6 +37,8 @@ extensions = [
     'sphinx.ext.graphviz',
     'sphinxcontrib.mermaid',
     'code_annotations.contrib.sphinx.extensions.openedx_events',
+    'sphinx.ext.intersphinx',
+    'code_annotations.contrib.sphinx.extensions.settings',
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -115,3 +118,24 @@ if os.environ.get("READTHEDOCS", "") == "True":
     html_context["READTHEDOCS"] = True
 
 # -- Extension configuration -------------------------------------------------
+
+# Intersphinx Extension Configuration
+DIGITS_ONLY = r"^\d+$"
+rtd_language = os.environ.get("READTHEDOCS_LANGUAGE", "en")
+rtd_version = os.environ.get("READTHEDOCS_VERSION", "latest")
+if re.search(DIGITS_ONLY, rtd_version):
+    # This is a PR build, use the latest versions of the other repos.
+    rtd_version = "latest"
+
+intersphinx_mapping = {
+    "docs.openedx.org": (
+        f"https://docs.openedx.org/{rtd_language}/{rtd_version}",
+        None,
+    ),
+    "openedx-proposals": (
+        # Not setting the version on purpose because we always want the latest version
+        # of OEPs
+        f"https://docs.openedx.org/projects/openedx-proposals/{rtd_language}/latest",
+        None,
+    ),
+}

@@ -19,7 +19,7 @@ if you have time, you could accompany your proposal with the implementation of t
 2. Place your event in an architecture subdomain
 -------------------------------------------------
 
-As specified in the Architectural Decisions Record (ADR) events naming and versioning, the event definition needs an Open edX Architecture
+As specified in the Architectural Decisions Record (ADR) events naming and versioning, the :term:`event definition <Event Definition>` needs an Open edX Architecture
 Subdomain for:
 
 - The name of the event: ``{Reverse DNS}.{Architecture Subdomain}.{Subject}.{Action}.{Major Version}``
@@ -43,7 +43,7 @@ Refer to `edX DDD Bounded Contexts <https://openedx.atlassian.net/l/cp/vf8XjRiX>
 3. Create the data attributes for the event (OEP-49)
 ----------------------------------------------------
 
-Events send `data attributes <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0049-django-app-patterns.html#data-py>`_ when triggered. Therefore, when designing your new event definition you must
+Events send `data attributes <https://open-edx-proposals.readthedocs.io/en/latest/architectural-decisions/oep-0049-django-app-patterns.html#data-py>`_ when triggered. Therefore, when designing your new :term:`event definition <Event Definition>` you must
 decide if an existent data class works for your use case or you must create a new one. If the answer is the latter, then try to answer:
 
 - Which attributes of the object are the most relevant?
@@ -103,33 +103,21 @@ Consider the user data representation as an example:
 4. Create the event definition
 ------------------------------
 
-Open edX Events are instances of the class OpenEdxPublicSignal, this instance represents the event definition that
+Open edX Events are instances of the class OpenEdxPublicSignal, this instance represents the :term:`event definition <Event Definition>` that
 specifies:
 
-- The event type which should follow the conventions in the Naming Conventions ADR.
+- The :term:`event type <Event Type>` which should follow the conventions in the Naming Conventions ADR.
 - The events' payload, here you must use the class you decided on before.
 
 The definition created in this step must comply with:
 
-- It should be created in the `signals.py` file in the corresponding subdomain. Refer to Naming Conventions ADR for more
+- It should be created in the ``signals.py`` file in the corresponding subdomain. Refer to Naming Conventions ADR for more
   on events subdomains.
-- It should follow the naming conventions specified in Naming Conventions ADR.
-- It must be documented using in-line documentation with at least: `event_type`, `event_name`, `event_description` and
-  `event_data`:
+- It should follow the naming conventions specified in :doc:`../decisions/0002-events-naming-and-versioning`.
+- It must be documented using in-line documentation with at least: ``event_type``, ``event_name``, ``event_description`` and
+  ``event_data``. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
 
-+-------------------+----------------------------------------------------------------------------------------------------+
-| Annotation        | Description                                                                                        |
-+===================+====================================================================================================+
-| event_type        | Identifier across services of the event. Should follow the events naming conventions.              |
-+-------------------+----------------------------------------------------------------------------------------------------+
-| event_name        | Name of the variable storing the event instance.                                                   |
-+-------------------+----------------------------------------------------------------------------------------------------+
-| event_description | General description which includes when the event should be emitted.                               |
-+-------------------+----------------------------------------------------------------------------------------------------+
-| event_data        | What type of class attribute the event sends.                                                      |
-+-------------------+----------------------------------------------------------------------------------------------------+
-
-Consider the following example:
+Consider the course enrollment created event as an example:
 
 .. code-block:: python
 

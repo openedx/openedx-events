@@ -32,9 +32,9 @@ Configuration
 
 The package we just installed is a `Django plugin`_, which adds additional
 configurations to our working environment thanks to the extension mechanisms put in place. Now,
-signal receivers are listening to the registration and enrollment events sent within the LMS service.
+:term:`event receivers <Event Receiver>` are listening to the registration and enrollment events sent within the LMS service.
 
-The following is the implementation for the signal receiver listening for the event ``STUDENT_REGISTRATION_COMPLETED``:
+The following is the implementation for the `event receivers <Event Receiver>` listening for the event ``STUDENT_REGISTRATION_COMPLETED``:
 
 .. code-block:: python
 
@@ -97,7 +97,7 @@ The following is the implementation for the signal receiver listening for the ev
             flatten_dict(zapier_payload),
         )
 
-Those receivers work out of the box after the plugin installation. Now, we must
+Those `event receivers <Event Receiver>` work out of the box after the plugin installation. Now, we must
 set the plugin settings which indicate where to send the events data. For this,
 go to ``env/apps/openedx/settings/development.py`` and add your Zapier configuration:
 
@@ -109,7 +109,7 @@ go to ``env/apps/openedx/settings/development.py`` and add your Zapier configura
 Getting data from Zapier
 ------------------------
 
-Now that you have configured both receivers, you'll need to trigger the events
+Now that you have configured both `event receivers <Event Receiver>`, you'll need to trigger the events
 so you receive the events data in Zapier. Try it out!
 
 .. _openedx-events-2-zapier: https://github.com/eduNEXT/openedx-events-2-zapier
@@ -117,5 +117,5 @@ so you receive the events data in Zapier. Try it out!
 .. _Django plugin: https://github.com/openedx/edx-django-utils/blob/master/edx_django_utils/plugins/README.rst
 
 .. warning::
-    The receiver function implemented in this tutorial was intended to be lightweight, just to serve as an example for events' receivers. However, in production
+    The `event receiver <Event Receiver>` function implemented in this tutorial was intended to be lightweight, just to serve as an example for event receivers. However, in production
     settings, we encourage the use of asynchronous tasks to avoid creating bottlenecks.
