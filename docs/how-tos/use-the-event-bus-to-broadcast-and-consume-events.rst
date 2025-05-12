@@ -3,6 +3,8 @@
 Use the Open edX Event Bus to Broadcast and Consume Events
 ==========================================================
 
+.. note:: Be sure to check out how to make your Open edX Event event bus compatible in the :doc:`../how-tos/add-event-bus-support-to-an-event` guide.
+
 After creating a new Open edX Event, you might need to send it across services instead of just within the same process. For this kind of use-cases, you might want to use the Open edX Event Bus. Here :doc:`../concepts/event-bus`, you can find useful information to start getting familiar with the Open edX Event Bus.
 
 The Open edX Event Bus is a key component of the Open edX architecture, enabling services to communicate without direct dependencies on each other. This guide provides an overview of how to use the event bus to broadcast Open edX Events to multiple services, allowing them to react to changes or actions in the system.

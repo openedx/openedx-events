@@ -16,6 +16,55 @@ Change Log
 Unreleased
 __________
 
+
+[10.2.0] - 2024-05-08
+---------------------
+
+Added
+~~~~~
+
+* Added new ``LIBRARY_BLOCK_PUBLISHED`` event in authoring.
+* Added new ``LIBRARY_CONTAINER_PUBLISHED`` event in authoring.
+
+Changed
+~~~~~~~
+* Deprecated the ``update_blocks`` and ``background`` attributes of various
+  content library events in authoring.
+* Clarified the use case of various content library events in authoring.
+
+[10.1.0] - 2024-05-01
+---------------------
+
+Added
+~~~~~
+
+* Added new ``EXTERNAL_GRADER_SCORE_SUBMITTED`` event in learning.
+* Add ``ExternalGraderScoreData`` to support this event
+
+[10.0.0] - 2024-04-04
+---------------------
+Changed
+~~~~~~~
+* **Breaking change**: LibraryCollectionData now takes only a LibraryCollectionLocator.
+* **Breaking change**: LibraryContainerData now takes only a LibraryContainerLocator.
+
+[9.20.0] - 2025-03-15
+---------------------
+
+Added
+~~~~~
+
+* Added new ``LIBRARY_CONTAINER_CREATED``, ``LIBRARY_CONTAINER_UPDATED`` and ``LIBRARY_CONTAINER_DELETED`` events in content_authoring.
+* Adds ``LibraryContainerData`` to support these events
+
+[9.19.0] - 2025-03-14
+---------------------
+
+Changed
+~~~~~~~
+
+* When ``EVENT_BUS_CONSUMER`` setting is missing or unusable, calling ``consume_indefinitely`` will raise an exception instead of silently exiting.
+
 [9.18.2] - 2025-02-18
 ---------------------
 

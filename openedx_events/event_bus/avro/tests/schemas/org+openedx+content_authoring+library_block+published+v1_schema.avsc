@@ -4,22 +4,22 @@
   "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
   "fields": [
     {
-      "name": "library_collection",
+      "name": "library_block",
       "type": {
-        "name": "LibraryCollectionData",
+        "name": "LibraryBlockData",
         "type": "record",
         "fields": [
           {
-            "name": "collection_key",
+            "name": "library_key",
             "type": "string"
           },
           {
-            "name": "background",
-            "type": "boolean"
+            "name": "usage_key",
+            "type": "string"
           }
         ]
       }
     }
   ],
-  "namespace": "org.openedx.content_authoring.content_library.collection.deleted.v1"
+  "namespace": "org.openedx.content_authoring.library_block.published.v1"
 }

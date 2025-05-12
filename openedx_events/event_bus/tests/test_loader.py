@@ -3,6 +3,7 @@ Tests for event bus implementation loader.
 """
 
 import copy
+import re
 import sys
 import warnings
 from contextlib import contextmanager
@@ -137,11 +138,11 @@ class TestConsumer(TestCase):
         """
         Test that the default is of the right class but does nothing.
         """
-        consumer = make_single_consumer(topic="test", group_id="test", signal=SESSION_LOGIN_COMPLETED)
+        with assert_warnings(["Event Bus setting EVENT_BUS_CONSUMER is missing; component will be inactive"]):
+            consumer = make_single_consumer(topic="test", group_id="test", signal=SESSION_LOGIN_COMPLETED)
 
-        with assert_warnings([]):
-            # Nothing thrown, no warnings.
-            assert consumer.consume_indefinitely() is None
+        with pytest.raises(Exception, match=re.escape("Cannot consume events; no consumer configured.")):
+            consumer.consume_indefinitely()
 
 
 class TestSettings(TestCase):

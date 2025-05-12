@@ -625,3 +625,34 @@ class VerificationAttemptData:
     status = attr.ib(type=str)
     name = attr.ib(type=str, default=None)
     expiration_date = attr.ib(type=datetime, default=None)
+
+
+@attr.s(frozen=True)
+class ExternalGraderScoreData:
+    """
+    Class that encapsulates score data provided by an external grader.
+
+    This class uses attr.s with frozen=True to create an immutable structure
+    containing information about the score assigned to a student submission.
+
+    Attributes:
+        points_possible (int): Maximum possible score for this assignment
+        points_earned (int): Score earned by the student
+        course_id (str): Unique identifier for the course
+        score_msg (str): Descriptive message about the score (feedback)
+        submission_id (int): Unique identifier for the graded submission
+        user_id (str): ID of the user who submitted the assignment
+        module_id (str): ID of the module/problem being graded
+        queue_key (str): Unique key for the submission in the queue
+        queue_name (str): Name of the queue that processed the submission
+    """
+
+    points_possible = attr.ib(type=int)
+    points_earned = attr.ib(type=int)
+    course_id = attr.ib(type=str)
+    score_msg = attr.ib(type=str)
+    submission_id = attr.ib(type=int)
+    user_id = attr.ib(type=str)
+    module_id = attr.ib(type=str)
+    queue_key = attr.ib(type=str)
+    queue_name = attr.ib(type=str)
