@@ -656,3 +656,31 @@ class ExternalGraderScoreData:
     module_id = attr.ib(type=str)
     queue_key = attr.ib(type=str)
     queue_name = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class LtiProviderLaunchParamsData:
+    """
+    Data required for a successful LTI launch.
+
+    Attributes:
+        roles (str): A comma-separated list of roles (as per LTI Spec) of the User.
+        context_id (str): An ID for the launch context of LTI content.
+        user_id (str): User ID of user performing the launch.
+        extra_params (dict): A dictionary of other optional launch parameters.
+    """
+    roles = attr.ib(type=str)
+    context_id = attr.ib(type=str)
+    user_id = attr.ib(type=str)
+    extra_params = attr.ib(type=dict[str, str], factory=dict)
+
+
+@attr.s(frozen=True)
+class LtiProviderLaunchData:
+    """
+    Class that encapsulates LTI data for an LTI launch event.
+    """
+    user = attr.ib(type=UserData)
+    course_key = attr.ib(type=CourseKey)
+    usage_key = attr.ib(type=UsageKey)
+    launch_params = attr.ib(type=LtiProviderLaunchParamsData)
