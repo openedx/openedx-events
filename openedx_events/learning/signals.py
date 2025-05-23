@@ -21,6 +21,7 @@ from openedx_events.learning.data import (
     DiscussionThreadData,
     ExamAttemptData,
     ExternalGraderScoreData,
+    LtiProviderLaunchData,
     ORASubmissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
@@ -502,5 +503,17 @@ EXTERNAL_GRADER_SCORE_SUBMITTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.external_grader.score.submitted.v1",
     data={
         "score": ExternalGraderScoreData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.lti_provider.launch.success.v1
+# .. event_name: LTI_PROVIDER_LAUNCH_SUCCESS
+# .. event_description: emitted when a student accesses learning content via LTI
+# .. event_data: LtiProviderLaunchData
+LTI_PROVIDER_LAUNCH_SUCCESS = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.lti_provider.launch.success.v1",
+    data={
+        "launch_data": LtiProviderLaunchData,
     }
 )
