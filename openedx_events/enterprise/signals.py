@@ -8,7 +8,9 @@ They also must comply with the payload definition specified in
 docs/decisions/0003-events-payload.rst
 """
 
-from openedx_events.enterprise.data import LearnerCreditEnterpriseCourseEnrollment, LedgerTransaction, SubsidyRedemption
+from openedx_events.enterprise.data import (
+  LearnerCreditEnterpriseCourseEnrollment, LedgerTransaction, SubsidyRedemption, EnterpriseGroup
+)
 from openedx_events.tooling import OpenEdxPublicSignal
 
 # .. event_type: org.openedx.enterprise.subsidy.redeemed.v1
@@ -104,5 +106,18 @@ LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.learner_credit_course_enrollment.revoked.v1",
     data={
         "learner_credit_course_enrollment": LearnerCreditEnterpriseCourseEnrollment,
+    }
+)
+
+
+# .. event_type: org.openedx.enterprise.enterprise_group.deleted.v1
+# .. event_name: ENTERPRISE_GROUP_DELETED
+# .. event_description: emitted when a LearnerCreditEnterpriseCourseEnrollment is revoked. This most often happens when
+#      an enterprise learner unenrolls from a course which was LC-subsidized.
+# .. event_data: LearnerCreditEnterpriseCourseEnrollment
+ENTERPRISE_GROUP_DELETED = OpenEdxPublicSignal(
+    event_type="org.openedx.enterprise.enterprise_group.deleted.v1",
+    data={
+        "enterprise_group": EnterpriseGroup,
     }
 )
