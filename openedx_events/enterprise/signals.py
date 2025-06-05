@@ -112,9 +112,9 @@ LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED = OpenEdxPublicSignal(
 
 # .. event_type: org.openedx.enterprise.enterprise_group.deleted.v1
 # .. event_name: ENTERPRISE_GROUP_DELETED
-# .. event_description: emitted when a LearnerCreditEnterpriseCourseEnrollment is revoked. This most often happens when
-#      an enterprise learner unenrolls from a course which was LC-subsidized.
-# .. event_data: LearnerCreditEnterpriseCourseEnrollment
+# .. event_description: emitted when an EnterpriseGroup is deleted.
+# .. event_data: EnterpriseGroup
+# .. event_trigger_repository: openedx/edx-enterprise
 ENTERPRISE_GROUP_DELETED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.enterprise_group.deleted.v1",
     data={
