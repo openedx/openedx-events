@@ -9,7 +9,10 @@ docs/decisions/0003-events-payload.rst
 """
 
 from openedx_events.enterprise.data import (
-  LearnerCreditEnterpriseCourseEnrollment, LedgerTransaction, SubsidyRedemption, EnterpriseGroup
+  LearnerCreditEnterpriseCourseEnrollment,
+  LedgerTransaction,
+  SubsidyRedemption,
+  EnterpriseGroup
 )
 from openedx_events.tooling import OpenEdxPublicSignal
 
