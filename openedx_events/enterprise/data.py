@@ -231,7 +231,8 @@ class EnterpriseGroup:
     """
     Attributes of an ``enterprise.EnterpriseGroup`` record.
 
-    Django model definition: https://github.com/openedx/edx-enterprise/blob/4ae2831a02087747da7bee7ea5cdd1d22929a059/enterprise/models.py#L4701
+    Django model definition:
+    https://github.com/openedx/edx-enterprise/blob/4ae2831a02087747da7bee7ea5cdd1d22929a059/enterprise/models.py#L4701
 
     Arguments:
         id (int): Primary identifier of the record.
