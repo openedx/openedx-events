@@ -1,3 +1,5 @@
+.. _ADR-4:
+
 4. External event bus and Django Signal events
 ==============================================
 

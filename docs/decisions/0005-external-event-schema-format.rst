@@ -1,3 +1,5 @@
+.. _ADR-5:
+
 5. External Event Schema Format
 ===============================
 

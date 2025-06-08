@@ -1,3 +1,5 @@
+.. _ADR-6:
+
 6. Event schema serialization and evolution
 ===========================================
 
