@@ -1,3 +1,5 @@
+.. _Existing Events:
+
 Events
 #######
 

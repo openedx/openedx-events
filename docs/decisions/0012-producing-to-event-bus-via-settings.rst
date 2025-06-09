@@ -1,3 +1,5 @@
+.. _ADR-12:
+
 12. Enable producing to event bus via settings
 ##############################################
 

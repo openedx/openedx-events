@@ -1,11 +1,13 @@
 .. include:: ../common_refs.rst
 
+.. _Consume an Event:
+
 Consume an Open edX Event
 ##########################
 
-You have two ways of consuming an Open edX event: within the same service or in a different service. In this guide, we will show you how to consume an event within the same service. For consuming events across services, see :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
+You have two ways of consuming an Open edX event: within the same service or in a different service. In this guide, we will show you how to consume an event within the same service. For consuming events across services, see :ref:`Use the Open edX Event Bus to Broadcast and Consume Events`.
 
-.. note:: We encourage you to also consider the practices outlined in the :doc:`../decisions/0016-event-design-practices` ADR for event consumption.
+.. note:: We encourage you to also consider the practices outlined in the :ref:`ADR-16` ADR for event consumption.
 
 Throughout this guide, we will implement the use case to send the enrollment data to a webhook when a user enrolls in a course to better illustrate the steps involved in creating a consumer for an event.
 
@@ -15,7 +17,7 @@ Assumptions
 - You have a development environment set up using `Tutor`_.
 - You have a basic understanding of Python and Django.
 - You have a basic understanding of Django signals. If not, you can review the `Django Signals Documentation`_.
-- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Receiver`. If not, you can review the :doc:`../reference/glossary` documentation.
+- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Receiver`. If not, you can review the :ref:`Glossary` documentation.
 
 Steps
 *******

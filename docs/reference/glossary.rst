@@ -12,7 +12,7 @@ An event has multiple components that are used to define, trigger, and handle th
       An event trigger is the action that causes an event to be emitted. When a trigger action occurs, the associated event is emitted, and any registered event receivers are called to handle the event. For example, when a user enrolls in a course, the ``COURSE_ENROLLMENT_CREATED`` event is triggered. In this case, the event trigger is the user enrolling in the course.
 
     Event Payload
-      The event payload is the data associated with an event that is passed to event receivers when it's triggered. The payload of an event are data attribute classes (e.g. ``CourseEnrollmentData``, ``UserData``, etc.) that carry data about the event such as the event name, timestamp, and any additional metadata and information about the actual event. For more information, see the `Events Payload ADR`_.
+      The event payload is the data associated with an event that is passed to event receivers when it's triggered. The payload of an event are data attribute classes (e.g. ``CourseEnrollmentData``, ``UserData``, etc.) that carry data about the event such as the event name, timestamp, and any additional metadata and information about the actual event. For more information, see the :ref:`ADR-3`.
 
     Event Type
       The event type is a unique identifier for an event that distinguishes it from other events. For example, ``org.openedx.content_authoring.xblock.published.v1``. The event type is used to identify the event, its purpose, and version. In the event bus context, the event type is used to connect events to the appropriate topics in the ``EVENT_BUS_PRODUCER_CONFIG``. E.g., the event type ``org.openedx.learning.course.enrollment.created.v1`` is used to identify the ``COURSE_ENROLLMENT_CREATED`` event.
@@ -47,5 +47,5 @@ An event has multiple components that are used to define, trigger, and handle th
     Avro Record Dictionary
       A dictionary whose structure is determined by an Avro schema. These dictionaries are the entities that are actually serialized to bytes and sent over the wire to the event bus.
 
-.. _Events Payload ADR: :doc: `/decisions/0003-events-payload`
+
 .. _Apache Avro: https://avro.apache.org/docs/current/spec.html

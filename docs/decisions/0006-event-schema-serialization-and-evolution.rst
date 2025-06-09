@@ -19,9 +19,9 @@ Currently, the specification for events are written as OpenEdxPublicSignal insta
 
 Over time, as needs change, applications will need the schema for an event to change.
 
-For internal events, there is some discussion of versioning events related to how they might change in ADR ":doc:`0002-events-naming-and-versioning`". For external events to be sent using an event bus, the same OpenEdxPublicSignal definitions will provide the schema.
+For internal events, there is some discussion of versioning events related to how they might change in ADR ":ref:`ADR-2`". For external events to be sent using an event bus, the same OpenEdxPublicSignal definitions will provide the schema.
 
-However, for the event bus, we will be introducing more rigorous event evolution rules using an explicit schema and schema registry. We had decided to use Avro in ":doc:`0005-external-event-schema-format`".
+However, for the event bus, we will be introducing more rigorous event evolution rules using an explicit schema and schema registry. We had decided to use Avro in ":ref:`ADR-5`".
 
 Event schemas can evolve in various ways and each implementation of an event bus should choose a schema evolution configuration. The choices include how data can change, as well as the order in which producer and consumer needs to be deployed with new changes.
 

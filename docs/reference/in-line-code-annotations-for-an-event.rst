@@ -1,3 +1,5 @@
+.. _In-line Code Annotations:
+
 In-line Code Annotations for an Open edX Event
 ################################################
 
@@ -6,7 +8,7 @@ When creating a new Open edX Event, you must document the event definition using
 +-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
 | Annotation                          | Description                                                                                                                |
 +=====================================+============================================================================================================================+
-| event_type (Required)               | Identifier across services of the event. Should follow the :doc:`../decisions/0002-events-naming-and-versioning` standard. |
+| event_type (Required)               | Identifier across services of the event. Should follow the :ref:`ADR-2` standard.                                          |
 +-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+
 | event_name (Required)               | Name of the variable storing the event instance.                                                                           |
 +-------------------------------------+----------------------------------------------------------------------------------------------------------------------------+

@@ -1,3 +1,5 @@
+.. _ADR-3:
+
 3. Open edX events payload conventions
 ======================================
 

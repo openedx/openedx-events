@@ -1,3 +1,5 @@
+.. _ADR-16:
+
 16. Event Design Best Practices
 ###############################
 
@@ -57,7 +59,7 @@ Responsibility and Granularity
 
 - Design events with a single responsibility in mind. Each event should represent a single action or fact that happened in the system. If an event contains multiple actions, consider splitting it into multiple events. For instance, if the course grade is updated to pass or fail, there should be two events: one for the pass action and another for the fail action.
 
-.. note:: For the :doc:`Event Bus <../concepts/event-bus>`, events that are split across multiple actions are an exceptional case where the same event :term:`Topic` should be used to help maintain order across these events.
+.. note:: For the :ref:`Event Bus <Event Bus>`, events that are split across multiple actions are an exceptional case where the same event :term:`Topic` should be used to help maintain order across these events.
 
 - Manage the granularity of the event so it is not too coarse (generic with too much information) or too fine-grained (specific with too little information). When making a decision on the granularity of the event, start with the minimum required information for consumers to react to the event and add more information as needed with enough justification. If necessary, leverage API calls from the consumer side to retrieve additional information but always consider the trade-offs of adding dependencies with other services.
 - Ensure that the triggering logic is consistent and narrow. For instance, if an event is triggered when a user enrolls in a course, it should be triggered when the user enrolls in a course in all ways possible to enroll in a course. If the event is triggered when a user enrolls in a course through the API, it should also be triggered when the user enrolls in a course through the UI.

@@ -1,3 +1,5 @@
+.. _Add New Implementation of the Event Bus:
+
 Add a New Concrete Implementation of the Event Bus
 ###################################################
 

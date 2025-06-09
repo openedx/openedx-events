@@ -1,3 +1,5 @@
+.. _Event Bus Configuration:
+
 Event Bus Configuration
 ########################
 

@@ -1,3 +1,5 @@
+.. _Events Tooling:
+
 Open edX Events Tooling
 ########################
 
