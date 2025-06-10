@@ -235,15 +235,7 @@ class EnterpriseGroup:
     https://github.com/openedx/edx-enterprise/blob/4ae2831a02087747da7bee7ea5cdd1d22929a059/enterprise/models.py#L4701
 
     Arguments:
-        id (int): Primary identifier of the record.
-        created (datetime): When the record was created.
-        modified (datetime): When the record was last modified.
-        enterprise_customer_user (EnterpriseCustomerUser): The enterprise learner to which this enrollment is attached.
-        course_id (CourseKey): The ID of the course in which the learner was enrolled.
-        saved_for_later (bool): Specifies whether a user marked this course as saved for later in the learner portal.
-        source_slug (str): DB slug for the source of the enrollment, e.g. "enrollment_task", "management_command", etc.
-        unenrolled (bool): Specifies whether the related LMS course enrollment object was unenrolled.
-        unenrolled_at (datetime): Specifies when the related LMS course enrollment object was unenrolled.
+        uuid (UUID): Primary identifier of the record.
     """
 
     uuid = attr.ib(type=UUID)
