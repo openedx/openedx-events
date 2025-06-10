@@ -124,3 +124,8 @@ ENTERPRISE_GROUP_DELETED = OpenEdxPublicSignal(
         "enterprise_group": EnterpriseGroup,
     }
 )
+
+'''
+Test event:
+python3 manage.py lms produce_event --signal openedx_events.enterprise.signals.ENTERPRISE_GROUP_DELETED --topic enterprise-core --key-field enterprise_group.uuid --data '{"enterprise_group": { "uuid": "d509a63b-eb11-4dc8-8b84-4688c7335110" }}'
+'''
