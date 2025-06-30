@@ -1,3 +1,5 @@
+.. _ADRs:
+
 Architectural Decision Records (ADRs)
 #####################################
 

@@ -1,14 +1,16 @@
 .. include:: ../common_refs.rst
 
+.. _Add Event Bus Support:
+
 Add Event Bus Support to an Open edX Event
 ############################################
 
 Before sending an event across services, you need to ensure that the event is compatible with the Open edX Event Bus. This involves ensuring that the event, with its corresponding payload, can be emitted by a service through the event bus and that other services can consume it. This guide will walk you through the process of adding event bus support to an Open edX event.
 
-For more details on how the :term:`Event Payload` is structured, refer to the :doc:`../decisions/0003-events-payload` decision record.
+For more details on how the :term:`Event Payload` is structured, refer to the :ref:`ADR-3` decision record.
 
 .. note::
-    This guide assumes that you have already created an Open edX event. If you have not, refer to the :doc:`../how-tos/create-a-new-event` how-to guide.
+    This guide assumes that you have already created an Open edX event. If you have not, refer to the :ref:`Create a New Open edX Event with Long-Term Support` how-to guide.
 
 Step 1: Does my Event Need Event Bus Support?
 ===============================================
@@ -32,7 +34,7 @@ Step 2: Define the Event Payload
 
 An Open edX Event is compatible with the event bus when its payload can be serialized, sent, and deserialized by other services. The payload, structured as `attrs data classes`_, must align with the event bus schema format, which in this case is the :term:`Avro Schema`. This schema is used to serialize and deserialize the :term:`Event Payload` when sending it across services.
 
-This ensures the event can be sent by the producer and then re-emitted by the same instance of |OpenEdxPublicSignal| on the consumer side, guaranteeing that the data sent and received is identical. Serializing this way should prevent data inconsistencies between services, e.g., timezone issues and precision loss. For more information on the event bus schema format, refer to the :doc:`../decisions/0004-external-event-bus-and-django-signal-events` and :doc:`../decisions/0005-external-event-schema-format` decision records.
+This ensures the event can be sent by the producer and then re-emitted by the same instance of |OpenEdxPublicSignal| on the consumer side, guaranteeing that the data sent and received is identical. Serializing this way should prevent data inconsistencies between services, e.g., timezone issues and precision loss. For more information on the event bus schema format, refer to the :ref:`ADR-4` and :ref:`ADR-5` decision records.
 
 The data types used in the attrs classes that the current Open edX Event Bus with the chosen schema are:
 
@@ -59,7 +61,7 @@ In the ``data.py`` files within each architectural subdomain, you can find examp
 Step 3: Ensure Serialization and Deserialization
 ==================================================
 
-Before sending the event across services, you need to ensure that the :term:`Event Payload` can be serialized and deserialized correctly. The event bus concrete implementations use the :term:`Avro Schema` to serialize and deserialize the :term:`Event Payload` as mentioned in the :doc:`../decisions/0005-external-event-schema-format` decision record. The concrete implementation of the event bus handles serialization and deserialization with the help of methods implemented by this library.
+Before sending the event across services, you need to ensure that the :term:`Event Payload` can be serialized and deserialized correctly. The event bus concrete implementations use the :term:`Avro Schema` to serialize and deserialize the :term:`Event Payload` as mentioned in the :ref:`ADR-5` decision record. The concrete implementation of the event bus handles serialization and deserialization with the help of methods implemented by this library.
 
 If you are interested in how the serialization and deserialization of the :term:`Event Payload` are handled by the event bus, you can refer to the concrete event bus implementation in the Open edX Event Bus repository. For example, here's how the Redis event bus handles `serialization`_ and `deserialization`_ when sending and receiving events.
 
@@ -126,7 +128,7 @@ Run ``python manage.py generate_avro_schemas --help`` to see the available optio
 Step 5: Send the Event Across Services with the Event Bus
 ==========================================================
 
-To validate that you can consume the event emitted by a service through the event bus, you can send the event across services. Here is an example of how you can send the event across services using the Redis event bus implementation following the `setup instructions in a Tutor environment`_. We recommend also following :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events` to understand how to use the event bus in your environment.
+To validate that you can consume the event emitted by a service through the event bus, you can send the event across services. Here is an example of how you can send the event across services using the Redis event bus implementation following the `setup instructions in a Tutor environment`_. We recommend also following :ref:`Use the Open edX Event Bus to Broadcast and Consume Events` to understand how to use the event bus in your environment.
 
 .. note:: If you implemented a custom serializer for a type in the :term:`Event Payload`, the custom serializer support must be included in both the producer and consumer sides before it can be used.
 

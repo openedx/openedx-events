@@ -37,5 +37,5 @@ Consequences
 Deferred/Rejected Decisions
 ---------------------------
 
-- Top-level fields will continue to be required, as stated in ":doc:`0006-event-schema-serialization-and-evolution`". We continue to defer the possibility of making these optional.
+- Top-level fields will continue to be required, as stated in ":ref:`ADR-6`". We continue to defer the possibility of making these optional.
 - We are also deferring any work around making an explicit ``Optional`` keyword for attrs fields

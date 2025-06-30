@@ -1,3 +1,5 @@
+.. _ADR-4:
+
 4. External event bus and Django Signal events
 ==============================================
 
@@ -17,7 +19,7 @@ Decision
 --------
 Note that for purposes of this ADR, ``event`` refers to a dictionary of data that is emitted by a Django signal, specifically by an instance of ``OpenEdxPublicSignal``
 
-- Event definitions will be shared between internal and external events. The event definitions will continue to be in the form of ``OpenEdxPublicSignal``, as decided in ADR ":doc:`0003-events-payload`".
+- Event definitions will be shared between internal and external events. The event definitions will continue to be in the form of ``OpenEdxPublicSignal``, as decided in ADR ":ref:`ADR-3`".
 
 - At this time, events will be published to the event bus from a Django signal handler. That is, when an internal event is sent via a Django signal, one of the handlers will take the event and publish it to the event bus.
 
@@ -32,7 +34,7 @@ Consequences
 
 - An external event will never be sent without a corresponding internal event (at this time, based on the current design).
 
-- The external event bus handler will listen for Django signals (``OpenEdxPublicSignals``) that have been configured to be sent as external events. These external events will be serialized using utilities in this library, as decided in ADR ":doc:`0005-external-event-schema-format`", before sending the messages over the wire.
+- The external event bus handler will listen for Django signals (``OpenEdxPublicSignals``) that have been configured to be sent as external events. These external events will be serialized using utilities in this library, as decided in ADR ":ref:`ADR-5`", before sending the messages over the wire.
 
 - The use of the ``OpenEdxPublicSignal`` on both the event producing and event consuming sides for external events should hopefully provide a consistent mechanism to plug in for events.
 

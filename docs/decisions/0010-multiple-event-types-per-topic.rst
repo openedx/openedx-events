@@ -1,3 +1,5 @@
+.. _ADR-10:
+
 10. Multiple event types per topic
 ##################################
 

@@ -1,3 +1,5 @@
+.. _ADR-2:
+
 2. Open edX events naming and versioning
 ========================================
 

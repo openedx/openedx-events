@@ -1,3 +1,5 @@
+.. _Architecture Subdomains Reference:
+
 Architecture Subdomains
 ##########################
 

@@ -1,20 +1,22 @@
 .. include:: ../common_refs.rst
 
+.. _Create a New Open edX Event with Long-Term Support:
+
 Create a New Open edX Event with Long-Term Support
 ####################################################
 
-Open edX Events are supported and maintained by the Open edX community. This mechanism is designed to be extensible and flexible, allowing developers to create new events that other services can consume. This guide describes how to create a new Open edX event with long-term support by following the practices outlined in the :doc:`../decisions/0016-event-design-practices` ADR.
+Open edX Events are supported and maintained by the Open edX community. This mechanism is designed to be extensible and flexible, allowing developers to create new events that other services can consume. This guide describes how to create a new Open edX event with long-term support by following the practices outlined in the :ref:`ADR-16` ADR.
 
 Events designed with long-term support closely follow the practices described in the ADR to minimize breaking changes and maximize compatibility and support for future Open edX versions.
 
-.. note:: Before starting, ensure you have reviewed the documentation on :doc:`docs.openedx.org:developers/concepts/hooks_extension_framework`, this documentation helps you decide if creating a new event is necessary. You should also review the documentation on :doc:`../decisions/0016-event-design-practices` to understand the practices that should be followed when creating a new event.
+.. note:: Before starting, ensure you have reviewed the documentation on :ref:`docs.openedx.org:Hooks Extension Framework`, this documentation helps you decide if creating a new event is necessary. You should also review the documentation on :ref:`ADR-16` to understand the practices that should be followed when creating a new event.
 
 Throughout this guide, we will use an example of creating a new event that will be triggered when a user enrolls in a course from the course about page to better illustrate the steps involved in creating a new event.
 
 Key Outlines from Event Design Practices
 ******************************************
 
-The :doc:`../decisions/0016-event-design-practices` outlines the following key practices to follow when creating a new event:
+The :ref:`ADR-16` outlines the following key practices to follow when creating a new event:
 
 - Clearly describe what happened and why.
 - Self-descriptive and self-contained as much as possible.
@@ -36,9 +38,9 @@ Assumptions
 - You have a development environment set up using `Tutor`_.
 - You have a basic understanding of Python and Django.
 - You have a basic understanding of Django signals. If not, you can review the `Django Signals Documentation`_.
-- You understand the concept of events or have reviewed the relevant :doc:`/concepts/index` docs.
-- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Payload`. If not, you can review the :doc:`../reference/glossary` docs.
-- You have reviewed the :doc:`../decisions/0016-event-design-practices` ADR.
+- You understand the concept of events or have reviewed the relevant :ref:`Concepts` docs.
+- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Event Payload`. If not, you can review the :ref:`Glossary` docs.
+- You have reviewed the :ref:`ADR-16` ADR.
 - You have identified that you need to create a new event and have a use case for the event.
 
 Steps
@@ -65,9 +67,9 @@ If you are confident that the event benefits the community, you can proceed to t
 Step 2: Place Your Event In an Architecture Subdomain
 =======================================================
 
-To implement the new event in the library, you should understand the purpose of the event and where it fits in the Open edX main architecture subdomains. This will help you place the event in the right architecture subdomain and ensure that the event is consistent with the framework's definitions. For more details on the Open edX Architectural Subdomains, refer to the :doc:`../reference/architecture-subdomains`.
+To implement the new event in the library, you should understand the purpose of the event and where it fits in the Open edX main architecture subdomains. This will help you place the event in the right architecture subdomain and ensure that the event is consistent with the framework's definitions. For more details on the Open edX Architectural Subdomains, refer to the :ref:`Architecture Subdomains Reference`.
 
-In our example, the event is related to the enrollment process, which is part of the ``learning`` subdomain. Therefore, the event should be placed in the ``/learning`` module in the library. The subdomain is also used as part of the :term:`event type <Event Type>`, which is used to identify the event. The event type should be unique and follow the naming convention for event types specified in the :doc:`../decisions/0002-events-naming-and-versioning` ADR.
+In our example, the event is related to the enrollment process, which is part of the ``learning`` subdomain. Therefore, the event should be placed in the ``/learning`` module in the library. The subdomain is also used as part of the :term:`event type <Event Type>`, which is used to identify the event. The event type should be unique and follow the naming convention for event types specified in the :ref:`ADR-2` ADR.
 
 For the enrollment event, the event type could be ``org.openedx.learning.course.enrollment.v1``, where ``learning`` is the subdomain.
 
@@ -87,7 +89,7 @@ For this, choose a specific point in the service where the event should be trigg
 Step 4: Determine the Content of the Event
 =============================================
 
-The event's content should comply with the practices outlined in the :doc:`../decisions/0016-event-design-practices`. The event should be self-descriptive and self-contained as much as possible. The event should contain all the necessary information for consumers to react to the event without having to make additional calls to other services when possible.
+The event's content should comply with the practices outlined in the :ref:`ADR-16`. The event should be self-descriptive and self-contained as much as possible. The event should contain all the necessary information for consumers to react to the event without having to make additional calls to other services when possible.
 
 When determining the content of the event, consider the following:
 
@@ -121,7 +123,7 @@ Implement the :term:`Event Definition` and :term:`Event Payload` for your event 
 
 .. note:: Ideally, the data that is included in the event payload should be available at the time the event is triggered, and it should be directly related to the event that took place. So before defining the payload, inspect the triggering logic to review the data that is available at the time the event is triggered.
 
-The event definition and payload must comply with the practices outlined in the :doc:`../decisions/0002-events-naming-and-versioning` and :doc:`../decisions/0003-events-payload` ADRs. Also, with the practices outlined in the :doc:`../decisions/0016-event-design-practices` ADR. Mainly:
+The event definition and payload must comply with the practices outlined in the :ref:`ADR-2` and :ref:`ADR-3` ADRs. Also, with the practices outlined in the :ref:`ADR-16` ADR. Mainly:
 
 - The event should be self-descriptive and self-contained as much as possible.
 - The event should contain all the necessary information directly related to the event that took place.
@@ -161,11 +163,11 @@ In our example, the event definition and payload for the enrollment event could 
 - The payload should be an `attrs`_ class to ensure that the data is immutable by using the ``frozen=True`` argument and to ensure that the data is self-descriptive.
 - Use the ``attr.ib`` decorator to define the fields in the payload with the data type that the field should contain. Try to use the appropriate data type for each field to ensure that the data is consistent and maintainable, you can inspect the triggering logic to review the data that is available at the time the event is triggered.
 - Try using nested data classes to group related data together. This will help maintain consistency and make the event more readable. For instance, in the above example, we have grouped the data into User, Course, and Enrollment data.
-- Try reusing existing data classes if possible to avoid duplicating data classes. This will help maintain consistency and reduce the chances of introducing errors. You can review the existing data classes in :doc:`../reference/events-data` to see if there is a data class that fits your use case.
+- Try reusing existing data classes if possible to avoid duplicating data classes. This will help maintain consistency and reduce the chances of introducing errors. You can review the existing data classes in :ref:`Data Attributes` to see if there is a data class that fits your use case.
 - Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
 - Use defaults for optional fields in the payload to ensure its consistency in all cases.
 
-.. note:: When defining the payload, enforce :doc:`../concepts/event-bus` compatibility by ensuring that the data types used in the payload align with the event bus schema format. This will help ensure that the event can be sent by the producer and then be re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side, guaranteeing that the data sent and received is identical. For more information about adding event bus support to an event, refer to :doc:`../how-tos/add-event-bus-support-to-an-event`.
+.. note:: When defining the payload, enforce :ref:`Event Bus` compatibility by ensuring that the data types used in the payload align with the event bus schema format. This will help ensure that the event can be sent by the producer and then be re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side, guaranteeing that the data sent and received is identical. For more information about adding event bus support to an event, refer to :ref:`Add Event Bus Support`.
 
 Event Definition
 ------------------
@@ -188,9 +190,9 @@ The :term:`Event Definition` should be implemented in the corresponding subdomai
         }
     )
 
-- The event definition should be documented using in-line documentation with at least ``event_type``, ``event_name``, ``event_key_field``, ``event_description``, ``event_data`` and ``event_trigger_repository``. This will help consumers understand the event and react to it. See :doc:`../reference/in-line-code-annotations-for-an-event` for more information.
-- The :term:`Event Type` should be unique and follow the naming convention for event types specified in the :doc:`../decisions/0002-events-naming-and-versioning` ADR. This is used by consumers to identify the event.
-- The ``event_name`` should be the variable name storing the event instance used to trigger the event. The name of the variable usually matches the ``{Subject}_{Action}`` of the event type. See more about the name in the :doc:`../decisions/0002-events-naming-and-versioning` ADR.
+- The event definition should be documented using in-line documentation with at least ``event_type``, ``event_name``, ``event_key_field``, ``event_description``, ``event_data`` and ``event_trigger_repository``. This will help consumers understand the event and react to it. See :ref:`In-line Code Annotations` for more information.
+- The :term:`Event Type` should be unique and follow the naming convention for event types specified in the :ref:`ADR-2` ADR. This is used by consumers to identify the event.
+- The ``event_name`` should be the variable name storing the event instance used to trigger the event. The name of the variable usually matches the ``{Subject}_{Action}`` of the event type. See more about the name in the :ref:`ADR-2` ADR.
 - The ``event_key_field`` should be a field in the payload that uniquely identifies the event. This is used by consumers to identify the event.
 - The ``event_description`` should describe what the event is about and why it is triggered.
 - The ``event_data`` should be the payload class that is used to define the data that is included in the event.
@@ -315,14 +317,14 @@ In our example, we could write a test that enrolls a user in a course and verifi
 Step 8: Consume the Event
 ===========================
 
-Since the event is now implemented, you should consume it to verify that it is triggered and that the payload contains the necessary information. You can consume the event in a test environment using a Django Signal Receiver. This will help you verify that the event is triggered and that the payload contains the necessary information. You can follow the steps in :doc:`../how-tos/consume-an-event` to consume the event in a test environment with a Django Signal Receiver. You could also use the Open edX Event Bus to consume the event in a test environment. For more information on how to use the Open edX Event Bus, refer to the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
+Since the event is now implemented, you should consume it to verify that it is triggered and that the payload contains the necessary information. You can consume the event in a test environment using a Django Signal Receiver. This will help you verify that the event is triggered and that the payload contains the necessary information. You can follow the steps in :ref:`Consume an Event` to consume the event in a test environment with a Django Signal Receiver. You could also use the Open edX Event Bus to consume the event in a test environment. For more information on how to use the Open edX Event Bus, refer to the :ref:`Use the Open edX Event Bus to Broadcast and Consume Events`.
 
 Step 9: Continue the Contribution Process
 ============================================
 
 After implementing the event, you should continue the contribution process by creating a pull request in the repository. The pull requests should contain the changes you made to implement the event, including the event definition, payload, and the places where the event is triggered.
 
-For more details on how the contribution flow works, refer to the :doc:`docs.openedx.org:developers/concepts/hooks_extension_framework` documentation.
+For more details on how the contribution flow works, refer to the :ref:`docs.openedx.org:Hooks Extension Framework` documentation.
 
 .. _Add Extensibility Mechanism to IDV to Enable Integration of New IDV Vendor Persona: https://openedx.atlassian.net/wiki/spaces/OEPM/pages/4307386369/Proposal+Add+Extensibility+Mechanisms+to+IDV+to+Enable+Integration+of+New+IDV+Vendor+Persona
 .. _Add Program Certificate events: https://github.com/openedx/openedx-events/issues/250

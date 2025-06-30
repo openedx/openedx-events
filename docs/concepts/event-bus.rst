@@ -1,5 +1,7 @@
 .. include:: ../common_refs.rst
 
+.. _Event Bus:
+
 Open edX Event Bus
 ####################
 
@@ -29,7 +31,7 @@ The :term:`Event Bus` can help us achieve loose coupling between services, repla
 How Does the Open edX Event Bus Work?
 ***************************************
 
-The Open edX platform uses the ``OpenEdxPublicSignals`` (Open edX-specific Django Signals) to send events within a service. The event bus extends these signals, allowing them to be broadcasted and handled across multiple services. That's how Open edX Events are used for internal and external communication. For more details on how these Open edX-specific Django Signals are used by the event bus, refer to the :doc:`../decisions/0004-external-event-bus-and-django-signal-events` Architectural Decision Record (ADR).
+The Open edX platform uses the ``OpenEdxPublicSignals`` (Open edX-specific Django Signals) to send events within a service. The event bus extends these signals, allowing them to be broadcasted and handled across multiple services. That's how Open edX Events are used for internal and external communication. For more details on how these Open edX-specific Django Signals are used by the event bus, refer to the :ref:`ADR-4` Architectural Decision Record (ADR).
 
 Open edX Events provides an abstract implementation of the `publish/subscribe messaging pattern`_ (pub/sub), which is the chosen pattern for the event bus implementation, as explained in :doc:`openedx-proposals:architectural-decisions/oep-0052-arch-event-bus-architecture`. It implements two abstract classes, `EventProducer`_ and `EventConsumer`_, which allow concrete implementations of the event bus based on different message brokers, such as Pulsar.
 
@@ -78,7 +80,7 @@ From Service B (Consumer)
 2. When a new message is found, the ``EventConsumer`` deserializes the message and re-emits it as an event with the data that was transmitted.
 3. The event sending and processing workflow repeats in Service B.
 
-This approach of producing events via settings with the generic handler was chosen to allow for flexibility in the event bus implementation. It allows developers to choose the event bus implementation that best fits their needs, and easily switch between implementations if necessary. See more details in the :doc:`../decisions/0012-producing-to-event-bus-via-settings` Architectural Decision Record (ADR).
+This approach of producing events via settings with the generic handler was chosen to allow for flexibility in the event bus implementation. It allows developers to choose the event bus implementation that best fits their needs, and easily switch between implementations if necessary. See more details in the :ref:`ADR-12` Architectural Decision Record (ADR).
 
 Event Bus vs Asynchronous Tasks
 ********************************
@@ -123,7 +125,7 @@ How is the Open edX Event Bus Used?
 
 The event bus is used to broadcast Open edX Events to multiple services, allowing them to react to changes or actions in the system.
 
-We encourage you to review the :doc:`../reference/real-life-use-cases` page for examples of how the community uses the event bus in the Open edX ecosystem. Also, see the :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events` guide to start sending events to the event bus.
+We encourage you to review the :ref:`Real-Life Use Cases` page for examples of how the community uses the event bus in the Open edX ecosystem. Also, see the :ref:`Use the Open edX Event Bus to Broadcast and Consume Events` guide to start sending events to the event bus.
 
 .. _general_signal_handler: https://github.com/openedx/openedx-events/blob/main/openedx_events/apps.py#L16-L44
 .. _EventProducer: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/__init__.py#L71-L91

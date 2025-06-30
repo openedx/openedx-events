@@ -1,3 +1,5 @@
+.. _ADR-5:
+
 5. External Event Schema Format
 ===============================
 
@@ -12,7 +14,7 @@ Context
 
 * It is a best practice to use an explicit schema definition. Avro is the recommended serialization format for Kafka.
 
-* The attrs objects that we currently have for signal-based events don't easily inter-operate with event bus client objects. Source ADR ":doc:`0003-events-payload`".
+* The attrs objects that we currently have for signal-based events don't easily inter-operate with event bus client objects. Source ADR ":ref:`ADR-3`".
 
 * Industry best practices seem to suggest using a binary encoding of messages.
 

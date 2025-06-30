@@ -1,3 +1,5 @@
+.. _Data Attributes:
+
 Open edX Events Data Attributes
 ################################
 

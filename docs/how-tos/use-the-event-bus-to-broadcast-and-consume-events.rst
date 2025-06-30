@@ -1,11 +1,13 @@
 .. include:: ../common_refs.rst
 
+.. _Use the Open edX Event Bus to Broadcast and Consume Events:
+
 Use the Open edX Event Bus to Broadcast and Consume Events
 ==========================================================
 
-.. note:: Be sure to check out how to make your Open edX Event event bus compatible in the :doc:`../how-tos/add-event-bus-support-to-an-event` guide.
+.. note:: Be sure to check out how to make your Open edX Event event bus compatible in the :ref:`Add Event Bus Support` guide.
 
-After creating a new Open edX Event, you might need to send it across services instead of just within the same process. For this kind of use-cases, you might want to use the Open edX Event Bus. Here :doc:`../concepts/event-bus`, you can find useful information to start getting familiar with the Open edX Event Bus.
+After creating a new Open edX Event, you might need to send it across services instead of just within the same process. For this kind of use-cases, you might want to use the Open edX Event Bus. Here :ref:`Event Bus`, you can find useful information to start getting familiar with the Open edX Event Bus.
 
 The Open edX Event Bus is a key component of the Open edX architecture, enabling services to communicate without direct dependencies on each other. This guide provides an overview of how to use the event bus to broadcast Open edX Events to multiple services, allowing them to react to changes or actions in the system.
 
@@ -14,9 +16,9 @@ Assumptions
 
 - You have a development environment set up using `Tutor`_.
 - You have a basic understanding of Python and Django.
-- You have basic understanding of the Open edX Event Bus. If not, you can review the :doc:`../concepts/event-bus` docs.
-- You understand the concept of filters or have reviewed the relevant :doc:`/concepts/index` docs.
-- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Topic`. If not, you can review the :doc:`/reference/glossary` docs.
+- You have basic understanding of the Open edX Event Bus. If not, you can review the :ref:`Event Bus` docs.
+- You understand the concept of filters or have reviewed the relevant :ref:`Concepts` docs.
+- You are familiar with the terminology used in the project, such as the terms :term:`Event Type` or :term:`Topic`. If not, you can review the :ref:`Glossary` docs.
 
 Steps
 -----
@@ -32,12 +34,12 @@ First, you need to install the Open edX Event Bus plugin in both the producing a
 
    pip install edx-event-bus-redis
 
-.. note:: There are currently two community-supported concrete implementations of the Open edX Events Bus, Redis (`event-bus-redis`_) and Kafka (`event-bus-kafka`_). Redis is the default plugin for the Open edX Event Bus, but you can also use Kafka depending on your requirements. If none of these implementations meet your needs, you can implement your own plugin by following the :doc:`../how-tos/add-new-event-bus-concrete-implementation` documentation.
+.. note:: There are currently two community-supported concrete implementations of the Open edX Events Bus, Redis (`event-bus-redis`_) and Kafka (`event-bus-kafka`_). Redis is the default plugin for the Open edX Event Bus, but you can also use Kafka depending on your requirements. If none of these implementations meet your needs, you can implement your own plugin by following the :ref:`Add New Implementation of the Event Bus` documentation.
 
 Step 2: Configure the Event Bus
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In :doc:`../reference/event-bus-configurations`, you can find the available configurations for the event bus that are used to set up the event bus in the Open edX platform.
+In :ref:`Event Bus Configuration`, you can find the available configurations for the event bus that are used to set up the event bus in the Open edX platform.
 
 In both the producing and consuming services, you need to configure the event bus. This includes setting up the :term:`event types <Event Type>`, :term:`topics <Topic>`, and other configurations for the :term:`Event Bus` to work with. In this step, you should configure the producer and consumer classes for the event bus implementation you are using:
 

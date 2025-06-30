@@ -1,12 +1,14 @@
 .. include:: ../common_refs.rst
 
+.. _Real-Life Use Cases:
+
 Real-Life Use Cases for Open edX Events
 ########################################
 
 Overview
 **********
 
-As mentioned in the :doc:`docs.openedx.org:developers/concepts/hooks_extension_framework` docs, Open edX Events can be used to integrate application components with each other or with external services, allowing them to communicate, synchronize, and perform additional actions when specific triggers occur.
+As mentioned in the :ref:`docs.openedx.org:Hooks Extension Framework` docs, Open edX Events can be used to integrate application components with each other or with external services, allowing them to communicate, synchronize, and perform additional actions when specific triggers occur.
 
 To illustrate the different solutions that can be implemented with this approach, we have compiled a list of use cases built using Open edX Events to address various challenges. The goal of this list is to serve as a reference for extension developers to implement their own solutions in their own plugins or IDAs based on the community's experience.
 
@@ -18,7 +20,7 @@ The following list of real-life use cases showcases the different ways Open edX 
 Cross-services communication
 =============================
 
-As mentioned in :doc:`../concepts/event-bus`, the suggested strategy for cross-service communication in the Open edX ecosystem is through an event-based architecture implemented via the :doc:`../concepts/event-bus`. This functionality used for asynchronous communication between services is built on top of sending Open edX Events (Open edX-specific Django signals) within a service. For more details on the Event Bus,  please see :doc:`../how-tos/use-the-event-bus-to-broadcast-and-consume-events`.
+As mentioned in :ref:`Event Bus`, the suggested strategy for cross-service communication in the Open edX ecosystem is through an event-based architecture implemented via the :ref:`Event Bus`. This functionality used for asynchronous communication between services is built on top of sending Open edX Events (Open edX-specific Django signals) within a service. For more details on the Event Bus, please see :ref:`Use the Open edX Event Bus to Broadcast and Consume Events`.
 
 Here are some examples of how the Event Bus can be used to facilitate communication between IDAs:
 
