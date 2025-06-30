@@ -1,0 +1,21 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "enterprise_group",
+      "type": {
+        "name": "EnterpriseGroup",
+        "type": "record",
+        "fields": [
+          {
+            "name": "uuid",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.enterprise.enterprise_group.deleted.v1"
+}
