@@ -22,7 +22,7 @@ The :term:`Event Bus` implements an event-driven architecture that enables async
 Why use the Open edX Event Bus?
 **********************************
 
-The :term:`Event Bus` can help us achieve loose coupling between services, replacing blocking requests between services and large sync jobs, leading to a faster, more reliable, and more extensible system. See event messaging architectural goals highlighted in :doc:`openedx-proposals:architectural-decisions/oep-0041-arch-async-server-event-messaging` to read more about its benefits. Here's a brief summary of some key points:
+The :term:`Event Bus` can help us achieve loose coupling between services, replacing blocking requests between services and large sync jobs, leading to a faster, more reliable, and more extensible system. See event messaging architectural goals highlighted in :ref:`openedx-proposals:OEP-41 Asynchronous Server Event Message Format` to read more about its benefits. Here's a brief summary of some key points:
 
 * **Eliminate Blocking, Synchronous Requests**: reduce site outages when services become overloaded with requests by replacing synchronous calls with asynchronous communication.
 * **Eliminate Expensive, Delayed, Batch Synchronization**: replace expensive batch processing with near real-time data updates.
@@ -33,7 +33,7 @@ How Does the Open edX Event Bus Work?
 
 The Open edX platform uses the ``OpenEdxPublicSignals`` (Open edX-specific Django Signals) to send events within a service. The event bus extends these signals, allowing them to be broadcasted and handled across multiple services. That's how Open edX Events are used for internal and external communication. For more details on how these Open edX-specific Django Signals are used by the event bus, refer to the :ref:`ADR-4` Architectural Decision Record (ADR).
 
-Open edX Events provides an abstract implementation of the `publish/subscribe messaging pattern`_ (pub/sub), which is the chosen pattern for the event bus implementation, as explained in :doc:`openedx-proposals:architectural-decisions/oep-0052-arch-event-bus-architecture`. It implements two abstract classes, `EventProducer`_ and `EventConsumer`_, which allow concrete implementations of the event bus based on different message brokers, such as Pulsar.
+Open edX Events provides an abstract implementation of the `publish/subscribe messaging pattern`_ (pub/sub), which is the chosen pattern for the event bus implementation, as explained in :ref:`openedx-proposals:oep-52`. It implements two abstract classes, `EventProducer`_ and `EventConsumer`_, which allow concrete implementations of the event bus based on different message brokers, such as Pulsar.
 
 This abstraction allows for developers to implement their own concrete implementations of the event bus in their own plugins. There are currently two implementations of the event bus, Redis (`event-bus-redis`_) and Kafka (`event-bus-kafka`_). Redis streams is a data structure that acts like an append-only log, and Kafka is a distributed event streaming application. Both implementations handle event production and consumption using technology-specific methods.
 
