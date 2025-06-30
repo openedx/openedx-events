@@ -679,6 +679,12 @@ class LtiProviderLaunchParamsData:
 class LtiProviderLaunchData:
     """
     Class that encapsulates LTI data for an LTI launch event.
+
+    Attributes:
+        user (UserData): The user data for the Open edX user initiating the launch.
+        course_key (CourseKey): The unique course ID for the course to which the launched content belongs.
+        usage_key (UsageKey): The usage key for the content being luanched via LtiProviderLaunchParamsData.
+        launch_params (LtiProviderLaunchParamsData): The LTI parameters used for the launch.
     """
     user = attr.ib(type=UserData)
     course_key = attr.ib(type=CourseKey)
