@@ -20,7 +20,7 @@ log = getLogger(__name__)
 # If a signal is explicitly not for use with the event bus, add it to this list
 #  and document why in the event's annotations
 KNOWN_UNSERIALIZABLE_SIGNALS = [
-    # "org.openedx.learning.discussions.configuration.changed.v1",
+    "org.openedx.learning.discussions.configuration.changed.v1",
     "org.openedx.content_authoring.course.certificate_config.changed.v1",
     "org.openedx.content_authoring.course.certificate_config.deleted.v1",
     "org.openedx.learning.user.notification.requested.v1",
