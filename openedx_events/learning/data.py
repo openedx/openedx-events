@@ -666,7 +666,7 @@ class LtiProviderLaunchParamsData:
     Attributes:
         roles (str): A comma-separated list of roles (as per LTI Spec) of the User.
         context_id (str): An ID for the launch context of LTI content.
-        user_id (str): User ID of user performing the launch.
+        user_id (str): External (LTI) User ID of user performing the launch.
         extra_params (dict): A dictionary of other optional launch parameters.
     """
     roles = attr.ib(type=str)
