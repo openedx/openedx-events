@@ -248,6 +248,10 @@ class TestSchemaGeneration(TestCase):
         DICT_SIGNAL = create_simple_signal({"dict_input": dict})
         LIST_WITHOUT_ANNOTATION_SIGNAL = create_simple_signal({"list_input": List})
         DICT_WITHOUT_ANNOTATION_SIGNAL = create_simple_signal({"dict_input": Dict})
+        LIST_OF_DICT_SIGNAL = create_simple_signal({"list_input": list[dict]})
+        LIST_OF_LIST_SIGNAL = create_simple_signal({"list_input": list[list]})
+        DICT_OF_LIST_SIGNAL = create_simple_signal({"dict_input": dict[str, list]})
+        DICT_OF_DICT_SIGNAL = create_simple_signal({"dict_input": dict[str, dict]})
         with self.assertRaises(Exception):
             schema_from_signal(LIST_SIGNAL)
 
@@ -260,10 +264,29 @@ class TestSchemaGeneration(TestCase):
         with self.assertRaises(TypeError):
             schema_from_signal(DICT_WITHOUT_ANNOTATION_SIGNAL)
 
-    def test_throw_exception_invalid_dict_annotation(self):
-        INVALID_DICT_SIGNAL = create_simple_signal({"dict_input": Dict[str, NestedAttrsWithDefaults]})
         with self.assertRaises(TypeError):
-            schema_from_signal(INVALID_DICT_SIGNAL)
+            schema_from_signal(LIST_OF_DICT_SIGNAL)
+
+        with self.assertRaises(TypeError):
+            schema_from_signal(LIST_OF_LIST_SIGNAL)
+
+        with self.assertRaises(TypeError):
+            schema_from_signal(DICT_OF_LIST_SIGNAL)
+
+        with self.assertRaises(TypeError):
+            schema_from_signal(DICT_OF_DICT_SIGNAL)
+
+    def test_throw_exception_to_list_or_dict_types_of_unsupported_types(self):
+        class UnSupportedClass:
+            pass
+
+        LIST_SIGNAL = create_simple_signal({"list_input": List[UnSupportedClass]})
+        DICT_SIGNAL = create_simple_signal({"dict_input": Dict[str, UnSupportedClass]})
+        with self.assertRaises(TypeError):
+            schema_from_signal(LIST_SIGNAL)
+
+        with self.assertRaises(TypeError):
+            schema_from_signal(DICT_SIGNAL)
 
     def test_list_with_annotation_works(self):
         LIST_SIGNAL = create_simple_signal({"list_input": List[int]})
@@ -293,4 +316,34 @@ class TestSchemaGeneration(TestCase):
             }],
         }
         schema = schema_from_signal(DICT_SIGNAL)
+        self.assertDictEqual(schema, expected_dict)
+
+    def test_dict_of_list_with_annotation_works(self):
+        DICT_SIGNAL = create_simple_signal({"dict_input": Dict[str, List[int]]})
+        expected_dict = {
+            "name": "CloudEvent",
+            "type": "record",
+            "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            "namespace": "simple.signal",
+            "fields": [{
+                "name": "dict_input",
+                "type": {"type": "map", "values": {"type": "array", "items": "long"}},
+            }],
+        }
+        schema = schema_from_signal(DICT_SIGNAL)
+        self.assertDictEqual(schema, expected_dict)
+
+    def test_list_of_dict_with_annotation_works(self):
+        LIST_SIGNAL = create_simple_signal({"list_input": List[Dict[str, int]]})
+        expected_dict = {
+            "name": "CloudEvent",
+            "type": "record",
+            "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            "namespace": "simple.signal",
+            "fields": [{
+                "name": "list_input",
+                "type": {"type": "array", "items": {"type": "map", "values": "long"}},
+            }],
+        }
+        schema = schema_from_signal(LIST_SIGNAL)
         self.assertDictEqual(schema, expected_dict)
