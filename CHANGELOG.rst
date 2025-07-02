@@ -16,6 +16,15 @@ Change Log
 Unreleased
 __________
 
+[10.3.0] - 2025-05-23
+---------------------
+
+Added
+~~~~~
+
+* Added new ``LTI_PROVIDER_LAUNCH_SUCCESS`` event in learning.
+
+
 [10.2.1] - 2025-05-13
 ---------------------
 

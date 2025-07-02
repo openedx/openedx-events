@@ -656,3 +656,37 @@ class ExternalGraderScoreData:
     module_id = attr.ib(type=str)
     queue_key = attr.ib(type=str)
     queue_name = attr.ib(type=str)
+
+
+@attr.s(frozen=True)
+class LtiProviderLaunchParamsData:
+    """
+    Data required for a successful LTI launch.
+
+    Attributes:
+        roles (str): A comma-separated list of roles (as per LTI Spec) of the User.
+        context_id (str): An ID for the launch context of LTI content.
+        user_id (str): External (LTI) User ID of user performing the launch.
+        extra_params (dict): A dictionary of other optional launch parameters.
+    """
+    roles = attr.ib(type=str)
+    context_id = attr.ib(type=str)
+    user_id = attr.ib(type=str)
+    extra_params = attr.ib(type=dict[str, str], factory=dict)
+
+
+@attr.s(frozen=True)
+class LtiProviderLaunchData:
+    """
+    Class that encapsulates LTI data for an LTI launch event.
+
+    Attributes:
+        user (UserData): The user data for the Open edX user initiating the launch.
+        course_key (CourseKey): The unique course ID for the course to which the launched content belongs.
+        usage_key (UsageKey): The usage key for the content being luanched via LtiProviderLaunchParamsData.
+        launch_params (LtiProviderLaunchParamsData): The LTI parameters used for the launch.
+    """
+    user = attr.ib(type=UserData)
+    course_key = attr.ib(type=CourseKey)
+    usage_key = attr.ib(type=UsageKey)
+    launch_params = attr.ib(type=LtiProviderLaunchParamsData)
