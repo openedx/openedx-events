@@ -248,3 +248,19 @@ class LibraryContainerData:
 
     container_key = attr.ib(type=LibraryContainerLocator)
     background = attr.ib(type=bool, default=False)
+
+
+@attr.s(frozen=True)
+class Lti1p1ContentGraded:
+    """
+    Data about LTI 1.1 content object.
+
+    Arguments:
+        user_id (int): database identifier of the learner's LMS user.
+        xblock_id (UsageKey): Location of the Xblock reponsible to launch the LTI content.
+        anonymous_user_id (str): Anonymous id of the Learner's LMS user.
+    """
+
+    user_id = attr.ib(type=int)
+    xblock_id = attr.ib(type=UsageKey)
+    anonymous_user_id = attr.ib(type=str)
