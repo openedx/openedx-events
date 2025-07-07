@@ -18,6 +18,7 @@ from openedx_events.content_authoring.data import (
     LibraryBlockData,
     LibraryCollectionData,
     LibraryContainerData,
+    Lti1p1ContentGraded,
     XBlockData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -369,4 +370,17 @@ COURSE_RERUN_COMPLETED = OpenEdxPublicSignal(
     data={
         "course": CourseData,
     }
+)
+
+# .. event_type: org.openedx.content_authoring.xblock.lti1p1.content.graded.v1
+# .. event_name: XBLOCK_LTI1P1_GRADED
+# .. event_key_field: xblock.scope_ids.usage_id
+# .. event_description: emitted when an LTI 1.1 Content is graded via Xblock's OutcomeService
+# .. event_data: Lti1p1ContentGraded
+# .. event_trigger_repository: Pearson-Advance/xblock-lti-consumer
+XBLOCK_LTI1P1_GRADED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.xblock.lti1p1.content.graded.v1",
+    data={
+        "graded_content": Lti1p1ContentGraded,
+    },
 )
