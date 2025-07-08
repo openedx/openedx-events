@@ -1,6 +1,7 @@
 .PHONY: clean clean_tox compile_translations coverage diff_cover docs dummy_translations \
         extract_translations fake_translations help pull_translations push_translations \
-        quality requirements selfcheck test test-all upgrade validate install_transifex_client
+        quality requirements selfcheck test test-all upgrade validate install_transifex_client \
+		changelog-entry changelog
 
 .DEFAULT_GOAL := help
 
@@ -31,6 +32,12 @@ coverage: clean ## generate and view HTML coverage report
 docs: ## generate Sphinx HTML documentation, including API docs
 	tox -e docs
 	$(BROWSER)docs/_build/html/index.html
+
+changelog-entry: ## Create a new changelog entry
+	scriv create
+
+changelog: ## Collect changelog entries in the CHANGELOG.rst file
+	scriv collect
 
 # Define PIP_COMPILE_OPTS=-v to get more information during make upgrade.
 PIP_COMPILE = pip-compile --upgrade $(PIP_COMPILE_OPTS)

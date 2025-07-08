@@ -1,0 +1,44 @@
+.. Create a new changelog entry for every new user-facing change.
+
+.. Please respect the following instructions:
+.. * Add a new bullet item for the category that best describes the change.
+.. * You may optionally append "(by @<author> in #<pr-number>)" at the end of
+..   the bullet item. This will be used to credit the PR author in the bullet
+..   item, where <author> is the GitHub username of the author of the change
+..   and <pr-number> is the PR number of the change. These affiliations will
+..   be displayed in the release notes for every release.
+.. * The accepted categories are: Added, Changed, Deprecated, Removed, Fixed,
+..   and Security.
+.. * Indicate breaking changes with a "**BREAKING CHANGE:**" prefix in the
+..   bullet item.
+
+.. For example:
+
+.. Added
+.. ~~~~~
+.. * Added new ``COURSE_DOWNLOADED_COMPLETED`` event.
+.. * Added support for annotated Python dictionaries as Avro Map type. (by @developer in #1)
+
+.. Changed
+.. ~~~~~~~
+.. * Added support for Python 3.12.
+.. * **BREAKING CHANGE:** Updated from Django 3.x to 4.x. (by @developer #2)
+
+.. Deprecated
+.. ~~~~~~~~~~
+.. * Deprecated ``COURSE_DOWNLOADED_STARTED`` event
+.. * Deprecated use of non-annotated dictionaries in events. (by @developer #3)
+
+.. Removed
+.. ~~~~~~~
+.. * Removed support for Python 3.8.
+.. * Removed unused ``COURSE_DOWNLOADED_STARTED`` event. (by @developer #4)
+
+.. Fixed
+.. ~~~~~
+.. * Fixed event validation in background processes.
+.. * Fixed incorrect handling of event payloads. (by @developer #4)
+
+.. Security
+.. ~~~~~~~~
+.. * Updated dependencies to patch security vulnerabilities.
