@@ -16,6 +16,15 @@ Change Log
 Unreleased
 __________
 
+[10.4.0] - 2025-07-21
+---------------------
+
+Added
+~~~~~
+
+* Added new ``ENTERPRISE_GROUP_DELETED`` event in enterprise.
+
+
 [10.3.0] - 2025-05-23
 ---------------------
 
