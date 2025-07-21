@@ -28,7 +28,7 @@ beautifulsoup4==4.13.4
     # via pydata-sphinx-theme
 build==1.2.2.post1
     # via -r requirements/doc.in
-certifi==2025.7.9
+certifi==2025.7.14
     # via requests
 cffi==1.17.1
     # via
@@ -142,7 +142,7 @@ more-itertools==10.7.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.2.21
+nh3==0.3.0
     # via readme-renderer
 packaging==25.0
     # via
@@ -276,7 +276,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
     #   django
-starlette==0.47.1
+starlette==0.47.2
     # via sphinx-autobuild
 stevedore==5.4.1
     # via
