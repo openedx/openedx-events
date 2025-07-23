@@ -224,3 +224,18 @@ class LicensedEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
     """
 
     license_uuid = attr.ib(type=UUID, default=None)
+
+
+@attr.s(frozen=True)
+class EnterpriseGroup:
+    """
+    Attributes of an ``enterprise.EnterpriseGroup`` record.
+
+    Django model definition:
+    https://github.com/openedx/edx-enterprise/blob/4ae2831a02087747da7bee7ea5cdd1d22929a059/enterprise/models.py#L4701
+
+    Attributes:
+        uuid (UUID): Primary identifier of the record.
+    """
+
+    uuid = attr.ib(type=UUID)

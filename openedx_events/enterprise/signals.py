@@ -8,7 +8,12 @@ They also must comply with the payload definition specified in
 docs/decisions/0003-events-payload.rst
 """
 
-from openedx_events.enterprise.data import LearnerCreditEnterpriseCourseEnrollment, LedgerTransaction, SubsidyRedemption
+from openedx_events.enterprise.data import (
+    EnterpriseGroup,
+    LearnerCreditEnterpriseCourseEnrollment,
+    LedgerTransaction,
+    SubsidyRedemption,
+)
 from openedx_events.tooling import OpenEdxPublicSignal
 
 # .. event_type: org.openedx.enterprise.subsidy.redeemed.v1
@@ -104,5 +109,24 @@ LEARNER_CREDIT_COURSE_ENROLLMENT_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.enterprise.learner_credit_course_enrollment.revoked.v1",
     data={
         "learner_credit_course_enrollment": LearnerCreditEnterpriseCourseEnrollment,
+    }
+)
+
+
+"""
+To test this event in LMS, you can use the following command:
+`python3 manage.py lms produce_event --signal openedx_events.enterprise.signals.ENTERPRISE_GROUP_DELETED \
+--topic enterprise-core --key-field enterprise_group.uuid \
+--data '{"enterprise_group": { "uuid": "d509a63b-eb11-4dc8-8b84-4688c7335110" }}'`
+"""
+# .. event_type: org.openedx.enterprise.enterprise_group.deleted.v1
+# .. event_name: ENTERPRISE_GROUP_DELETED
+# .. event_description: emitted when an EnterpriseGroup is deleted.
+# .. event_data: EnterpriseGroup
+# .. event_trigger_repository: openedx/edx-enterprise
+ENTERPRISE_GROUP_DELETED = OpenEdxPublicSignal(
+    event_type="org.openedx.enterprise.enterprise_group.deleted.v1",
+    data={
+        "enterprise_group": EnterpriseGroup,
     }
 )
