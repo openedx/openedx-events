@@ -28,7 +28,7 @@ beautifulsoup4==4.13.4
     # via pydata-sphinx-theme
 build==1.2.2.post1
     # via -r requirements/doc.in
-certifi==2025.7.9
+certifi==2025.7.14
     # via requests
 cffi==1.17.1
     # via
@@ -47,7 +47,7 @@ code-annotations==2.3.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.9.2
+coverage[toml]==7.10.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -95,7 +95,7 @@ fastavro==1.11.1
     # via -r requirements/test.txt
 gitdb==4.0.12
     # via gitpython
-gitpython==3.1.44
+gitpython==3.1.45
     # via -r requirements/doc.in
 h11==0.16.0
     # via uvicorn
@@ -142,7 +142,7 @@ more-itertools==10.7.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.2.21
+nh3==0.3.0
     # via readme-renderer
 packaging==25.0
     # via
@@ -223,7 +223,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==14.0.0
+rich==14.1.0
     # via twine
 roman-numerals-py==3.1.0
     # via sphinx
@@ -276,7 +276,7 @@ sqlparse==0.5.3
     # via
     #   -r requirements/test.txt
     #   django
-starlette==0.47.1
+starlette==0.47.2
     # via sphinx-autobuild
 stevedore==5.4.1
     # via
