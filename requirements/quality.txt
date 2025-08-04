@@ -16,7 +16,7 @@ attrs==25.3.0
     # via -r requirements/test.txt
 backports-tarfile==1.2.0
     # via jaraco-context
-certifi==2025.7.9
+certifi==2025.8.3
     # via requests
 cffi==1.17.1
     # via
@@ -38,7 +38,7 @@ code-annotations==2.3.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.9.2
+coverage[toml]==7.10.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -50,7 +50,7 @@ dill==0.4.0
     # via pylint
 django==4.2.23
     # via
-    #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
+    #   -c https:/raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
     #   django-crum
     #   django-waffle
@@ -67,7 +67,7 @@ dnspython==2.7.0
     # via
     #   -r requirements/test.txt
     #   pymongo
-docutils==0.21.2
+docutils==0.22
     # via readme-renderer
 edx-ccx-keys==2.0.2
     # via -r requirements/test.txt
@@ -79,7 +79,7 @@ edx-opaque-keys[django]==3.0.0
     # via
     #   -r requirements/test.txt
     #   edx-ccx-keys
-fastavro==1.11.1
+fastavro==1.12.0
     # via -r requirements/test.txt
 id==1.5.0
     # via twine
@@ -125,7 +125,7 @@ more-itertools==10.7.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.2.21
+nh3==0.3.0
     # via readme-renderer
 packaging==25.0
     # via
@@ -209,9 +209,9 @@ requests-toolbelt==1.0.0
     # via twine
 rfc3986==2.0.0
     # via twine
-rich==14.0.0
+rich==14.1.0
     # via twine
-ruff==0.12.3
+ruff==0.12.7
     # via -r requirements/quality.in
 secretstorage==3.3.3
     # via keyring
@@ -242,9 +242,8 @@ typing-extensions==4.14.1
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-urllib3==2.2.3
+urllib3==2.5.0
     # via
-    #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   requests
     #   twine
 zipp==3.23.0
