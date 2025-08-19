@@ -357,3 +357,16 @@ COURSE_IMPORT_COMPLETED = OpenEdxPublicSignal(
         "course": CourseData,
     }
 )
+
+# .. event_type: org.openedx.content_authoring.course.rerun.completed.v1
+# .. event_name: COURSE_RERUN_COMPLETED
+# .. event_key_field: catalog_info.course_key
+# .. event_description: Fired after a course is re-run
+# .. event_data: CourseData
+# .. event_trigger_repository: openedx/edx-platform
+COURSE_RERUN_COMPLETED = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.course.rerun.completed.v1",
+    data={
+        "course": CourseData,
+    }
+)

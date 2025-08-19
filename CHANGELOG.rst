@@ -16,6 +16,15 @@ Change Log
 Unreleased
 __________
 
+[10.5.0] - 2025-08-19
+---------------------
+
+Added
+~~~~~
+
+* Added new ``COURSE_RERUN_COMPLETED`` event in authoring.
+
+
 [10.4.0] - 2025-07-21
 ---------------------
 
