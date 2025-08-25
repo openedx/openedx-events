@@ -2,7 +2,7 @@
 import io
 import os
 from datetime import datetime
-from typing import List, Union
+from typing import Any, List, Union, get_args, get_origin
 from unittest import TestCase
 from uuid import UUID, uuid4
 
@@ -32,78 +32,181 @@ from openedx_events.tests.utils import FreezeSignalCacheMixin
 from openedx_events.tooling import KNOWN_UNSERIALIZABLE_SIGNALS, OpenEdxPublicSignal, load_all_signals
 
 
-def generate_test_data_for_schema(schema):  # pragma: no cover
+def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no cover
     """
-    Generates a test data dict for the given schema.
+    Generates test data dict for the given schema.
 
-    Arguments:
-        schema: A JSON representation of an Avro schema
+    This function creates sample data that conforms to the provided Avro schema
+    structure. It handles complex nested schemas including records, arrays,
+    maps, unions, and references to named types. For each field, it generates
+    sample data according to the field type.
+
+    Args:
+        schema (dict[str, Any]): The Avro schema as a dictionary
 
     Returns:
-         A dictionary of test data parseable by the schema
+        dict: Test data according to the schema
     """
-    defaults_per_type = {
-        'long': 1,
-        'boolean': True,
-        'string': "default",
-        'double': 1.0,
-        'null': None,
-        'map': {'key': 'value'},
+    DEFAULT_PER_TYPE = {
+        "long": 1,
+        "boolean": True,
+        "string": "default",
+        "double": 1.0,
+        "null": None,
     }
 
-    def get_default_value_or_raise(schema_field_type):
-        try:
-            return defaults_per_type[schema_field_type]
-        # 'None' is the default value for type=null so we can't just check if default_value is not None
-        except KeyError as exc:
-            raise Exception(f"Unsupported type {schema_field_type}") from exc  # pylint: disable=broad-exception-raised
+    # Repository for defined types in the schema
+    defined_types = {}
 
-    data_dict = {}
-    top_level = schema['fields']
-    for field in top_level:
-        key = field['name']
-        field_type = field['type']
+    def register_defined_types(schema_obj: Any) -> None:
+        """
+        Registers all types defined in the schema for later reference.
 
-        # some fields (like optional ones) accept multiple types. Choose the first one and run with it.
-        if isinstance(field_type, list):
-            field_type = field_type[0]
+        Args:
+            schema_obj (Any): A schema object which might be a dict, list,
+                or primitive
+        """
+        if isinstance(schema_obj, dict):
+            if schema_obj.get("type") == "record" and "name" in schema_obj:
+                record_name = schema_obj["name"]
+                defined_types[record_name] = schema_obj
 
-        # if the field_type is a dict, we're either dealing with a list or a custom object
-        if isinstance(field_type, dict):
-            sub_field_type = field_type['type']
-            if sub_field_type == "array":
-                # if we're dealing with a list, "items" will be the type of items in the list
-                data_dict.update({key: [get_default_value_or_raise(field_type['items'])]})
-            elif sub_field_type == "record":
-                # if we're dealing with a record, recurse into the record
-                data_dict.update({key: generate_test_data_for_schema(field_type)})
-            elif sub_field_type == "map":
-                # if we're dealing with a map, "values" will be the type of values in the map
-                data_dict.update({key: {"key": get_default_value_or_raise(field_type["values"])}})
-            else:
-                raise Exception(f"Unsupported type {field_type}")  # pylint: disable=broad-exception-raised
+                # Process fields to find more defined types
+                for field in schema_obj.get("fields", []):
+                    field_type = field.get("type")
+                    register_defined_types(field_type)
 
-        # a record is a collection of fields rather than a field itself, so recursively generate and add each field
-        elif field_type == "record":
-            data_dict.update([generate_test_data_for_schema(sub_field) for sub_field in field['fields']])
+            # Process arrays and maps
+            elif schema_obj.get("type") == "array":
+                register_defined_types(schema_obj.get("items"))
+            elif schema_obj.get("type") == "map":
+                register_defined_types(schema_obj.get("values"))
+
+    def process_schema(schema_obj: Any) -> Any:
+        """
+        Processes a complete schema and generates test data. This is the entry
+        point for processing.
+
+        Args:
+            schema_obj (Any): The schema object to process
+
+        Returns:
+            Generated test data for the schema
+        """
+        # First, we register the types defined throughout the schema
+        register_defined_types(schema_obj)
+
+        # Then, we process the schema to generate data
+        if isinstance(schema_obj, dict) and schema_obj.get("type") == "record":
+            return process_record(schema_obj)
         else:
-            data_dict.update({key: get_default_value_or_raise(field_type)})
+            return process_type(schema_obj)
 
-    return data_dict
+    def process_record(record_schema: dict[str, Any]) -> dict[str, Any]:
+        """
+        Args:
+            record_schema (dict[str, Any]): A record type schema
+
+        Returns:
+            A dictionary with all fields populated according to the schema
+        """
+        result = {}
+        for field in record_schema.get("fields", []):
+            field_name = field.get("name")
+            field_type = field.get("type")
+
+            # Process the field type
+            result[field_name] = process_type(field_type)
+
+        return result
+
+    def process_type(type_spec: Any) -> Any:
+        """
+        Processes any data type in Avro and generates an appropriate test value.
+        Handles primitive types, complex types, union types, and references to
+        defined types.
+
+        Args:
+            type_spec (Any): A type specification which might be a str, dict, or list
+
+        Returns:
+           Any: An appropriate test value for the specified type
+        """
+        # Primitive types like string, long, boolean, etc.
+        if isinstance(type_spec, str):
+            if type_spec in DEFAULT_PER_TYPE:
+                return DEFAULT_PER_TYPE[type_spec]
+
+            # It's a reference to a previously defined type
+            if type_spec in defined_types:
+                return process_type(defined_types[type_spec])
+
+            return {}
+
+        # Union types (list of possible types)
+        if isinstance(type_spec, list):
+            # If null is in the list, we try to return a non-null type
+            if "null" in type_spec:
+                for t in type_spec:
+                    if t != "null":
+                        return process_type(t)
+                # If all types are null, we return None
+                return None
+
+            # If there's no null, we use the first type
+            if type_spec:
+                return process_type(type_spec[0])
+
+            return None
+
+        # Complex types defined as dictionaries
+        if isinstance(type_spec, dict):
+            type_name = type_spec.get("type")
+
+            # Record type (object with fields)
+            if type_name == "record":
+                return process_record(type_spec)
+
+            # Array type (list)
+            elif type_name == "array":
+                items = type_spec.get("items")
+                # We create a list with a single element
+                return [process_type(items)]
+
+            # Map type (dictionary/object)
+            elif type_name == "map":
+                values = type_spec.get("values")
+                # We create a dictionary with a single key
+                return {"key": process_type(values)}
+
+            # If the type is directly primitive
+            elif type_name in DEFAULT_PER_TYPE:
+                return DEFAULT_PER_TYPE[type_name]
+
+        # If we can't determine the type, we return None
+        return None
+
+    # We start processing the schema
+    return process_schema(schema)
 
 
-def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
+def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: no cover
     """
     Generates test data for use in the event bus test cases.
 
     Builds data by filling in dummy data for basic data types (int/float/bool/str)
     and recursively breaks down the classes for nested classes into basic data types.
+    Also supports complex container types like List[dict[str, str]], Dict[str, List[int]],
+    List[EventData], and Dict[str, EventData].
 
-    Arguments:
-        data_type: The type of the data which we are generating data for
+    Args:
+        data_type (Any): The type of the data which we are generating data for
 
     Returns:
-        (dict): A data dictionary containing dummy data for all attributes of the class
+        dict: A data dictionary containing dummy data for all attributes of the class
+
+    Raises:
+        TypeError: If a dictionary has non-string keys (not compatible with AVRO)
     """
     defaults_per_type = {
         int: 1,
@@ -150,17 +253,89 @@ def generate_test_event_data_for_data_type(data_type):  # pragma: no cover
         dict[str, Union[str, int]]: {'key': 'value'},
         dict[str, Union[str, int, float]]: {'key': 1.0},
     }
-    data_dict = {}
-    for attribute in data_type.__attrs_attrs__:
-        result = defaults_per_type.get(attribute.type, None)
-        if result is not None:
-            data_dict.update({attribute.name: result})
-        elif attribute.type in [dict, list]:
-            # pylint: disable-next=broad-exception-raised
-            raise Exception("Unable to generate Avro schema for dict or array fields")
-        else:
-            data_dict.update({attribute.name: attribute.type(**generate_test_event_data_for_data_type(attribute.type))})
-    return data_dict
+
+    # Handle origin types
+    origin_type = get_origin(data_type)
+
+    if origin_type is not None:
+
+        args = get_args(data_type)
+
+        # Handle List types
+        if origin_type is list:
+
+            item_type = args[0]
+
+            # Handle List of simple types, e.g. List[str]
+            if item_type in defaults_per_type:
+                return [defaults_per_type[item_type]]
+
+            # Handle List of Dicts, e.g. List[Dict[str, str]]
+            if get_origin(item_type) is dict:
+                dict_key_type, dict_value_type = get_args(item_type)
+                # Only support string keys for Avro compatibility
+                if dict_key_type is not str:
+                    raise TypeError("Avro maps only support string keys. The key type must be 'str'.")
+
+                sample_dict = {}
+                if get_origin(dict_value_type) is not None:
+                    # Handle nested types in dictionary values, e.g. List[str]
+                    sample_dict = {"key": generate_test_event_data_for_data_type(dict_value_type)}
+                else:
+                    # Handle simple types in dictionary values, e.g. str
+                    default_value = defaults_per_type.get(dict_value_type, "default_value")
+                    sample_dict = {"key": default_value}
+
+                return [sample_dict]
+
+            # Handle List of attrs classes, e.g. List[EventData]
+            item_data = generate_test_event_data_for_data_type(item_type)
+            return [item_data]
+
+        # Handle Dict types
+        elif origin_type is dict:
+
+            key_type, value_type = args[0], args[1]
+
+            # Only support string keys for Avro compatibility
+            if key_type is not str:
+                raise TypeError("Avro maps only support string keys. The key type must be 'str'.")
+
+            # Handle Dict of simple types, e.g. Dict[str, str]
+            if value_type in defaults_per_type:
+                return {"key": defaults_per_type[value_type]}
+
+            # Handle Dict of List types, e.g. Dict[str, List[int]]
+            if get_origin(value_type) is list:
+                list_item_type = get_args(value_type)[0]
+                return {"key": [defaults_per_type[list_item_type]]}
+
+            # Handle Dict of attrs classes, e.g. Dict[str, EventData]
+            value_data = generate_test_event_data_for_data_type(value_type)
+            return {"key": value_data}
+
+    # Handle attrs classes
+    if hasattr(data_type, "__attrs_attrs__"):
+
+        data_dict = {}
+
+        for attribute in data_type.__attrs_attrs__:
+
+            result = defaults_per_type.get(attribute.type, None)
+            # Handle simple types
+            if result is not None:
+                data_dict.update({attribute.name: result})
+            else:
+                # Handle origin types in attributes
+                origin = get_origin(attribute.type)
+                if origin is not None:
+                    data_dict.update({attribute.name: generate_test_event_data_for_data_type(attribute.type)})
+                # Handle attrs classes
+                if hasattr(attribute.type, "__attrs_attrs__"):
+                    attr_data = generate_test_event_data_for_data_type(attribute.type)
+                    data_dict.update({attribute.name: attr_data})
+
+    return data_type(**data_dict)
 
 
 def generate_test_data_for_signal(signal: OpenEdxPublicSignal) -> dict:
@@ -178,8 +353,7 @@ def generate_test_data_for_signal(signal: OpenEdxPublicSignal) -> dict:
     """
     test_data = {}
     for key, curr_class in signal.init_data.items():
-        example_data = generate_test_event_data_for_data_type(curr_class)
-        example_data_processed = curr_class(**example_data)
+        example_data_processed = generate_test_event_data_for_data_type(curr_class)
         test_data.update({key: example_data_processed})
     return test_data
 
