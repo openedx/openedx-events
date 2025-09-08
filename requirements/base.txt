@@ -12,7 +12,7 @@ cffi==1.17.1
     # via pynacl
 click==8.2.1
     # via edx-django-utils
-django==4.2.23
+django==4.2.24
     # via
     #   -c https:/raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -23,7 +23,7 @@ django-crum==0.7.9
     # via edx-django-utils
 django-waffle==5.0.0
     # via edx-django-utils
-dnspython==2.7.0
+dnspython==2.8.0
     # via pymongo
 edx-ccx-keys==2.0.2
     # via -r requirements/base.in
