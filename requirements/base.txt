@@ -8,11 +8,11 @@ asgiref==3.9.1
     # via django
 attrs==25.3.0
     # via -r requirements/base.in
-cffi==1.17.1
+cffi==2.0.0
     # via pynacl
 click==8.2.1
     # via edx-django-utils
-django==4.2.23
+django==4.2.24
     # via
     #   -c https:/raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -23,7 +23,7 @@ django-crum==0.7.9
     # via edx-django-utils
 django-waffle==5.0.0
     # via edx-django-utils
-dnspython==2.7.0
+dnspython==2.8.0
     # via pymongo
 edx-ccx-keys==2.0.2
     # via -r requirements/base.in
@@ -37,11 +37,11 @@ fastavro==1.12.0
     # via -r requirements/base.in
 psutil==7.0.0
     # via edx-django-utils
-pycparser==2.22
+pycparser==2.23
     # via cffi
-pymongo==4.14.1
+pymongo==4.15.0
     # via edx-opaque-keys
-pynacl==1.5.0
+pynacl==1.6.0
     # via edx-django-utils
 six==1.17.0
     # via edx-ccx-keys
