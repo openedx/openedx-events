@@ -10,6 +10,6 @@ metadata:
   annotations:
     openedx.org/arch-interest-groups: "mariajgrimaldi,felipemontoya"
 spec:
-  owner: group:hooks-extension-framework
+  owner: group:committers-openedx-events
   type: 'source-code'
   lifecycle: 'production'
