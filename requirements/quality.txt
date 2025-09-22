@@ -25,7 +25,7 @@ cffi==2.0.0
     #   pynacl
 charset-normalizer==3.4.3
     # via requests
-click==8.2.1
+click==8.3.0
     # via
     #   -r requirements/test.txt
     #   click-log
@@ -38,11 +38,11 @@ code-annotations==2.3.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.10.6
+coverage[toml]==7.10.7
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==45.0.7
+cryptography==46.0.1
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
@@ -67,7 +67,7 @@ dnspython==2.8.0
     # via
     #   -r requirements/test.txt
     #   pymongo
-docutils==0.22
+docutils==0.22.2
     # via readme-renderer
 edx-ccx-keys==2.0.2
     # via -r requirements/test.txt
@@ -139,7 +139,7 @@ pluggy==1.6.0
     #   -r requirements/test.txt
     #   pytest
     #   pytest-cov
-psutil==7.0.0
+psutil==7.1.0
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -169,7 +169,7 @@ pylint-plugin-utils==0.9.0
     # via
     #   pylint-celery
     #   pylint-django
-pymongo==4.15.0
+pymongo==4.15.1
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -207,7 +207,7 @@ rfc3986==2.0.0
     # via twine
 rich==14.1.0
     # via twine
-ruff==0.13.0
+ruff==0.13.1
     # via -r requirements/quality.in
 secretstorage==3.4.0
     # via keyring
