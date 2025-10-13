@@ -16,7 +16,7 @@ asgiref==3.10.0
     # via
     #   -r requirements/test.txt
     #   django
-attrs==25.3.0
+attrs==25.4.0
     # via -r requirements/test.txt
 babel==2.17.0
     # via
@@ -91,7 +91,7 @@ edx-opaque-keys[django]==3.0.0
     # via
     #   -r requirements/test.txt
     #   edx-ccx-keys
-fastavro==1.12.0
+fastavro==1.12.1
     # via -r requirements/test.txt
 gitdb==4.0.12
     # via gitpython
@@ -101,7 +101,7 @@ h11==0.16.0
     # via uvicorn
 id==1.5.0
     # via twine
-idna==3.10
+idna==3.11
     # via
     #   anyio
     #   requests
@@ -142,7 +142,7 @@ more-itertools==10.8.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.3.0
+nh3==0.3.1
     # via readme-renderer
 packaging==25.0
     # via
@@ -177,7 +177,7 @@ pygments==2.19.2
     #   readme-renderer
     #   rich
     #   sphinx
-pymongo==4.15.2
+pymongo==4.15.3
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -219,7 +219,7 @@ restructuredtext-lint==1.4.0
     # via doc8
 rfc3986==2.0.0
     # via twine
-rich==14.1.0
+rich==14.2.0
     # via twine
 roman-numerals-py==3.1.0
     # via sphinx
