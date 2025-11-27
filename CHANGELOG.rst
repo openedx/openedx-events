@@ -16,6 +16,8 @@ Change Log
 Unreleased
 __________
 
+* Added support for complex types in dictionaries and lists.
+
 [10.5.0] - 2025-08-19
 ---------------------
 
