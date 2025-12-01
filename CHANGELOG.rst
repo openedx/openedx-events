@@ -16,7 +16,27 @@ Change Log
 Unreleased
 __________
 
-* Added support for complex types in dictionaries and lists.
+
+[10.6.0] - 2025-12-01
+---------------------
+
+Added
+~~~~~
+
+* Added support for complex nested types in dictionaries and lists, including ``List[Dict[str, int]]``, ``Dict[str, List[int]]``, ``List[UserData]``, and ``Dict[str, CourseData]``.
+
+Removed
+~~~~~~~
+
+* Removed 7 signals from ``KNOWN_UNSERIALIZABLE_SIGNALS`` list that are now compatible with the event bus due to improved complex type support:
+
+  * ``org.openedx.learning.discussions.configuration.changed.v1``
+  * ``org.openedx.learning.user.notification.requested.v1``
+  * ``org.openedx.learning.forum.thread.created.v1``
+  * ``org.openedx.learning.forum.thread.response.created.v1``
+  * ``org.openedx.learning.forum.thread.response.comment.created.v1``
+  * ``org.openedx.learning.course.notification.requested.v1``
+  * ``org.openedx.learning.ora.submission.created.v1``
 
 [10.5.0] - 2025-08-19
 ---------------------
