@@ -165,6 +165,11 @@ In our example, the event definition and payload for the enrollment event could 
 - Try using nested data classes to group related data together. This will help maintain consistency and make the event more readable. For instance, in the above example, we have grouped the data into User, Course, and Enrollment data.
 - Try reusing existing data classes if possible to avoid duplicating data classes. This will help maintain consistency and reduce the chances of introducing errors. You can review the existing data classes in :ref:`Data Attributes` to see if there is a data class that fits your use case.
 - Each field in the payload should be documented with a description of what the field represents and the data type it should contain. This will help consumers understand the payload and react to the event. You should be able to justify why each field is included in the payload and how it relates to the event.
+- Use type-annotated complex data types when needed. The event bus supports dictionaries and lists with proper type annotations:
+
+  - ``Dict[str, int]`` for dictionaries with string keys and integer values.
+  - ``List[UserData]`` for lists containing attrs classes.
+  - ``Dict[str, List[str]]`` for nested complex structures.
 - Use defaults for optional fields in the payload to ensure its consistency in all cases.
 
 .. note:: When defining the payload, enforce :ref:`Event Bus` compatibility by ensuring that the data types used in the payload align with the event bus schema format. This will help ensure that the event can be sent by the producer and then be re-emitted by the same instance of `OpenEdxPublicSignal`_ on the consumer side, guaranteeing that the data sent and received is identical. For more information about adding event bus support to an event, refer to :ref:`Add Event Bus Support`.

@@ -51,10 +51,55 @@ Complex Data Types
 --------------------
 
 - Type-annotated Lists (e.g., ``List[int]``, ``List[str]``)
+- Type-annotated Dictionaries (e.g., ``Dict[str, int]``, ``Dict[str, str]``)
 - Attrs Classes (e.g., ``UserNonPersonalData``, ``UserPersonalData``, ``UserData``, ``CourseData``)
 - Types with Custom Serializers (e.g., ``CourseKey``, ``datetime``)
+- Nested Complex Types:
+
+  - Lists containing dictionaries (e.g., ``List[Dict[str, int]]``)
+  - Dictionaries containing lists (e.g., ``Dict[str, List[int]]``)
+  - Lists containing attrs classes (e.g., ``List[UserData]``)
+  - Dictionaries containing attrs classes (e.g., ``Dict[str, CourseData]``)
 
 Ensure that the :term:`Event Payload` is structured as `attrs data classes`_ and that the data types used in those classes align with the event bus schema format.
+
+Examples of Complex Data Types Usage
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Here are practical examples of how to use the supported complex data types in your event payloads:
+
+.. code-block:: python
+
+    # Example 1: Event with type-annotated dictionaries and lists
+    @attr.s(frozen=True)
+    class CourseMetricsData:
+        """
+        Course metrics with complex data structures.
+        """
+        # Simple dictionary with string keys and integer values
+        enrollment_counts = attr.ib(type=dict[str, int], factory=dict)
+
+        # List of dictionaries
+        grade_distributions = attr.ib(type=List[dict[str, float]], factory=list)
+
+        # Dictionary containing lists
+        student_groups = attr.ib(type=dict[str, List[str]], factory=dict)
+
+
+    # Example 2: Event with nested attrs classes
+    @attr.s(frozen=True)
+    class BatchOperationData:
+        """
+        Batch operation with collections of user data.
+        """
+        # List of attrs classes
+        affected_users = attr.ib(type=List[UserData], factory=list)
+
+        # Dictionary mapping course IDs to course data
+        courses_mapping = attr.ib(type=dict[str, CourseData], factory=dict)
+
+        # Complex nested structure
+        operation_results = attr.ib(type=dict[str, List[dict[str, bool]]], factory=dict)
 
 In the ``data.py`` files within each architectural subdomain, you can find examples of the :term:`Event Payload` structured as `attrs data classes`_ that align with the event bus schema format.
 
@@ -103,7 +148,12 @@ After implementing the serializer, add it to ``DEFAULT_CUSTOM_SERIALIZERS`` at t
 Now, the :term:`Event Payload` can be serialized and deserialized correctly when sent across services.
 
 .. warning::
-    One of the known limitations of the current Open edX Event Bus is that it does not support dictionaries as data types. If the :term:`Event Payload` contains dictionaries, you may need to refactor the :term:`Event Payload` to use supported data types. When you know the structure of the dictionary, you can create an attrs class that represents the dictionary structure. If not, you can use a str type to represent the dictionary as a string and deserialize it on the consumer side using JSON deserialization.
+    The Open edX Event Bus supports type-annotated dictionaries (e.g., ``Dict[str, int]``) and complex nested types. However, dictionaries **without type annotations** are still not supported. Always use proper type annotations for dictionaries and lists in your :term:`Event Payload`. For example:
+
+    - ✅ Supported: ``Dict[str, int]``, ``List[Dict[str, str]]``, ``Dict[str, UserData]``
+    - ❌ Not supported: ``dict``, ``list``, ``Dict`` (without type parameters)
+
+    If you need to use unstructured data, consider creating an attrs class that represents the data structure.
 
 Step 4: Generate the Avro Schema
 ====================================

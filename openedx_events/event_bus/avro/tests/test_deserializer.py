@@ -13,6 +13,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     ComplexAttrs,
     EventData,
     NestedAttrsWithDefaults,
+    NestedComplexAttrs,
     NestedNonAttrs,
     NonAttrs,
     SimpleAttrs,
@@ -57,7 +58,7 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
                         },
                     },
                 ],
-            }
+            },
         ),
         (
             ComplexAttrs,
@@ -79,8 +80,54 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
                         },
                     },
                 ],
-            }
-        )
+            },
+        ),
+        (
+            NestedComplexAttrs,
+            {
+                "name": "CloudEvent",
+                "type": "record",
+                "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+                "namespace": "simple.signal",
+                "fields": [
+                    {
+                        "name": "data",
+                        "type": {
+                            "name": "NestedComplexAttrs",
+                            "type": "record",
+                            "fields": [
+                                {
+                                    "name": "list_of_attr_field",
+                                    "type": {
+                                        "type": "array",
+                                        "items": {
+                                            "name": "SimpleAttrs",
+                                            "type": "record",
+                                            "fields": [
+                                                {"name": "boolean_field", "type": "boolean"},
+                                                {"name": "int_field", "type": "long"},
+                                                {"name": "float_field", "type": "double"},
+                                                {"name": "bytes_field", "type": "bytes"},
+                                                {"name": "string_field", "type": "string"},
+                                            ],
+                                        },
+                                    },
+                                },
+                                {"name": "dict_of_attr_field", "type": {"type": "map", "values": "SimpleAttrs"}},
+                                {
+                                    "name": "list_of_dict_field",
+                                    "type": {"type": "array", "items": {"type": "map", "values": "long"}},
+                                },
+                                {
+                                    "name": "dict_of_list_field",
+                                    "type": {"type": "map", "values": {"type": "array", "items": "long"}},
+                                },
+                            ],
+                        },
+                    }
+                ],
+            },
+        ),
     )
     @ddt.unpack
     def test_schema_string(self, data_cls, expected_schema):
@@ -281,6 +328,110 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         self.assertIsInstance(test_data, dict)
         self.assertEqual(test_data, expected_event_data)
 
+    def test_deserialization_of_dict_of_lists(self):
+        SIGNAL = create_simple_signal({"dict_input": dict[str, List[int]]})
+        initial_dict = {"dict_input": {"key1": [1, 2], "key2": [3, 4]}}
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = {"key1": [1, 2], "key2": [3, 4]}
+        test_data = event_data["dict_input"]
+
+        self.assertIsInstance(test_data, dict)
+        self.assertEqual(test_data, expected_event_data)
+
+    def test_deserialization_of_dict_of_event_data(self):
+        SIGNAL = create_simple_signal({"dict_input": dict[str, EventData]})
+        initial_dict = {
+            "dict_input": {
+                "key1": {
+                    "course_id": "bar",
+                    "sub_name": "bar.name",
+                    "sub_test_0": {"course_id": "bar1.course", "sub_name": "bar1.name"},
+                    "sub_test_1": {"course_id": "bar2.course", "sub_name": "bar2.name"},
+                },
+                "key2": {
+                    "course_id": "foo",
+                    "sub_name": "foo.name",
+                    "sub_test_0": {"course_id": "foo1.course", "sub_name": "foo1.name"},
+                    "sub_test_1": {"course_id": "foo2.course", "sub_name": "foo2.name"},
+                },
+            }
+        }
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = {
+            "key1": EventData(
+                sub_name="bar.name",
+                course_id="bar",
+                sub_test_0=SubTestData0(sub_name="bar1.name", course_id="bar1.course"),
+                sub_test_1=SubTestData1(sub_name="bar2.name", course_id="bar2.course"),
+            ),
+            "key2": EventData(
+                sub_name="foo.name",
+                course_id="foo",
+                sub_test_0=SubTestData0(sub_name="foo1.name", course_id="foo1.course"),
+                sub_test_1=SubTestData1(sub_name="foo2.name", course_id="foo2.course"),
+            ),
+        }
+        test_data = event_data["dict_input"]
+
+        self.assertIsInstance(test_data, dict)
+        self.assertEqual(test_data, expected_event_data)
+
+    def test_deserialization_of_list_of_dicts(self):
+        SIGNAL = create_simple_signal({"list_input": List[dict[str, int]]})
+        initial_dict = {"list_input": [{"key1": 1, "key2": 2}, {"key1": 3, "key2": 4}]}
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = [{"key1": 1, "key2": 2}, {"key1": 3, "key2": 4}]
+        test_data = event_data["list_input"]
+
+        self.assertIsInstance(test_data, list)
+        self.assertEqual(test_data, expected_event_data)
+
+    def test_deserialization_of_list_of_event_data(self):
+        SIGNAL = create_simple_signal({"list_input": List[EventData]})
+        initial_dict = {
+            "list_input": [
+                {
+                    "course_id": "bar",
+                    "sub_name": "bar.name",
+                    "sub_test_0": {"course_id": "bar1.course", "sub_name": "bar1.name"},
+                    "sub_test_1": {"course_id": "bar2.course", "sub_name": "bar2.name"},
+                },
+                {
+                    "course_id": "foo",
+                    "sub_name": "foo.name",
+                    "sub_test_0": {"course_id": "foo1.course", "sub_name": "foo1.name"},
+                    "sub_test_1": {"course_id": "foo2.course", "sub_name": "foo2.name"},
+                },
+            ]
+        }
+
+        deserializer = AvroSignalDeserializer(SIGNAL)
+        event_data = deserializer.from_dict(initial_dict)
+        expected_event_data = [
+            EventData(
+                sub_name="bar.name",
+                course_id="bar",
+                sub_test_0=SubTestData0(sub_name="bar1.name", course_id="bar1.course"),
+                sub_test_1=SubTestData1(sub_name="bar2.name", course_id="bar2.course"),
+            ),
+            EventData(
+                sub_name="foo.name",
+                course_id="foo",
+                sub_test_0=SubTestData0(sub_name="foo1.name", course_id="foo1.course"),
+                sub_test_1=SubTestData1(sub_name="foo2.name", course_id="foo2.course"),
+            ),
+        ]
+        test_data = event_data["list_input"]
+
+        self.assertIsInstance(test_data, list)
+        self.assertEqual(test_data, expected_event_data)
+
     def test_deserialization_of_dict_without_annotation(self):
         """
         Check that deserialization raises error when dict data is not annotated.
@@ -298,20 +449,6 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
-    def test_deserialization_of_dict_with_complex_types_fails(self):
-        SIGNAL = create_simple_signal({"dict_input": Dict[str, list]})
-        with self.assertRaises(TypeError):
-            AvroSignalDeserializer(SIGNAL)
-        initial_dict = {"dict_input": {"key1": [1, 3], "key2": [4, 5]}}
-        # create dummy signal to bypass schema check while initializing deserializer
-        # This allows us to test whether correct exceptions are raised while deserializing data
-        DUMMY_SIGNAL = create_simple_signal({"dict_input": Dict[str, int]})
-        deserializer = AvroSignalDeserializer(DUMMY_SIGNAL)
-        # Update signal with incorrect type info
-        deserializer.signal = SIGNAL
-        with self.assertRaises(TypeError):
-            deserializer.from_dict(initial_dict)
-
     def test_deserialization_of_dicts_with_keys_of_complex_types_fails(self):
         SIGNAL = create_simple_signal({"dict_input": Dict[CourseKey, int]})
         deserializer = AvroSignalDeserializer(SIGNAL)
@@ -319,34 +456,32 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
-    def test_deserialization_of_nested_list_fails(self):
+    def test_deserialization_of_unsupported_data_type(self):
         """
-        Check that deserialization raises error when nested list data is passed.
+        Check that deserialization raises TypeError when encountering an unsupported data type.
+
+        Create a dummy signal with a custom class that isn't in the deserializers dictionary
+        and doesn't have __attrs_attrs__ to test the final TypeError case.
         """
-        # create dummy signal to bypass schema check while initializing deserializer
-        # This allows us to test whether correct exceptions are raised while deserializing data
-        SIGNAL = create_simple_signal({"list_input": List[int]})
-        LIST_SIGNAL = create_simple_signal({"list_input": List[List[int]]})
-        initial_dict = {"list_input": [[1, 3], [4, 5]]}
-        deserializer = AvroSignalDeserializer(SIGNAL)
-        # Update signal with incomplete type info
-        deserializer.signal = LIST_SIGNAL
-        with self.assertRaises(TypeError):
+        # Create a custom class that isn't in the deserializers and doesn't have __attrs_attrs__
+        class CustomUnsupportedType:
+            pass
+
+        # Create a signal with a valid type first to avoid schema validation errors
+        VALID_SIGNAL = create_simple_signal({"list_input": List[int]})
+        INVALID_SIGNAL = create_simple_signal({"list_input": List[CustomUnsupportedType]})
+        initial_dict = {"list_input": [1, 2, 3]}
+        deserializer = AvroSignalDeserializer(VALID_SIGNAL)
+        # Update signal with invalid type
+        deserializer.signal = INVALID_SIGNAL
+
+        # Test that it raises TypeError with appropriate message
+        with self.assertRaises(TypeError) as context:
             deserializer.from_dict(initial_dict)
 
-    def test_deserialization_of_nested_list_with_complex_types_fails(self):
-        SIGNAL = create_simple_signal({"list_input": List[list]})
-        with self.assertRaises(TypeError):
-            AvroSignalDeserializer(SIGNAL)
-        initial_dict = {"list_input": [[1, 3], [4, 5]]}
-        # create dummy signal to bypass schema check while initializing deserializer
-        # This allows us to test whether correct exceptions are raised while deserializing data
-        DUMMY_SIGNAL = create_simple_signal({"list_input": List[int]})
-        deserializer = AvroSignalDeserializer(DUMMY_SIGNAL)
-        # Update signal with incorrect type info
-        deserializer.signal = SIGNAL
-        with self.assertRaises(TypeError):
-            deserializer.from_dict(initial_dict)
+        # Verify the error message mentions the unsupported type
+        self.assertIn("Unable to deserialize", str(context.exception))
+        self.assertIn("CustomUnsupportedType", str(context.exception))
 
     def test_deserialize_bytes_to_event_data(self):
         """
