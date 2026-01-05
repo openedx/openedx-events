@@ -8,7 +8,7 @@ asgiref==3.11.0
     # via
     #   -r requirements/test.txt
     #   django
-astroid==3.3.11
+astroid==4.0.3
     # via
     #   pylint
     #   pylint-celery
@@ -16,7 +16,7 @@ attrs==25.4.0
     # via -r requirements/test.txt
 backports-tarfile==1.2.0
     # via jaraco-context
-certifi==2025.11.12
+certifi==2026.1.4
     # via requests
 cffi==2.0.0
     # via
@@ -38,7 +38,7 @@ code-annotations==2.3.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.12.0
+coverage[toml]==7.13.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -48,7 +48,7 @@ ddt==1.7.2
     # via -r requirements/test.txt
 dill==0.4.0
     # via pylint
-django==5.2.8
+django==5.2.9
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -67,7 +67,7 @@ dnspython==2.8.0
     # via
     #   -r requirements/test.txt
     #   pymongo
-docutils==0.22.3
+docutils==0.22.4
     # via readme-renderer
 edx-ccx-keys==2.0.2
     # via -r requirements/test.txt
@@ -85,21 +85,21 @@ id==1.5.0
     # via twine
 idna==3.11
     # via requests
-importlib-metadata==8.7.0
+importlib-metadata==8.7.1
     # via keyring
 iniconfig==2.3.0
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==6.1.0
+isort==7.0.0
     # via
     #   -r requirements/quality.in
     #   pylint
 jaraco-classes==3.4.0
     # via keyring
-jaraco-context==6.0.1
+jaraco-context==6.0.2
     # via keyring
-jaraco-functools==4.3.0
+jaraco-functools==4.4.0
     # via keyring
 jeepney==0.9.0
     # via
@@ -132,14 +132,14 @@ packaging==25.0
     #   -r requirements/test.txt
     #   pytest
     #   twine
-platformdirs==4.5.0
+platformdirs==4.5.1
     # via pylint
 pluggy==1.6.0
     # via
     #   -r requirements/test.txt
     #   pytest
     #   pytest-cov
-psutil==7.1.3
+psutil==7.2.1
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
@@ -155,7 +155,7 @@ pygments==2.19.2
     #   pytest
     #   readme-renderer
     #   rich
-pylint==3.3.9
+pylint==4.0.4
     # via
     #   edx-lint
     #   pylint-celery
@@ -163,21 +163,21 @@ pylint==3.3.9
     #   pylint-plugin-utils
 pylint-celery==0.3
     # via edx-lint
-pylint-django==2.6.1
+pylint-django==2.7.0
     # via edx-lint
 pylint-plugin-utils==0.9.0
     # via
     #   pylint-celery
     #   pylint-django
-pymongo==4.15.4
+pymongo==4.15.5
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-pynacl==1.6.1
+pynacl==1.6.2
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pytest==9.0.1
+pytest==9.0.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -207,7 +207,7 @@ rfc3986==2.0.0
     # via twine
 rich==14.2.0
     # via twine
-ruff==0.14.7
+ruff==0.14.10
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring
@@ -216,7 +216,7 @@ six==1.17.0
     #   -r requirements/test.txt
     #   edx-ccx-keys
     #   edx-lint
-sqlparse==0.5.4
+sqlparse==0.5.5
     # via
     #   -r requirements/test.txt
     #   django
@@ -238,7 +238,7 @@ typing-extensions==4.15.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-urllib3==2.5.0
+urllib3==2.6.2
     # via
     #   requests
     #   twine
