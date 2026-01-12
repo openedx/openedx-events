@@ -75,7 +75,7 @@ pycparser==2.23
     #   cffi
 pygments==2.19.2
     # via pytest
-pymongo==4.15.5
+pymongo==4.16.0
     # via
     #   -r requirements/base.txt
     #   edx-opaque-keys

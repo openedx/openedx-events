@@ -48,7 +48,7 @@ ddt==1.7.2
     # via -r requirements/test.txt
 dill==0.4.0
     # via pylint
-django==5.2.9
+django==5.2.10
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/test.txt
@@ -169,7 +169,7 @@ pylint-plugin-utils==0.9.0
     # via
     #   pylint-celery
     #   pylint-django
-pymongo==4.15.5
+pymongo==4.16.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -207,7 +207,7 @@ rfc3986==2.0.0
     # via twine
 rich==14.2.0
     # via twine
-ruff==0.14.10
+ruff==0.14.11
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring
@@ -238,7 +238,7 @@ typing-extensions==4.15.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
-urllib3==2.6.2
+urllib3==2.6.3
     # via
     #   requests
     #   twine
