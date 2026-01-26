@@ -16,7 +16,14 @@ Change Log
 Unreleased
 __________
 
-* Added support for complex types in dictionaries and lists.
+
+[10.5.1] - 2026-01-26
+---------------------
+
+Fixed
+~~~~~
+
+* Fixed circular reference error in ``PERSISTENT_GRADE_SUMMARY_CHANGED`` event serialization by adding converters to handle MongoDB BSON objects (``FixedOffset`` timezone and ``ObjectId``) in ``PersistentCourseGradeData`` and ``CourseData``.
 
 [10.5.0] - 2025-08-19
 ---------------------
