@@ -12,6 +12,54 @@ from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
 
+def _convert_objectid_to_str(value):
+    """
+    Convert MongoDB ObjectId to string if needed.
+    
+    This converter handles cases where MongoDB BSON ObjectId objects
+    are passed instead of strings, preventing JSON serialization errors.
+    
+    Args:
+        value: The value to convert (str or ObjectId)
+        
+    Returns:
+        str: String representation of the value
+    """
+    # Check if it's a BSON ObjectId without importing bson
+    # (to avoid adding hard dependency on pymongo)
+    if value is not None and hasattr(value, '__class__') and value.__class__.__name__ == 'ObjectId':
+        return str(value)
+    return value
+
+
+def _normalize_datetime_timezone(value):
+    """
+    Normalize datetime timezone to avoid BSON FixedOffset circular reference.
+    
+    MongoDB's bson.tz_util.FixedOffset objects cause circular reference errors
+    during JSON serialization. This converter replaces them with standard UTC.
+    
+    Args:
+        value: datetime object (possibly with BSON FixedOffset timezone)
+        
+    Returns:
+        datetime: datetime with standard timezone or None
+    """
+    if value is None:
+        return None
+    
+    # Check if tzinfo is a BSON FixedOffset (causes circular reference)
+    if value.tzinfo is not None:
+        tzinfo_class = value.tzinfo.__class__.__name__
+        if tzinfo_class == 'FixedOffset':
+            # Convert to UTC to avoid circular reference
+            # The FixedOffset represents a fixed UTC offset, so convert to standard UTC
+            from datetime import timezone as dt_timezone
+            return value.replace(tzinfo=dt_timezone.utc)
+    
+    return value
+
+
 @attr.s(frozen=True)
 class UserNonPersonalData:
     """
@@ -75,8 +123,8 @@ class CourseData:
 
     course_key = attr.ib(type=CourseKey)
     display_name = attr.ib(type=str, factory=str)
-    start = attr.ib(type=datetime, default=None)
-    end = attr.ib(type=datetime, default=None)
+    start = attr.ib(type=datetime, default=None, converter=_normalize_datetime_timezone)
+    end = attr.ib(type=datetime, default=None, converter=_normalize_datetime_timezone)
 
 
 @attr.s(frozen=True)
@@ -252,12 +300,12 @@ class PersistentCourseGradeData:
 
     user_id = attr.ib(type=int)
     course = attr.ib(type=CourseData)
-    course_edited_timestamp = attr.ib(type=datetime)
-    course_version = attr.ib(type=str)
+    course_edited_timestamp = attr.ib(type=datetime, converter=_normalize_datetime_timezone)
+    course_version = attr.ib(type=str, converter=_convert_objectid_to_str)
     grading_policy_hash = attr.ib(type=str)
     percent_grade = attr.ib(type=float)
     letter_grade = attr.ib(type=str)
-    passed_timestamp = attr.ib(type=datetime)
+    passed_timestamp = attr.ib(type=datetime, converter=_normalize_datetime_timezone)
 
 
 @attr.s(frozen=True)
