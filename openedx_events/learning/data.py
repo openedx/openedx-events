@@ -11,6 +11,8 @@ import attr
 from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
+from ..content_authoring.data import XBlockData
+
 
 @attr.s(frozen=True)
 class UserNonPersonalData:
@@ -240,7 +242,7 @@ class PersistentCourseGradeData:
     defined in the grades app.
 
     Attributes:
-        user_id (int): identifier of the grade to which the grade belongs.
+        user_id (int): identifier of the user to which the grade belongs.
         course (CourseData): Identifier of the course to which the grade belongs.
         course_edited_timestamp (datetime): date the course was edited.
         course_version (str): version of the course.
@@ -258,6 +260,72 @@ class PersistentCourseGradeData:
     percent_grade = attr.ib(type=float)
     letter_grade = attr.ib(type=str)
     passed_timestamp = attr.ib(type=datetime)
+
+
+@attr.s(frozen=True)
+class XBlockWithScoringData(XBlockData):
+    """
+    A subclass of XBlockData that includes scoring related information.
+    """
+    weight = attr.ib(float)
+    raw_possible = attr.ib(float)
+    graded = attr.ib(bool)
+
+
+@attr.s(frozen=True)
+class PersistentSubsectionGradeData:
+    """
+    Data related to a persistent subsection grade object.
+
+    This data is based on the fields available in the PersistentSubsectionGrade
+    data model defined in the openedx-platform grades app.
+
+    Attributes:
+        user_id (int): identifier of the user to which the grade belongs.
+        course (CourseData): Identifier of the course to which the grade belongs.
+        subsection_edited_timestamp (datetime): date the subsection was edited.
+        grading_policy_hash (str): grading policy hash of the course.
+        usage_key (UsageKey): UsageKey of the subsection being graded.
+    """
+    user_id = attr.ib(type=int)
+    course = attr.ib(type=CourseData)
+    subsection_edited_timestamp = attr.ib(type=datetime)
+    grading_policy_hash = attr.ib(type=str)
+
+    usage_key = attr.ib(type=UsageKey)
+
+    # The "graded" attribute can be set on individual problems if desired, so
+    # this is what's supposed to count towards their progress page/grades. Other
+    # ungraded problems may exist (e.g. practice problems). In practice, this
+    # will almost never happen because marking individual problems as ungraded
+    # requires manually editing XML via import or the advanced editor.
+    # Regardless, if you want to answer the question of, "What did the user earn
+    # for this assignment?", use these fields.
+    weighted_graded_earned = attr.ib(type=float)
+    weighted_graded_possible = attr.ib(type=float)
+
+    # This represents the earned/possible for all XBlock types that are capable
+    # of holding scoring data in this subsection, regardless of whether they are
+    # marked as "graded" or not, i.e. regardless of whether these points count
+    # towards the student's progress page and final grade. This may have some
+    # obscure use cases, like if for some reason you want to judge mastery based
+    # on an assignment that does not actually count towards the grade of the
+    # course it's in. Overall, this is just here to ensure parity with the
+    # pre-existing event emitted by openedx-platform.
+    weighted_total_earned = attr.ib(type=float)
+    weighted_total_possible = attr.ib(type=float)
+
+    first_attempted = attr.ib(type=datetime)
+
+    # Every user may see a slightly different permutation of subsection content
+    # depending on various dynamic block types like LibraryContentBlock, as well
+    # access rules like cohorts and enrollment tracks. A student can only be
+    # graded on what they have access to, so the total possible grade may vary
+    # from student to student. The visible_blocks attribute captures all the
+    # blocks that were available to this user at the time their subsection grade
+    # was updated.
+    visible_blocks = attr.ib(type=List[XBlockWithScoringData])
+    visible_blocks_hash = attr.ib(type=str)
 
 
 @attr.s(frozen=True)
