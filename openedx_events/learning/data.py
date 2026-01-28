@@ -11,6 +11,8 @@ import attr
 from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
+from ..content_authoring.data import XBlockData
+
 
 @attr.s(frozen=True)
 class UserNonPersonalData:
@@ -240,7 +242,7 @@ class PersistentCourseGradeData:
     defined in the grades app.
 
     Attributes:
-        user_id (int): identifier of the grade to which the grade belongs.
+        user_id (int): identifier of the user to which the grade belongs.
         course (CourseData): Identifier of the course to which the grade belongs.
         course_edited_timestamp (datetime): date the course was edited.
         course_version (str): version of the course.
@@ -258,6 +260,145 @@ class PersistentCourseGradeData:
     percent_grade = attr.ib(type=float)
     letter_grade = attr.ib(type=str)
     passed_timestamp = attr.ib(type=datetime)
+
+
+@attr.s(frozen=True)
+class XBlockWithScoringData(XBlockData):
+    """
+    A subclass of XBlockData that includes scoring related information.
+
+    Attributes:
+        usage_key (UsageKey): Identifier of the XBlock object.
+        block_type (str): type of block.
+        version (UsageKey): Identifier of the XBlock object with branch and
+            version data (optional). This could be used to get the exact version
+            of the XBlock object, but it is often not available and should not
+            be relied on.
+        graded (bool): does this block count towards the student's grade? This
+            will almost always be True, but can be False in special
+            circumstances. For more details, please see the documentation for
+            ``PersistentSubsectionGradeData``
+        raw_possible (float): Individual block types determine how many points
+            they are worth by default. The implementation of this varies between
+            XBlock classes. ProblemBlocks count the number of parts they have,
+            ORA uses points from an author-defined rubric, etc.
+        weight (float): How many points is the problem weighted to be. This is
+            what actually matters for the purposes of grade calculation.
+            Specifying weight allows authors to make certain problems worth more
+            than others.
+    """
+    graded = attr.ib(bool)
+    raw_possible = attr.ib(float)
+    weight = attr.ib(float)
+
+
+@attr.s(frozen=True)
+class PersistentSubsectionGradeData:
+    """
+    Data related to a persistent subsection grade object.
+
+    This data is based on the fields available in the PersistentSubsectionGrade
+    data model defined in the openedx-platform grades app.
+
+    In order to use this data, it's important to understand what it means for
+    something to be "graded" in our system, i.e. have the XBlock field
+    graded=True on a particular block. The ``graded`` attribute can be set at
+    any level of the hierarchy in OLX and it will inherit down. In practice, it
+    is applied to the subsection (``SequentialBlock``) by Studio as soon as you
+    mark it with an assignment type (e.g. Homework, Midterm, Final), and we rely
+    on this inheritance behavior to mark all the components inside the
+    Subsection as having ``graded=True``. This has a couple of unintuitive
+    consequences:
+
+    1. All descendant Components will have ``graded=True``, even if they are not
+       block types that can hold a score, e.g. Text Components (HTMLBlock).
+    2. It is possible to set any particular problem to ``graded=False``.
+
+    There is no actual UI to modify the ``graded`` attribute of a problem in
+    Studio, and even the advanced editor will not actually persist your changes
+    properly. In order to really change this, you need to export and manually
+    modify the OLX to add ``graded="false"`` to the problem you want to target,
+    and then re-import the course. One use case for doing this is to allow
+    students to try an example/practice problem at the start of an assignment,
+    without it counting towards their grade.
+
+    This usage is extremely rare, but it is supported by the grading system,
+    even if the presentation to the user on the Progress page is confusing (the
+    ungraded problem scores are displayed individually but don't count towards
+    the total).
+
+    In summary: Unless you really, really know what you're doing, use
+    ``weighted_graded_earned`` and ``weighted_graded_possible`` to get the
+    grades for graded content, rather than using the more general
+    ``weighted_total_earned`` and ``weighted_total_possible`` that represents
+    all scorable content in the subsection. The latter fields exist for
+    backwards compatibility with the equivalent SUBSECTION_GRADE_CALCULATED
+    openedx-platform event, and because we do have some instances of people
+    taking advantage of this obscure feature.
+
+    Attributes:
+        user_id (int): ID of the user to which the grade belongs.
+        course (CourseData): The course to which the grade belongs.
+        subsection_edited_timestamp (datetime): Datetime the subsection was
+            last edited.
+        grading_policy_hash (str): Grading policy hash of the course. A change
+            in this value from one even to the next means that *something* in
+            the grading policy has changed, but does not necessarily mean that
+            it had any affect on this subsection. A change might be to change
+            the relative weight a midterm and final exam have on the overall
+            course grade.
+        usage_key (UsageKey): UsageKey of the subsection being graded.
+        weighted_graded_earned: How many graded points did the student earn in
+            this subsection. Prefer this over ``weighted_total_earned`` for most
+            use cases.
+        weighted_graded_possible (float): How many graded points were possible
+            for this student in this subsection. Prefer this over
+            ``weighted_total_possible`` for most use cases.
+        weighted_total_earned (float): How many points did the student earn in
+            this subsection, regardless of whether of not those points count
+            towards their grade (i.e. including things like practice problems).
+            You usually want to use ``weighted_graded_earned`` instead of this
+            field.
+        weighted_total_possible (float): How many points were possible for this
+            student in this subsection, regardless of whether or not those
+            points count towards their grade (i.e. including things like
+            practice problems). You usually want to use
+            ``weighted_graded_possible`` instead of this field.
+        first_attempted (datetime): When did the user first submit a problem'
+            attempt in this subsection?
+        visible_blocks (List[XBlockWithScoringData]): A flat list of XBlock data
+            that represents every scorable component in the subsection for this
+            student at the time that they attempted a problem. Every user may
+            see a slightly different permutation of subsection content depending
+            on various dynamic block types like ``LibraryContentBlock``, as well
+            access rules like cohorts and enrollment tracks. A student can only
+            be graded on what they have access to, so the total possible points
+            for a subsection may vary from student to student. Furthermore, the
+            content can also be edited by the course author after the students
+            have completed the assignment (this is bad practice, but the system
+            allows it). Therefore, the ``visible_blocks`` attribute can give us
+            an audit log of what the content was like at the time that the
+            student was graded.
+        visible_blocks_hash (str): A hash digest for the state of the visible
+            blocks for that user. Changes if anything anything related to
+            the grading information changes, e.g. adding or removing a problem,
+            or changing problem weights.
+    """
+    user_id = attr.ib(type=int)
+    course = attr.ib(type=CourseData)
+    subsection_edited_timestamp = attr.ib(type=datetime)
+    grading_policy_hash = attr.ib(type=str)
+    usage_key = attr.ib(type=UsageKey)
+
+    weighted_graded_earned = attr.ib(type=float)
+    weighted_graded_possible = attr.ib(type=float)
+    weighted_total_earned = attr.ib(type=float)
+    weighted_total_possible = attr.ib(type=float)
+
+    first_attempted = attr.ib(type=datetime)
+
+    visible_blocks = attr.ib(type=List[XBlockWithScoringData])
+    visible_blocks_hash = attr.ib(type=str)
 
 
 @attr.s(frozen=True)
