@@ -1,0 +1,130 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "grade",
+      "type": {
+        "name": "PersistentSubsectionGradeData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "user_id",
+            "type": "long"
+          },
+          {
+            "name": "course",
+            "type": {
+              "name": "CourseData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "course_key",
+                  "type": "string"
+                },
+                {
+                  "name": "display_name",
+                  "type": "string"
+                },
+                {
+                  "name": "start",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                },
+                {
+                  "name": "end",
+                  "type": [
+                    "null",
+                    "string"
+                  ],
+                  "default": null
+                }
+              ]
+            }
+          },
+          {
+            "name": "subsection_edited_timestamp",
+            "type": "string"
+          },
+          {
+            "name": "grading_policy_hash",
+            "type": "string"
+          },
+          {
+            "name": "usage_key",
+            "type": "string"
+          },
+          {
+            "name": "weighted_graded_earned",
+            "type": "double"
+          },
+          {
+            "name": "weighted_graded_possible",
+            "type": "double"
+          },
+          {
+            "name": "weighted_total_earned",
+            "type": "double"
+          },
+          {
+            "name": "weighted_total_possible",
+            "type": "double"
+          },
+          {
+            "name": "first_attempted",
+            "type": "string"
+          },
+          {
+            "name": "visible_blocks",
+            "type": {
+              "type": "array",
+              "items": {
+                "name": "XBlockWithScoringData",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "usage_key",
+                    "type": "string"
+                  },
+                  {
+                    "name": "block_type",
+                    "type": "string"
+                  },
+                  {
+                    "name": "version",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "graded",
+                    "type": "null"
+                  },
+                  {
+                    "name": "raw_possible",
+                    "type": "null"
+                  },
+                  {
+                    "name": "weight",
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "visible_blocks_hash",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.course.persistent_subsection_grade.changed.v1"
+}
