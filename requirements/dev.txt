@@ -4,11 +4,11 @@
 #
 #    make upgrade
 #
-asgiref==3.11.0
+asgiref==3.11.1
     # via
     #   -r requirements/quality.txt
     #   django
-astroid==4.0.3
+astroid==4.0.4
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -19,11 +19,11 @@ backports-tarfile==1.2.0
     # via
     #   -r requirements/quality.txt
     #   jaraco-context
-build==1.3.0
+build==1.4.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==6.2.4
+cachetools==7.0.1
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -36,7 +36,7 @@ cffi==2.0.0
     #   -r requirements/quality.txt
     #   cryptography
     #   pynacl
-chardet==5.2.0
+chardet==6.0.0.post1
     # via
     #   -r requirements/ci.txt
     #   diff-cover
@@ -66,19 +66,19 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.13.1
+coverage[toml]==7.13.4
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
-cryptography==46.0.3
+cryptography==46.0.5
     # via
     #   -r requirements/quality.txt
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/quality.txt
-diff-cover==10.1.0
+diff-cover==10.2.0
     # via -r requirements/dev.in
-dill==0.4.0
+dill==0.4.1
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -86,7 +86,7 @@ distlib==0.4.0
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==5.2.9
+django==5.2.11
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
@@ -121,12 +121,12 @@ edx-opaque-keys[django]==3.0.0
     #   edx-ccx-keys
 fastavro==1.12.1
     # via -r requirements/quality.txt
-filelock==3.20.2
+filelock==3.24.3
     # via
     #   -r requirements/ci.txt
     #   tox
     #   virtualenv
-id==1.5.0
+id==1.6.1
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -142,7 +142,7 @@ iniconfig==2.3.0
     # via
     #   -r requirements/quality.txt
     #   pytest
-isort==7.0.0
+isort==8.0.0
     # via
     #   -r requirements/quality.txt
     #   pylint
@@ -150,7 +150,7 @@ jaraco-classes==3.4.0
     # via
     #   -r requirements/quality.txt
     #   keyring
-jaraco-context==6.0.2
+jaraco-context==6.1.0
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -193,11 +193,11 @@ more-itertools==10.8.0
     #   -r requirements/quality.txt
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.3.2
+nh3==0.3.3
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
-packaging==25.0
+packaging==26.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/pip-tools.txt
@@ -207,9 +207,10 @@ packaging==25.0
     #   pytest
     #   tox
     #   twine
-pip-tools==7.5.2
+    #   wheel
+pip-tools==7.5.3
     # via -r requirements/pip-tools.txt
-platformdirs==4.5.1
+platformdirs==4.9.2
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -224,13 +225,13 @@ pluggy==1.6.0
     #   pytest
     #   pytest-cov
     #   tox
-psutil==7.2.1
+psutil==7.2.2
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
 pycodestyle==2.14.0
     # via -r requirements/quality.txt
-pycparser==2.23
+pycparser==3.0
     # via
     #   -r requirements/quality.txt
     #   cffi
@@ -241,7 +242,7 @@ pygments==2.19.2
     #   pytest
     #   readme-renderer
     #   rich
-pylint==4.0.4
+pylint==4.0.5
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -261,7 +262,7 @@ pylint-plugin-utils==0.9.0
     #   -r requirements/quality.txt
     #   pylint-celery
     #   pylint-django
-pymongo==4.15.5
+pymongo==4.16.0
     # via
     #   -r requirements/quality.txt
     #   edx-opaque-keys
@@ -285,7 +286,7 @@ pytest==9.0.2
     #   pytest-django
 pytest-cov==7.0.0
     # via -r requirements/quality.txt
-pytest-django==4.11.1
+pytest-django==4.12.0
     # via -r requirements/quality.txt
 python-slugify==8.0.4
     # via
@@ -302,7 +303,6 @@ readme-renderer==44.0
 requests==2.32.5
     # via
     #   -r requirements/quality.txt
-    #   id
     #   requests-toolbelt
     #   twine
 requests-toolbelt==1.0.0
@@ -313,11 +313,11 @@ rfc3986==2.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-rich==14.2.0
+rich==14.3.3
     # via
     #   -r requirements/quality.txt
     #   twine
-ruff==0.14.10
+ruff==0.15.2
     # via -r requirements/quality.txt
 secretstorage==3.5.0
     # via
@@ -332,7 +332,7 @@ sqlparse==0.5.5
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==5.6.0
+stevedore==5.7.0
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -342,11 +342,11 @@ text-unidecode==1.3
     # via
     #   -r requirements/quality.txt
     #   python-slugify
-tomlkit==0.13.3
+tomlkit==0.14.0
     # via
     #   -r requirements/quality.txt
     #   pylint
-tox==4.33.0
+tox==4.44.0
     # via -r requirements/ci.txt
 twine==6.2.0
     # via -r requirements/quality.txt
@@ -354,16 +354,17 @@ typing-extensions==4.15.0
     # via
     #   -r requirements/quality.txt
     #   edx-opaque-keys
-urllib3==2.6.2
+urllib3==2.6.3
     # via
     #   -r requirements/quality.txt
+    #   id
     #   requests
     #   twine
-virtualenv==20.35.4
+virtualenv==20.38.0
     # via
     #   -r requirements/ci.txt
     #   tox
-wheel==0.45.1
+wheel==0.46.3
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
