@@ -215,6 +215,7 @@ class CourseDiscussionConfigurationData:
     Attributes:
         course_key (str): identifier of the course to which the discussion belongs.
         provider_type (str): provider type from discussion settings.
+        enabled (bool): indicates whether discussions are enabled for the course.
         enable_in_context (bool): indicates whether in-context discussion is enabled for the course
         enable_graded_units (bool): If enabled, discussion topics will be created for graded units as well.
         unit_level_visibility (bool): visibility for unit level.
@@ -224,6 +225,7 @@ class CourseDiscussionConfigurationData:
 
     course_key = attr.ib(type=CourseKey)
     provider_type = attr.ib(type=str)
+    enabled = attr.ib(type=bool, default=True)
     enable_in_context = attr.ib(type=bool, default=True)
     enable_graded_units = attr.ib(type=bool, default=False)
     unit_level_visibility = attr.ib(type=bool, default=False)

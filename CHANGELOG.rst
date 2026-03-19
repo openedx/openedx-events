@@ -17,6 +17,14 @@ Unreleased
 __________
 
 
+[11.1.0] - 2026-03-19
+---------------------
+
+Added
+~~~~~
+
+* Added ``enabled`` field to ``CourseDiscussionConfigurationData`` to preserve course discussion enabled state during imports and reruns.
+
 [10.6.0] - 2026-03-09
 ---------------------
 
