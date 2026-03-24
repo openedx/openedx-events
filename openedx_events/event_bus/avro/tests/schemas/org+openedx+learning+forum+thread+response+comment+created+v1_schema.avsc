@@ -1,0 +1,183 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "thread",
+      "type": {
+        "name": "DiscussionThreadData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "body",
+            "type": "string"
+          },
+          {
+            "name": "commentable_id",
+            "type": "string"
+          },
+          {
+            "name": "id",
+            "type": "string"
+          },
+          {
+            "name": "truncated",
+            "type": "boolean"
+          },
+          {
+            "name": "url",
+            "type": "string"
+          },
+          {
+            "name": "user",
+            "type": {
+              "name": "UserData",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "id",
+                  "type": "long"
+                },
+                {
+                  "name": "is_active",
+                  "type": "boolean"
+                },
+                {
+                  "name": "pii",
+                  "type": {
+                    "name": "UserPersonalData",
+                    "type": "record",
+                    "fields": [
+                      {
+                        "name": "username",
+                        "type": "string"
+                      },
+                      {
+                        "name": "email",
+                        "type": "string"
+                      },
+                      {
+                        "name": "name",
+                        "type": "string"
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "name": "course_id",
+            "type": "string"
+          },
+          {
+            "name": "thread_type",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "anonymous",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "default": null
+          },
+          {
+            "name": "anonymous_to_peers",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "default": null
+          },
+          {
+            "name": "title",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "title_truncated",
+            "type": [
+              "null",
+              "boolean"
+            ],
+            "default": null
+          },
+          {
+            "name": "group_id",
+            "type": [
+              "null",
+              "long"
+            ],
+            "default": null
+          },
+          {
+            "name": "team_id",
+            "type": [
+              "null",
+              "long"
+            ],
+            "default": null
+          },
+          {
+            "name": "category_id",
+            "type": [
+              "null",
+              "long"
+            ],
+            "default": null
+          },
+          {
+            "name": "category_name",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          },
+          {
+            "name": "discussion",
+            "type": [
+              "null",
+              {
+                "type": "map",
+                "values": "string"
+              }
+            ],
+            "default": null
+          },
+          {
+            "name": "user_course_roles",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          },
+          {
+            "name": "user_forums_roles",
+            "type": {
+              "type": "array",
+              "items": "string"
+            }
+          },
+          {
+            "name": "options",
+            "type": {
+              "type": "map",
+              "values": "boolean"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.forum.thread.response.comment.created.v1"
+}

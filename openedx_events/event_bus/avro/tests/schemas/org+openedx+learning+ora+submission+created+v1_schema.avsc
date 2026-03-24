@@ -1,0 +1,95 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "submission",
+      "type": {
+        "name": "ORASubmissionData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "uuid",
+            "type": "string"
+          },
+          {
+            "name": "anonymous_user_id",
+            "type": "string"
+          },
+          {
+            "name": "location",
+            "type": "string"
+          },
+          {
+            "name": "attempt_number",
+            "type": "long"
+          },
+          {
+            "name": "created_at",
+            "type": "string"
+          },
+          {
+            "name": "submitted_at",
+            "type": "string"
+          },
+          {
+            "name": "answer",
+            "type": {
+              "name": "ORASubmissionAnswer",
+              "type": "record",
+              "fields": [
+                {
+                  "name": "parts",
+                  "type": {
+                    "type": "array",
+                    "items": {
+                      "type": "map",
+                      "values": "string"
+                    }
+                  }
+                },
+                {
+                  "name": "file_keys",
+                  "type": {
+                    "type": "array",
+                    "items": "string"
+                  }
+                },
+                {
+                  "name": "file_descriptions",
+                  "type": {
+                    "type": "array",
+                    "items": "string"
+                  }
+                },
+                {
+                  "name": "file_names",
+                  "type": {
+                    "type": "array",
+                    "items": "string"
+                  }
+                },
+                {
+                  "name": "file_sizes",
+                  "type": {
+                    "type": "array",
+                    "items": "long"
+                  }
+                },
+                {
+                  "name": "file_urls",
+                  "type": {
+                    "type": "array",
+                    "items": "string"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.ora.submission.created.v1"
+}

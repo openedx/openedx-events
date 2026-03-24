@@ -1,0 +1,99 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "configuration",
+      "type": {
+        "name": "CourseDiscussionConfigurationData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "course_key",
+            "type": "string"
+          },
+          {
+            "name": "provider_type",
+            "type": "string"
+          },
+          {
+            "name": "enable_in_context",
+            "type": "boolean"
+          },
+          {
+            "name": "enable_graded_units",
+            "type": "boolean"
+          },
+          {
+            "name": "unit_level_visibility",
+            "type": "boolean"
+          },
+          {
+            "name": "plugin_configuration",
+            "type": {
+              "type": "map",
+              "values": "boolean"
+            }
+          },
+          {
+            "name": "contexts",
+            "type": {
+              "type": "array",
+              "items": {
+                "name": "DiscussionTopicContext",
+                "type": "record",
+                "fields": [
+                  {
+                    "name": "title",
+                    "type": "string"
+                  },
+                  {
+                    "name": "usage_key",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "group_id",
+                    "type": [
+                      "null",
+                      "long"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "external_id",
+                    "type": [
+                      "null",
+                      "string"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "ordering",
+                    "type": [
+                      "null",
+                      "long"
+                    ],
+                    "default": null
+                  },
+                  {
+                    "name": "context",
+                    "type": {
+                      "type": "map",
+                      "values": "string"
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.learning.discussions.configuration.changed.v1"
+}
