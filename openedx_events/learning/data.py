@@ -216,7 +216,8 @@ class CourseDiscussionConfigurationData:
         course_key (str): identifier of the course to which the discussion belongs.
         provider_type (str): provider type from discussion settings.
         enabled (bool): indicates whether discussions are enabled for the course.
-        enable_in_context (bool): indicates whether in-context discussion is enabled for the course
+        enable_in_context (bool): indicates whether in-context discussion is enabled.
+           this has no effect unless `enabled==True` as well.
         enable_graded_units (bool): If enabled, discussion topics will be created for graded units as well.
         unit_level_visibility (bool): visibility for unit level.
         plugin_configuration (dict): The plugin configuration data for this context/provider.
