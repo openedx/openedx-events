@@ -14,7 +14,7 @@ cffi==2.0.0
     # via
     #   -r requirements/base.txt
     #   pynacl
-click==8.3.1
+click==8.3.2
     # via
     #   -r requirements/base.txt
     #   code-annotations
@@ -47,7 +47,7 @@ edx-ccx-keys==2.0.2
     # via -r requirements/base.txt
 edx-django-utils==8.0.1
     # via -r requirements/base.txt
-edx-opaque-keys[django]==3.1.0
+edx-opaque-keys[django]==4.0.0
     # via
     #   -r requirements/base.txt
     #   edx-ccx-keys

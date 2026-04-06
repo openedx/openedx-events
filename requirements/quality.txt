@@ -21,9 +21,9 @@ cffi==2.0.0
     #   -r requirements/test.txt
     #   cryptography
     #   pynacl
-charset-normalizer==3.4.6
+charset-normalizer==3.4.7
     # via requests
-click==8.3.1
+click==8.3.2
     # via
     #   -r requirements/test.txt
     #   click-log
@@ -73,7 +73,7 @@ edx-django-utils==8.0.1
     # via -r requirements/test.txt
 edx-lint==6.0.0
     # via -r requirements/quality.in
-edx-opaque-keys[django]==3.1.0
+edx-opaque-keys[django]==4.0.0
     # via
     #   -r requirements/test.txt
     #   edx-ccx-keys
@@ -117,7 +117,7 @@ mccabe==0.7.0
     # via pylint
 mdurl==0.1.2
     # via markdown-it-py
-more-itertools==10.8.0
+more-itertools==11.0.1
     # via
     #   jaraco-classes
     #   jaraco-functools
@@ -202,7 +202,7 @@ rfc3986==2.0.0
     # via twine
 rich==14.3.3
     # via twine
-ruff==0.15.8
+ruff==0.15.9
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring
