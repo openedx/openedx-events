@@ -17,6 +17,16 @@ Unreleased
 __________
 
 
+[11.1.1] - 2026-04-06
+---------------------
+
+Fixed
+~~~~~
+
+* ``OpenEdxEventsTestMixin`` now re-enables all events in ``tearDownClass`` to
+  prevent disabled event state from leaking into subsequent test classes running
+  in the same process.
+
 [11.1.0] - 2026-03-19
 ---------------------
 

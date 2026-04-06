@@ -118,6 +118,17 @@ class OpenEdxEventsTestMixin(EventsIsolationMixin):
         cls().start_events_isolation()
 
     @classmethod
+    def tearDownClass(cls):
+        """
+        Re-enable all events after class teardown.
+
+        Restores event state so subsequent test classes running in the same
+        process are not affected by this class's event isolation.
+        """
+        cls().enable_all_events()
+        super().tearDownClass()
+
+    @classmethod
     def start_events_isolation(cls):
         """
         Start Open edX Events isolation and then enable events by type.
