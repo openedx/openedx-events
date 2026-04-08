@@ -1,9 +1,9 @@
 """
-Tests for openedx_events/tests/utils.py.
+Tests for openedx_events/testing.py.
 """
 from django.test import TestCase
 
-from openedx_events.tests.utils import FreezeSignalCacheMixin, OpenEdxEventsTestMixin
+from openedx_events.testing import FreezeSignalCacheMixin, OpenEdxEventsTestMixin
 from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
 
 

@@ -17,7 +17,7 @@ from django.test import TestCase, override_settings
 
 from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import SenderValidationError
-from openedx_events.tests.utils import FreezeSignalCacheMixin
+from openedx_events.testing import FreezeSignalCacheMixin
 from openedx_events.tooling import OpenEdxPublicSignal, _process_all_signals_modules, load_all_signals
 
 

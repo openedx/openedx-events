@@ -23,7 +23,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     SubTestData1,
     create_simple_signal,
 )
-from openedx_events.tests.utils import FreezeSignalCacheMixin
+from openedx_events.testing import FreezeSignalCacheMixin
 
 
 @ddt.ddt
