@@ -24,3 +24,4 @@ Architectural Decision Records (ADRs)
    0015-outbox-pattern-and-production-modes
    0016-event-design-practices
    0017-event-signal-for-external-grader-score-submission
+   0018-supporting-subdomain-modules

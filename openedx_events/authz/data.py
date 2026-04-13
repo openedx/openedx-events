@@ -1,0 +1,27 @@
+"""Data attributes for events related to the authorization framework."""
+
+from typing import Optional
+
+import attr
+
+
+@attr.s(frozen=True)
+class RoleAssignmentData:
+    """Data related to a specific role assignment.
+
+    A role assignment represents the assignment of a role to a subject (e.g., user)
+    within a specific scope (e.g., course, organization).
+
+    Attributes:
+        operation (str): The operation being performed (e.g., 'assign', 'revoke').
+        subject (str): The subject to which the role is assigned (e.g., 'user^john_doe').
+        role (str): The role that is assigned (e.g., 'course_admin').
+        scope (str): The scope in which the role is assigned (e.g., 'course-v1:edX+DemoX+Demo_Course').
+        actor (Optional[str]): The actor performing the operation (e.g., 'user^admin_user').
+            This is optional and may be None if the actor is not known or not applicable (system-initiated actions).
+    """
+    operation: str = attr.ib()
+    subject: str = attr.ib()
+    role: str = attr.ib()
+    scope: str = attr.ib()
+    actor: Optional[str] = attr.ib(default=None)
