@@ -1,6 +1,6 @@
 """Data attributes for events related to the authorization framework."""
 
-from typing import Optional
+from typing import NamedTuple, Optional
 
 import attr
 
@@ -13,14 +13,22 @@ class RoleAssignmentData:
     within a specific scope (e.g., course, organization).
 
     Attributes:
-        operation (str): The operation being performed (e.g., 'assign', 'revoke').
+        operation (str): The operation being performed. Use ``OPERATIONS.created`` or
+            ``OPERATIONS.deleted``.
         subject (str): The subject to which the role is assigned (e.g., 'user^john_doe').
         role (str): The role that is assigned (e.g., 'course_admin').
         scope (str): The scope in which the role is assigned (e.g., 'course-v1:edX+DemoX+Demo_Course').
         actor (Optional[str]): The actor performing the operation (e.g., 'user^admin_user').
             This is optional and may be None if the actor is not known or not applicable (system-initiated actions).
     """
-    operation: str = attr.ib()
+
+    class Operations(NamedTuple):
+        created: str = "created"
+        deleted: str = "deleted"
+
+    OPERATIONS = Operations()
+
+    operation: str = attr.ib(validator=attr.validators.in_(OPERATIONS))
     subject: str = attr.ib()
     role: str = attr.ib()
     scope: str = attr.ib()
