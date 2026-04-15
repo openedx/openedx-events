@@ -1,4 +1,5 @@
-"""Standard Open edX events related to the Open edX authorization framework.
+"""
+Standard Open edX events related to the Open edX authorization framework.
 
 This module defines signals that are used to notify other parts of the system
 about changes or actions related to authorization.
@@ -6,7 +7,6 @@ about changes or actions related to authorization.
 
 from openedx_events.authz.data import RoleAssignmentData
 from openedx_events.tooling import OpenEdxPublicSignal
-
 
 # .. event_type: org.openedx.authz.role_assignment.created
 # .. event_name: ROLE_ASSIGNMENT_CREATED

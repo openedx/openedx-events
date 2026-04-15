@@ -5,7 +5,8 @@ import attr
 
 @attr.s(frozen=True)
 class RoleAssignmentData:
-    """Data related to a specific role assignment.
+    """
+    Data related to a specific role assignment.
 
     A role assignment represents the assignment of a role to a subject (e.g., user)
     within a specific scope (e.g., course, organization).
