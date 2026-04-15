@@ -1,0 +1,41 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "role_assignment",
+      "type": {
+        "name": "RoleAssignmentData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "operation",
+            "type": "string"
+          },
+          {
+            "name": "subject",
+            "type": "string"
+          },
+          {
+            "name": "role",
+            "type": "string"
+          },
+          {
+            "name": "scope",
+            "type": "string"
+          },
+          {
+            "name": "actor",
+            "type": [
+              "null",
+              "string"
+            ],
+            "default": null
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.authz.role_assignment.deleted"
+}

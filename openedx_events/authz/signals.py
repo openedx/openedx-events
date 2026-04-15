@@ -8,7 +8,6 @@ from openedx_events.authz.data import RoleAssignmentData
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
-
 # .. event_type: org.openedx.authz.role_assignment.created
 # .. event_name: ROLE_ASSIGNMENT_CREATED
 # .. event_key_field: user.pii.username
