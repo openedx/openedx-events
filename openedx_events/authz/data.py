@@ -18,8 +18,8 @@ class RoleAssignmentData:
         subject (str): The subject to which the role is assigned (e.g., 'user^john_doe').
         role (str): The role that is assigned (e.g., 'course_admin').
         scope (str): The scope in which the role is assigned (e.g., 'course-v1:edX+DemoX+Demo_Course').
-        actor (Optional[str]): The actor performing the operation (e.g., 'user^admin_user').
-            This is optional and may be None if the actor is not known or not applicable (system-initiated actions).
+        actor (Optional[str]): Username of the user performing the operation.
+            None if not known or not applicable (system-initiated actions).
     """
 
     class Operations(NamedTuple):
