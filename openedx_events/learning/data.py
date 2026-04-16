@@ -75,8 +75,8 @@ class CourseData:
 
     course_key: CourseKey
     display_name: str = attrs.field(factory=str)
-    start: datetime = None  # type: ignore[assignment]
-    end: datetime = None  # type: ignore[assignment]
+    start: datetime | None = None
+    end: datetime | None = None
 
 
 @attrs.define(frozen=True)
@@ -99,9 +99,9 @@ class CcxCourseData:
     master_course_key: CourseKey
     display_name: str = attrs.field(factory=str)
     coach_email: str = attrs.field(factory=str)
-    start: str = None  # type: ignore[assignment]
-    end: str = None  # type: ignore[assignment]
-    max_students_allowed: int = None  # type: ignore[assignment]
+    start: str | None = None
+    end: str | None = None
+    max_students_allowed: int | None = None
 
 
 @attrs.define(frozen=True)
@@ -126,7 +126,7 @@ class CourseEnrollmentData:
     mode: str
     is_active: bool
     creation_date: datetime
-    created_by: UserData = None  # type: ignore[assignment]
+    created_by: UserData | None = None
 
 
 @attrs.define(frozen=True)
@@ -197,10 +197,10 @@ class DiscussionTopicContext:
     """
 
     title: str
-    usage_key: UsageKey = None  # type: ignore[assignment]
-    group_id: int = None  # type: ignore[assignment]
-    external_id: str = None  # type: ignore[assignment]
-    ordering: int = None  # type: ignore[assignment]
+    usage_key: UsageKey | None = None
+    group_id: int | None = None
+    external_id: str | None = None
+    ordering: int | None = None
     context: dict[str, str] = attrs.field(factory=dict)
 
 
@@ -339,7 +339,7 @@ class ProgramCertificateData:
     uuid: str
     status: str
     url: str
-    certificate_available_date: datetime = None  # type: ignore[assignment]
+    certificate_available_date: datetime | None = None
 
 
 @attrs.define(frozen=True)
@@ -372,7 +372,7 @@ class ExamAttemptData:
     course_key: CourseKey
     usage_key: UsageKey
     exam_type: str
-    requesting_user: UserData = None  # type: ignore[assignment]
+    requesting_user: UserData | None = None
 
 
 @attrs.define(frozen=True)
@@ -431,16 +431,16 @@ class DiscussionThreadData:
     url: str
     user: UserData
     course_id: CourseKey
-    thread_type: str = None  # type: ignore[assignment]
-    anonymous: bool = None  # type: ignore[assignment]
-    anonymous_to_peers: bool = None  # type: ignore[assignment]
-    title: str = None  # type: ignore[assignment]
-    title_truncated: bool = None  # type: ignore[assignment]
-    group_id: int = None  # type: ignore[assignment]
-    team_id: int = None  # type: ignore[assignment]
-    category_id: int = None  # type: ignore[assignment]
-    category_name: str = None  # type: ignore[assignment]
-    discussion: dict[str, str] = None  # type: ignore[assignment]
+    thread_type: str | None = None
+    anonymous: bool | None = None
+    anonymous_to_peers: bool | None = None
+    title: str | None = None
+    title_truncated: bool | None = None
+    group_id: int | None = None
+    team_id: int | None = None
+    category_id: int | None = None
+    category_name: str | None = None
+    discussion: dict[str, str] | None = None
     user_course_roles: list[str] = attrs.field(factory=list)
     user_forums_roles: list[str] = attrs.field(factory=list)
     options: dict[str, bool] = attrs.field(factory=dict)
@@ -589,9 +589,9 @@ class BadgeTemplateData:
 
     uuid: str
     origin: str
-    name: str = None  # type: ignore[assignment]
-    description: str = None  # type: ignore[assignment]
-    image_url: str = None  # type: ignore[assignment]
+    name: str | None = None
+    description: str | None = None
+    image_url: str | None = None
 
 
 @attrs.define(frozen=True)
@@ -626,8 +626,8 @@ class VerificationAttemptData:
     attempt_id: int
     user: UserData
     status: str
-    name: str = None  # type: ignore[assignment]
-    expiration_date: datetime = None  # type: ignore[assignment]
+    name: str | None = None
+    expiration_date: datetime | None = None
 
 
 @attrs.define(frozen=True)

@@ -1,22 +1,32 @@
 """
 Deserialize Avro record dictionaries to events that can be sent with OpenEdxPublicSignals.
 """
+
 import io
 import json
-from typing import get_args, get_origin
+from typing import TYPE_CHECKING, Any, Callable, get_args, get_origin
 
-import attr
+import attrs
 import fastavro
 
-from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
-from .schema import schema_from_signal
+from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS, BaseCustomTypeAvroSerializer
+from .schema import _unwrap_optional, schema_from_signal
 from .types import PYTHON_TYPE_TO_AVRO_MAPPING, SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING
 
+if TYPE_CHECKING:
+    from openedx_events.tooling import OpenEdxPublicSignal
+
 # Dict of class to deserialize methods (e.g. datetime => DatetimeAvroSerializer.deserialize)
-DEFAULT_DESERIALIZERS = {serializer.cls: serializer.deserialize for serializer in DEFAULT_CUSTOM_SERIALIZERS}
+DEFAULT_DESERIALIZERS: dict[type, Callable[..., Any]] = {
+    serializer.cls: serializer.deserialize for serializer in DEFAULT_CUSTOM_SERIALIZERS
+}
 
 
-def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializers=None):
+def _deserialized_avro_record_dict_to_object(
+    data: Any,
+    data_type: type,
+    deserializers: dict[type, Callable[..., Any]] | None = None,
+) -> Any:
     """
     Convert Avro record dictionary into an instance of data_type.
 
@@ -55,7 +65,10 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
 
         # Complex nested types like List[List[...]], List[Dict[...]], etc.
         item_type = arg_data_type[0]
-        return [_deserialized_avro_record_dict_to_object(sub_data, item_type, deserializers) for sub_data in data]
+        return [
+            _deserialized_avro_record_dict_to_object(sub_data, item_type, deserializers)
+            for sub_data in data
+        ]
     elif data_type_origin is dict:
         # Returns types of dict contents.
         # Example: if data_type == Dict[str, int], arg_data_type = (str, int)
@@ -71,11 +84,15 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
         # Complex dict values that need recursive deserialization
         key_type, value_type = arg_data_type
         if key_type is not str:
-            raise TypeError("Avro maps only support string keys. The key type must be 'str'.")
+            raise TypeError(
+                "Avro maps only support string keys. The key type must be 'str'."
+            )
 
         # Complex nested types like Dict[str, Dict[...]], Dict[str, List[...]], etc.
         return {
-            key: _deserialized_avro_record_dict_to_object(value, value_type, deserializers)
+            key: _deserialized_avro_record_dict_to_object(
+                value, value_type, deserializers
+            )
             for key, value in data.items()
         }
     elif hasattr(data_type, "__attrs_attrs__"):
@@ -83,10 +100,14 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
         for attribute in data_type.__attrs_attrs__:
             if attribute.name in data:
                 sub_data = data[attribute.name]
-                if sub_data or attribute.default is attr.NOTHING:
-                    transformed[attribute.name] = _deserialized_avro_record_dict_to_object(sub_data,
-                                                                                           attribute.type,
-                                                                                           deserializers=deserializers)
+                if sub_data or attribute.default is attrs.NOTHING:
+                    transformed[attribute.name] = (
+                        _deserialized_avro_record_dict_to_object(
+                            sub_data,
+                            _unwrap_optional(attribute.type),
+                            deserializers=deserializers,
+                        )
+                    )
 
         return data_type(**transformed)
     raise TypeError(
@@ -94,7 +115,11 @@ def _deserialized_avro_record_dict_to_object(data: dict, data_type, deserializer
     )
 
 
-def _avro_record_dict_to_event_data(signal, avro_record_dict, deserializers=None):
+def _avro_record_dict_to_event_data(
+    signal: "OpenEdxPublicSignal",
+    avro_record_dict: dict[str, Any],
+    deserializers: dict[type, Callable[..., Any]] | None = None,
+) -> dict[str, Any]:
     """
     Convert an Avro record dictionary into event data that can be sent by the given signal.
 
@@ -106,11 +131,18 @@ def _avro_record_dict_to_event_data(signal, avro_record_dict, deserializers=None
     Returns:
         - An event data dictionary that can be sent by the given signal
     """
-    return {data_key: _deserialized_avro_record_dict_to_object(avro_record_dict[data_key], data_type, deserializers)
-            for data_key, data_type in signal.init_data.items()}
+    return {
+        data_key: _deserialized_avro_record_dict_to_object(
+            avro_record_dict[data_key], data_type, deserializers
+        )
+        for data_key, data_type in signal.init_data.items()
+    }
 
 
-def deserialize_bytes_to_event_data(bytes_from_wire, signal):
+def deserialize_bytes_to_event_data(
+    bytes_from_wire: bytes,
+    signal: "OpenEdxPublicSignal",
+) -> dict[str, Any]:
     """
     Deserialize event_bus and Avro-serialized data.
 
@@ -121,7 +153,7 @@ def deserialize_bytes_to_event_data(bytes_from_wire, signal):
     deserializer = AvroSignalDeserializer(signal)
     schema_dict = deserializer.schema
     data_file = io.BytesIO(bytes_from_wire)
-    as_dict = fastavro.schemaless_reader(data_file, schema_dict)
+    as_dict: dict[str, Any] = fastavro.schemaless_reader(data_file, schema_dict)  # type: ignore[assignment, call-arg]
     return deserializer.from_dict(as_dict)
 
 
@@ -137,7 +169,7 @@ class AvroSignalDeserializer:
     To deserialize events that include data types that are not yet supported, see README.
     """
 
-    def __init__(self, signal):
+    def __init__(self, signal: "OpenEdxPublicSignal") -> None:
         """
         Initialize deserializer, creating an Avro schema from signal.
 
@@ -145,19 +177,27 @@ class AvroSignalDeserializer:
             signal: An instance of OpenEdxPublicSignal.
         """
         self.signal = signal
-        self.deserializers = {ext.cls: ext.deserialize for ext in self.custom_type_serializers()}
-        self.custom_types = {ext.cls: ext.field_type for ext in self.custom_type_serializers()}
-        self.schema = schema_from_signal(self.signal, custom_type_to_avro_type=self.custom_types)
+        self.deserializers: dict[type, Callable[..., Any]] = {
+            ext.cls: ext.deserialize for ext in self.custom_type_serializers()
+        }
+        self.custom_types: dict[type, str] = {
+            ext.cls: ext.field_type for ext in self.custom_type_serializers()
+        }
+        self.schema: dict[str, Any] = schema_from_signal(
+            self.signal, custom_type_to_avro_type=self.custom_types
+        )
 
-    def schema_string(self):
+    def schema_string(self) -> str:
         """Get Avro schema as string."""
         return json.dumps(self.schema, sort_keys=True)
 
-    def from_dict(self, avro_record_dict):
+    def from_dict(self, avro_record_dict: dict[str, Any]) -> dict[str, Any]:
         """Convert Avro record dictionary to event data."""
-        return _avro_record_dict_to_event_data(self.signal, avro_record_dict, self.deserializers)
+        return _avro_record_dict_to_event_data(
+            self.signal, avro_record_dict, self.deserializers
+        )
 
-    def custom_type_serializers(self):
+    def custom_type_serializers(self) -> list[type[BaseCustomTypeAvroSerializer]]:
         """
         Override this method to add custom serializers for unhandled classes.
 

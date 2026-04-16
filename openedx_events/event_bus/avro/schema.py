@@ -4,15 +4,48 @@ Code to convert attr classes to Avro specification.
 TODO: Handle optional parameters and allow for schema evolution. https://github.com/edx/edx-arch-experiments/issues/53
 """
 
-from typing import Any, Type, get_args, get_origin
+import types
+import typing
+from typing import TYPE_CHECKING, Any, get_args, get_origin
 
 from .custom_serializers import DEFAULT_CUSTOM_SERIALIZERS
 from .types import PYTHON_TYPE_TO_AVRO_MAPPING, SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING
 
-DEFAULT_FIELD_TYPES = {serializer.cls: serializer.field_type for serializer in DEFAULT_CUSTOM_SERIALIZERS}
+if TYPE_CHECKING:
+    from openedx_events.tooling import OpenEdxPublicSignal
+
+NoneType = type(None)
 
 
-def schema_from_signal(signal, custom_type_to_avro_type=None):
+def _unwrap_optional(data_type: type) -> type:
+    """
+    If data_type is a union of X | None, return X. Otherwise return data_type unchanged.
+
+    This allows attrs fields annotated as `X | None` with `default=None` to be
+    handled by the Avro layer the same way as fields annotated with the plain base
+    type `X`.  The `default_is_none` flag (derived from `attribute.default is
+    None`) already causes the generated Avro field to be wrapped in a
+    `["null", <type>]` union, so we only need to unwrap the Python-level `None`
+    from the annotation here.
+    """
+    # Handle both `X | None` and `typing.Optional[X]` / `typing.Union[X, None]`.
+    origin = get_origin(data_type)
+    if origin is types.UnionType or origin is typing.Union:
+        args = [a for a in get_args(data_type) if a is not NoneType]
+        if len(args) == 1:
+            return args[0]  # type: ignore[no-any-return]
+    return data_type
+
+
+DEFAULT_FIELD_TYPES: dict[type, str] = {
+    serializer.cls: serializer.field_type for serializer in DEFAULT_CUSTOM_SERIALIZERS
+}
+
+
+def schema_from_signal(
+    signal: "OpenEdxPublicSignal",
+    custom_type_to_avro_type: dict[type, str] | None = None,
+) -> dict[str, Any]:
     """
     Create an Avro schema for events sent by an instance of OpenEdxPublicSignal.
 
@@ -25,9 +58,9 @@ def schema_from_signal(signal, custom_type_to_avro_type=None):
     """
     field_types = custom_type_to_avro_type or {}
     all_custom_field_types = {**DEFAULT_FIELD_TYPES, **field_types}
-    previously_seen_types = set()
+    previously_seen_types: set[str] = set()
 
-    base_schema = {
+    base_schema: dict[str, Any] = {
         "name": "CloudEvent",
         "type": "record",
         "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
@@ -36,14 +69,24 @@ def schema_from_signal(signal, custom_type_to_avro_type=None):
     }
 
     for data_key, data_type in signal.init_data.items():
-        base_schema["fields"].append(_create_avro_field_definition(data_key, data_type,
-                                                                   previously_seen_types,
-                                                                   custom_type_to_avro_type=all_custom_field_types))
+        base_schema["fields"].append(
+            _create_avro_field_definition(
+                data_key,
+                data_type,
+                previously_seen_types,
+                custom_type_to_avro_type=all_custom_field_types,
+            )
+        )
     return base_schema
 
 
-def _create_avro_field_definition(data_key, data_type, previously_seen_types,
-                                  custom_type_to_avro_type=None, default_is_none=False):
+def _create_avro_field_definition(
+    data_key: str,
+    data_type: type,
+    previously_seen_types: set[str],
+    custom_type_to_avro_type: dict[type, str] | None = None,
+    default_is_none: bool = False,
+) -> dict[str, Any]:
     """
     Create an Avro schema field definition from an OpenEdxPublicSignal data definition.
 
@@ -57,7 +100,7 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
     Returns:
         - An Avro field definition.
     """
-    field = {"name": data_key}
+    field: dict[str, Any] = {"name": data_key}
     all_field_type_overrides = custom_type_to_avro_type or {}
     # get generic type of data_type
     # if data_type == List[int], data_type_origin = list
@@ -70,7 +113,9 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
     elif data_type in PYTHON_TYPE_TO_AVRO_MAPPING:
         if PYTHON_TYPE_TO_AVRO_MAPPING[data_type] in ["map", "array"]:
             # pylint: disable-next=broad-exception-raised
-            raise Exception("Unable to generate Avro schema for dict or array fields without annotation types.")
+            raise Exception(
+                "Unable to generate Avro schema for dict or array fields without annotation types."
+            )
         avro_type = PYTHON_TYPE_TO_AVRO_MAPPING[data_type]
         field["type"] = avro_type
     # Case 3: data_type is a list (possibly with complex items)
@@ -95,14 +140,21 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
             field["type"] = data_type.__name__
         else:
             previously_seen_types.add(data_type.__name__)
-            record_type = {"name": data_type.__name__, "type": 'record', "fields": []}
+            record_type: dict[str, Any] = {
+                "name": data_type.__name__,
+                "type": "record",
+                "fields": [],
+            }
 
             for attribute in data_type.__attrs_attrs__:
                 record_type["fields"].append(
-                    _create_avro_field_definition(attribute.name, attribute.type,
-                                                  previously_seen_types,
-                                                  custom_type_to_avro_type=all_field_type_overrides,
-                                                  default_is_none=attribute.default is None)
+                    _create_avro_field_definition(
+                        attribute.name,
+                        _unwrap_optional(attribute.type),
+                        previously_seen_types,
+                        custom_type_to_avro_type=all_field_type_overrides,
+                        default_is_none=attribute.default is None,
+                    )
                 )
             field["type"] = record_type
     else:
@@ -119,8 +171,10 @@ def _create_avro_field_definition(data_key, data_type, previously_seen_types,
 
 
 def _get_avro_type_for_dict_item(
-    data_type: Type[dict], previously_seen_types: set, type_overrides: dict[Any, str]
-) -> str | dict[str, str]:
+    data_type: type,
+    previously_seen_types: set[str],
+    type_overrides: dict[type, str],
+) -> str | dict[str, Any]:
     """
     Determine the Avro type definition for a dictionary value based on its Python type.
 
@@ -167,12 +221,16 @@ def _get_avro_type_for_dict_item(
     # Case 2: Complex types (dict, list, or attrs class)
     if get_origin(value_type) in (dict, list) or hasattr(value_type, "__attrs_attrs__"):
         # Create a temporary field for the value type and extract its type definition
-        temp_field = _create_avro_field_definition("temp", value_type, previously_seen_types, type_overrides)
-        return temp_field["type"]
+        temp_field = _create_avro_field_definition(
+            "temp", value_type, previously_seen_types, type_overrides
+        )
+        return temp_field["type"]  # type: ignore[no-any-return]
 
     # Case 3: Unannotated containers (raise specific errors)
     if value_type is dict:
-        raise TypeError("A Dictionary as a dictionary value should have a type annotation.")
+        raise TypeError(
+            "A Dictionary as a dictionary value should have a type annotation."
+        )
     if value_type is list:
         raise TypeError("A List as a dictionary value should have a type annotation.")
 
@@ -181,8 +239,10 @@ def _get_avro_type_for_dict_item(
 
 
 def _get_avro_type_for_list_item(
-    data_type: Type[list], previously_seen_types: set, type_overrides: dict[Any, str]
-) -> str | dict[str, str]:
+    data_type: type,
+    previously_seen_types: set[str],
+    type_overrides: dict[type, str],
+) -> str | dict[str, Any]:
     """
     Determine the Avro type definition for a list item based on its Python type.
 
@@ -231,8 +291,10 @@ def _get_avro_type_for_list_item(
     # Case 2: Complex types (dict, list, or attrs class)
     if get_origin(item_type) in (dict, list) or hasattr(item_type, "__attrs_attrs__"):
         # Create a temporary field for the value type and extract its type definition
-        temp_field = _create_avro_field_definition("temp", item_type, previously_seen_types, type_overrides)
-        return temp_field["type"]
+        temp_field = _create_avro_field_definition(
+            "temp", item_type, previously_seen_types, type_overrides
+        )
+        return temp_field["type"]  # type: ignore[no-any-return]
 
     # Case 3: Unannotated containers (raise specific errors)
     if item_type is dict:

@@ -18,6 +18,7 @@ import copy
 import warnings
 from abc import ABC, abstractmethod
 from functools import lru_cache
+from typing import TypeVar
 
 from django.conf import settings
 from django.dispatch import receiver
@@ -27,8 +28,17 @@ from django.utils.module_loading import import_string
 from openedx_events.data import EventsMetadata
 from openedx_events.tooling import OpenEdxPublicSignal
 
+_T = TypeVar("_T")
 
-def _try_load(*, setting_name: str, args: tuple, kwargs: dict, expected_class: type, default):
+
+def _try_load(
+    *,
+    setting_name: str,
+    args: tuple,
+    kwargs: dict,
+    expected_class: type[_T],
+    default: _T,
+) -> _T:
     """
     Load an instance of ``expected_class`` as indicated by ``setting_name``.
 
@@ -46,7 +56,9 @@ def _try_load(*, setting_name: str, args: tuple, kwargs: dict, expected_class: t
     """
     constructor_path = getattr(settings, setting_name, None)
     if constructor_path is None:
-        warnings.warn(f"Event Bus setting {setting_name} is missing; component will be inactive")
+        warnings.warn(
+            f"Event Bus setting {setting_name} is missing; component will be inactive"
+        )
         return default
 
     try:
@@ -75,8 +87,13 @@ class EventBusProducer(ABC):
 
     @abstractmethod
     def send(
-            self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
-            event_metadata: EventsMetadata
+        self,
+        *,
+        signal: OpenEdxPublicSignal,
+        topic: str,
+        event_key_field: str,
+        event_data: dict,
+        event_metadata: EventsMetadata,
     ) -> None:
         """
         Send a signal event to the event bus under the specified topic.
@@ -97,8 +114,13 @@ class NoEventBusProducer(EventBusProducer):
     """
 
     def send(
-            self, *, signal: OpenEdxPublicSignal, topic: str, event_key_field: str, event_data: dict,
-            event_metadata: EventsMetadata,
+        self,
+        *,
+        signal: OpenEdxPublicSignal,
+        topic: str,
+        event_key_field: str,
+        event_data: dict,
+        event_metadata: EventsMetadata,
     ) -> None:
         """Do nothing."""
 
@@ -112,6 +134,7 @@ class NoEventBusProducer(EventBusProducer):
 #   by openedx_events. If setting is not supplied or the callable raises an exception or does not return
 #   an instance of EventBusProducer, calls to the producer will be ignored with a warning at startup.
 
+
 @lru_cache  # will just be one cache entry, in practice
 def get_producer() -> EventBusProducer:
     """
@@ -120,8 +143,11 @@ def get_producer() -> EventBusProducer:
     If misconfigured, returns a fake implementation that can be called but does nothing.
     """
     return _try_load(
-        setting_name='EVENT_BUS_PRODUCER', args=(), kwargs={},
-        expected_class=EventBusProducer, default=NoEventBusProducer(),
+        setting_name="EVENT_BUS_PRODUCER",
+        args=(),
+        kwargs={},
+        expected_class=EventBusProducer,  # type: ignore[type-abstract]
+        default=NoEventBusProducer(),
     )
 
 
@@ -161,8 +187,7 @@ class NoEventBusConsumer(EventBusConsumer):
 #   an instance of EventBusConsumer, calls to the consumer will be ignored with a warning at startup.
 
 
-def make_single_consumer(*, topic: str, group_id: str,
-                         **kwargs) -> EventBusConsumer:
+def make_single_consumer(*, topic: str, group_id: str, **kwargs) -> EventBusConsumer:
     """
     Construct a consumer for a given topic, group, and signal.
 
@@ -173,13 +198,16 @@ def make_single_consumer(*, topic: str, group_id: str,
         group_id: The consumer group to participate in
     """
     options = {
-        'topic': topic,
-        'group_id': group_id,
+        "topic": topic,
+        "group_id": group_id,
         **kwargs,
     }
     return _try_load(
-        setting_name='EVENT_BUS_CONSUMER', args=(), kwargs=options,
-        expected_class=EventBusConsumer, default=NoEventBusConsumer(),
+        setting_name="EVENT_BUS_CONSUMER",
+        args=(),
+        kwargs=options,
+        expected_class=EventBusConsumer,  # type: ignore[type-abstract]
+        default=NoEventBusConsumer(),
     )
 
 
@@ -217,12 +245,14 @@ def merge_producer_configs(producer_config_original, producer_config_overrides):
         event_type_config_combined = combined.get(event_type, {})
         for topic, topic_config_overrides in event_type_config_overrides.items():
             topic_config_combined = event_type_config_combined.get(topic, {})
-            enabled_override = topic_config_overrides.get('enabled', None)
-            event_key_field_override = topic_config_overrides.get('event_key_field', None)
+            enabled_override = topic_config_overrides.get("enabled", None)
+            event_key_field_override = topic_config_overrides.get(
+                "event_key_field", None
+            )
             if enabled_override is not None:
-                topic_config_combined['enabled'] = enabled_override
+                topic_config_combined["enabled"] = enabled_override
             if event_key_field_override is not None:
-                topic_config_combined['event_key_field'] = event_key_field_override
+                topic_config_combined["event_key_field"] = event_key_field_override
             event_type_config_combined[topic] = topic_config_combined
         combined[event_type] = event_type_config_combined
     return combined

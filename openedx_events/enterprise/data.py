@@ -100,9 +100,9 @@ class LedgerTransaction(BaseLedgerTransaction):
     subsidy_access_policy_uuid: UUID
     lms_user_id: int
     content_key: CourseKey
-    parent_content_key: str = None  # type: ignore[assignment]
-    fulfillment_identifier: str = None  # type: ignore[assignment]
-    reversal: LedgerTransactionReversal = None  # type: ignore[assignment]
+    parent_content_key: str | None = None
+    fulfillment_identifier: str | None = None
+    reversal: LedgerTransactionReversal | None = None
 
 
 @attrs.define(frozen=True)
@@ -135,7 +135,7 @@ class EnterpriseCustomerUser:
     linked: bool
     is_relinkable: bool
     should_inactivate_other_customers: bool
-    invite_key: UUID = None  # type: ignore[assignment]
+    invite_key: UUID | None = None
 
 
 @attrs.define(frozen=True)
@@ -163,9 +163,9 @@ class EnterpriseCourseEnrollment:
     enterprise_customer_user: EnterpriseCustomerUser
     course_id: CourseKey
     saved_for_later: bool
-    source_slug: str = None  # type: ignore[assignment]
-    unenrolled: bool = None  # type: ignore[assignment]
-    unenrolled_at: datetime = None  # type: ignore[assignment]
+    source_slug: str | None = None
+    unenrolled: bool | None = None
+    unenrolled_at: datetime | None = None
 
 
 @attrs.define(frozen=True)
@@ -191,8 +191,8 @@ class BaseEnterpriseFulfillment:
     modified: datetime
     fulfillment_type: str
     is_revoked: bool
-    enterprise_course_entitlement_uuid: UUID = None  # type: ignore[assignment]
-    enterprise_course_enrollment: EnterpriseCourseEnrollment = None  # type: ignore[assignment]
+    enterprise_course_entitlement_uuid: UUID | None = None
+    enterprise_course_enrollment: EnterpriseCourseEnrollment | None = None
 
 
 @attrs.define(frozen=True)
@@ -208,7 +208,7 @@ class LearnerCreditEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
         transaction_id (UUID): Ledgered transaction UUID to associate with this learner credit fulfillment.
     """
 
-    transaction_id: UUID = None  # type: ignore[assignment]
+    transaction_id: UUID | None = None
 
 
 @attrs.define(frozen=True)
@@ -224,7 +224,7 @@ class LicensedEnterpriseCourseEnrollment(BaseEnterpriseFulfillment):
         license_uuid (UUID): License UUID to associate with this enterprise license fulfillment.
     """
 
-    license_uuid: UUID = None  # type: ignore[assignment]
+    license_uuid: UUID | None = None
 
 
 @attrs.define(frozen=True)

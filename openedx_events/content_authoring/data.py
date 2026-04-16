@@ -48,9 +48,9 @@ class CourseScheduleData:
 
     start: datetime
     pacing: str
-    end: datetime = None  # type: ignore[assignment]
-    enrollment_start: datetime = None  # type: ignore[assignment]
-    enrollment_end: datetime = None  # type: ignore[assignment]
+    end: datetime | None = None
+    enrollment_start: datetime | None = None
+    enrollment_end: datetime | None = None
 
 
 @attrs.define(frozen=True)
