@@ -1,6 +1,6 @@
 """A mapping of python types to the Avro type that we want to use make valid avro schema."""
 
-SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING: dict[type, str] = {
+SIMPLE_PYTHON_TYPE_TO_AVRO_MAPPING: dict[type | None, str] = {
     bool: "boolean",
     int: "long",
     float: "double",
