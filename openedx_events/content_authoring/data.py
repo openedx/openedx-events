@@ -7,10 +7,11 @@ pattern.
 The attributes for the events come from the CourseDetailView in the LMS, with some unused fields removed
 (see deprecation proposal at https://github.com/openedx/public-engineering/issues/160)
 """
-from datetime import datetime
-from typing import BinaryIO, List
 
-import attr
+from datetime import datetime
+from typing import BinaryIO
+
+import attrs
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import (
     LibraryCollectionLocator,
@@ -20,7 +21,7 @@ from opaque_keys.edx.locator import (
 )
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CourseData:
     """
     Data related to a course object.
@@ -29,10 +30,10 @@ class CourseData:
         course_key (CourseKey): identifier of the Course object.
     """
 
-    course_key = attr.ib(type=CourseKey)
+    course_key: CourseKey
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CourseScheduleData:
     """
     Data related to a course schedule.
@@ -45,14 +46,14 @@ class CourseScheduleData:
         enrollment_end (datetime): end of course enrollment (optional).
     """
 
-    start = attr.ib(type=datetime)
-    pacing = attr.ib(type=str)
-    end = attr.ib(type=datetime, default=None)
-    enrollment_start = attr.ib(type=datetime, default=None)
-    enrollment_end = attr.ib(type=datetime, default=None)
+    start: datetime
+    pacing: str
+    end: datetime = None  # type: ignore[assignment]
+    enrollment_start: datetime = None  # type: ignore[assignment]
+    enrollment_end: datetime = None  # type: ignore[assignment]
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CourseCatalogData:
     """
     Data related to a course catalog entry.
@@ -66,16 +67,16 @@ class CourseCatalogData:
     """
 
     # basic identifiers
-    course_key = attr.ib(type=CourseKey)
-    name = attr.ib(type=str)
+    course_key: CourseKey
+    name: str
 
     # additional marketing information
-    schedule_data = attr.ib(type=CourseScheduleData)
-    hidden = attr.ib(type=bool, default=False)
-    invitation_only = attr.ib(type=bool, default=False)
+    schedule_data: CourseScheduleData
+    hidden: bool = False
+    invitation_only: bool = False
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class XBlockData:
     """
     Data related to an XBlock object.
@@ -87,12 +88,12 @@ class XBlockData:
            could be used to get the exact version of the XBlock object.
     """
 
-    usage_key = attr.ib(type=UsageKey)
-    block_type = attr.ib(type=str)
-    version = attr.ib(type=UsageKey, default=None, kw_only=True)
+    usage_key: UsageKey
+    block_type: str
+    version: UsageKey = attrs.field(default=None, kw_only=True)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class DuplicatedXBlockData(XBlockData):
     """
     Data related to an XBlock object that has been duplicated.
@@ -103,10 +104,10 @@ class DuplicatedXBlockData(XBlockData):
         source_usage_key (UsageKey): identifier of the source XBlock object.
     """
 
-    source_usage_key = attr.ib(type=UsageKey)
+    source_usage_key: UsageKey = attrs.field(kw_only=True)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CertificateSignatoryData:
     """
     Data related to a certificate signatory. Subset of CertificateSignatory object from the LMS.
@@ -123,14 +124,13 @@ class CertificateSignatoryData:
     # It can potentially be large, making it difficult to pass this data structure through the Event Bus
     # (CloudEvent messages, which should be 64K or less) and store it on disk space.
     # We suggest referring to MAX_ASSET_UPLOAD_FILE_SIZE_IN_MB, i.e. restriction in the Studio for such cases.
-    image = attr.ib(type=BinaryIO)
-    # end Note
-    name = attr.ib(type=str)
-    organization = attr.ib(type=str)
-    title = attr.ib(type=str)
+    image: BinaryIO
+    name: str
+    organization: str
+    title: str
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CertificateConfigData:
     """
     Data related to a certificate configuration. Subset of CertificateConfig object from the LMS.
@@ -147,19 +147,19 @@ class CertificateConfigData:
            - masters.
         course_key (CourseKey): identifier of the Course object.
         title (str): certificate title.
-        signatories (List[CertificateSignatoryData]): contains a collection of signatures
+        signatories (list[CertificateSignatoryData]): contains a collection of signatures
            that belong to the certificate configuration.
         is_active (bool): indicates whether the certifivate configuration is active.
     """
 
-    certificate_type = attr.ib(type=str)
-    course_key = attr.ib(type=CourseKey)
-    title = attr.ib(type=str)
-    signatories = attr.ib(type=List[CertificateSignatoryData], factory=list)
-    is_active = attr.ib(type=bool, default=False)
+    certificate_type: str
+    course_key: CourseKey
+    title: str
+    signatories: list[CertificateSignatoryData] = attrs.field(factory=list)
+    is_active: bool = False
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ContentLibraryData:
     """
     Data related to a content library that has changed.
@@ -170,11 +170,11 @@ class ContentLibraryData:
             Now we send individual events for each updated item instead.
     """
 
-    library_key = attr.ib(type=LibraryLocatorV2)
-    update_blocks = attr.ib(type=bool, default=False)
+    library_key: LibraryLocatorV2
+    update_blocks: bool = False
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class LibraryBlockData:
     """
     Data related to a library block that has changed.
@@ -184,11 +184,11 @@ class LibraryBlockData:
         usage_key (LibraryUsageLocatorV2): a key that represents a XBlock in a Blockstore-based content library.
     """
 
-    library_key = attr.ib(type=LibraryLocatorV2)
-    usage_key = attr.ib(type=LibraryUsageLocatorV2)
+    library_key: LibraryLocatorV2
+    usage_key: LibraryUsageLocatorV2
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ContentObjectData:
     """
     Data related to a content object.
@@ -199,10 +199,10 @@ class ContentObjectData:
            >>> block-v1:SampleTaxonomyOrg2+STC1+2023_1+type@vertical+block@f8de78f0897049ce997777a3a31b6ea0
     """
 
-    object_id = attr.ib(type=str)
+    object_id: str
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ContentObjectChangedData(ContentObjectData):
     """
     Data related to a content object that has changed.
@@ -215,10 +215,10 @@ class ContentObjectChangedData(ContentObjectData):
            assume everything has changed.
     """
 
-    changes = attr.ib(type=List[str], factory=list)
+    changes: list[str] = attrs.field(factory=list)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class LibraryCollectionData:
     """
     Data related to a library collection that has changed.
@@ -230,11 +230,11 @@ class LibraryCollectionData:
            send the event(s) from an async celery task if it is expected to result in a lot of handlers being called.
     """
 
-    collection_key = attr.ib(type=LibraryCollectionLocator)
-    background = attr.ib(type=bool, default=False)
+    collection_key: LibraryCollectionLocator
+    background: bool = False
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class LibraryContainerData:
     """
     Data related to a library container that has changed.
@@ -246,5 +246,5 @@ class LibraryContainerData:
            send the event(s) from an async celery task if it is expected to result in a lot of handlers being called.
     """
 
-    container_key = attr.ib(type=LibraryContainerLocator)
-    background = attr.ib(type=bool, default=False)
+    container_key: LibraryContainerLocator
+    background: bool = False
