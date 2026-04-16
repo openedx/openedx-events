@@ -4,6 +4,8 @@ Test utilities for use by consumers of openedx-events.
 Provides mixins that help isolate Open edX event state between test classes.
 """
 
+from typing import ClassVar
+
 from openedx_events.tooling import OpenEdxPublicSignal
 
 
@@ -12,21 +14,24 @@ class FreezeSignalCacheMixin:
     A mixin to be used by TestCases to avoid new signals persisting in the OpenEdxPublicSignal cache of instances.
     """
 
+    pre_run_instances: ClassVar[list[OpenEdxPublicSignal]]
+    pre_run_mapping: ClassVar[dict[str, OpenEdxPublicSignal]]
+
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         """
         Save current signal instances.
         """
-        super().setUpClass()
+        super().setUpClass()  # type: ignore[misc]
         cls.pre_run_instances = list(OpenEdxPublicSignal.instances)
         cls.pre_run_mapping = dict(OpenEdxPublicSignal._mapping)  # pylint: disable=protected-access
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         """
         Restore instance cache to pre-test state.
         """
-        super().tearDownClass()
+        super().tearDownClass()  # type: ignore[misc]
         OpenEdxPublicSignal.instances = cls.pre_run_instances
         OpenEdxPublicSignal._mapping = cls.pre_run_mapping  # pylint: disable=protected-access
 
@@ -37,7 +42,7 @@ class EventsIsolationMixin:
     """
 
     @classmethod
-    def disable_all_events(cls):
+    def disable_all_events(cls) -> None:
         """
         Disable all events Open edX Events from all subdomains.
         """
@@ -45,7 +50,7 @@ class EventsIsolationMixin:
             event.disable()
 
     @classmethod
-    def enable_all_events(cls):
+    def enable_all_events(cls) -> None:
         """
         Enable all events Open edX Events from all subdomains.
         """
@@ -53,7 +58,7 @@ class EventsIsolationMixin:
             event.enable()
 
     @classmethod
-    def enable_events_by_type(cls, *event_types):
+    def enable_events_by_type(cls, *event_types: str) -> None:
         """
         Enable specific Open edX Events given their type.
 
@@ -64,7 +69,9 @@ class EventsIsolationMixin:
             try:
                 event = OpenEdxPublicSignal.get_signal_by_type(event_type)
             except KeyError:
-                all_event_types = sorted(s.event_type for s in OpenEdxPublicSignal.all_events())
+                all_event_types = sorted(
+                    s.event_type for s in OpenEdxPublicSignal.all_events()
+                )
                 err_msg = (
                     "You tried to enable event '{}', but I don't recognize that "
                     "signal type. Did you mean one of these?: {}"
@@ -73,7 +80,7 @@ class EventsIsolationMixin:
             event.enable()
 
     @classmethod
-    def allow_send_events_failure(cls, *event_types):
+    def allow_send_events_failure(cls, *event_types: str) -> None:
         """
         Allow that send_event method fails for the specified event.
 
@@ -87,7 +94,9 @@ class EventsIsolationMixin:
             try:
                 event = OpenEdxPublicSignal.get_signal_by_type(event_type)
             except KeyError:
-                all_event_types = sorted(s.event_type for s in OpenEdxPublicSignal.all_events())
+                all_event_types = sorted(
+                    s.event_type for s in OpenEdxPublicSignal.all_events()
+                )
                 err_msg = (
                     "You tried to enable event '{}', but I don't recognize that "
                     "signal type. Did you mean one of these?: {}"
@@ -109,18 +118,18 @@ class OpenEdxEventsTestMixin(EventsIsolationMixin):
     This class assumes that it's being used in conjunction with TestCase or TestCase subclasses.
     """
 
-    ENABLED_OPENEDX_EVENTS = []
+    ENABLED_OPENEDX_EVENTS: list[str] = []
 
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         """
         Start events isolation for class.
         """
-        super().setUpClass()
+        super().setUpClass()  # type: ignore[misc]
         cls().start_events_isolation()
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         """
         Re-enable all events after class teardown.
 
@@ -128,10 +137,10 @@ class OpenEdxEventsTestMixin(EventsIsolationMixin):
         process are not affected by this class's event isolation.
         """
         cls().enable_all_events()
-        super().tearDownClass()
+        super().tearDownClass()  # type: ignore[misc]
 
     @classmethod
-    def start_events_isolation(cls):
+    def start_events_isolation(cls) -> None:
         """
         Start Open edX Events isolation and then enable events by type.
         """

@@ -1,8 +1,11 @@
 """
 Makes ``consume_events`` management command available.
 """
+
 import json
 import logging
+from argparse import ArgumentParser
+from typing import Any
 
 from django.core.management.base import BaseCommand
 
@@ -32,41 +35,39 @@ class Command(BaseCommand):
             --extra '{"last_read_msg_id": "1679676448892-0"}'
     """
 
-    def add_arguments(self, parser):
+    def add_arguments(self, parser: ArgumentParser) -> None:
         """
         Add arguments for parsing topic, group, and extra args.
         """
         parser.add_argument(
-            '-t', '--topic',
+            "-t",
+            "--topic",
             nargs=1,
             required=True,
-            help='Topic to consume (without environment prefix)'
+            help="Topic to consume (without environment prefix)",
         )
         parser.add_argument(
-            '-g', '--group_id',
-            nargs=1,
-            required=True,
-            help='Consumer group id'
+            "-g", "--group_id", nargs=1, required=True, help="Consumer group id"
         )
         parser.add_argument(
-            '--extra',
-            nargs='?',
+            "--extra",
+            nargs="?",
             type=str,
             required=False,
-            help='JSON object to pass additional arguments to the consumer.'
+            help="JSON object to pass additional arguments to the consumer.",
         )
 
-    def handle(self, *args, **options):
+    def handle(self, *args: Any, **options: Any) -> None:
         """
         Create consumer based on django settings and consume events.
         """
         try:
             # load additional arguments specific for the underlying implementation of event_bus.
-            extra = json.loads(options.get('extra') or '{}')
+            extra = json.loads(options.get("extra") or "{}")
             load_all_signals()
             event_consumer = make_single_consumer(
-                topic=options['topic'][0],
-                group_id=options['group_id'][0],
+                topic=options["topic"][0],
+                group_id=options["group_id"][0],
                 **extra,
             )
             event_consumer.consume_indefinitely()
