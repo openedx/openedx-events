@@ -1,5 +1,5 @@
 .PHONY: clean clean_tox compile_translations coverage diff_cover docs dummy_translations \
-        extract_translations fake_translations help pull_translations push_translations \
+        extract_translations fake_translations help mypy pull_translations push_translations \
         quality requirements selfcheck test test-all upgrade validate install_transifex_client
 
 .DEFAULT_GOAL := help
@@ -60,6 +60,9 @@ upgrade: ## update the requirements/*.txt files with the latest packages satisfy
 
 quality: ## check coding style with pycodestyle and pylint
 	tox -e quality
+
+mypy: ## run mypy static type checks
+	mypy openedx_events
 
 piptools: ## install pinned version of pip-compile and pip-sync
 	pip install -r requirements/pip.txt

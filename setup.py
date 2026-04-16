@@ -165,6 +165,7 @@ setup(
         include=["openedx_events", "openedx_events.*"],
         exclude=["*tests"],
     ),
+    package_data={"openedx_events": ["py.typed"]},
     install_requires=load_requirements("requirements/base.in"),
     python_requires=">=3.12",
     license="Apache 2.0",
