@@ -8,7 +8,7 @@ class OpenEdxEventException(Exception):
     Base class for Open edX Events exceptions.
     """
 
-    def __init__(self, message=""):
+    def __init__(self, message: str = "") -> None:
         """
         Init method for OpenEdxEventException base class.
 
@@ -18,7 +18,7 @@ class OpenEdxEventException(Exception):
         super().__init__()
         self.message = message
 
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Show string representation of OpenEdxEventException using its message.
 
@@ -37,7 +37,7 @@ class InstantiationError(OpenEdxEventException):
     missing.
     """
 
-    def __init__(self, event_type="", message=""):
+    def __init__(self, event_type: str = "", message: str = "") -> None:
         """
         Init method for InstantiationError custom exception class.
 
@@ -57,7 +57,7 @@ class SenderValidationError(OpenEdxEventException):
     Describes errors that occur while validating arguments of send methods.
     """
 
-    def __init__(self, event_type="", message=""):
+    def __init__(self, event_type: str = "", message: str = "") -> None:
         """
         Init method for SenderValidationError custom exception class.
 
@@ -77,7 +77,7 @@ class ProducerConfigurationError(OpenEdxEventException):
     Describes errors that occurs while validating format of producer signal configuration.
     """
 
-    def __init__(self, event_type="", message=""):
+    def __init__(self, event_type: str = "", message: str = "") -> None:
         """
         Init method for ProducerConfigurationError custom exception class.
 
