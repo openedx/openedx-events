@@ -1,4 +1,5 @@
 """Tests for avro.deserializer"""
+
 import json
 from datetime import datetime
 from typing import Dict, List
@@ -74,8 +75,14 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
                             "name": "ComplexAttrs",
                             "type": "record",
                             "fields": [
-                                {"name": "list_field", "type": {"type": "array", "items": "long"}},
-                                {"name": "dict_field", "type": {"type": "map", "values": "long"}},
+                                {
+                                    "name": "list_field",
+                                    "type": {"type": "array", "items": "long"},
+                                },
+                                {
+                                    "name": "dict_field",
+                                    "type": {"type": "map", "values": "long"},
+                                },
                             ],
                         },
                     },
@@ -104,23 +111,44 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
                                             "name": "SimpleAttrs",
                                             "type": "record",
                                             "fields": [
-                                                {"name": "boolean_field", "type": "boolean"},
+                                                {
+                                                    "name": "boolean_field",
+                                                    "type": "boolean",
+                                                },
                                                 {"name": "int_field", "type": "long"},
-                                                {"name": "float_field", "type": "double"},
-                                                {"name": "bytes_field", "type": "bytes"},
-                                                {"name": "string_field", "type": "string"},
+                                                {
+                                                    "name": "float_field",
+                                                    "type": "double",
+                                                },
+                                                {
+                                                    "name": "bytes_field",
+                                                    "type": "bytes",
+                                                },
+                                                {
+                                                    "name": "string_field",
+                                                    "type": "string",
+                                                },
                                             ],
                                         },
                                     },
                                 },
-                                {"name": "dict_of_attr_field", "type": {"type": "map", "values": "SimpleAttrs"}},
+                                {
+                                    "name": "dict_of_attr_field",
+                                    "type": {"type": "map", "values": "SimpleAttrs"},
+                                },
                                 {
                                     "name": "list_of_dict_field",
-                                    "type": {"type": "array", "items": {"type": "map", "values": "long"}},
+                                    "type": {
+                                        "type": "array",
+                                        "items": {"type": "map", "values": "long"},
+                                    },
                                 },
                                 {
                                     "name": "dict_of_list_field",
-                                    "type": {"type": "map", "values": {"type": "array", "items": "long"}},
+                                    "type": {
+                                        "type": "map",
+                                        "values": {"type": "array", "items": "long"},
+                                    },
                                 },
                             ],
                         },
@@ -134,9 +162,7 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         """
         Test JSON round-trip; schema creation is tested more fully in test_schema.py.
         """
-        SIGNAL = create_simple_signal({
-            "data": data_cls
-        })
+        SIGNAL = create_simple_signal({"data": data_cls})
 
         actual_schema = json.loads(AvroSignalDeserializer(SIGNAL).schema_string())
 
@@ -148,7 +174,10 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
             "test_data": {
                 "course_id": "bar.course",
                 "sub_name": "foo",
-                "sub_test_0": {"course_id": "a.nother.course", "sub_name": "a.sub.name"},
+                "sub_test_0": {
+                    "course_id": "a.nother.course",
+                    "sub_name": "a.sub.name",
+                },
                 "sub_test_1": {
                     "course_id": "b.uber.another.course",
                     "sub_name": "b.uber.sub.name",
@@ -157,10 +186,12 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         }
         deserializer = AvroSignalDeserializer(SIGNAL)
         event_data = deserializer.from_dict(initial_dict)
-        expected_event_data = EventData("foo", "bar.course",
-                                        SubTestData0("a.sub.name", "a.nother.course"),
-                                        SubTestData1("b.uber.sub.name", "b.uber.another.course")
-                                        )
+        expected_event_data = EventData(
+            "foo",
+            "bar.course",
+            SubTestData0("a.sub.name", "a.nother.course"),
+            SubTestData1("b.uber.sub.name", "b.uber.another.course"),
+        )
         test_data = event_data["test_data"]
         self.assertIsInstance(test_data, EventData)
         self.assertEqual(test_data, expected_event_data)
@@ -219,7 +250,9 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         """
         SIGNAL = create_simple_signal({"usage_key": LibraryUsageLocatorV2})
         deserializer = AvroSignalDeserializer(SIGNAL)
-        usage_key = LibraryUsageLocatorV2.from_string("lb:MITx:reallyhardproblems:problem:problem1")
+        usage_key = LibraryUsageLocatorV2.from_string(
+            "lb:MITx:reallyhardproblems:problem:problem1"
+        )
         as_dict = {"usage_key": str(usage_key)}
         event_data = deserializer.from_dict(as_dict)
         usage_key_deserialized = event_data["usage_key"]
@@ -229,9 +262,7 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
     def test_deserialization_with_custom_serializer(self):
         SIGNAL = create_simple_signal({"test_data": NonAttrs})
         deserializer = SpecialDeserializer(SIGNAL)
-        as_dict = {
-            "test_data": "a.val:a.nother.val"
-        }
+        as_dict = {"test_data": "a.val:a.nother.val"}
         event_data = deserializer.from_dict(as_dict)
         non_attrs_deserialized = event_data["test_data"]
         self.assertIsInstance(non_attrs_deserialized, NonAttrs)
@@ -239,16 +270,16 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
 
     def test_deserialization_with_custom_serializer_on_nested_fields(self):
         SIGNAL = create_simple_signal({"test_data": NestedNonAttrs})
-        as_dict = {"test_data": {
-            "field_0": "a.val:a.nother.val"
-        }}
+        as_dict = {"test_data": {"field_0": "a.val:a.nother.val"}}
         deserializer = SpecialDeserializer(SIGNAL)
         event_data = deserializer.from_dict(as_dict)
         deserialized_nested = event_data["test_data"]
         self.assertIsInstance(deserialized_nested, NestedNonAttrs)
         inner_deserialized_non_attrs = deserialized_nested.field_0
         self.assertIsInstance(inner_deserialized_non_attrs, NonAttrs)
-        self.assertEqual(inner_deserialized_non_attrs, NonAttrs("a.val", "a.nother.val"))
+        self.assertEqual(
+            inner_deserialized_non_attrs, NonAttrs("a.val", "a.nother.val")
+        )
 
     def test_deserialization_fails_if_missing_fields(self):
         # missing "sub_name" field
@@ -264,22 +295,18 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
             _ = deserializer.from_dict(initial_dict)
 
     def test_deserialization_of_optional_fields(self):
-        SIGNAL = create_simple_signal({
-            "data": SimpleAttrsWithDefaults
-        })
+        SIGNAL = create_simple_signal({"data": SimpleAttrsWithDefaults})
         deserializer = AvroSignalDeserializer(SIGNAL)
 
-        as_dict = {"data": {}}
+        as_dict: dict[str, dict] = {"data": {}}
         data_dict = deserializer.from_dict(as_dict)
         self.assertIsInstance(data_dict["data"], SimpleAttrsWithDefaults)
         self.assertEqual(data_dict["data"], SimpleAttrsWithDefaults())
 
     def test_deserialization_of_nested_optional_fields(self):
-        SIGNAL = create_simple_signal({
-            "data": NestedAttrsWithDefaults
-        })
+        SIGNAL = create_simple_signal({"data": NestedAttrsWithDefaults})
         deserializer = AvroSignalDeserializer(SIGNAL)
-        as_dict = {"data": {"field_0": {}}}
+        as_dict: dict[str, dict] = {"data": {"field_0": {}}}
         data_dict = deserializer.from_dict(as_dict)
         nested_field = data_dict["data"].field_0
         self.assertIsInstance(nested_field, SimpleAttrsWithDefaults)
@@ -452,7 +479,9 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
     def test_deserialization_of_dicts_with_keys_of_complex_types_fails(self):
         SIGNAL = create_simple_signal({"dict_input": Dict[CourseKey, int]})
         deserializer = AvroSignalDeserializer(SIGNAL)
-        initial_dict = {"dict_input": {CourseKey.from_string("course-v1:edX+DemoX.1+2014"): 1}}
+        initial_dict = {
+            "dict_input": {CourseKey.from_string("course-v1:edX+DemoX.1+2014"): 1}
+        }
         with self.assertRaises(TypeError):
             deserializer.from_dict(initial_dict)
 
@@ -463,13 +492,16 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         Create a dummy signal with a custom class that isn't in the deserializers dictionary
         and doesn't have __attrs_attrs__ to test the final TypeError case.
         """
+
         # Create a custom class that isn't in the deserializers and doesn't have __attrs_attrs__
         class CustomUnsupportedType:
             pass
 
         # Create a signal with a valid type first to avoid schema validation errors
         VALID_SIGNAL = create_simple_signal({"list_input": List[int]})
-        INVALID_SIGNAL = create_simple_signal({"list_input": List[CustomUnsupportedType]})
+        INVALID_SIGNAL = create_simple_signal(
+            {"list_input": List[CustomUnsupportedType]}
+        )
         initial_dict = {"list_input": [1, 2, 3]}
         deserializer = AvroSignalDeserializer(VALID_SIGNAL)
         # Update signal with invalid type
@@ -488,13 +520,15 @@ class TestAvroSignalDeserializerCache(TestCase, FreezeSignalCacheMixin):
         Test deserialize_bytes_to_event_data utility function.
         """
         SIGNAL = create_simple_signal({"test_data": EventData})
-        bytes_data = b'\x06foo\x14bar.course\x14a.sub.name\x1ea.nother.course\x1eb.uber.sub.name*b.uber.another.course'
-        expected = {"test_data": EventData(
-            "foo",
-            "bar.course",
-            SubTestData0("a.sub.name", "a.nother.course"),
-            SubTestData1("b.uber.sub.name", "b.uber.another.course"),
-        )}
+        bytes_data = b"\x06foo\x14bar.course\x14a.sub.name\x1ea.nother.course\x1eb.uber.sub.name*b.uber.another.course"
+        expected = {
+            "test_data": EventData(
+                "foo",
+                "bar.course",
+                SubTestData0("a.sub.name", "a.nother.course"),
+                SubTestData1("b.uber.sub.name", "b.uber.another.course"),
+            )
+        }
         deserialized = deserialize_bytes_to_event_data(bytes_data, SIGNAL)
         self.assertIsInstance(deserialized["test_data"], EventData)
         self.assertEqual(deserialized, expected)

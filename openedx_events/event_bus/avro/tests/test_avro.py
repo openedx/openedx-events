@@ -11,6 +11,7 @@ from ccx_keys.locator import CCXLocator
 from fastavro import schemaless_reader, schemaless_writer
 from fastavro.repository.base import SchemaRepositoryError
 from fastavro.schema import load_schema
+from fastavro.types import Schema
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import (
     LibraryCollectionLocator,
@@ -34,7 +35,9 @@ from openedx_events.testing import FreezeSignalCacheMixin
 from openedx_events.tooling import KNOWN_UNSERIALIZABLE_SIGNALS, OpenEdxPublicSignal, load_all_signals
 
 
-def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no cover
+def generate_test_data_for_schema(
+    schema: Schema,
+) -> Any | None:  # pragma: no cover
     """
     Generates test data dict for the given schema.
 
@@ -192,7 +195,7 @@ def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no
     return process_schema(schema)
 
 
-def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: no cover
+def generate_test_event_data_for_data_type(data_type: Any) -> Any:  # pragma: no cover
     """
     Generates test data for use in the event bus test cases.
 

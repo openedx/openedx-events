@@ -2,6 +2,7 @@
 
 import json
 from datetime import datetime
+from typing import Any
 
 import pytest
 from django.test import TestCase
@@ -33,31 +34,29 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
         """
         Test JSON round-trip; schema creation is tested more fully in test_schema.py.
         """
-        SIGNAL = create_simple_signal({
-            "data": SimpleAttrs
-        })
+        SIGNAL = create_simple_signal({"data": SimpleAttrs})
         actual_schema = json.loads(AvroSignalSerializer(SIGNAL).schema_string())
         expected_schema = {
-            'name': 'CloudEvent',
-            'type': 'record',
-            'doc': 'Avro Event Format for CloudEvents created with openedx_events/schema',
-            'namespace': 'simple.signal',
-            'fields': [
+            "name": "CloudEvent",
+            "type": "record",
+            "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+            "namespace": "simple.signal",
+            "fields": [
                 {
-                    'name': 'data',
-                    'type': {
-                        'name': 'SimpleAttrs',
-                        'type': 'record',
-                        'fields': [
-                            {'name': 'boolean_field', 'type': 'boolean'},
-                            {'name': 'int_field', 'type': 'long'},
-                            {'name': 'float_field', 'type': 'double'},
-                            {'name': 'bytes_field', 'type': 'bytes'},
-                            {'name': 'string_field', 'type': 'string'},
-                        ]
-                    }
+                    "name": "data",
+                    "type": {
+                        "name": "SimpleAttrs",
+                        "type": "record",
+                        "fields": [
+                            {"name": "boolean_field", "type": "boolean"},
+                            {"name": "int_field", "type": "long"},
+                            {"name": "float_field", "type": "double"},
+                            {"name": "bytes_field", "type": "bytes"},
+                            {"name": "string_field", "type": "string"},
+                        ],
+                    },
                 }
-            ]
+            ],
         }
         assert actual_schema == expected_schema
 
@@ -82,7 +81,10 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
             "test_data": {
                 "course_id": "bar.course",
                 "sub_name": "foo",
-                "sub_test_0": {"course_id": "a.nother.course", "sub_name": "a.sub.name"},
+                "sub_test_0": {
+                    "course_id": "a.nother.course",
+                    "sub_name": "a.sub.name",
+                },
                 "sub_test_1": {
                     "course_id": "b.uber.another.course",
                     "sub_name": "b.uber.sub.name",
@@ -137,7 +139,9 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
         """
         SIGNAL = create_simple_signal({"usage_key": LibraryUsageLocatorV2})
         serializer = AvroSignalSerializer(SIGNAL)
-        usage_key = LibraryUsageLocatorV2.from_string("lb:MITx:reallyhardproblems:problem:problem1")
+        usage_key = LibraryUsageLocatorV2.from_string(
+            "lb:MITx:reallyhardproblems:problem:problem1"
+        )
         test_data = {"usage_key": usage_key}
         data_dict = serializer.to_dict(test_data)
         self.assertDictEqual(data_dict, {"usage_key": str(usage_key)})
@@ -146,9 +150,7 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
         SIGNAL = create_simple_signal({"test_data": NonAttrs})
 
         serializer = SpecialSerializer(SIGNAL)
-        test_data = {
-            "test_data": NonAttrs("a.val", "a.nother.val")
-        }
+        test_data = {"test_data": NonAttrs("a.val", "a.nother.val")}
         data_dict = serializer.to_dict(test_data)
         self.assertDictEqual(data_dict, {"test_data": "a.val:a.nother.val"})
 
@@ -158,70 +160,98 @@ class TestAvroSignalSerializerCache(FreezeSignalCacheMixin, TestCase):
             "test_data": NestedNonAttrs(field_0=NonAttrs("a.val", "a.nother.val"))
         }
         serializer = SpecialSerializer(SIGNAL)
-        test_data = {"test_data": NestedNonAttrs(field_0=NonAttrs("a.val", "a.nother.val"))}
+        test_data = {
+            "test_data": NestedNonAttrs(field_0=NonAttrs("a.val", "a.nother.val"))
+        }
         data_dict = serializer.to_dict(test_data)
-        self.assertDictEqual(data_dict, {"test_data": {
-            "field_0": "a.val:a.nother.val"
-        }})
+        self.assertDictEqual(
+            data_dict, {"test_data": {"field_0": "a.val:a.nother.val"}}
+        )
 
     def test_serialization_of_optional_simple_fields(self):
-        SIGNAL = create_simple_signal({
-            "data": SimpleAttrsWithDefaults
-        })
+        SIGNAL = create_simple_signal({"data": SimpleAttrsWithDefaults})
         serializer = AvroSignalSerializer(SIGNAL)
         event_data = {"data": SimpleAttrsWithDefaults()}
         data_dict = serializer.to_dict(event_data)
-        self.assertDictEqual(data_dict, {"data": {'boolean_field': None,
-                                                  'bytes_field': None,
-                                                  'float_field': None,
-                                                  'int_field': None,
-                                                  'string_field': None,
-                                                  'attrs_field': None}})
+        self.assertDictEqual(
+            data_dict,
+            {
+                "data": {
+                    "boolean_field": None,
+                    "bytes_field": None,
+                    "float_field": None,
+                    "int_field": None,
+                    "string_field": None,
+                    "attrs_field": None,
+                }
+            },
+        )
 
     def test_serialization_of_optional_custom_fields(self):
         SIGNAL = create_simple_signal({"data": CustomAttrsWithDefaults})
         serializer = AvroSignalSerializer(SIGNAL)
-        event_data = {"data": CustomAttrsWithDefaults(coursekey_field=None, datetime_field=None)}
+        event_data = {
+            "data": CustomAttrsWithDefaults(coursekey_field=None, datetime_field=None)  # type: ignore[arg-type]
+        }
         data_dict = serializer.to_dict(event_data)
-        self.assertDictEqual(data_dict, {"data": {'coursekey_field': None,
-                                                  'datetime_field': None}})
+        self.assertDictEqual(
+            data_dict, {"data": {"coursekey_field": None, "datetime_field": None}}
+        )
 
     def test_serialization_of_none_mandatory_custom_fields(self):
         """Check that None isn't accepted if field not optional."""
         SIGNAL = create_simple_signal({"data": CustomAttrsWithoutDefaults})
         serializer = AvroSignalSerializer(SIGNAL)
-        event_data = {"data": CustomAttrsWithoutDefaults(coursekey_field=None, datetime_field=None)}
+        event_data: Any = {
+            "data": CustomAttrsWithoutDefaults(
+                coursekey_field=None,  # type: ignore[arg-type]
+                datetime_field=None,  # type: ignore[arg-type]
+            )
+        }
         with pytest.raises(Exception) as excinfo:
             serializer.to_dict(event_data)
-        assert excinfo.value.args[0] == "None cannot be handled by custom serializers (and default=None was not set)"
+        assert (
+            excinfo.value.args[0]
+            == "None cannot be handled by custom serializers (and default=None was not set)"
+        )
 
     def test_serialization_of_nested_optional_fields(self):
-        SIGNAL = create_simple_signal({
-            "data": NestedAttrsWithDefaults
-        })
+        SIGNAL = create_simple_signal({"data": NestedAttrsWithDefaults})
         serializer = AvroSignalSerializer(SIGNAL)
 
-        event_data = {"data": NestedAttrsWithDefaults(field_0=SimpleAttrsWithDefaults())}
+        event_data = {
+            "data": NestedAttrsWithDefaults(field_0=SimpleAttrsWithDefaults())
+        }
         data_dict = serializer.to_dict(event_data)
-        self.assertDictEqual(data_dict, {"data": {"field_0": {'boolean_field': None,
-                                                              'bytes_field': None,
-                                                              'float_field': None,
-                                                              'int_field': None,
-                                                              'string_field': None,
-                                                              'attrs_field': None
-                                                              }}})
+        self.assertDictEqual(
+            data_dict,
+            {
+                "data": {
+                    "field_0": {
+                        "boolean_field": None,
+                        "bytes_field": None,
+                        "float_field": None,
+                        "int_field": None,
+                        "string_field": None,
+                        "attrs_field": None,
+                    }
+                }
+            },
+        )
 
     def test_serialize_event_data_to_bytes(self):
         """
         Test serialize_event_data_to_bytes utility function.
         """
         SIGNAL = create_simple_signal({"test_data": EventData})
-        event_data = {"test_data": EventData(
-            "foo",
-            "bar.course",
-            SubTestData0("a.sub.name", "a.nother.course"),
-            SubTestData1("b.uber.sub.name", "b.uber.another.course"),
-        )}
+        event_data = {
+            "test_data": EventData(
+                "foo",
+                "bar.course",
+                SubTestData0("a.sub.name", "a.nother.course"),
+                SubTestData1("b.uber.sub.name", "b.uber.another.course"),
+            )
+        }
         serialized = serialize_event_data_to_bytes(event_data, SIGNAL)
-        expected = b'\x06foo\x14bar.course\x14a.sub.name\x1ea.nother.course\x1eb.uber.sub.name*b.uber.another.course'
+        expected = b"\x06foo\x14bar.course\x14a.sub.name\x1ea.nother.course\x1eb.uber.sub.name*b.uber.another.course"
         self.assertEqual(serialized, expected)

@@ -18,7 +18,7 @@ import copy
 import warnings
 from abc import ABC, abstractmethod
 from functools import lru_cache
-from typing import TypeVar
+from typing import Any, TypeVar
 
 from django.conf import settings
 from django.dispatch import receiver
@@ -187,7 +187,9 @@ class NoEventBusConsumer(EventBusConsumer):
 #   an instance of EventBusConsumer, calls to the consumer will be ignored with a warning at startup.
 
 
-def make_single_consumer(*, topic: str, group_id: str, **kwargs) -> EventBusConsumer:
+def make_single_consumer(
+    *, topic: str, group_id: str, **kwargs: Any
+) -> EventBusConsumer:
     """
     Construct a consumer for a given topic, group, and signal.
 
@@ -212,7 +214,7 @@ def make_single_consumer(*, topic: str, group_id: str, **kwargs) -> EventBusCons
 
 
 @receiver(setting_changed)
-def _reset_state(sender, **kwargs):  # pylint: disable=unused-argument
+def _reset_state(sender: Any, **kwargs: Any) -> None:  # pylint: disable=unused-argument
     """Reset caches when settings change during unit tests."""
     get_producer.cache_clear()
 
@@ -227,7 +229,10 @@ def _reset_state(sender, **kwargs):  # pylint: disable=unused-argument
 #    EVENT_BUS_TOPIC_PREFIX setting. See 0012-producing-to-event-bus-via-settings for more details.
 
 
-def merge_producer_configs(producer_config_original, producer_config_overrides):
+def merge_producer_configs(
+    producer_config_original: dict[str, Any],
+    producer_config_overrides: dict[str, Any],
+) -> dict[str, Any]:
     """
     Merge two EVENT_BUS_PRODUCER_CONFIG maps.
 
