@@ -16,12 +16,11 @@ class RoleAssignmentData:
         subject (str): The subject to which the role is assigned (e.g., 'user^john_doe').
         role (str): The role that is assigned (e.g., 'course_admin').
         scope (str): The scope in which the role is assigned (e.g., 'course-v1:edX+DemoX+Demo_Course').
-        actor (str): Username of the user performing the operation.
-            None if not known or not applicable (system-initiated actions).
+        actor_id (int): The database ID of the actor performing the operation, if available.
     """
 
     operation = attr.ib(type=str)
     subject = attr.ib(type=str)
     role = attr.ib(type=str)
     scope = attr.ib(type=str)
-    actor = attr.ib(type=str, default=None)
+    actor_id = attr.ib(type=int, default=None)

@@ -26,10 +26,10 @@
             "type": "string"
           },
           {
-            "name": "actor",
+            "name": "actor_id",
             "type": [
               "null",
-              "string"
+              "long"
             ],
             "default": null
           }
