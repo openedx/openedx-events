@@ -123,7 +123,7 @@ more-itertools==11.0.2
     #   jaraco-functools
 nh3==0.3.4
     # via readme-renderer
-packaging==26.0
+packaging==26.1
     # via
     #   -r requirements/test.txt
     #   pytest
@@ -202,7 +202,7 @@ rfc3986==2.0.0
     # via twine
 rich==15.0.0
     # via twine
-ruff==0.15.10
+ruff==0.15.11
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring
