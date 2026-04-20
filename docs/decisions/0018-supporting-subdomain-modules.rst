@@ -22,7 +22,7 @@ core subdomains depend on, without belonging to any of them. ``analytics`` is th
 existing example in ``openedx-events``.
 
 Authorization has the same character: role assignment events originate from
-``openedx-authz`` and are consumed across learning, content authoring, enterprise,
+``openedx-authz`` and could be consumed across learning, content authoring, enterprise,
 and other areas. Its domain definition is independent of any single application,
 so the ``authz`` module introduced in this ADR is classified as supporting.
 
