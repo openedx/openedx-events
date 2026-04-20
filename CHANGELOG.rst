@@ -16,6 +16,18 @@ Change Log
 Unreleased
 __________
 
+[11.2.0] - 2026-04-20
+---------------------
+
+Added
+~~~~~
+
+* New module openedx_events/authz with ROLE_ASSIGNMENT_CREATED and
+  ROLE_ASSIGNMENT_DELETED events.
+* ADR-0018 documents the decision to use dedicated top-level modules for
+  supporting subdomains, with authz module recognized as a prior instance of the
+  same concept in https://github.com/openedx/openedx-events/pull/230
+
 
 [11.1.1] - 2026-04-06
 ---------------------
