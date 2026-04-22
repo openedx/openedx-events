@@ -141,7 +141,7 @@ more-itertools==11.0.2
     #   jaraco-functools
 nh3==0.3.4
     # via readme-renderer
-packaging==26.0
+packaging==26.1
     # via
     #   -r requirements/test.txt
     #   build
