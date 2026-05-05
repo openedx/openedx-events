@@ -693,3 +693,29 @@ class LtiProviderLaunchData:
     course_key = attr.ib(type=CourseKey)
     usage_key = attr.ib(type=UsageKey)
     launch_params = attr.ib(type=LtiProviderLaunchParamsData)
+
+
+@attr.s(frozen=True)
+class RegistrationDemographicsData:
+    """
+    Attributes defined for Open edX registration demographics object.
+
+    Fired alongside a successful registration when a deployment has
+    enabled an authn-form plugin slot that collects optional demographic
+    information about the learner.
+
+    Both ``pronouns`` and ``department`` default to the empty string so
+    receivers can be written without ``hasattr`` / ``None`` checks; a
+    deployment that has not enabled demographics collection simply never
+    fires the signal at all.
+
+    Arguments:
+        user (UserData): the just-registered user.
+        pronouns (str): free-text pronouns string. Empty if not provided.
+        department (str): department key from the operator-configured
+            allowlist. Empty if not provided.
+    """
+
+    user = attr.ib(type=UserData)
+    pronouns = attr.ib(type=str, default="")
+    department = attr.ib(type=str, default="")

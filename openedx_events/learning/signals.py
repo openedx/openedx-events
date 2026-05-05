@@ -25,6 +25,7 @@ from openedx_events.learning.data import (
     ORASubmissionData,
     PersistentCourseGradeData,
     ProgramCertificateData,
+    RegistrationDemographicsData,
     UserData,
     UserNotificationData,
     VerificationAttemptData,
@@ -515,5 +516,18 @@ LTI_PROVIDER_LAUNCH_SUCCESS = OpenEdxPublicSignal(
     event_type="org.openedx.learning.lti_provider.launch.success.v1",
     data={
         "launch_data": LtiProviderLaunchData,
+    }
+)
+
+
+# .. event_type: org.openedx.learning.student.registration.demographics.captured.v1
+# .. event_name: REGISTRATION_DEMOGRAPHICS_CAPTURED
+# .. event_description: emitted after STUDENT_REGISTRATION_COMPLETED when an
+#       authn-form plugin slot has collected optional demographic fields.
+# .. event_data: RegistrationDemographicsData
+REGISTRATION_DEMOGRAPHICS_CAPTURED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.student.registration.demographics.captured.v1",
+    data={
+        "demographics": RegistrationDemographicsData,
     }
 )
