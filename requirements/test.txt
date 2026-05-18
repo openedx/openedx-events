@@ -14,7 +14,7 @@ cffi==2.0.0
     # via
     #   -r requirements/base.txt
     #   pynacl
-click==8.3.3
+click==8.4.0
     # via
     #   -r requirements/base.txt
     #   code-annotations
