@@ -19,11 +19,11 @@ build==1.5.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==7.1.2
+cachetools==7.1.4
     # via
     #   -r requirements/ci.txt
     #   tox
-certifi==2026.4.22
+certifi==2026.5.20
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -38,7 +38,7 @@ charset-normalizer==3.4.7
     # via
     #   -r requirements/quality.txt
     #   requests
-click==8.4.0
+click==8.4.1
     # via
     #   -r requirements/pip-tools.txt
     #   -r requirements/quality.txt
@@ -69,7 +69,7 @@ cryptography==48.0.0
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/quality.txt
-diff-cover==10.2.0
+diff-cover==10.2.1
     # via -r requirements/dev.in
 dill==0.4.1
     # via
@@ -124,7 +124,7 @@ id==1.6.1
     # via
     #   -r requirements/quality.txt
     #   twine
-idna==3.15
+idna==3.16
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -178,7 +178,7 @@ mdurl==0.1.2
     # via
     #   -r requirements/quality.txt
     #   markdown-it-py
-more-itertools==11.0.2
+more-itertools==11.1.0
     # via
     #   -r requirements/quality.txt
     #   jaraco-classes
@@ -313,7 +313,7 @@ rich==15.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-ruff==0.15.13
+ruff==0.15.14
     # via -r requirements/quality.txt
 secretstorage==3.5.0
     # via
@@ -328,7 +328,7 @@ sqlparse==0.5.5
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==5.7.0
+stevedore==5.8.0
     # via
     #   -r requirements/quality.txt
     #   code-annotations

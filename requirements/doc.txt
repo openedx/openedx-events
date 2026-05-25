@@ -26,7 +26,7 @@ beautifulsoup4==4.14.3
     # via pydata-sphinx-theme
 build==1.5.0
     # via -r requirements/doc.in
-certifi==2026.4.22
+certifi==2026.5.20
     # via requests
 cffi==2.0.0
     # via
@@ -35,7 +35,7 @@ cffi==2.0.0
     #   pynacl
 charset-normalizer==3.4.7
     # via requests
-click==8.4.0
+click==8.4.1
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -99,7 +99,7 @@ h11==0.16.0
     # via uvicorn
 id==1.6.1
     # via twine
-idna==3.15
+idna==3.16
     # via
     #   anyio
     #   requests
@@ -135,7 +135,7 @@ markupsafe==3.0.3
     #   jinja2
 mdurl==0.1.2
     # via markdown-it-py
-more-itertools==11.0.2
+more-itertools==11.1.0
     # via
     #   jaraco-classes
     #   jaraco-functools
@@ -226,9 +226,9 @@ six==1.17.0
     #   edx-ccx-keys
 smmap==5.0.3
     # via gitdb
-snowballstemmer==3.0.1
+snowballstemmer==3.1.0
     # via sphinx
-soupsieve==2.8.3
+soupsieve==2.8.4
     # via beautifulsoup4
 sphinx==9.1.0
     # via
@@ -262,9 +262,9 @@ sqlparse==0.5.5
     # via
     #   -r requirements/test.txt
     #   django
-starlette==1.0.0
+starlette==1.1.0
     # via sphinx-autobuild
-stevedore==5.7.0
+stevedore==5.8.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -290,9 +290,9 @@ urllib3==2.7.0
     #   id
     #   requests
     #   twine
-uvicorn==0.47.0
+uvicorn==0.48.0
     # via sphinx-autobuild
-watchfiles==1.1.1
+watchfiles==1.2.0
     # via sphinx-autobuild
 websockets==16.0
     # via sphinx-autobuild
