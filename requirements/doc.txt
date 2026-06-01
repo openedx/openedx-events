@@ -45,7 +45,7 @@ code-annotations==3.0.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.14.0
+coverage[toml]==7.14.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -99,7 +99,7 @@ h11==0.16.0
     # via uvicorn
 id==1.6.1
     # via twine
-idna==3.16
+idna==3.17
     # via
     #   anyio
     #   requests
@@ -262,7 +262,7 @@ sqlparse==0.5.5
     # via
     #   -r requirements/test.txt
     #   django
-starlette==1.1.0
+starlette==1.2.1
     # via sphinx-autobuild
 stevedore==5.8.0
     # via

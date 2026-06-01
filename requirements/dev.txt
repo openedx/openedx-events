@@ -59,7 +59,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.14.0
+coverage[toml]==7.14.1
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -69,7 +69,7 @@ cryptography==48.0.0
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/quality.txt
-diff-cover==10.2.1
+diff-cover==10.3.0
     # via -r requirements/dev.in
 dill==0.4.1
     # via
@@ -98,7 +98,7 @@ dnspython==2.8.0
     # via
     #   -r requirements/quality.txt
     #   pymongo
-docutils==0.22.4
+docutils==0.23
     # via
     #   -r requirements/quality.txt
     #   readme-renderer
@@ -124,7 +124,7 @@ id==1.6.1
     # via
     #   -r requirements/quality.txt
     #   twine
-idna==3.16
+idna==3.17
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -200,7 +200,7 @@ packaging==26.2
     #   wheel
 pip-tools==7.5.3
     # via -r requirements/pip-tools.txt
-platformdirs==4.9.6
+platformdirs==4.10.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -261,7 +261,7 @@ pynacl==1.6.2
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-pyproject-api==1.10.0
+pyproject-api==1.10.1
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -279,7 +279,7 @@ pytest-cov==7.1.0
     # via -r requirements/quality.txt
 pytest-django==4.12.0
     # via -r requirements/quality.txt
-python-discovery==1.3.1
+python-discovery==1.4.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -313,7 +313,7 @@ rich==15.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-ruff==0.15.14
+ruff==0.15.15
     # via -r requirements/quality.txt
 secretstorage==3.5.0
     # via
@@ -347,7 +347,7 @@ tomlkit==0.15.0
     #   -r requirements/quality.txt
     #   edx-lint
     #   pylint
-tox==4.54.0
+tox==4.55.0
     # via -r requirements/ci.txt
 twine==6.2.0
     # via -r requirements/quality.txt
@@ -361,7 +361,7 @@ urllib3==2.7.0
     #   id
     #   requests
     #   twine
-virtualenv==21.3.3
+virtualenv==21.4.2
     # via
     #   -r requirements/ci.txt
     #   tox
