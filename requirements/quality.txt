@@ -36,7 +36,7 @@ code-annotations==3.0.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.14.0
+coverage[toml]==7.14.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -65,7 +65,7 @@ dnspython==2.8.0
     # via
     #   -r requirements/test.txt
     #   pymongo
-docutils==0.22.4
+docutils==0.23
     # via readme-renderer
 edx-ccx-keys==2.0.2
     # via -r requirements/test.txt
@@ -81,7 +81,7 @@ fastavro==1.12.2
     # via -r requirements/test.txt
 id==1.6.1
     # via twine
-idna==3.16
+idna==3.17
     # via requests
 iniconfig==2.3.0
     # via
@@ -128,7 +128,7 @@ packaging==26.2
     #   -r requirements/test.txt
     #   pytest
     #   twine
-platformdirs==4.9.6
+platformdirs==4.10.0
     # via pylint
 pluggy==1.6.0
     # via
@@ -202,7 +202,7 @@ rfc3986==2.0.0
     # via twine
 rich==15.0.0
     # via twine
-ruff==0.15.14
+ruff==0.15.15
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring
