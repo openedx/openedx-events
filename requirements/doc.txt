@@ -49,7 +49,7 @@ coverage[toml]==7.14.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==48.0.0
+cryptography==49.0.0
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
@@ -183,7 +183,7 @@ pynacl==1.6.2
     #   edx-django-utils
 pyproject-hooks==1.2.0
     # via build
-pytest==9.0.3
+pytest==9.1.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -201,7 +201,7 @@ pyyaml==6.0.3
     #   -r requirements/test.txt
     #   code-annotations
     #   sphinxcontrib-mermaid
-readme-renderer==44.0
+readme-renderer==45.0
     # via twine
 requests==2.34.2
     # via
@@ -262,7 +262,7 @@ sqlparse==0.5.5
     # via
     #   -r requirements/test.txt
     #   django
-starlette==1.2.1
+starlette==1.3.1
     # via sphinx-autobuild
 stevedore==5.8.0
     # via

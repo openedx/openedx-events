@@ -63,7 +63,7 @@ coverage[toml]==7.14.1
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
-cryptography==48.0.0
+cryptography==49.0.0
     # via
     #   -r requirements/quality.txt
     #   secretstorage
@@ -75,7 +75,7 @@ dill==0.4.1
     # via
     #   -r requirements/quality.txt
     #   pylint
-distlib==0.4.1
+distlib==0.4.3
     # via
     #   -r requirements/ci.txt
     #   virtualenv
@@ -114,7 +114,7 @@ edx-opaque-keys[django]==4.0.0
     #   edx-ccx-keys
 fastavro==1.12.2
     # via -r requirements/quality.txt
-filelock==3.29.1
+filelock==3.29.4
     # via
     #   -r requirements/ci.txt
     #   python-discovery
@@ -233,7 +233,7 @@ pygments==2.20.0
     #   pytest
     #   readme-renderer
     #   rich
-pylint==4.0.5
+pylint==4.0.6
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -270,7 +270,7 @@ pyproject-hooks==1.2.0
     #   -r requirements/pip-tools.txt
     #   build
     #   pip-tools
-pytest==9.0.3
+pytest==9.1.0
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -279,7 +279,7 @@ pytest-cov==7.1.0
     # via -r requirements/quality.txt
 pytest-django==4.12.0
     # via -r requirements/quality.txt
-python-discovery==1.4.0
+python-discovery==1.4.2
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -292,7 +292,7 @@ pyyaml==6.0.3
     # via
     #   -r requirements/quality.txt
     #   code-annotations
-readme-renderer==44.0
+readme-renderer==45.0
     # via
     #   -r requirements/quality.txt
     #   twine
@@ -313,7 +313,7 @@ rich==15.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-ruff==0.15.16
+ruff==0.15.17
     # via -r requirements/quality.txt
 secretstorage==3.5.0
     # via
@@ -361,7 +361,7 @@ urllib3==2.7.0
     #   id
     #   requests
     #   twine
-virtualenv==21.4.2
+virtualenv==21.5.0
     # via
     #   -r requirements/ci.txt
     #   tox
