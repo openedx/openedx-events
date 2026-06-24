@@ -14,7 +14,7 @@ astroid==4.0.4
     #   pylint-celery
 attrs==26.1.0
     # via -r requirements/test.txt
-certifi==2026.5.20
+certifi==2026.6.17
     # via requests
 cffi==2.0.0
     # via
@@ -36,7 +36,7 @@ code-annotations==3.0.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.14.1
+coverage[toml]==7.14.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -121,7 +121,7 @@ more-itertools==11.1.0
     # via
     #   jaraco-classes
     #   jaraco-functools
-nh3==0.3.5
+nh3==0.3.6
     # via readme-renderer
 packaging==26.2
     # via
@@ -173,7 +173,7 @@ pynacl==1.6.2
     # via
     #   -r requirements/test.txt
     #   edx-django-utils
-pytest==9.1.0
+pytest==9.1.1
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -202,7 +202,7 @@ rfc3986==2.0.0
     # via twine
 rich==15.0.0
     # via twine
-ruff==0.15.17
+ruff==0.15.18
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring
