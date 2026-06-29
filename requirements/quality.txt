@@ -23,7 +23,7 @@ cffi==2.0.0
     #   pynacl
 charset-normalizer==3.4.7
     # via requests
-click==8.4.1
+click==8.4.2
     # via
     #   -r requirements/test.txt
     #   click-log
@@ -36,7 +36,7 @@ code-annotations==3.0.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.14.2
+coverage[toml]==7.14.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -202,7 +202,7 @@ rfc3986==2.0.0
     # via twine
 rich==15.0.0
     # via twine
-ruff==0.15.18
+ruff==0.15.20
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring

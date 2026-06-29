@@ -8,7 +8,7 @@ accessible-pygments==0.0.5
     # via pydata-sphinx-theme
 alabaster==1.0.0
     # via sphinx
-anyio==4.14.0
+anyio==4.14.1
     # via
     #   starlette
     #   watchfiles
@@ -35,7 +35,7 @@ cffi==2.0.0
     #   pynacl
 charset-normalizer==3.4.7
     # via requests
-click==8.4.1
+click==8.4.2
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -45,7 +45,7 @@ code-annotations==3.0.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.14.2
+coverage[toml]==7.14.3
     # via
     #   -r requirements/test.txt
     #   pytest-cov
