@@ -19,14 +19,8 @@ from opaque_keys.edx.locator import (
     LibraryUsageLocatorV2,
 )
 
-from openedx_events.event_bus.avro.deserializer import (
-    AvroSignalDeserializer,
-    deserialize_bytes_to_event_data,
-)
-from openedx_events.event_bus.avro.serializer import (
-    AvroSignalSerializer,
-    serialize_event_data_to_bytes,
-)
+from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
+from openedx_events.event_bus.avro.serializer import AvroSignalSerializer, serialize_event_data_to_bytes
 from openedx_events.event_bus.avro.tests.test_utilities import (
     EventData,
     NestedAttrsWithDefaults,
@@ -36,11 +30,7 @@ from openedx_events.event_bus.avro.tests.test_utilities import (
     create_simple_signal,
 )
 from openedx_events.testing import FreezeSignalCacheMixin
-from openedx_events.tooling import (
-    KNOWN_UNSERIALIZABLE_SIGNALS,
-    OpenEdxPublicSignal,
-    load_all_signals,
-)
+from openedx_events.tooling import KNOWN_UNSERIALIZABLE_SIGNALS, OpenEdxPublicSignal, load_all_signals
 
 
 def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no cover
