@@ -4,6 +4,7 @@ Data attributes for events within the architecture subdomain `learning`.
 These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
 """
+
 from datetime import datetime
 from typing import List
 
@@ -290,9 +291,10 @@ class XBlockWithScoringData(XBlockData):
             Specifying weight allows authors to make certain problems worth more
             than others.
     """
-    graded = attr.ib(bool)
-    raw_possible = attr.ib(float)
-    weight = attr.ib(float)
+
+    graded = attr.ib(type=bool)
+    raw_possible = attr.ib(type=float)
+    weight = attr.ib(type=float)
 
 
 @attr.s(frozen=True)
@@ -387,6 +389,7 @@ class PersistentSubsectionGradeData:
             the grading information changes, e.g. adding or removing a problem,
             or changing problem weights.
     """
+
     user_id = attr.ib(type=int)
     course = attr.ib(type=CourseData)
     subsection_edited_timestamp = attr.ib(type=datetime)
@@ -813,6 +816,7 @@ class LtiProviderLaunchParamsData:
         user_id (str): External (LTI) User ID of user performing the launch.
         extra_params (dict): A dictionary of other optional launch parameters.
     """
+
     roles = attr.ib(type=str)
     context_id = attr.ib(type=str)
     user_id = attr.ib(type=str)
@@ -830,6 +834,7 @@ class LtiProviderLaunchData:
         usage_key (UsageKey): The usage key for the content being luanched via LtiProviderLaunchParamsData.
         launch_params (LtiProviderLaunchParamsData): The LTI parameters used for the launch.
     """
+
     user = attr.ib(type=UserData)
     course_key = attr.ib(type=CourseKey)
     usage_key = attr.ib(type=UsageKey)

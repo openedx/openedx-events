@@ -104,15 +104,15 @@
                   },
                   {
                     "name": "graded",
-                    "type": "null"
+                    "type": "boolean"
                   },
                   {
                     "name": "raw_possible",
-                    "type": "null"
+                    "type": "double"
                   },
                   {
                     "name": "weight",
-                    "type": "null"
+                    "type": "double"
                   }
                 ]
               }
