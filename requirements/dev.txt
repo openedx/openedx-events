@@ -59,7 +59,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.14.3
+coverage[toml]==7.15.0
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -114,7 +114,7 @@ edx-opaque-keys[django]==4.0.0
     #   edx-ccx-keys
 fastavro==1.12.2
     # via -r requirements/quality.txt
-filelock==3.29.4
+filelock==3.29.5
     # via
     #   -r requirements/ci.txt
     #   python-discovery
@@ -279,7 +279,7 @@ pytest-cov==7.1.0
     # via -r requirements/quality.txt
 pytest-django==4.12.0
     # via -r requirements/quality.txt
-python-discovery==1.4.2
+python-discovery==1.4.3
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -328,7 +328,7 @@ sqlparse==0.5.5
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==5.8.0
+stevedore==5.9.0
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -351,7 +351,7 @@ tox==4.56.1
     # via -r requirements/ci.txt
 twine==6.2.0
     # via -r requirements/quality.txt
-typing-extensions==4.15.0
+typing-extensions==4.16.0
     # via
     #   -r requirements/quality.txt
     #   edx-opaque-keys

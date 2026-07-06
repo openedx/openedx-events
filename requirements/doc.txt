@@ -45,7 +45,7 @@ code-annotations==3.0.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.14.3
+coverage[toml]==7.15.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -264,7 +264,7 @@ sqlparse==0.5.5
     #   django
 starlette==1.3.1
     # via sphinx-autobuild
-stevedore==5.8.0
+stevedore==5.9.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -277,7 +277,7 @@ text-unidecode==1.3
     #   python-slugify
 twine==6.2.0
     # via -r requirements/doc.in
-typing-extensions==4.15.0
+typing-extensions==4.16.0
     # via
     #   -r requirements/test.txt
     #   anyio
@@ -290,7 +290,7 @@ urllib3==2.7.0
     #   id
     #   requests
     #   twine
-uvicorn==0.49.0
+uvicorn==0.50.0
     # via sphinx-autobuild
 watchfiles==1.2.0
     # via sphinx-autobuild

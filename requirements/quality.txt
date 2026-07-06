@@ -36,7 +36,7 @@ code-annotations==3.0.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.14.3
+coverage[toml]==7.15.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -215,7 +215,7 @@ sqlparse==0.5.5
     # via
     #   -r requirements/test.txt
     #   django
-stevedore==5.8.0
+stevedore==5.9.0
     # via
     #   -r requirements/test.txt
     #   code-annotations
@@ -231,7 +231,7 @@ tomlkit==0.15.0
     #   pylint
 twine==6.2.0
     # via -r requirements/quality.in
-typing-extensions==4.15.0
+typing-extensions==4.16.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
