@@ -294,7 +294,7 @@ class XBlockWithScoringData(XBlockData):
 
     graded = attr.ib(type=bool)
     raw_possible = attr.ib(type=float)
-    weight = attr.ib(type=float)
+    weight = attr.ib(type=float, default=None)
 
 
 @attr.s(frozen=True)
