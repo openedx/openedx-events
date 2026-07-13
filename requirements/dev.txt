@@ -15,7 +15,7 @@ astroid==4.0.4
     #   pylint-celery
 attrs==26.1.0
     # via -r requirements/quality.txt
-build==1.5.0
+build==1.5.1
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
@@ -27,14 +27,14 @@ certifi==2026.6.17
     # via
     #   -r requirements/quality.txt
     #   requests
-cffi==2.0.0
+cffi==2.1.0
     # via
     #   -r requirements/quality.txt
     #   cryptography
     #   pynacl
 chardet==7.4.3
     # via diff-cover
-charset-normalizer==3.4.7
+charset-normalizer==3.4.9
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -59,7 +59,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.14.3
+coverage[toml]==7.15.1
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -79,7 +79,7 @@ distlib==0.4.3
     # via
     #   -r requirements/ci.txt
     #   virtualenv
-django==5.2.15
+django==5.2.16
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
@@ -114,7 +114,7 @@ edx-opaque-keys[django]==4.0.0
     #   edx-ccx-keys
 fastavro==1.12.2
     # via -r requirements/quality.txt
-filelock==3.29.4
+filelock==3.29.7
     # via
     #   -r requirements/ci.txt
     #   python-discovery
@@ -244,7 +244,7 @@ pylint-celery==0.3
     # via
     #   -r requirements/quality.txt
     #   edx-lint
-pylint-django==2.7.0
+pylint-django==2.8.0
     # via
     #   -r requirements/quality.txt
     #   edx-lint
@@ -279,7 +279,7 @@ pytest-cov==7.1.0
     # via -r requirements/quality.txt
 pytest-django==4.12.0
     # via -r requirements/quality.txt
-python-discovery==1.4.2
+python-discovery==1.4.4
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -313,7 +313,7 @@ rich==15.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-ruff==0.15.20
+ruff==0.15.21
     # via -r requirements/quality.txt
 secretstorage==3.5.0
     # via
@@ -328,7 +328,7 @@ sqlparse==0.5.5
     # via
     #   -r requirements/quality.txt
     #   django
-stevedore==5.8.0
+stevedore==5.9.0
     # via
     #   -r requirements/quality.txt
     #   code-annotations
@@ -347,11 +347,11 @@ tomlkit==0.15.0
     #   -r requirements/quality.txt
     #   edx-lint
     #   pylint
-tox==4.56.1
+tox==4.56.4
     # via -r requirements/ci.txt
 twine==6.2.0
     # via -r requirements/quality.txt
-typing-extensions==4.15.0
+typing-extensions==4.16.0
     # via
     #   -r requirements/quality.txt
     #   edx-opaque-keys
@@ -361,7 +361,7 @@ urllib3==2.7.0
     #   id
     #   requests
     #   twine
-virtualenv==21.5.1
+virtualenv==21.6.1
     # via
     #   -r requirements/ci.txt
     #   tox
