@@ -153,7 +153,7 @@ def deserialize_bytes_to_event_data(
     deserializer = AvroSignalDeserializer(signal)
     schema_dict = deserializer.schema
     data_file = io.BytesIO(bytes_from_wire)
-    as_dict: dict[str, Any] = fastavro.schemaless_reader(data_file, schema_dict)  # type: ignore[assignment, call-arg]
+    as_dict: dict[str, Any] = fastavro.schemaless_reader(data_file, schema_dict)  # type: ignore[assignment]
     return deserializer.from_dict(as_dict)
 
 
