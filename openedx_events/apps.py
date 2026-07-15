@@ -1,7 +1,9 @@
 """
 openedx_events Django application initialization.
 """
+
 import logging
+from typing import Any
 
 from django.apps import AppConfig
 from django.conf import settings
@@ -13,11 +15,15 @@ from openedx_events.tooling import SIGNAL_PROCESSED_FROM_EVENT_BUS, OpenEdxPubli
 logger = logging.getLogger(__name__)
 
 
-def general_signal_handler(sender, signal, **kwargs):  # pylint: disable=unused-argument
+def general_signal_handler(  # pylint: disable=unused-argument
+    sender: Any, signal: OpenEdxPublicSignal, **kwargs: Any
+) -> None:
     """
     Signal handler for producing events to configured event bus.
     """
-    event_type_producer_configs = getattr(settings, "EVENT_BUS_PRODUCER_CONFIG", {}).get(signal.event_type, {})
+    event_type_producer_configs = getattr(
+        settings, "EVENT_BUS_PRODUCER_CONFIG", {}
+    ).get(signal.event_type, {})
     # event_type_producer_configs should look something like
     # {
     #        "topic_a": { "event_key_field": "my.key.field", "enabled": True },
@@ -50,7 +56,9 @@ class OpenedxEventsConfig(AppConfig):
 
     name = "openedx_events"
 
-    def _get_validated_signal_config(self, event_type, configuration):
+    def _get_validated_signal_config(
+        self, event_type: str, configuration: Any
+    ) -> OpenEdxPublicSignal:
         """
         Validate signal configuration format.
 
@@ -66,34 +74,38 @@ class OpenedxEventsConfig(AppConfig):
         if not isinstance(configuration, dict):
             raise ProducerConfigurationError(
                 event_type=event_type,
-                message="Configuration for event_types should be a dict"
+                message="Configuration for event_types should be a dict",
             )
         try:
             signal = OpenEdxPublicSignal.get_signal_by_type(event_type)
         except KeyError as exc:
-            raise ProducerConfigurationError(message=f"No OpenEdxPublicSignal of type: '{event_type}'.") from exc
+            raise ProducerConfigurationError(
+                message=f"No OpenEdxPublicSignal of type: '{event_type}'."
+            ) from exc
         for _, topic_configuration in configuration.items():
             if not isinstance(topic_configuration, dict):
                 raise ProducerConfigurationError(
                     event_type=event_type,
-                    message="One of the configuration objects is not a dictionary"
+                    message="One of the configuration objects is not a dictionary",
                 )
             expected_keys = {"event_key_field": str, "enabled": bool}
             for expected_key, expected_type in expected_keys.items():
                 if expected_key not in topic_configuration.keys():
                     raise ProducerConfigurationError(
                         event_type=event_type,
-                        message=f"One of the configuration object is missing '{expected_key}' key."
+                        message=f"One of the configuration object is missing '{expected_key}' key.",
                     )
                 if not isinstance(topic_configuration[expected_key], expected_type):
                     raise ProducerConfigurationError(
                         event_type=event_type,
-                        message=(f"Expected type: {expected_type} for '{expected_key}', "
-                                 f"found: {type(topic_configuration[expected_key])}")
+                        message=(
+                            f"Expected type: {expected_type} for '{expected_key}', "
+                            f"found: {type(topic_configuration[expected_key])}"
+                        ),
                     )
         return signal
 
-    def ready(self):
+    def ready(self) -> None:
         """
         Read `EVENT_BUS_PRODUCER_CONFIG` setting and connects appropriate handlers to the events based on it.
 
@@ -115,8 +127,10 @@ class OpenedxEventsConfig(AppConfig):
         signals_config = getattr(settings, "EVENT_BUS_PRODUCER_CONFIG", {})
         if not isinstance(signals_config, dict):
             raise ProducerConfigurationError(
-                message=("Setting 'EVENT_BUS_PRODUCER_CONFIG' should be a dictionary with event_type as"
-                         " key and list or tuple of config dictionaries as values")
+                message=(
+                    "Setting 'EVENT_BUS_PRODUCER_CONFIG' should be a dictionary with event_type as"
+                    " key and list or tuple of config dictionaries as values"
+                )
             )
         for event_type, configurations in signals_config.items():
             signal = self._get_validated_signal_config(event_type, configurations)

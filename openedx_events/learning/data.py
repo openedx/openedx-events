@@ -4,15 +4,15 @@ Data attributes for events within the architecture subdomain `learning`.
 These attributes follow the form of attr objects specified in OEP-49 data
 pattern.
 """
-from datetime import datetime
-from typing import List
 
-import attr
+from datetime import datetime
+
+import attrs
 from ccx_keys.locator import CCXLocator
 from opaque_keys.edx.keys import CourseKey, UsageKey
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class UserNonPersonalData:
     """
     Data related to a user object that does not contain personal information (PII).
@@ -22,11 +22,11 @@ class UserNonPersonalData:
         is_active (bool): indicates whether the user is active.
     """
 
-    id = attr.ib(type=int)
-    is_active = attr.ib(type=bool)
+    id: int
+    is_active: bool
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class UserPersonalData:
     """
     Data related to a user object that contains personal information (PII).
@@ -37,12 +37,12 @@ class UserPersonalData:
         name (str): name associated with the user's profile.
     """
 
-    username = attr.ib(type=str)
-    email = attr.ib(type=str)
-    name = attr.ib(type=str, factory=str)
+    username: str
+    email: str
+    name: str = attrs.field(factory=str)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class UserData(UserNonPersonalData):
     """
     Data related to a user object, including personal information and non-personal information.
@@ -55,10 +55,10 @@ class UserData(UserNonPersonalData):
         pii (UserPersonalData): user's Personal Identifiable Information.
     """
 
-    pii = attr.ib(type=UserPersonalData)
+    pii: UserPersonalData
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CourseData:
     """
     Data related to a course object.
@@ -73,13 +73,13 @@ class CourseData:
         end (datetime): end date for the course. Defaults to None.
     """
 
-    course_key = attr.ib(type=CourseKey)
-    display_name = attr.ib(type=str, factory=str)
-    start = attr.ib(type=datetime, default=None)
-    end = attr.ib(type=datetime, default=None)
+    course_key: CourseKey
+    display_name: str = attrs.field(factory=str)
+    start: datetime | None = None
+    end: datetime | None = None
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CcxCourseData:
     """
     Represents data for a CCX (Custom Courses for edX) course.
@@ -95,16 +95,16 @@ class CcxCourseData:
            Defaults to None, indicating no limit.
     """
 
-    ccx_course_key = attr.ib(type=CCXLocator)
-    master_course_key = attr.ib(type=CourseKey)
-    display_name = attr.ib(type=str, factory=str)
-    coach_email = attr.ib(type=str, factory=str)
-    start = attr.ib(type=str, default=None)
-    end = attr.ib(type=str, default=None)
-    max_students_allowed = attr.ib(type=int, default=None)
+    ccx_course_key: CCXLocator
+    master_course_key: CourseKey
+    display_name: str = attrs.field(factory=str)
+    coach_email: str = attrs.field(factory=str)
+    start: str | None = None
+    end: str | None = None
+    max_students_allowed: int | None = None
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CourseEnrollmentData:
     """
     Data related to a course enrollment object.
@@ -121,15 +121,15 @@ class CourseEnrollmentData:
         created_by (UserData): if available, who created the enrollment.
     """
 
-    user = attr.ib(type=UserData)
-    course = attr.ib(type=CourseData)
-    mode = attr.ib(type=str)
-    is_active = attr.ib(type=bool)
-    creation_date = attr.ib(type=datetime)
-    created_by = attr.ib(type=UserData, default=None)
+    user: UserData
+    course: CourseData
+    mode: str
+    is_active: bool
+    creation_date: datetime
+    created_by: UserData | None = None
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CertificateData:
     """
     Data related to a certificate object.
@@ -148,17 +148,17 @@ class CertificateData:
         previous_status (str): if available, pre-event certificate status.
     """
 
-    user = attr.ib(type=UserData)
-    course = attr.ib(type=CourseData)
-    mode = attr.ib(type=str)
-    grade = attr.ib(type=str)
-    download_url = attr.ib(type=str)
-    name = attr.ib(type=str)
-    current_status = attr.ib(type=str)
-    previous_status = attr.ib(type=str, factory=str)
+    user: UserData
+    course: CourseData
+    mode: str
+    grade: str
+    download_url: str
+    name: str
+    current_status: str
+    previous_status: str = attrs.field(factory=str)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CohortData:
     """
     Attributes defined for cohort membership object.
@@ -172,12 +172,12 @@ class CohortData:
         name (str): name of the cohort group.
     """
 
-    user = attr.ib(type=UserData)
-    course = attr.ib(type=CourseData)
-    name = attr.ib(type=str)
+    user: UserData
+    course: CourseData
+    name: str
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class DiscussionTopicContext:
     """
     Data related to a discussion topic context.
@@ -196,15 +196,15 @@ class DiscussionTopicContext:
            which this topic is used, such as the section, subsection etc.
     """
 
-    title = attr.ib(type=str)
-    usage_key = attr.ib(type=UsageKey, default=None)
-    group_id = attr.ib(type=int, default=None)
-    external_id = attr.ib(type=str, default=None)
-    ordering = attr.ib(type=int, default=None)
-    context = attr.ib(type=dict[str, str], factory=dict)
+    title: str
+    usage_key: UsageKey | None = None
+    group_id: int | None = None
+    external_id: str | None = None
+    ordering: int | None = None
+    context: dict[str, str] = attrs.field(factory=dict)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CourseDiscussionConfigurationData:
     """
     Data related to a course discussion configuration object.
@@ -221,20 +221,20 @@ class CourseDiscussionConfigurationData:
         enable_graded_units (bool): If enabled, discussion topics will be created for graded units as well.
         unit_level_visibility (bool): visibility for unit level.
         plugin_configuration (dict): The plugin configuration data for this context/provider.
-        contexts (List[DiscussionTopicContext]): contains all the contexts for which discussion is to be enabled.
+        contexts (list[DiscussionTopicContext]): contains all the contexts for which discussion is to be enabled.
     """
 
-    course_key = attr.ib(type=CourseKey)
-    provider_type = attr.ib(type=str)
-    enabled = attr.ib(type=bool, default=True)
-    enable_in_context = attr.ib(type=bool, default=True)
-    enable_graded_units = attr.ib(type=bool, default=False)
-    unit_level_visibility = attr.ib(type=bool, default=False)
-    plugin_configuration = attr.ib(type=dict[str, bool], default=dict)
-    contexts = attr.ib(type=List[DiscussionTopicContext], factory=list)
+    course_key: CourseKey
+    provider_type: str
+    enabled: bool = True
+    enable_in_context: bool = True
+    enable_graded_units: bool = False
+    unit_level_visibility: bool = False
+    plugin_configuration: dict[str, bool] = attrs.field(factory=dict)
+    contexts: list[DiscussionTopicContext] = attrs.field(factory=list)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class PersistentCourseGradeData:
     """
     Data related to a persistent course grade object.
@@ -253,17 +253,17 @@ class PersistentCourseGradeData:
         passed_timestamp (datetime): date the course was passed.
     """
 
-    user_id = attr.ib(type=int)
-    course = attr.ib(type=CourseData)
-    course_edited_timestamp = attr.ib(type=datetime)
-    course_version = attr.ib(type=str)
-    grading_policy_hash = attr.ib(type=str)
-    percent_grade = attr.ib(type=float)
-    letter_grade = attr.ib(type=str)
-    passed_timestamp = attr.ib(type=datetime)
+    user_id: int
+    course: CourseData
+    course_edited_timestamp: datetime
+    course_version: str
+    grading_policy_hash: str
+    percent_grade: float
+    letter_grade: str
+    passed_timestamp: datetime
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class XBlockSkillVerificationData:
     """
     Data needed to update verification count of tags/skills for an XBlock.
@@ -272,22 +272,22 @@ class XBlockSkillVerificationData:
 
     Attributes:
         usage_key (UsageKey): identifier of the XBlock object.
-        verified_skills (List[int]): list of verified skill ids.
-        ignored_skills (List[int]): list of ignored skill ids.
+        verified_skills (list[int]): list of verified skill ids.
+        ignored_skills (list[int]): list of ignored skill ids.
     """
 
-    usage_key = attr.ib(type=UsageKey)
-    verified_skills = attr.ib(type=List[int], factory=list)
-    ignored_skills = attr.ib(type=List[int], factory=list)
+    usage_key: UsageKey
+    verified_skills: list[int] = attrs.field(factory=list)
+    ignored_skills: list[int] = attrs.field(factory=list)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class UserNotificationData:
     """
     Data related to a user notification object.
 
     Attributes:
-        user_ids (List[int]): identifier of the users to which the notification belongs.
+        user_ids (list[int]): identifier of the users to which the notification belongs.
         notification_type (str): type of the notification.
         content_url (str): url of the content.
         app_name (str): name of the app.
@@ -295,15 +295,15 @@ class UserNotificationData:
         context (dict[str, str]): additional structured information about the context of the notification.
     """
 
-    user_ids = attr.ib(type=List[int])
-    notification_type = attr.ib(type=str)
-    content_url = attr.ib(type=str)
-    app_name = attr.ib(type=str)
-    course_key = attr.ib(type=CourseKey)
-    context = attr.ib(type=dict[str, str], factory=dict)
+    user_ids: list[int]
+    notification_type: str
+    content_url: str
+    app_name: str
+    course_key: CourseKey
+    context: dict[str, str] = attrs.field(factory=dict)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ProgramData:
     """
     Data related to a program object.
@@ -314,12 +314,12 @@ class ProgramData:
         program_type (str): The type slug of the program (e.g. professional, microbachelors, micromasters, etc.).
     """
 
-    uuid = attr.ib(type=str)
-    title = attr.ib(type=str)
-    program_type = attr.ib(type=str)
+    uuid: str
+    title: str
+    program_type: str
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ProgramCertificateData:
     """
     Data related to a Program Certificate object.
@@ -334,15 +334,15 @@ class ProgramCertificateData:
         url (str): A URL to the learner's credential.
     """
 
-    user = attr.ib(type=UserData)
-    program = attr.ib(type=ProgramData)
-    uuid = attr.ib(type=str)
-    status = attr.ib(type=str)
-    url = attr.ib(type=str)
-    certificate_available_date = attr.ib(type=datetime, default=None)
+    user: UserData
+    program: ProgramData
+    uuid: str
+    status: str
+    url: str
+    certificate_available_date: datetime | None = None
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ExamAttemptData:
     """
     Data for the Open edX Exam downstream effects.
@@ -368,14 +368,14 @@ class ExamAttemptData:
         requesting_user (UserData): user triggering the event (sometimes a non-learner, e.g. an instructor)
     """
 
-    student_user = attr.ib(type=UserData)
-    course_key = attr.ib(type=CourseKey)
-    usage_key = attr.ib(type=UsageKey)
-    exam_type = attr.ib(type=str)
-    requesting_user = attr.ib(type=UserData, default=None)
+    student_user: UserData
+    course_key: CourseKey
+    usage_key: UsageKey
+    exam_type: str
+    requesting_user: UserData | None = None
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CourseAccessRoleData:
     """
     Data related to a user's access role in a course.
@@ -387,13 +387,13 @@ class CourseAccessRoleData:
         role (str): the role of the user in the course.
     """
 
-    user = attr.ib(type=UserData)
-    org_key = attr.ib(type=str)
-    course_key = attr.ib(type=CourseKey)
-    role = attr.ib(type=str)
+    user: UserData
+    org_key: str
+    course_key: CourseKey
+    role: str
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class DiscussionThreadData:
     """
     Data related to a discussion thread object, used to represent Forum events such as comments, responses, and threads.
@@ -419,34 +419,34 @@ class DiscussionThreadData:
         user (UserData): information of the user that authored the thread/comment/response.
         course_id (CourseKey): identifier of the course.
         discussion (dict): discussion data. (optional, specific to comments and responses)
-        user_course_roles (List[str]): user course roles.
-        user_forums_roles (List[str]): user forums roles.
+        user_course_roles (list[str]): user course roles.
+        user_forums_roles (list[str]): user forums roles.
         options (dict): options for the thread.
     """
 
-    body = attr.ib(type=str)
-    commentable_id = attr.ib(type=str)
-    id = attr.ib(type=str)
-    truncated = attr.ib(type=bool)
-    url = attr.ib(type=str)
-    user = attr.ib(type=UserData)
-    course_id = attr.ib(type=CourseKey)
-    thread_type = attr.ib(type=str, default=None)
-    anonymous = attr.ib(type=bool, default=None)
-    anonymous_to_peers = attr.ib(type=bool, default=None)
-    title = attr.ib(type=str, default=None)
-    title_truncated = attr.ib(type=bool, default=None)
-    group_id = attr.ib(type=int, default=None)
-    team_id = attr.ib(type=int, default=None)
-    category_id = attr.ib(type=int, default=None)
-    category_name = attr.ib(type=str, default=None)
-    discussion = attr.ib(type=dict[str, str], default=None)
-    user_course_roles = attr.ib(type=List[str], factory=list)
-    user_forums_roles = attr.ib(type=List[str], factory=list)
-    options = attr.ib(type=dict[str, bool], factory=dict)
+    body: str
+    commentable_id: str
+    id: str
+    truncated: bool
+    url: str
+    user: UserData
+    course_id: CourseKey
+    thread_type: str | None = None
+    anonymous: bool | None = None
+    anonymous_to_peers: bool | None = None
+    title: str | None = None
+    title_truncated: bool | None = None
+    group_id: int | None = None
+    team_id: int | None = None
+    category_id: int | None = None
+    category_name: str | None = None
+    discussion: dict[str, str] | None = None
+    user_course_roles: list[str] = attrs.field(factory=list)
+    user_forums_roles: list[str] = attrs.field(factory=list)
+    options: dict[str, bool] = attrs.field(factory=dict)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CourseNotificationData:
     """
     Data related to a course notification object.
@@ -482,40 +482,40 @@ class CourseNotificationData:
         }
     """
 
-    course_key = attr.ib(type=CourseKey)
-    app_name = attr.ib(type=str)
-    notification_type = attr.ib(type=str)
-    content_url = attr.ib(type=str)
-    content_context = attr.ib(type=dict[str, str], factory=dict)
-    audience_filters = attr.ib(type=dict[str, List[str]], factory=dict)
+    course_key: CourseKey
+    app_name: str
+    notification_type: str
+    content_url: str
+    content_context: dict[str, str] = attrs.field(factory=dict)
+    audience_filters: dict[str, list[str]] = attrs.field(factory=dict)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ORASubmissionAnswer:
     """
     Data related to the answer submitted by the user in an ORA submission.
 
     Attributes:
-        parts (List[dict]): List with the response text in the ORA submission.
+        parts (list[dict]): List with the response text in the ORA submission.
 
         The following attributes are used to represent the files submitted in the ORA submission:
 
-        file_keys (List[str]): List of file keys in the ORA submission.
-        file_descriptions (List[str]): List of file descriptions in the ORA submission.
-        file_names (List[str]): List of file names in the ORA submission.
-        file_sizes (List[int]): List of file sizes in the ORA submission.
-        file_urls (List[str]): List of file URLs in the ORA submission.
+        file_keys (list[str]): List of file keys in the ORA submission.
+        file_descriptions (list[str]): List of file descriptions in the ORA submission.
+        file_names (list[str]): List of file names in the ORA submission.
+        file_sizes (list[int]): List of file sizes in the ORA submission.
+        file_urls (list[str]): List of file URLs in the ORA submission.
     """
 
-    parts = attr.ib(type=List[dict[str, str]], factory=list)
-    file_keys = attr.ib(type=List[str], factory=list)
-    file_descriptions = attr.ib(type=List[str], factory=list)
-    file_names = attr.ib(type=List[str], factory=list)
-    file_sizes = attr.ib(type=List[int], factory=list)
-    file_urls = attr.ib(type=List[str], factory=list)
+    parts: list[dict[str, str]] = attrs.field(factory=list)
+    file_keys: list[str] = attrs.field(factory=list)
+    file_descriptions: list[str] = attrs.field(factory=list)
+    file_names: list[str] = attrs.field(factory=list)
+    file_sizes: list[int] = attrs.field(factory=list)
+    file_urls: list[str] = attrs.field(factory=list)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ORASubmissionData:
     """
     Data associated to the ORA assessment submitted by a user.
@@ -530,16 +530,16 @@ class ORASubmissionData:
         answer (ORASubmissionAnswer): Answer submitted by the user in the ORA submission.
     """
 
-    uuid = attr.ib(type=str)
-    anonymous_user_id = attr.ib(type=str)
-    location = attr.ib(type=str)
-    attempt_number = attr.ib(type=int)
-    created_at = attr.ib(type=datetime)
-    submitted_at = attr.ib(type=datetime)
-    answer = attr.ib(type=ORASubmissionAnswer)
+    uuid: str
+    anonymous_user_id: str
+    location: str
+    attempt_number: int
+    created_at: datetime
+    submitted_at: datetime
+    answer: ORASubmissionAnswer
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CoursePassingStatusData:
     """
     Represents the event data when a user's grade is updated, indicates if current grade is enough for course passing.
@@ -551,12 +551,12 @@ class CoursePassingStatusData:
            in which the grade was updated.
     """
 
-    is_passing = attr.ib(type=bool)
-    course = attr.ib(type=CourseData)
-    user = attr.ib(type=UserData)
+    is_passing: bool
+    course: CourseData
+    user: UserData
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class CcxCoursePassingStatusData(CoursePassingStatusData):
     """
     Extends CoursePassingStatusData for CCX courses, specifying CCX course data.
@@ -571,10 +571,10 @@ class CcxCoursePassingStatusData(CoursePassingStatusData):
         All other attributes are inherited from CoursePassingStatusData.
     """
 
-    course = attr.ib(type=CcxCourseData)
+    course: CcxCourseData = attrs.field(kw_only=True)  # type: ignore[assignment]
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class BadgeTemplateData:
     """
     Data related to a badge template object.
@@ -587,14 +587,14 @@ class BadgeTemplateData:
         image_url (str): badge image url.
     """
 
-    uuid = attr.ib(type=str)
-    origin = attr.ib(type=str)
-    name = attr.ib(type=str, default=None)
-    description = attr.ib(type=str, default=None)
-    image_url = attr.ib(type=str, default=None)
+    uuid: str
+    origin: str
+    name: str | None = None
+    description: str | None = None
+    image_url: str | None = None
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class BadgeData:
     """
     Data related to a badge object.
@@ -605,12 +605,12 @@ class BadgeData:
         template (BadgeTemplateData): badge template data.
     """
 
-    uuid = attr.ib(type=str)
-    user = attr.ib(type=UserData)
-    template = attr.ib(type=BadgeTemplateData)
+    uuid: str
+    user: UserData
+    template: BadgeTemplateData
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class VerificationAttemptData:
     """
     Data related to a IDV attempt object.
@@ -623,14 +623,14 @@ class VerificationAttemptData:
         expiration_datetime (datetime, optional): When the verification attempt expires. Defaults to None.
     """
 
-    attempt_id = attr.ib(type=int)
-    user = attr.ib(type=UserData)
-    status = attr.ib(type=str)
-    name = attr.ib(type=str, default=None)
-    expiration_date = attr.ib(type=datetime, default=None)
+    attempt_id: int
+    user: UserData
+    status: str
+    name: str | None = None
+    expiration_date: datetime | None = None
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class ExternalGraderScoreData:
     """
     Class that encapsulates score data provided by an external grader.
@@ -650,18 +650,18 @@ class ExternalGraderScoreData:
         queue_name (str): Name of the queue that processed the submission
     """
 
-    points_possible = attr.ib(type=int)
-    points_earned = attr.ib(type=int)
-    course_id = attr.ib(type=str)
-    score_msg = attr.ib(type=str)
-    submission_id = attr.ib(type=int)
-    user_id = attr.ib(type=str)
-    module_id = attr.ib(type=str)
-    queue_key = attr.ib(type=str)
-    queue_name = attr.ib(type=str)
+    points_possible: int
+    points_earned: int
+    course_id: str
+    score_msg: str
+    submission_id: int
+    user_id: str
+    module_id: str
+    queue_key: str
+    queue_name: str
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class LtiProviderLaunchParamsData:
     """
     Data required for a successful LTI launch.
@@ -672,13 +672,14 @@ class LtiProviderLaunchParamsData:
         user_id (str): External (LTI) User ID of user performing the launch.
         extra_params (dict): A dictionary of other optional launch parameters.
     """
-    roles = attr.ib(type=str)
-    context_id = attr.ib(type=str)
-    user_id = attr.ib(type=str)
-    extra_params = attr.ib(type=dict[str, str], factory=dict)
+
+    roles: str
+    context_id: str
+    user_id: str
+    extra_params: dict[str, str] = attrs.field(factory=dict)
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class LtiProviderLaunchData:
     """
     Class that encapsulates LTI data for an LTI launch event.
@@ -689,7 +690,8 @@ class LtiProviderLaunchData:
         usage_key (UsageKey): The usage key for the content being luanched via LtiProviderLaunchParamsData.
         launch_params (LtiProviderLaunchParamsData): The LTI parameters used for the launch.
     """
-    user = attr.ib(type=UserData)
-    course_key = attr.ib(type=CourseKey)
-    usage_key = attr.ib(type=UsageKey)
-    launch_params = attr.ib(type=LtiProviderLaunchParamsData)
+
+    user: UserData
+    course_key: CourseKey
+    usage_key: UsageKey
+    launch_params: LtiProviderLaunchParamsData

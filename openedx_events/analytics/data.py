@@ -7,10 +7,10 @@ pattern.
 
 from datetime import datetime
 
-import attr
+import attrs
 
 
-@attr.s(frozen=True)
+@attrs.define(frozen=True)
 class TrackingLogData:
     """
     Data related to tracking events.
@@ -24,7 +24,7 @@ class TrackingLogData:
            defined in https://docs.openedx.org/en/latest/developers/references/internal_data_formats/index.html
     """
 
-    name = attr.ib(type=str)
-    timestamp = attr.ib(type=datetime)
-    data = attr.ib(type=str)
-    context = attr.ib(type=str)
+    name: str
+    timestamp: datetime
+    data: str
+    context: str

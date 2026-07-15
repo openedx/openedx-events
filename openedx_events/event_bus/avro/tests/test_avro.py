@@ -1,4 +1,5 @@
 """Test interplay of the various Avro helper classes"""
+
 import io
 import os
 from datetime import datetime
@@ -10,6 +11,7 @@ from ccx_keys.locator import CCXLocator
 from fastavro import schemaless_reader, schemaless_writer
 from fastavro.repository.base import SchemaRepositoryError
 from fastavro.schema import load_schema
+from fastavro.types import Schema
 from opaque_keys.edx.keys import CourseKey, UsageKey
 from opaque_keys.edx.locator import (
     LibraryCollectionLocator,
@@ -19,6 +21,7 @@ from opaque_keys.edx.locator import (
 )
 
 from openedx_events.event_bus.avro.deserializer import AvroSignalDeserializer, deserialize_bytes_to_event_data
+from openedx_events.event_bus.avro.schema import _unwrap_optional
 from openedx_events.event_bus.avro.serializer import AvroSignalSerializer, serialize_event_data_to_bytes
 from openedx_events.event_bus.avro.tests.test_utilities import (
     EventData,
@@ -32,7 +35,9 @@ from openedx_events.testing import FreezeSignalCacheMixin
 from openedx_events.tooling import KNOWN_UNSERIALIZABLE_SIGNALS, OpenEdxPublicSignal, load_all_signals
 
 
-def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no cover
+def generate_test_data_for_schema(
+    schema: Schema,
+) -> Any | None:  # pragma: no cover
     """
     Generates test data dict for the given schema.
 
@@ -190,7 +195,7 @@ def generate_test_data_for_schema(schema: dict[str, Any]) -> dict:  # pragma: no
     return process_schema(schema)
 
 
-def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: no cover
+def generate_test_event_data_for_data_type(data_type: Any) -> Any:  # pragma: no cover
     """
     Generates test data for use in the event bus test cases.
 
@@ -217,53 +222,67 @@ def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: n
         UsageKey: UsageKey.from_string(
             "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
         ),
-        LibraryCollectionLocator: LibraryCollectionLocator.from_string('lib-collection:MITx:reallyhardproblems:col1'),
-        LibraryContainerLocator: LibraryContainerLocator.from_string(
-            'lct:MITx:reallyhardproblems:unit:test-container',
+        LibraryCollectionLocator: LibraryCollectionLocator.from_string(
+            "lib-collection:MITx:reallyhardproblems:col1"
         ),
-        LibraryLocatorV2: LibraryLocatorV2.from_string('lib:MITx:reallyhardproblems'),
-        LibraryUsageLocatorV2: LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1'),
+        LibraryContainerLocator: LibraryContainerLocator.from_string(
+            "lct:MITx:reallyhardproblems:unit:test-container",
+        ),
+        LibraryLocatorV2: LibraryLocatorV2.from_string("lib:MITx:reallyhardproblems"),
+        LibraryUsageLocatorV2: LibraryUsageLocatorV2.from_string(
+            "lb:MITx:reallyhardproblems:problem:problem1"
+        ),
         List[int]: [1, 2, 3],
         List[str]: ["hi", "there"],
         datetime: datetime.now(),
-        CCXLocator: CCXLocator(org='edx', course='DemoX', run='Demo_course', ccx='1'),
+        CCXLocator: CCXLocator(org="edx", course="DemoX", run="Demo_course", ccx="1"),
         UUID: uuid4(),
-        dict[str, str]: {'key': 'value'},
-        dict[str, int]: {'key': 1},
-        dict[str, float]: {'key': 1.0},
-        dict[str, bool]: {'key': True},
-        dict[str, CourseKey]: {'key': CourseKey.from_string("course-v1:edX+DemoX.1+2014")},
-        dict[str, UsageKey]: {'key': UsageKey.from_string(
-            "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
-        )},
-        dict[str, LibraryLocatorV2]: {'key': LibraryLocatorV2.from_string('lib:MITx:reallyhardproblems')},
+        dict[str, str]: {"key": "value"},
+        dict[str, int]: {"key": 1},
+        dict[str, float]: {"key": 1.0},
+        dict[str, bool]: {"key": True},
+        dict[str, CourseKey]: {
+            "key": CourseKey.from_string("course-v1:edX+DemoX.1+2014")
+        },
+        dict[str, UsageKey]: {
+            "key": UsageKey.from_string(
+                "block-v1:edx+DemoX+Demo_course+type@video+block@UaEBjyMjcLW65gaTXggB93WmvoxGAJa0JeHRrDThk",
+            )
+        },
+        dict[str, LibraryLocatorV2]: {
+            "key": LibraryLocatorV2.from_string("lib:MITx:reallyhardproblems")
+        },
         dict[str, LibraryCollectionLocator]: {
-            'key': LibraryCollectionLocator.from_string('lib-collection:MITx:reallyhardproblems:col1'),
+            "key": LibraryCollectionLocator.from_string(
+                "lib-collection:MITx:reallyhardproblems:col1"
+            ),
         },
         dict[str, LibraryContainerLocator]: {
-            'key': LibraryContainerLocator.from_string('lct:MITx:reallyhardproblems:unit:test-container'),
+            "key": LibraryContainerLocator.from_string(
+                "lct:MITx:reallyhardproblems:unit:test-container"
+            ),
         },
         dict[str, LibraryUsageLocatorV2]: {
-            'key': LibraryUsageLocatorV2.from_string('lb:MITx:reallyhardproblems:problem:problem1'),
+            "key": LibraryUsageLocatorV2.from_string(
+                "lb:MITx:reallyhardproblems:problem:problem1"
+            ),
         },
-        dict[str, List[int]]: {'key': [1, 2, 3]},
-        dict[str, List[str]]: {'key': ["hi", "there"]},
-        dict[str, dict[str, str]]: {'key': {'key': 'value'}},
-        dict[str, dict[str, int]]: {'key': {'key': 1}},
-        dict[str, Union[str, int]]: {'key': 'value'},
-        dict[str, Union[str, int, float]]: {'key': 1.0},
+        dict[str, List[int]]: {"key": [1, 2, 3]},
+        dict[str, List[str]]: {"key": ["hi", "there"]},
+        dict[str, dict[str, str]]: {"key": {"key": "value"}},
+        dict[str, dict[str, int]]: {"key": {"key": 1}},
+        dict[str, Union[str, int]]: {"key": "value"},
+        dict[str, Union[str, int, float]]: {"key": 1.0},
     }
 
     # Handle origin types
     origin_type = get_origin(data_type)
 
     if origin_type is not None:
-
         args = get_args(data_type)
 
         # Handle List types
         if origin_type is list:
-
             item_type = args[0]
 
             # Handle List of simple types, e.g. List[str]
@@ -275,15 +294,21 @@ def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: n
                 dict_key_type, dict_value_type = get_args(item_type)
                 # Only support string keys for Avro compatibility
                 if dict_key_type is not str:
-                    raise TypeError("Avro maps only support string keys. The key type must be 'str'.")
+                    raise TypeError(
+                        "Avro maps only support string keys. The key type must be 'str'."
+                    )
 
                 sample_dict = {}
                 if get_origin(dict_value_type) is not None:
                     # Handle nested types in dictionary values, e.g. List[str]
-                    sample_dict = {"key": generate_test_event_data_for_data_type(dict_value_type)}
+                    sample_dict = {
+                        "key": generate_test_event_data_for_data_type(dict_value_type)
+                    }
                 else:
                     # Handle simple types in dictionary values, e.g. str
-                    default_value = defaults_per_type.get(dict_value_type, "default_value")
+                    default_value = defaults_per_type.get(
+                        dict_value_type, "default_value"
+                    )
                     sample_dict = {"key": default_value}
 
                 return [sample_dict]
@@ -294,12 +319,13 @@ def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: n
 
         # Handle Dict types
         elif origin_type is dict:
-
             key_type, value_type = args[0], args[1]
 
             # Only support string keys for Avro compatibility
             if key_type is not str:
-                raise TypeError("Avro maps only support string keys. The key type must be 'str'.")
+                raise TypeError(
+                    "Avro maps only support string keys. The key type must be 'str'."
+                )
 
             # Handle Dict of simple types, e.g. Dict[str, str]
             if value_type in defaults_per_type:
@@ -316,23 +342,29 @@ def generate_test_event_data_for_data_type(data_type: Any) -> dict:  # pragma: n
 
     # Handle attrs classes
     if hasattr(data_type, "__attrs_attrs__"):
-
         data_dict = {}
 
         for attribute in data_type.__attrs_attrs__:
+            attr_type = _unwrap_optional(attribute.type)
 
-            result = defaults_per_type.get(attribute.type, None)
+            result = defaults_per_type.get(attr_type, None)
             # Handle simple types
             if result is not None:
                 data_dict.update({attribute.name: result})
             else:
                 # Handle origin types in attributes
-                origin = get_origin(attribute.type)
+                origin = get_origin(attr_type)
                 if origin is not None:
-                    data_dict.update({attribute.name: generate_test_event_data_for_data_type(attribute.type)})
+                    data_dict.update(
+                        {
+                            attribute.name: generate_test_event_data_for_data_type(
+                                attr_type
+                            )
+                        }
+                    )
                 # Handle attrs classes
-                if hasattr(attribute.type, "__attrs_attrs__"):
-                    attr_data = generate_test_event_data_for_data_type(attribute.type)
+                if hasattr(attr_type, "__attrs_attrs__"):
+                    attr_data = generate_test_event_data_for_data_type(attr_type)
                     data_dict.update({attribute.name: attr_data})
 
     return data_type(**data_dict)
@@ -400,18 +432,26 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
             current_event_bytes = current_out.read()
 
             # get stored schema
-            schema_filename = f"{os.path.dirname(os.path.abspath(__file__))}/schemas/" \
-                              f"{signal.event_type.replace('.', '+')}_schema.avsc"
+            schema_filename = (
+                f"{os.path.dirname(os.path.abspath(__file__))}/schemas/"
+                f"{signal.event_type.replace('.', '+')}_schema.avsc"
+            )
             try:
                 stored_schema = load_schema(schema_filename)
             except SchemaRepositoryError:  # pragma: no cover
-                self.fail(f"Missing file {schema_filename}. If a new signal has been added, you may need to run the"
-                          f" generate_avro_schemas management command to save the signal schema.")
+                self.fail(
+                    f"Missing file {schema_filename}. If a new signal has been added, you may need to run the"
+                    f" generate_avro_schemas management command to save the signal schema."
+                )
 
             data_file_current = io.BytesIO(current_event_bytes)
 
             # read bytes using stored schema
-            schemaless_reader(data_file_current, reader_schema=stored_schema, writer_schema=schema_dict)
+            schemaless_reader(
+                data_file_current,
+                reader_schema=stored_schema,
+                writer_schema=schema_dict,
+            )
 
     def test_evolution_is_backward_compatible(self):
         """
@@ -431,13 +471,17 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
             schema_dict = serializer.schema
 
             # get stored schema
-            schema_filename = f"{os.path.dirname(os.path.abspath(__file__))}/schemas/" \
-                              f"{signal.event_type.replace('.', '+')}_schema.avsc"
+            schema_filename = (
+                f"{os.path.dirname(os.path.abspath(__file__))}/schemas/"
+                f"{signal.event_type.replace('.', '+')}_schema.avsc"
+            )
             try:
                 old_schema = load_schema(schema_filename)
             except SchemaRepositoryError:  # pragma: no cover
-                self.fail(f"Missing file {schema_filename}. If a new signal has been added, you may need to run the"
-                          f" generate_avro_schemas management command to save the signal schema.")
+                self.fail(
+                    f"Missing file {schema_filename}. If a new signal has been added, you may need to run the"
+                    f" generate_avro_schemas management command to save the signal schema."
+                )
             data_dict = generate_test_data_for_schema(old_schema)
 
             # write to bytes using stored schema
@@ -449,16 +493,20 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
             data_file_stored = io.BytesIO(stored_event_bytes)
 
             # read bytes using current schema
-            schemaless_reader(data_file_stored, reader_schema=schema_dict, writer_schema=old_schema)
+            schemaless_reader(
+                data_file_stored, reader_schema=schema_dict, writer_schema=old_schema
+            )
 
     def test_full_serialize_deserialize(self):
         SIGNAL = create_simple_signal({"test_data": EventData})
-        event_data = {"test_data": EventData(
-            "foo",
-            "bar.course",
-            SubTestData0("a.sub.name", "a.nother.course"),
-            SubTestData1("b.uber.sub.name", "b.uber.another.course"),
-        )}
+        event_data = {
+            "test_data": EventData(
+                "foo",
+                "bar.course",
+                SubTestData0("a.sub.name", "a.nother.course"),
+                SubTestData1("b.uber.sub.name", "b.uber.another.course"),
+            )
+        }
         serialized = serialize_event_data_to_bytes(event_data, SIGNAL)
         deserialized = deserialize_bytes_to_event_data(serialized, SIGNAL)
         self.assertIsInstance(deserialized["test_data"], EventData)
@@ -468,7 +516,9 @@ class TestAvro(FreezeSignalCacheMixin, TestCase):
 
     def test_full_serialize_deserialize_with_optional_fields(self):
         SIGNAL = create_simple_signal({"test_data": NestedAttrsWithDefaults})
-        event_data = {"test_data": NestedAttrsWithDefaults(field_0=SimpleAttrsWithDefaults())}
+        event_data = {
+            "test_data": NestedAttrsWithDefaults(field_0=SimpleAttrsWithDefaults())
+        }
         serialized = serialize_event_data_to_bytes(event_data, SIGNAL)
         deserialized = deserialize_bytes_to_event_data(serialized, SIGNAL)
         self.assertIsInstance(deserialized["test_data"], NestedAttrsWithDefaults)

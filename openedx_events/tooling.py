@@ -1,10 +1,13 @@
 """
 Tooling necessary to use Open edX events.
 """
+
 import pkgutil
 import warnings
+from datetime import datetime
 from importlib import import_module
 from logging import getLogger
+from typing import Any, Callable, ClassVar, Mapping
 
 from django.conf import settings
 from django.db import connection
@@ -19,13 +22,13 @@ log = getLogger(__name__)
 
 # If a signal is explicitly not for use with the event bus, add it to this list
 #  and document why in the event's annotations
-KNOWN_UNSERIALIZABLE_SIGNALS = [
+KNOWN_UNSERIALIZABLE_SIGNALS: list[str] = [
     "org.openedx.content_authoring.course.certificate_config.changed.v1",
     "org.openedx.content_authoring.course.certificate_config.deleted.v1",
     "org.openedx.learning.external_grader.score.submitted.v1",
 ]
 
-SIGNAL_PROCESSED_FROM_EVENT_BUS = "from_event_bus"
+SIGNAL_PROCESSED_FROM_EVENT_BUS: str = "from_event_bus"
 
 
 class OpenEdxPublicSignal(Signal):
@@ -33,10 +36,12 @@ class OpenEdxPublicSignal(Signal):
     Standardized Django Signals used to create Open edX events.
     """
 
-    _mapping = {}
-    instances = []
+    _mapping: ClassVar[dict[str, "OpenEdxPublicSignal"]] = {}
+    instances: ClassVar[list["OpenEdxPublicSignal"]] = []
 
-    def __init__(self, event_type, data, minor_version=0):
+    def __init__(
+        self, event_type: str, data: Mapping[str, type], minor_version: int = 0
+    ) -> None:
         """
         Init method for OpenEdxPublicSignal definition class.
 
@@ -54,21 +59,21 @@ class OpenEdxPublicSignal(Signal):
         self.__class__._mapping[self.event_type] = self
         super().__init__()
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         """
         Represent OpenEdxPublicSignal as a string.
         """
         return "<OpenEdxPublicSignal: {event_type}>".format(event_type=self.event_type)
 
     @classmethod
-    def all_events(cls):
+    def all_events(cls) -> list["OpenEdxPublicSignal"]:
         """
         Get all current events.
         """
         return cls.instances
 
     @classmethod
-    def get_signal_by_type(cls, event_type):
+    def get_signal_by_type(cls, event_type: str) -> "OpenEdxPublicSignal":
         """
         Get event identified by type.
 
@@ -80,7 +85,7 @@ class OpenEdxPublicSignal(Signal):
         """
         return cls._mapping[event_type]
 
-    def generate_signal_metadata(self, time=None):
+    def generate_signal_metadata(self, time: datetime | None = None) -> EventsMetadata:
         """
         Generate signal metadata when an event is sent.
 
@@ -94,7 +99,7 @@ class OpenEdxPublicSignal(Signal):
         Example usage:
             >>> metadata = \
                 STUDENT_REGISTRATION_COMPLETED.generate_signal_metadata()
-                attr.asdict(metadata)
+                attrs.asdict(metadata)
             >>> {
                     'event_type': '...learning.student.registration.completed.v1',
                     'minorversion': 0,
@@ -111,7 +116,13 @@ class OpenEdxPublicSignal(Signal):
             time=time,
         )
 
-    def _send_event_with_metadata(self, metadata, send_robust=True, from_event_bus=False, **kwargs):
+    def _send_event_with_metadata(
+        self,
+        metadata: EventsMetadata,
+        send_robust: bool = True,
+        from_event_bus: bool = False,
+        **kwargs: Any,
+    ) -> list[tuple[Any, Any]]:
         """
         Send events to all connected receivers with the provided metadata.
 
@@ -128,7 +139,7 @@ class OpenEdxPublicSignal(Signal):
         See ``send_event`` docstring for more details on its usage and behavior.
         """
 
-        def validate_sender():
+        def validate_sender() -> None:
             """
             Run validations over the send arguments.
 
@@ -175,7 +186,12 @@ class OpenEdxPublicSignal(Signal):
 
         return responses
 
-    def send_event(self, send_robust=True, time=None, **kwargs):
+    def send_event(
+        self,
+        send_robust: bool = True,
+        time: datetime | None = None,
+        **kwargs: Any,
+    ) -> list[tuple[Any, Any]]:
         """
         Send events to all connected receivers.
 
@@ -213,11 +229,18 @@ class OpenEdxPublicSignal(Signal):
                to this method and arguments used to initialize the event.
         """
         metadata = self.generate_signal_metadata(time=time)
-        return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)
+        return self._send_event_with_metadata(
+            metadata=metadata, send_robust=send_robust, **kwargs
+        )
 
     def send_event_with_custom_metadata(
-            self, metadata, /, *, send_robust=True, **kwargs
-    ):
+        self,
+        metadata: EventsMetadata,
+        /,
+        *,
+        send_robust: bool = True,
+        **kwargs: Any,
+    ) -> list[tuple[Any, Any]]:
         """
         Send events to all connected receivers using the provided metadata.
 
@@ -238,13 +261,15 @@ class OpenEdxPublicSignal(Signal):
             metadata=metadata, send_robust=send_robust, from_event_bus=True, **kwargs
         )
 
-    def send(self, sender, **kwargs):  # pylint: disable=unused-argument
+    def send(self, sender: Any, **kwargs: Any) -> None:  # type: ignore[override]  # pylint: disable=unused-argument
         """
         Override method used to recommend the sender to adopt our custom send.
         """
         warnings.warn("Please, use 'send_event' when triggering an Open edX event.")
 
-    def send_robust(self, sender, **kwargs):  # pylint: disable=unused-argument
+    def send_robust(  # type: ignore[override]  # pylint: disable=unused-argument
+        self, sender: Any, **kwargs: Any
+    ) -> None:
         """
         Override method used to recommend the sender to adopt our custom send.
         """
@@ -252,19 +277,19 @@ class OpenEdxPublicSignal(Signal):
             "Please, use 'send_event' with send_robust equals to True when triggering an Open edX event."
         )
 
-    def enable(self):
+    def enable(self) -> None:
         """
         Enable all events. Meaning, send_event will send a Django signal.
         """
         self._allow_events = True
 
-    def disable(self):
+    def disable(self) -> None:
         """
         Disable all events. Meaning, send_event will have no effect.
         """
         self._allow_events = False
 
-    def allow_send_event_failure(self):
+    def allow_send_event_failure(self) -> None:
         """
         Allow Django signal to fail. Meaning, uses send_robust instead of send.
 
@@ -273,23 +298,23 @@ class OpenEdxPublicSignal(Signal):
         self._allow_send_event_failure = True
 
 
-def _process_all_signals_modules(func):
+def _process_all_signals_modules(func: Callable[[str], Any]) -> None:
     """
     Walk the package tree and apply func on all signals.py files.
 
     Arguments:
         func: A method that takes a module name as its parameter
     """
-    root = import_module('openedx_events')
-    for m in pkgutil.walk_packages(root.__path__, root.__name__ + '.'):
+    root = import_module("openedx_events")
+    for m in pkgutil.walk_packages(root.__path__, root.__name__ + "."):
         module_name = m.name
-        if 'tests' in module_name.split('.') or '.test_' in module_name:
+        if "tests" in module_name.split(".") or ".test_" in module_name:
             continue
-        if module_name.endswith('.signals'):
+        if module_name.endswith(".signals"):
             func(module_name)
 
 
-def load_all_signals():
+def load_all_signals() -> None:
     """
     Ensure OpenEdxPublicSignal.all_events() cache is fully populated.
 
@@ -298,7 +323,7 @@ def load_all_signals():
     _process_all_signals_modules(import_module)
 
 
-def _reconnect_to_db_if_needed():  # pragma: no cover
+def _reconnect_to_db_if_needed() -> None:  # pragma: no cover
     """
     Reconnects the db connection if needed.
 
@@ -313,7 +338,7 @@ def _reconnect_to_db_if_needed():  # pragma: no cover
         connection.connect()
 
 
-def _clear_request_cache():  # pragma: no cover
+def _clear_request_cache() -> None:  # pragma: no cover
     """
     Clear the RequestCache so that each event consumption starts fresh.
 
@@ -323,7 +348,7 @@ def _clear_request_cache():  # pragma: no cover
     RequestCache.clear_all_namespaces()
 
 
-def prepare_for_new_work_cycle():  # pragma: no cover
+def prepare_for_new_work_cycle() -> None:  # pragma: no cover
     """
     Ensure that the application state is appropriate for performing a new unit of work.
 

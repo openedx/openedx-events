@@ -3,8 +3,10 @@
 
 -r test.txt               # Core and testing dependencies for this package
 
+django-stubs[compatible-mypy]  # Type stubs for Django, compatible with mypy
 edx-lint                  # edX pylint rules and plugins
 isort                     # to standardize order of imports
+mypy                      # Static type checker for Python
 pycodestyle               # PEP 8 compliance validation
 twine                     # Utility for publishing Python packages on PyPI.
 ruff                      # A modern Python code linter and formatter.

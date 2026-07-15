@@ -84,12 +84,20 @@ django==5.2.16
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/quality.txt
     #   django-crum
+    #   django-stubs
+    #   django-stubs-ext
     #   django-waffle
     #   edx-django-utils
 django-crum==0.7.9
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
+django-stubs[compatible-mypy]==6.0.2
+    # via -r requirements/quality.txt
+django-stubs-ext==6.0.2
+    # via
+    #   -r requirements/quality.txt
+    #   django-stubs
 django-waffle==5.0.0
     # via
     #   -r requirements/quality.txt
@@ -162,6 +170,10 @@ keyring==25.7.0
     # via
     #   -r requirements/quality.txt
     #   twine
+librt==0.9.0
+    # via
+    #   -r requirements/quality.txt
+    #   mypy
 markdown-it-py==4.2.0
     # via
     #   -r requirements/quality.txt
@@ -183,6 +195,14 @@ more-itertools==11.1.0
     #   -r requirements/quality.txt
     #   jaraco-classes
     #   jaraco-functools
+mypy==1.20.1
+    # via
+    #   -r requirements/quality.txt
+    #   django-stubs
+mypy-extensions==1.1.0
+    # via
+    #   -r requirements/quality.txt
+    #   mypy
 nh3==0.3.6
     # via
     #   -r requirements/quality.txt
@@ -198,6 +218,10 @@ packaging==26.2
     #   tox
     #   twine
     #   wheel
+pathspec==1.0.4
+    # via
+    #   -r requirements/quality.txt
+    #   mypy
 pip-tools==7.5.3
     # via -r requirements/pip-tools.txt
 platformdirs==4.10.0
@@ -351,10 +375,17 @@ tox==4.56.4
     # via -r requirements/ci.txt
 twine==6.2.0
     # via -r requirements/quality.txt
+types-pyyaml==6.0.12.20260408
+    # via
+    #   -r requirements/quality.txt
+    #   django-stubs
 typing-extensions==4.16.0
     # via
     #   -r requirements/quality.txt
+    #   django-stubs
+    #   django-stubs-ext
     #   edx-opaque-keys
+    #   mypy
 urllib3==2.7.0
     # via
     #   -r requirements/quality.txt

@@ -1,9 +1,10 @@
 """
 Utilities for Open edX events usage.
 """
-import collections
+
 import traceback
 from pprint import PrettyPrinter
+from typing import Any
 
 
 class ResponsePrettyPrinter(PrettyPrinter):
@@ -13,8 +14,18 @@ class ResponsePrettyPrinter(PrettyPrinter):
     This class pretty-prints the response of common Django Signals.
     """
 
-    # pylint: disable-next=arguments-renamed, too-many-positional-arguments
-    def _format(self, obj, stream, indent, allowance, context, level):
+    # This overrides a standard library function, these problems are inherited
+    # from it.
+    # pylint: disable=too-many-positional-arguments, redefined-builtin
+    def _format(
+        self,
+        object: Any,
+        stream: Any,
+        indent: int,
+        allowance: int,
+        context: dict[int, int],
+        level: int,
+    ) -> None:
         """
         Override format method exposing more information about functions/exceptions.
 
@@ -23,21 +34,33 @@ class ResponsePrettyPrinter(PrettyPrinter):
         exception.
         With other objects has the same behavior.
         """
-        if isinstance(obj, Exception):
-            exc_type, exc_value, exc_traceback = type(obj), obj, obj.__traceback__
+        if isinstance(object, Exception):
+            exc_type, exc_value, exc_traceback = (
+                type(object),
+                object,
+                object.__traceback__,
+            )
             exc_traceback_formatted = traceback.format_exception(
                 exc_type, exc_value, exc_traceback
             )
-            obj = "".join(exc_traceback_formatted)
-        if isinstance(obj, collections.abc.Callable):
-            obj = "{func_module}.{func_name}".format(
-                func_module=obj.__module__,
-                func_name=obj.__name__,
+            object = "".join(exc_traceback_formatted)
+        if callable(object):
+            object = "{func_module}.{func_name}".format(
+                func_module=object.__module__,
+                func_name=object.__name__,
             )
-        return super()._format(obj, stream, indent, allowance, context, level)
+        return super()._format(object, stream, indent, allowance, context, level)
 
 
-def format_responses(obj, indent=1, width=80, depth=None, *, compact=False, sort_dicts=True):
+def format_responses(
+    obj: Any,
+    indent: int = 1,
+    width: int = 80,
+    depth: int | None = None,
+    *,
+    compact: bool = False,
+    sort_dicts: bool = True,
+) -> str:
     """
     Format a Django Signal response object into a pretty-printed representation.
 
