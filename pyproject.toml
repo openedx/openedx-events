@@ -41,6 +41,54 @@ dependencies = [
 Homepage = "https://github.com/openedx/openedx-events"
 Repository = "https://github.com/openedx/openedx-events"
 
+[dependency-groups]
+test-base = [
+    "ddt",
+    "pytest-cov",
+    "pytest-django",
+    "code-annotations",
+]
+test = [
+    {include-group = "test-base"},
+]
+test-django42 = [
+    {include-group = "test-base"},
+    "Django>=4.2,<4.3",
+]
+test-django52 = [
+    {include-group = "test-base"},
+    "Django>=5.2,<5.3",
+]
+quality = [
+    {include-group = "test"},
+    "edx-lint",
+    "isort",
+    "pycodestyle",
+    "ruff",
+    "twine",
+]
+doc = [
+    {include-group = "test"},
+    "doc8",
+    "sphinx-book-theme",
+    "build",
+    "twine",
+    "sphinx",
+    "sphinx-copybutton",
+    "sphinx-autobuild",
+    "sphinxcontrib-mermaid",
+    "gitpython",
+]
+ci = [
+    "tox",
+    "tox-uv",
+]
+dev = [
+    {include-group = "quality"},
+    {include-group = "ci"},
+    {include-group = "doc"},
+]
+
 [tool.setuptools]
 include-package-data = true
 
@@ -61,6 +109,32 @@ exclude = ["*tests"]
 version_scheme = "only-version"
 local_scheme = "no-local-version"
 fallback_version = "0.0.0.dev0"
+
+[tool.uv]
+# Every `uv sync`/`uv run` invocation in this repo names an explicit --group.
+# Without this, uv's implicit default group (named "dev") would be synced *in
+# addition* to whatever --group is passed, silently pulling the entire
+# dev/test/quality/ci superset into every target, defeating the point of
+# having separate groups.
+default-groups = []
+#  DO NOT EDIT constraint-dependencies DIRECTLY.
+#  This list is managed by `edx_lint write_uv_constraints`
+#  and will be overwritten the next time `make upgrade` is run.
+#  - GLOBAL constraints: edit edx_lint/files/common_constraints.txt
+#  - REPO-SPECIFIC constraints: edit [tool.edx_lint].uv_constraints in this file
+constraint-dependencies = [
+    "Django<6.0",
+    "elasticsearch<7.14.0",
+]
+conflicts = [
+    [
+        {group = "test-django42"},
+        {group = "test-django52"},
+    ],
+]
+
+[tool.edx_lint]
+uv_constraints = []
 
 [tool.isort]
 indent = '    '
