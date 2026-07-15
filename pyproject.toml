@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm>8.1"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openedx-events"
+description = "Open edX events from the Hooks Extensions Framework"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+authors = [
+    {name = "edX", email = "oscm@edx.org"},
+]
+classifiers = [
+    'Development Status :: 3 - Alpha',
+    'Framework :: Django',
+    'Framework :: Django :: 4.2',
+    'Framework :: Django :: 5.2',
+    'Intended Audience :: Developers',
+    'Natural Language :: English',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.12',
+]
+keywords = [
+    "Python",
+    "edx",
+]
+
+dynamic = ["readme", "version"]
+
+dependencies = [
+    "Django>=4.2",
+    "edx_django_utils",
+    "attrs",
+    "fastavro",
+    "edx-opaque-keys[django]",
+    "edx-ccx-keys",
+    "setuptools",
+]
+
+[project.urls]
+Homepage = "https://github.com/openedx/openedx-events"
+Repository = "https://github.com/openedx/openedx-events"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.rst", "CHANGELOG.rst"], content-type = "text/x-rst"}
+
+[tool.setuptools.packages.find]
+include = ["openedx_events", "openedx_events.*"]
+exclude = ["*tests"]
+
+[tool.setuptools.exclude-package-data]
+# `packages.find.exclude` above only stops setuptools from *registering* the
+# tests subpackage -- with include-package-data=true, setuptools-scm still
+# sweeps tracked test files in as package_data unless excluded here too.
+"*" = ["tests/*", "tests/**/*"]
+
+[tool.setuptools_scm]
+version_scheme = "only-version"
+local_scheme = "no-local-version"
+fallback_version = "0.0.0.dev0"
+
+[tool.isort]
+indent = '    '
+line_length = 120
+multi_line_output = 3
+include_trailing_comma = true
+skip = ["migrations"]
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "test_utils.test_settings"
+addopts = "--cov openedx_events --cov-report term-missing --cov-report xml"
+norecursedirs = [".*", "docs", "requirements", "site-packages"]
