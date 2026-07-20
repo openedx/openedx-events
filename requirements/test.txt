@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.11.1
+asgiref==3.12.1
     # via
     #   -r requirements/base.txt
     #   django
@@ -21,7 +21,7 @@ click==8.4.2
     #   edx-django-utils
 code-annotations==3.0.0
     # via -r requirements/test.in
-coverage[toml]==7.15.1
+coverage[toml]==7.15.2
     # via pytest-cov
 ddt==1.7.2
     # via -r requirements/test.in
