@@ -29,59 +29,40 @@ coverage: clean ## generate and view HTML coverage report
 	$(BROWSER)htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	tox -e docs
+	uv run tox -e docs
 	$(BROWSER)docs/_build/html/index.html
 
 serve_docs: ## serve the built docs locally to preview the RtD in the browser with theme working
-	pip install -qr requirements/doc.txt
+	uv sync --group doc
 	make -e -C docs serve_docs
 
-# Define PIP_COMPILE_OPTS=-v to get more information during make upgrade.
-PIP_COMPILE = pip-compile --upgrade $(PIP_COMPILE_OPTS)
+compile-requirements: ## generate the uv.lock file without upgrading packages
+	uv lock
 
-upgrade: export CUSTOM_COMPILE_COMMAND=make upgrade
-upgrade: ## update the requirements/*.txt files with the latest packages satisfying requirements/*.in
-	pip install -qr requirements/pip-tools.txt
-	pip install -qr requirements/pip.txt
-	# Make sure to compile files after any other files they include!
-	$(PIP_COMPILE) --allow-unsafe -o requirements/pip.txt requirements/pip.in
-	$(PIP_COMPILE) -o requirements/pip-tools.txt requirements/pip-tools.in
-	pip install -qr requirements/pip.txt
-	pip install -qr requirements/pip-tools.txt
-	$(PIP_COMPILE) -o requirements/base.txt requirements/base.in
-	$(PIP_COMPILE) -o requirements/test.txt requirements/test.in
-	$(PIP_COMPILE) -o requirements/doc.txt requirements/doc.in
-	$(PIP_COMPILE) -o requirements/quality.txt requirements/quality.in
-	$(PIP_COMPILE) -o requirements/ci.txt requirements/ci.in
-	$(PIP_COMPILE) -o requirements/dev.txt requirements/dev.in
-	# Let tox control the Django version for tests
-	sed '/^[dD]jango==/d' requirements/test.txt > requirements/test.tmp
-	mv requirements/test.tmp requirements/test.txt
+upgrade: ## upgrade all packages in uv.lock and sync constraints from edx-lint
+	uv run --with edx-lint edx_lint write_uv_constraints pyproject.toml
+	uv lock --upgrade
 
 quality: ## check coding style with pycodestyle and pylint
-	tox -e quality
+	uv run tox -e quality
 
-piptools: ## install pinned version of pip-compile and pip-sync
-	pip install -r requirements/pip.txt
-	pip install -r requirements/pip-tools.txt
-
-requirements: clean_tox piptools ## install development environment requirements
-	pip-sync -q requirements/dev.txt requirements/private.*
+requirements: ## install development environment requirements
+	uv sync --group dev
 
 test: clean ## run tests in the current virtualenv
-	pytest
+	DJANGO_SETTINGS_MODULE=test_utils.test_settings pytest
 
 diff_cover: test ## find diff lines that need test coverage
 	diff-cover coverage.xml
 
 test-all: quality ## run tests on every supported Python/Django combination
-	tox
-	tox -e docs
+	uv run tox
+	uv run tox -e docs
 
 validate: quality test ## run tests and quality checks
 
 isort:  ## fix improperly sorted imports
-	isort test_utils openedx_events manage.py setup.py
+	isort test_utils src/openedx_events manage.py
 
 selfcheck: ## check that the Makefile is well-formed
 	@echo "The Makefile is well-formed."
