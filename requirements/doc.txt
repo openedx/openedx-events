@@ -12,7 +12,7 @@ anyio==4.14.2
     # via
     #   starlette
     #   watchfiles
-asgiref==3.11.1
+asgiref==3.12.1
     # via
     #   -r requirements/test.txt
     #   django
@@ -24,9 +24,9 @@ babel==2.18.0
     #   sphinx
 beautifulsoup4==4.15.0
     # via pydata-sphinx-theme
-build==1.5.1
+build==1.5.0
     # via -r requirements/doc.in
-certifi==2026.6.17
+certifi==2026.7.22
     # via requests
 cffi==2.1.0
     # via
@@ -45,7 +45,7 @@ code-annotations==3.0.0
     # via -r requirements/test.txt
 colorama==0.4.6
     # via sphinx-autobuild
-coverage[toml]==7.15.1
+coverage[toml]==7.15.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
@@ -93,7 +93,7 @@ fastavro==1.12.2
     # via -r requirements/test.txt
 gitdb==4.0.12
     # via gitpython
-gitpython==3.1.51
+gitpython==3.1.57
     # via -r requirements/doc.in
 h11==0.16.0
     # via uvicorn
@@ -113,7 +113,7 @@ jaraco-classes==3.4.0
     # via keyring
 jaraco-context==6.1.2
     # via keyring
-jaraco-functools==4.5.0
+jaraco-functools==4.6.0
     # via keyring
 jeepney==0.9.0
     # via
@@ -123,6 +123,7 @@ jinja2==3.1.6
     # via
     #   -r requirements/test.txt
     #   code-annotations
+    #   pydata-sphinx-theme
     #   sphinx
     #   sphinxcontrib-mermaid
 keyring==25.7.0
@@ -161,7 +162,7 @@ pycparser==3.0
     # via
     #   -r requirements/test.txt
     #   cffi
-pydata-sphinx-theme==0.16.1
+pydata-sphinx-theme==0.20.0
     # via sphinx-book-theme
 pygments==2.20.0
     # via
@@ -205,6 +206,7 @@ readme-renderer==45.0
     # via twine
 requests==2.34.2
     # via
+    #   pydata-sphinx-theme
     #   requests-toolbelt
     #   sphinx
     #   twine
@@ -228,7 +230,7 @@ smmap==5.0.3
     # via gitdb
 snowballstemmer==3.1.1
     # via sphinx
-soupsieve==2.8.4
+soupsieve==2.9.1
     # via beautifulsoup4
 sphinx==9.1.0
     # via
@@ -240,7 +242,7 @@ sphinx==9.1.0
     #   sphinxcontrib-mermaid
 sphinx-autobuild==2025.8.25
     # via -r requirements/doc.in
-sphinx-book-theme==1.2.0
+sphinx-book-theme==1.4.0
     # via -r requirements/doc.in
 sphinx-copybutton==0.5.2
     # via -r requirements/doc.in
@@ -252,7 +254,7 @@ sphinxcontrib-htmlhelp==2.1.0
     # via sphinx
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
-sphinxcontrib-mermaid==2.0.3
+sphinxcontrib-mermaid==2.1.0
     # via -r requirements/doc.in
 sphinxcontrib-qthelp==2.0.0
     # via sphinx
@@ -283,7 +285,6 @@ typing-extensions==4.16.0
     #   anyio
     #   beautifulsoup4
     #   edx-opaque-keys
-    #   pydata-sphinx-theme
     #   starlette
 urllib3==2.7.0
     # via
@@ -294,5 +295,5 @@ uvicorn==0.51.0
     # via sphinx-autobuild
 watchfiles==1.2.0
     # via sphinx-autobuild
-websockets==16.1
+websockets==16.1.1
     # via sphinx-autobuild
