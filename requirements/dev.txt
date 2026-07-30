@@ -4,7 +4,7 @@
 #
 #    make upgrade
 #
-asgiref==3.11.1
+asgiref==3.12.1
     # via
     #   -r requirements/quality.txt
     #   django
@@ -15,15 +15,15 @@ astroid==4.0.4
     #   pylint-celery
 attrs==26.1.0
     # via -r requirements/quality.txt
-build==1.5.1
+build==1.5.0
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==7.1.4
+cachetools==7.1.6
     # via
     #   -r requirements/ci.txt
     #   tox
-certifi==2026.6.17
+certifi==2026.7.22
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -59,7 +59,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.15.1
+coverage[toml]==7.15.2
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -69,7 +69,7 @@ cryptography==49.0.0
     #   secretstorage
 ddt==1.7.2
     # via -r requirements/quality.txt
-diff-cover==10.3.0
+diff-cover==10.4.1
     # via -r requirements/dev.in
 dill==0.4.1
     # via
@@ -114,7 +114,7 @@ edx-opaque-keys[django]==4.0.0
     #   edx-ccx-keys
 fastavro==1.12.2
     # via -r requirements/quality.txt
-filelock==3.29.7
+filelock==3.32.0
     # via
     #   -r requirements/ci.txt
     #   python-discovery
@@ -144,7 +144,7 @@ jaraco-context==6.1.2
     # via
     #   -r requirements/quality.txt
     #   keyring
-jaraco-functools==4.5.0
+jaraco-functools==4.6.0
     # via
     #   -r requirements/quality.txt
     #   keyring
@@ -198,9 +198,9 @@ packaging==26.2
     #   tox
     #   twine
     #   wheel
-pip-tools==7.5.3
+pip-tools==7.6.0
     # via -r requirements/pip-tools.txt
-platformdirs==4.10.0
+platformdirs==4.11.0
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -261,7 +261,7 @@ pynacl==1.6.2
     # via
     #   -r requirements/quality.txt
     #   edx-django-utils
-pyproject-api==1.10.1
+pyproject-api==1.11.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -279,7 +279,7 @@ pytest-cov==7.1.0
     # via -r requirements/quality.txt
 pytest-django==4.12.0
     # via -r requirements/quality.txt
-python-discovery==1.4.4
+python-discovery==1.5.0
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -313,7 +313,7 @@ rich==15.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-ruff==0.15.21
+ruff==0.16.0
     # via -r requirements/quality.txt
 secretstorage==3.5.0
     # via
@@ -342,12 +342,12 @@ tomli-w==1.2.0
     # via
     #   -r requirements/ci.txt
     #   tox
-tomlkit==0.15.0
+tomlkit==0.15.1
     # via
     #   -r requirements/quality.txt
     #   edx-lint
     #   pylint
-tox==4.56.4
+tox==4.58.0
     # via -r requirements/ci.txt
 twine==6.2.0
     # via -r requirements/quality.txt
@@ -361,7 +361,7 @@ urllib3==2.7.0
     #   id
     #   requests
     #   twine
-virtualenv==21.6.1
+virtualenv==21.7.0
     # via
     #   -r requirements/ci.txt
     #   tox
