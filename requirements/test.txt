@@ -10,7 +10,7 @@ asgiref==3.12.1
     #   django
 attrs==26.1.0
     # via -r requirements/base.txt
-cffi==2.1.0
+cffi==2.1.1
     # via
     #   -r requirements/base.txt
     #   pynacl
@@ -21,7 +21,7 @@ click==8.4.2
     #   edx-django-utils
 code-annotations==3.0.0
     # via -r requirements/test.in
-coverage[toml]==7.15.2
+coverage[toml]==7.15.4
     # via pytest-cov
 ddt==1.7.2
     # via -r requirements/test.in
@@ -59,7 +59,7 @@ jinja2==3.1.6
     # via code-annotations
 markupsafe==3.0.3
     # via jinja2
-packaging==26.2
+packaging==26.3
     # via pytest
 pluggy==1.6.0
     # via
@@ -89,7 +89,7 @@ pytest==9.1.1
     #   pytest-django
 pytest-cov==7.1.0
     # via -r requirements/test.in
-pytest-django==4.12.0
+pytest-django==4.14.0
     # via -r requirements/test.in
 python-slugify==8.0.4
     # via code-annotations
@@ -99,7 +99,7 @@ six==1.17.0
     # via
     #   -r requirements/base.txt
     #   edx-ccx-keys
-sqlparse==0.5.5
+sqlparse==0.6.0
     # via
     #   -r requirements/base.txt
     #   django
