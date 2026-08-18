@@ -4,19 +4,23 @@ This file contains all test for the tooling.py file.
 Classes:
     EventsToolingTest: Test events tooling.
 """
+import base64
 import datetime
 import sys
 from contextlib import contextmanager
-from unittest.mock import Mock, patch
+from unittest.mock import ANY, Mock, patch
 from uuid import UUID, uuid1
 
 import attr
 import ddt
 import pytest
-from django.test import TestCase, override_settings
+from django.db import transaction
+from django.test import TestCase, TransactionTestCase, override_settings
 
 from openedx_events.data import EventsMetadata
 from openedx_events.exceptions import SenderValidationError
+from openedx_events.learning.data import UserData, UserPersonalData
+from openedx_events.learning.signals import SESSION_LOGIN_COMPLETED
 from openedx_events.testing import FreezeSignalCacheMixin
 from openedx_events.tooling import OpenEdxPublicSignal, _process_all_signals_modules, load_all_signals
 
@@ -257,7 +261,8 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
 
         assert response == expected_response
         mock_send_event_with_metadata.assert_called_once_with(
-            metadata=metadata, send_robust=True, foo="bar", from_event_bus=True
+            metadata=metadata, send_robust=True, foo="bar", from_event_bus=True,
+            send_on_commit=False, send_async=False,
         )
 
     @ddt.data(
@@ -331,6 +336,225 @@ class OpenEdxPublicSignalTestCache(FreezeSignalCacheMixin, TestCase):
 
         send_mock.assert_not_called()
         self.assertListEqual([], result)
+
+
+def _make_user_data():
+    """Build a UserData payload for the real SESSION_LOGIN_COMPLETED signal."""
+    return UserData(
+        pii=UserPersonalData(username="alice", email="alice@example.com", name="Alice"),
+        id=1,
+        is_active=True,
+    )
+
+
+class SendEventOnCommitTests(TestCase):
+    """
+    Tests for the ``send_on_commit`` parameter of ``send_event``.
+
+    Uses ``TestCase.captureOnCommitCallbacks`` to observe callbacks that
+    ``transaction.on_commit`` registers inside the outer test-level
+    transaction.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.receiver = Mock(return_value="ok")
+        SESSION_LOGIN_COMPLETED.connect(self.receiver)
+        self.addCleanup(SESSION_LOGIN_COMPLETED.disconnect, self.receiver)
+
+    def test_send_on_commit_defers_until_commit(self):
+        """
+        With ``send_on_commit=True`` inside a transaction, the receiver is
+        only called once the enclosing transaction commits.
+        """
+        with self.captureOnCommitCallbacks(execute=False) as callbacks:
+            result = SESSION_LOGIN_COMPLETED.send_event(
+                send_on_commit=True, user=_make_user_data(),
+            )
+
+        self.receiver.assert_not_called()
+        self.assertEqual(result, [])
+        self.assertEqual(len(callbacks), 1)
+
+        # Now "commit" and verify receiver runs.
+        for cb in callbacks:
+            cb()
+        self.receiver.assert_called_once()
+
+    def test_send_on_commit_callback_runs_receiver(self):
+        """
+        Executing the captured ``on_commit`` callback (simulating a commit)
+        triggers the receiver, verifying that the work registered under the
+        callback is the actual signal send.
+        """
+        with self.captureOnCommitCallbacks(execute=True):
+            SESSION_LOGIN_COMPLETED.send_event(
+                send_on_commit=True, user=_make_user_data(),
+            )
+        self.receiver.assert_called_once()
+
+
+class SendEventOnCommitRollbackTests(TransactionTestCase):
+    """
+    Tests that ``send_on_commit`` suppresses sending when the transaction
+    rolls back. Uses ``TransactionTestCase`` so transactions actually commit
+    and roll back.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.receiver = Mock(return_value="ok")
+        SESSION_LOGIN_COMPLETED.connect(self.receiver)
+        self.addCleanup(SESSION_LOGIN_COMPLETED.disconnect, self.receiver)
+
+    def test_send_on_commit_immediate_when_no_transaction(self):
+        """
+        Outside any transaction, ``send_on_commit=True`` sends immediately
+        (per Django's ``transaction.on_commit`` contract).
+        """
+        SESSION_LOGIN_COMPLETED.send_event(
+            send_on_commit=True, user=_make_user_data(),
+        )
+        self.receiver.assert_called_once()
+
+    def test_send_on_commit_not_sent_on_rollback(self):
+        """
+        If the transaction rolls back, the on_commit callback is never run,
+        so the event is not sent.
+        """
+        class _Rollback(Exception):
+            pass
+
+        with self.assertRaises(_Rollback):
+            with transaction.atomic():
+                SESSION_LOGIN_COMPLETED.send_event(
+                    send_on_commit=True, user=_make_user_data(),
+                )
+                raise _Rollback()
+
+        self.receiver.assert_not_called()
+
+
+class SendEventAsyncTests(TestCase):
+    """
+    Tests for the ``send_async`` parameter of ``send_event``.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.receiver = Mock(return_value="ok")
+        SESSION_LOGIN_COMPLETED.connect(self.receiver)
+        self.addCleanup(SESSION_LOGIN_COMPLETED.disconnect, self.receiver)
+
+    @patch("openedx_events.tasks.send_async_event.delay")
+    def test_send_async_dispatches_celery_task(self, mock_delay):
+        """
+        With ``send_async=True``, the receiver is not called synchronously.
+        Instead a Celery task is dispatched with the serialized event data.
+        """
+        result = SESSION_LOGIN_COMPLETED.send_event(
+            send_async=True, user=_make_user_data(),
+        )
+
+        self.assertEqual(result, [])
+        self.receiver.assert_not_called()
+        mock_delay.assert_called_once_with(
+            SESSION_LOGIN_COMPLETED.event_type, ANY, ANY,
+        )
+        _, metadata_json, event_data_b64 = mock_delay.call_args.args
+        # The metadata round-trips through JSON.
+        self.assertEqual(
+            EventsMetadata.from_json(metadata_json).event_type,
+            SESSION_LOGIN_COMPLETED.event_type,
+        )
+        # The event data is valid base64.
+        base64.b64decode(event_data_b64)
+
+    def test_send_async_task_sends_event(self):
+        """
+        End-to-end: when ``send_async=True``, running the dispatched Celery
+        task synchronously delivers the event to the receiver with the same
+        metadata and a payload that round-trips through Avro.
+        """
+        captured = {}
+
+        def _capture_delay(event_type, metadata_json, event_data_b64):
+            captured["args"] = (event_type, metadata_json, event_data_b64)
+
+        with patch("openedx_events.tasks.send_async_event.delay", side_effect=_capture_delay):
+            SESSION_LOGIN_COMPLETED.send_event(
+                send_async=True, user=_make_user_data(),
+            )
+
+        self.receiver.assert_not_called()
+
+        # Now run the task body directly, simulating a Celery worker.
+        from openedx_events.tasks import send_async_event  # pylint: disable=import-outside-toplevel
+        send_async_event(*captured["args"])
+
+        self.receiver.assert_called_once()
+        call_kwargs = self.receiver.call_args.kwargs
+        self.assertEqual(call_kwargs["signal"], SESSION_LOGIN_COMPLETED)
+        self.assertEqual(call_kwargs["user"], _make_user_data())
+        self.assertEqual(call_kwargs["metadata"].event_type, SESSION_LOGIN_COMPLETED.event_type)
+        self.assertEqual(call_kwargs["from_event_bus"], False)
+
+
+class SendEventAsyncOnCommitTests(TestCase):
+    """
+    Tests combining ``send_on_commit=True`` with ``send_async=True``: the
+    Celery task dispatch should be deferred until the transaction commits.
+    """
+
+    def setUp(self):
+        super().setUp()
+        self.receiver = Mock(return_value="ok")
+        SESSION_LOGIN_COMPLETED.connect(self.receiver)
+        self.addCleanup(SESSION_LOGIN_COMPLETED.disconnect, self.receiver)
+
+    @patch("openedx_events.tasks.send_async_event.delay")
+    def test_async_on_commit_defers_dispatch(self, mock_delay):
+        """
+        ``send_async=True`` + ``send_on_commit=True`` in a transaction: the
+        Celery dispatch is registered as an on_commit callback, not invoked
+        immediately.
+        """
+        with self.captureOnCommitCallbacks(execute=False) as callbacks:
+            SESSION_LOGIN_COMPLETED.send_event(
+                send_async=True, send_on_commit=True, user=_make_user_data(),
+            )
+
+        mock_delay.assert_not_called()
+        self.assertEqual(len(callbacks), 1)
+
+        for cb in callbacks:
+            cb()
+        mock_delay.assert_called_once()
+
+
+class SendEventAsyncOnCommitRollbackTests(TransactionTestCase):
+    """Rollback behavior for ``send_async`` + ``send_on_commit``."""
+
+    def setUp(self):
+        super().setUp()
+        self.receiver = Mock(return_value="ok")
+        SESSION_LOGIN_COMPLETED.connect(self.receiver)
+        self.addCleanup(SESSION_LOGIN_COMPLETED.disconnect, self.receiver)
+
+    @patch("openedx_events.tasks.send_async_event.delay")
+    def test_async_on_commit_not_dispatched_on_rollback(self, mock_delay):
+        class _Rollback(Exception):
+            pass
+
+        with self.assertRaises(_Rollback):
+            with transaction.atomic():
+                SESSION_LOGIN_COMPLETED.send_event(
+                    send_async=True, send_on_commit=True, user=_make_user_data(),
+                )
+                raise _Rollback()
+
+        mock_delay.assert_not_called()
+        self.receiver.assert_not_called()
 
 
 class TestLoadAllSignals(FreezeSignalCacheMixin, TestCase):
