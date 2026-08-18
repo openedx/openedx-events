@@ -16,6 +16,16 @@ Change Log
 Unreleased
 __________
 
+[11.2.1] - 2026-07-21
+---------------------
+
+Changed
+~~~~~~~
+
+* Upgraded Python requirements to their latest compatible versions.
+* Pinned GitHub Actions workflows to full commit SHAs.
+* Bumped ``actions/checkout``, ``actions/setup-python``, and ``codecov/codecov-action`` to their latest major versions.
+
 [11.2.0] - 2026-04-20
 ---------------------
 
