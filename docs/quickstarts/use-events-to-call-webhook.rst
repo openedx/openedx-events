@@ -8,6 +8,8 @@ Live Example
 
 For a complete and detailed example you can see the `openedx-events-2-zapier`_ plugin and its `documentation`_. This is a fully functional plugin that connects to ``STUDENT_REGISTRATION_COMPLETED`` and ``COURSE_ENROLLMENT_CREATED`` and sends the relevant information to Zapier or any other services.
 
+If you use `n8n`_ instead of Zapier, see the `openedx-events-2-n8n`_ plugin and its `n8n documentation`_, which follows the same integration pattern shown below.
+
 Let's see it working!
 
 Setup Your Environment
@@ -89,6 +91,8 @@ Now that you have configured both :term:`event receivers <Event Receiver>`, you'
 .. _Django plugin: https://github.com/openedx/edx-django-utils/blob/master/edx_django_utils/plugins/README.rst
 .. _documentation: https://edunext.github.io/openedx-events-2-zapier/
 .. _install extra requirements in Tutor: https://docs.tutor.edly.io/configuration.html#installing-extra-xblocks-and-requirements
+.. _n8n: https://n8n.io/
+.. _n8n documentation: https://abstract-tech.github.io/openedx-events-2-n8n/
 
 **Maintenance chart**
 
