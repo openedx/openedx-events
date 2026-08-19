@@ -1,0 +1,29 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "graded_content",
+      "type": {
+        "name": "Lti1p1ContentGraded",
+        "type": "record",
+        "fields": [
+          {
+            "name": "user_id",
+            "type": "long"
+          },
+          {
+            "name": "xblock_id",
+            "type": "string"
+          },
+          {
+            "name": "anonymous_user_id",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.content_authoring.xblock.lti1p1.content.graded.v1"
+}
