@@ -23,7 +23,7 @@ cffi==2.1.1
     #   pynacl
 charset-normalizer==3.5.1
     # via requests
-click==8.4.2
+click==8.5.0
     # via
     #   -r requirements/test.txt
     #   click-log
@@ -36,11 +36,11 @@ code-annotations==3.0.0
     # via
     #   -r requirements/test.txt
     #   edx-lint
-coverage[toml]==7.15.4
+coverage[toml]==7.16.0
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==50.0.0
+cryptography==50.0.1
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
@@ -69,7 +69,7 @@ docutils==0.23
     # via readme-renderer
 edx-ccx-keys==2.0.2
     # via -r requirements/test.txt
-edx-django-utils==8.0.1
+edx-django-utils==8.0.2
     # via -r requirements/test.txt
 edx-lint==6.2.0
     # via -r requirements/quality.in
@@ -87,7 +87,7 @@ iniconfig==2.3.0
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==8.0.1
+isort==9.0.1
     # via
     #   -r requirements/quality.in
     #   pylint
@@ -121,6 +121,8 @@ more-itertools==11.1.0
     # via
     #   jaraco-classes
     #   jaraco-functools
+mypy-extensions==1.1.0
+    # via isort
 nh3==0.3.7
     # via readme-renderer
 packaging==26.3
@@ -128,7 +130,7 @@ packaging==26.3
     #   -r requirements/test.txt
     #   pytest
     #   twine
-platformdirs==4.11.3
+platformdirs==4.11.5
     # via pylint
 pluggy==1.6.0
     # via
@@ -151,7 +153,7 @@ pygments==2.21.0
     #   pytest
     #   readme-renderer
     #   rich
-pylint==4.0.7
+pylint==4.0.8
     # via
     #   edx-lint
     #   pylint-celery
@@ -190,7 +192,7 @@ pyyaml==6.0.3
     # via
     #   -r requirements/test.txt
     #   code-annotations
-readme-renderer==45.0
+readme-renderer==46.0
     # via twine
 requests==2.34.2
     # via
@@ -202,7 +204,7 @@ rfc3986==2.0.0
     # via twine
 rich==15.0.0
     # via twine
-ruff==0.16.4
+ruff==0.16.5
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring
