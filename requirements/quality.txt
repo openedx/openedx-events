@@ -130,7 +130,7 @@ packaging==26.3
     #   -r requirements/test.txt
     #   pytest
     #   twine
-platformdirs==4.11.5
+platformdirs==4.11.7
     # via pylint
 pluggy==1.6.0
     # via
@@ -167,7 +167,7 @@ pylint-plugin-utils==0.9.0
     # via
     #   pylint-celery
     #   pylint-django
-pymongo==4.17.0
+pymongo==4.18.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -204,7 +204,7 @@ rfc3986==2.0.0
     # via twine
 rich==15.0.0
     # via twine
-ruff==0.16.5
+ruff==0.16.6
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring

@@ -8,7 +8,7 @@ accessible-pygments==0.0.5
     # via pydata-sphinx-theme
 alabaster==1.0.0
     # via sphinx
-anyio==4.14.2
+anyio==4.15.1
     # via
     #   starlette
     #   watchfiles
@@ -174,7 +174,7 @@ pygments==2.21.0
     #   readme-renderer
     #   rich
     #   sphinx
-pymongo==4.17.0
+pymongo==4.18.0
     # via
     #   -r requirements/test.txt
     #   edx-opaque-keys
@@ -254,7 +254,7 @@ sphinxcontrib-htmlhelp==2.1.0
     # via sphinx
 sphinxcontrib-jsmath==1.0.1
     # via sphinx
-sphinxcontrib-mermaid==2.1.0
+sphinxcontrib-mermaid==2.1.1
     # via -r requirements/doc.in
 sphinxcontrib-qthelp==2.0.0
     # via sphinx
