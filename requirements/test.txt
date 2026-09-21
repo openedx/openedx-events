@@ -91,7 +91,7 @@ pytest-cov==7.1.0
     # via -r requirements/test.in
 pytest-django==4.14.0
     # via -r requirements/test.in
-python-slugify==9.0.0
+python-slugify==9.1.0
     # via code-annotations
 pyyaml==6.0.3
     # via code-annotations
