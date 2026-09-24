@@ -1,13 +1,15 @@
 """
 Tooling necessary to use Open edX events.
 """
+
+import base64
 import pkgutil
 import warnings
 from importlib import import_module
 from logging import getLogger
 
 from django.conf import settings
-from django.db import connection
+from django.db import connection, transaction
 from django.dispatch import Signal
 from edx_django_utils.cache import RequestCache
 
@@ -111,7 +113,16 @@ class OpenEdxPublicSignal(Signal):
             time=time,
         )
 
-    def _send_event_with_metadata(self, metadata, send_robust=True, from_event_bus=False, **kwargs):
+    def _send_event_with_metadata(
+        self,
+        *,
+        metadata,
+        send_robust=True,
+        from_event_bus=False,
+        send_on_commit=False,
+        send_async=False,
+        **kwargs,
+    ):
         """
         Send events to all connected receivers with the provided metadata.
 
@@ -124,6 +135,13 @@ class OpenEdxPublicSignal(Signal):
               being sent from the event bus. This is used to prevent infinite
               loops when the event bus is consuming events. It should not be
               used when sending events from the application.
+            send_on_commit (bool): Defaults to False. If True, defer sending
+              the event until the current database transaction commits. If no
+              transaction is open, the event is sent immediately. If the
+              transaction rolls back, the event is not sent.
+            send_async (bool): Defaults to False. If True, serialize the event
+              and dispatch it to a Celery task so that receivers run in a
+              worker process instead of the caller's thread.
 
         See ``send_event`` docstring for more details on its usage and behavior.
         """
@@ -162,20 +180,56 @@ class OpenEdxPublicSignal(Signal):
 
         validate_sender()
 
+        if send_async:
+            # Serialize event data up-front so that (a) serialization errors surface
+            # in the caller and (b) the task argument is JSON-safe for Celery.
+            # pylint: disable=import-outside-toplevel
+            from openedx_events.event_bus.avro.serializer import serialize_event_data_to_bytes
+            from openedx_events.tasks import send_async_event
+
+            event_data_b64 = base64.b64encode(
+                serialize_event_data_to_bytes(kwargs, self)
+            ).decode("ascii")
+            metadata_json = metadata.to_json()
+
+            def _dispatch_async():
+                send_async_event.delay(self.event_type, metadata_json, event_data_b64)
+
+            if send_on_commit:
+                transaction.on_commit(_dispatch_async)
+            else:
+                _dispatch_async()
+            return []
+
         kwargs["metadata"] = metadata
         kwargs[SIGNAL_PROCESSED_FROM_EVENT_BUS] = from_event_bus
 
-        if self._allow_send_event_failure or settings.DEBUG or not send_robust:
-            return super().send(sender=None, **kwargs)
+        signal_send = super().send
+        signal_send_robust = super().send_robust
 
-        responses = super().send_robust(sender=None, **kwargs)
-        log.info(
-            f"Responses of the Open edX Event <{self.event_type}>: \n{format_responses(responses, depth=2)}",
-        )
+        def _dispatch_sync():
+            if self._allow_send_event_failure or settings.DEBUG or not send_robust:
+                return signal_send(sender=None, **kwargs)
 
-        return responses
+            responses = signal_send_robust(sender=None, **kwargs)
+            log.info(f"Responses of the Open edX Event <{self.event_type}>: \n{format_responses(responses, depth=2)}")
+            return responses
 
-    def send_event(self, send_robust=True, time=None, **kwargs):
+        if send_on_commit:
+            transaction.on_commit(_dispatch_sync)
+            return []
+
+        return _dispatch_sync()
+
+    def send_event(
+        self,
+        *,
+        send_robust=True,
+        time=None,
+        send_on_commit=False,
+        send_async=False,
+        **kwargs,
+    ):
         """
         Send events to all connected receivers.
 
@@ -194,11 +248,26 @@ class OpenEdxPublicSignal(Signal):
             >>> [(<function callback at 0x7f2ce638ef70>, 'callback response')]
 
         Arguments:
-            send_robust (bool): Defaults to True. See Django signal docs.
+            send_robust (bool): Defaults to True unless settings.DEBUG is True or you have previously
+               called .allow_send_event_failure() for this signal. When this is True, exceptions that
+               occurr during event handling will be ignored, ensuring that every registered receiver
+               gets the event. This can make debugging difficult, however. See Django signal docs.
             time (datetime): (Optional - see note) Timestamp when the event was sent with UTC
                timezone. For events requiring a DB create or update, use the timestamp from the DB
                record. Defaults to current time in UTC. This argument is optional for backward
                compatibility, but ideally would be explicitly set. See OEP-41 for details.
+            send_on_commit (bool): Defaults to False. If True, defer sending the event until the
+               current database transaction commits (using ``django.db.transaction.on_commit``). If
+               there is no open transaction the event is sent immediately. If the transaction rolls
+               back the event is not sent. Useful when the event reports a DB change that may yet
+               be rolled back.
+            send_async (bool): Defaults to False. If True, the event is sent from an asynchronous
+               Celery task instead of the caller's thread. The event payload is serialized with the
+               Avro serializer so that attrs-based payload classes can round-trip through Celery's
+               JSON transport. Requires a running Celery worker configured to import
+               ``openedx_events.tasks``. Can be combined with ``send_on_commit`` to defer the Celery
+               dispatch until after the transaction commits. When this is True the returned list is
+               always empty, because receivers run in the worker.
 
         Keyword Arguments:
            kwargs: Data to be sent to the signal's receivers. The keys must match the attributes defined in
@@ -206,17 +275,31 @@ class OpenEdxPublicSignal(Signal):
 
         Returns:
             list: response of each receiver following the format [(receiver, response), ... ].
-               The list is empty if the event is disabled.
+               The list is empty if the event is disabled, if ``send_on_commit`` defers the dispatch,
+               or if ``send_async`` is used.
 
         Raises:
             SenderValidationError: raised when there's a mismatch between arguments passed
                to this method and arguments used to initialize the event.
         """
         metadata = self.generate_signal_metadata(time=time)
-        return self._send_event_with_metadata(metadata=metadata, send_robust=send_robust, **kwargs)
+        return self._send_event_with_metadata(
+            metadata=metadata,
+            send_robust=send_robust,
+            send_on_commit=send_on_commit,
+            send_async=send_async,
+            **kwargs,
+        )
 
     def send_event_with_custom_metadata(
-            self, metadata, /, *, send_robust=True, **kwargs
+        self,
+        metadata,
+        /,
+        *,
+        send_robust=True,
+        send_on_commit=False,
+        send_async=False,
+        **kwargs,
     ):
         """
         Send events to all connected receivers using the provided metadata.
@@ -230,12 +313,19 @@ class OpenEdxPublicSignal(Signal):
         Arguments:
             metadata (EventsMetadata): The metadata to be sent with the signal.
             send_robust (bool): Defaults to True. See Django signal docs.
+            send_on_commit (bool): Defaults to False. See ``send_event``.
+            send_async (bool): Defaults to False. See ``send_event``.
             kwargs: Data to be sent to the signal's receivers.
 
         See ``send_event`` docstring for more details.
         """
         return self._send_event_with_metadata(
-            metadata=metadata, send_robust=send_robust, from_event_bus=True, **kwargs
+            metadata=metadata,
+            send_robust=send_robust,
+            from_event_bus=True,
+            send_on_commit=send_on_commit,
+            send_async=send_async,
+            **kwargs,
         )
 
     def send(self, sender, **kwargs):  # pylint: disable=unused-argument
@@ -266,8 +356,9 @@ class OpenEdxPublicSignal(Signal):
 
     def allow_send_event_failure(self):
         """
-        Allow Django signal to fail. Meaning, uses send_robust instead of send.
+        Do not silence exceptions in event handlers.
 
+        Meaning, uses ``send()`` instead of ``send_robust()``.
         More information on send_robust in the Django official documentation.
         """
         self._allow_send_event_failure = True

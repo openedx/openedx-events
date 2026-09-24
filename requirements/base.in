@@ -1,6 +1,7 @@
 # Core requirements for using this application
 -c constraints.txt
 
+celery
 edx_django_utils
 django
 attrs

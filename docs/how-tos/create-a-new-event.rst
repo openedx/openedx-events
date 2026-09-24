@@ -248,6 +248,25 @@ Here is how the integration could look like:
 - Ensure that the event is triggered consistently and only when the event should be triggered. Avoid triggering the event multiple times for the same event unless necessary, e.g., when there is no other way to ensure that the event is triggered consistently.
 - Try placing the event after the triggering logic completes successfully to ensure that it is triggered only when needed.  This will help ensure that the event is triggered only for factual events. If the triggering logic fails, the event should not be triggered.
 
+Deferring and Backgrounding Event Sends
+-----------------------------------------
+
+``send_event`` accepts two optional keyword arguments that control *when* and *where* receivers run:
+
+- ``send_on_commit=True``: Defer the send until the current database transaction commits (via ``django.db.transaction.on_commit``). If there is no open transaction, the event is sent immediately. If the transaction rolls back, the event is not sent. Use this when the event reports a database change that may still be rolled back, to avoid "counterfactual" events.
+
+- ``send_async=True``: Send the event from an asynchronous Celery task instead of the caller's thread. Event data is serialized with the Avro serializer (so that ``attrs`` payload classes round-trip through Celery's JSON transport) and handed off to ``openedx_events.tasks.send_async_event``. Use this when receivers are slow, non-critical, or you want to decouple their cost from the triggering request. Requires a Celery worker that imports ``openedx_events.tasks``.
+
+Both options can be combined. For example, to send a notification event only if the enrollment commits, and to run the (possibly slow) receivers in a worker:
+
+.. code-block:: python
+
+    COURSE_ENROLLMENT_CREATED.send_event(
+        enrollment=enrollment_data,
+        send_on_commit=True,
+        send_async=True,
+    )
+
 Step 7: Test the Event
 ========================
 

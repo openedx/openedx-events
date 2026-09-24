@@ -16,6 +16,26 @@ Change Log
 Unreleased
 __________
 
+Added
+~~~~~
+
+* ``OpenEdxPublicSignal.send_event`` now accepts two new keyword arguments:
+
+  * ``send_on_commit`` (bool, default ``False``): defers sending the event until
+    the current database transaction commits, using ``django.db.transaction.on_commit``.
+    Sends immediately if there is no open transaction, and does not send at all
+    if the transaction rolls back.
+  * ``send_async`` (bool, default ``False``): sends the event from a Celery
+    task instead of the caller's thread. Event data is serialized with the Avro
+    serializer so that attrs-based payload classes can round-trip through
+    Celery's JSON transport. Requires a Celery worker that imports
+    ``openedx_events.tasks``.
+
+  The two options compose: combining them defers the Celery dispatch until the
+  transaction commits.
+
+* Added ``celery`` to ``requirements/base.in``.
+
 [11.2.0] - 2026-04-20
 ---------------------
 
