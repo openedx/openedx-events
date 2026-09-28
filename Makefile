@@ -29,7 +29,7 @@ coverage: clean ## generate and view HTML coverage report
 	$(BROWSER)htmlcov/index.html
 
 docs: ## generate Sphinx HTML documentation, including API docs
-	uv run tox -e docs
+	tox -e docs
 	$(BROWSER)docs/_build/html/index.html
 
 serve_docs: ## serve the built docs locally to preview the RtD in the browser with theme working
@@ -44,7 +44,7 @@ upgrade: ## upgrade all packages in uv.lock and sync constraints from edx-lint
 	uv lock --upgrade
 
 quality: ## check coding style with pycodestyle and pylint
-	uv run tox -e quality
+	tox -e quality
 
 requirements: ## install development environment requirements
 	uv sync --group dev
@@ -56,8 +56,8 @@ diff_cover: test ## find diff lines that need test coverage
 	diff-cover coverage.xml
 
 test-all: quality ## run tests on every supported Python/Django combination
-	uv run tox
-	uv run tox -e docs
+	tox
+	tox -e docs
 
 validate: quality test ## run tests and quality checks
 
