@@ -111,13 +111,14 @@ More details on: `Forum Emails Notifier`_.
 Webhooks Integration
 ----------------------
 
-`Webhooks`_ trigger an HTTP POST request to a configurable URL when certain events happen in the Open edX platform, including information relevant to the event. When these events are sent, then the data is sent to services like Zapier or any other configured, allowing the sharing of data between different external services.
+`Webhooks`_ trigger an HTTP POST request to a configurable URL when certain events happen in the Open edX platform, including information relevant to the event. When these events are sent, then the data is sent to services like Zapier, n8n, or any other configured, allowing the sharing of data between different external services.
 
 More details on:
 
 * `Webhooks`_.
 * `Open edX Events Sender`_.
 * `Open edX Events To Zapier`_.
+* `Open edX Events To n8n`_.
 
 Send ORA Submissions to Third-Party Plagiarism Services
 ---------------------------------------------------------
