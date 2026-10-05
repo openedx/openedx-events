@@ -12,7 +12,7 @@ asgiref==3.12.1
     # via
     #   -r requirements/test.txt
     #   django
-astroid==4.0.4
+astroid==4.3.3
     # via
     #   pylint
     #   pylint-celery
@@ -31,7 +31,7 @@ cffi==2.1.1
     #   -r requirements/test.txt
     #   cryptography
     #   pynacl
-charset-normalizer==3.5.1
+charset-normalizer==3.5.2
     # via requests
 click==8.5.0
     # via
@@ -66,7 +66,7 @@ coverage[toml]==7.16.2
     # via
     #   -r requirements/test.txt
     #   pytest-cov
-cryptography==50.0.1
+cryptography==50.0.2
     # via secretstorage
 ddt==1.7.2
     # via -r requirements/test.txt
@@ -95,11 +95,11 @@ docutils==0.23
     # via readme-renderer
 edx-ccx-keys==2.0.2
     # via -r requirements/test.txt
-edx-django-utils==8.0.2
+edx-django-utils==8.1.0
     # via -r requirements/test.txt
 edx-lint==6.2.0
     # via -r requirements/quality.in
-edx-opaque-keys[django]==4.0.0
+edx-opaque-keys[django]==4.0.1
     # via
     #   -r requirements/test.txt
     #   edx-ccx-keys
@@ -113,7 +113,7 @@ iniconfig==2.3.0
     # via
     #   -r requirements/test.txt
     #   pytest
-isort==9.0.1
+isort==9.0.2
     # via
     #   -r requirements/quality.in
     #   pylint
@@ -139,7 +139,7 @@ kombu==5.6.2
     #   celery
 markdown-it-py==4.2.0
     # via rich
-markupsafe==3.0.3
+markupsafe==3.0.4
     # via
     #   -r requirements/test.txt
     #   jinja2
@@ -161,7 +161,7 @@ packaging==26.3
     #   kombu
     #   pytest
     #   twine
-platformdirs==4.12.0
+platformdirs==4.12.3
     # via pylint
 pluggy==1.6.0
     # via
@@ -188,7 +188,7 @@ pygments==2.21.0
     #   pytest
     #   readme-renderer
     #   rich
-pylint==4.0.9
+pylint==4.1.2
     # via
     #   edx-lint
     #   pylint-celery
@@ -243,7 +243,7 @@ rfc3986==2.0.0
     # via twine
 rich==15.0.0
     # via twine
-ruff==0.16.9
+ruff==0.16.10
     # via -r requirements/quality.in
 secretstorage==3.5.0
     # via keyring
@@ -278,7 +278,7 @@ typing-extensions==4.16.0
     #   -r requirements/test.txt
     #   click-repl
     #   edx-opaque-keys
-tzdata==2026.4
+tzdata==2026.5
     # via
     #   -r requirements/test.txt
     #   kombu
@@ -297,7 +297,7 @@ vine==5.1.0
     #   amqp
     #   celery
     #   kombu
-wcwidth==0.9.1
+wcwidth==0.9.2
     # via
     #   -r requirements/test.txt
     #   prompt-toolkit
