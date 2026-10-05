@@ -5,6 +5,8 @@ import collections
 import traceback
 from pprint import PrettyPrinter
 
+from packaging.version import Version
+
 
 class ResponsePrettyPrinter(PrettyPrinter):
     """
@@ -89,3 +91,15 @@ def format_responses(obj, indent=1, width=80, depth=None, *, compact=False, sort
         compact=compact,
         sort_dicts=sort_dicts,
     ).pformat(obj)
+
+
+def parse_sourcelib_release(version_str: str) -> tuple[int, ...]:
+    """
+    Return only the release segment of a PEP 440 version as ints.
+
+    Examples:
+      - 11.2.0 -> (11, 2, 0)
+      - 9.10.post1 -> (9, 10)
+      - 1.2.3rc1 -> (1, 2, 3)
+    """
+    return Version(version_str).release
