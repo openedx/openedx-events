@@ -14,6 +14,7 @@ import attrs
 from django.conf import settings
 
 import openedx_events
+from openedx_events.utils import parse_sourcelib_release
 
 
 def _ensure_utc_time(_, attribute, value):
@@ -101,7 +102,7 @@ class EventsMetadata:
     sourcelib = attr.ib(
         type=tuple, default=None,
         converter=attr.converters.default_if_none(
-            attr.Factory(lambda: tuple(map(int, openedx_events.__version__.split("."))))
+            attr.Factory(lambda: parse_sourcelib_release(openedx_events.__version__))
         ),
         validator=attr.validators.instance_of(tuple),
     )
@@ -137,6 +138,10 @@ class EventsMetadata:
         """
         as_json = json.loads(json_string)
         time = datetime.fromisoformat(as_json['time'])
-        sourcelib = tuple(as_json['sourcelib'])
+        raw_sourcelib = as_json["sourcelib"]
+        if isinstance(raw_sourcelib, str):
+            sourcelib = parse_sourcelib_release(raw_sourcelib)
+        else:
+            sourcelib = tuple(raw_sourcelib)
         return cls(event_type=as_json['event_type'], id=UUID(as_json['id']), source=as_json['source'],
                    sourcehost=as_json['sourcehost'], time=time, sourcelib=sourcelib)
