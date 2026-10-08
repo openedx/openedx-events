@@ -248,3 +248,26 @@ class LibraryContainerData:
 
     container_key = attr.ib(type=LibraryContainerLocator)
     background = attr.ib(type=bool, default=False)
+
+
+@attr.s(frozen=True)
+class LtiGradePassbackData:
+    """
+    Data emitted when an LTI tool reports a grade back to Open edX.
+
+    Arguments:
+        user_id (int): Database identifier of the learner's LMS user.
+        anonymous_user_id (str): Anonymous id of the learner's LMS user.
+        course_key (CourseKey): Course where the graded component lives.
+        usage_key (UsageKey): Usage key of the XBlock launching LTI content.
+        score (float): Raw earned score reported by the external LTI tool.
+        max_score (float): Maximum possible score for the graded attempt.
+        lti_version (str): LTI protocol version source (e.g. "1.1", "1.3").
+    """
+    user_id = attr.ib(type=int)
+    anonymous_user_id = attr.ib(type=str)
+    course_key = attr.ib(type=CourseKey)
+    usage_key = attr.ib(type=UsageKey)
+    score = attr.ib(type=float)
+    max_score = attr.ib(type=float)
+    lti_version = attr.ib(type=str)
