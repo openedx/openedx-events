@@ -18,7 +18,7 @@ from openedx_events.content_authoring.data import (
     LibraryBlockData,
     LibraryCollectionData,
     LibraryContainerData,
-    Lti1p1ContentGraded,
+    LtiGradePassbackData,
     XBlockData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -372,15 +372,15 @@ COURSE_RERUN_COMPLETED = OpenEdxPublicSignal(
     }
 )
 
-# .. event_type: org.openedx.content_authoring.xblock.lti1p1.content.graded.v1
-# .. event_name: XBLOCK_LTI1P1_GRADED
-# .. event_key_field: xblock.scope_ids.usage_id
-# .. event_description: emitted when an LTI 1.1 Content is graded via Xblock's OutcomeService
-# .. event_data: Lti1p1ContentGraded
-# .. event_trigger_repository: Pearson-Advance/xblock-lti-consumer
-XBLOCK_LTI1P1_GRADED = OpenEdxPublicSignal(
-    event_type="org.openedx.content_authoring.xblock.lti1p1.content.graded.v1",
+# .. event_type: org.openedx.content_authoring.xblock.lti.grade.passback.v1
+# .. event_name: XBLOCK_LTI_GRADE_PASSBACK
+# .. event_key_field: lti_grade_passback.usage_key
+# .. event_description: emitted when an LTI tool reports a grade passback via XBlock
+# .. event_data: LtiGradePassbackData
+# .. event_trigger_repository: openedx/xblock-lti-consumer
+XBLOCK_LTI_GRADE_PASSBACK = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.xblock.lti.grade.passback.v1",
     data={
-        "graded_content": Lti1p1ContentGraded,
+        "lti_grade_passback": LtiGradePassbackData,
     },
 )
