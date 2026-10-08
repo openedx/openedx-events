@@ -28,6 +28,7 @@ keywords = [
 dynamic = ["readme", "version"]
 
 dependencies = [
+    "celery",
     "Django>=4.2",
     "edx_django_utils",
     "attrs",
