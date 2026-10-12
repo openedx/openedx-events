@@ -4,13 +4,13 @@
 #
 #    make upgrade
 #
-amqp==5.4.0
+amqp==5.4.1
     # via kombu
 asgiref==3.12.1
     # via django
 attrs==26.1.0
     # via -r requirements/base.in
-billiard==4.3.0
+billiard==4.3.1
     # via celery
 celery==5.6.3
     # via -r requirements/base.in
@@ -27,9 +27,9 @@ click-didyoumean==0.3.1
     # via celery
 click-plugins==1.1.1.2
     # via celery
-click-repl==0.4.0
+click-repl==0.4.1
     # via celery
-django==5.2.17
+django==5.2.18
     # via
     #   -c https://raw.githubusercontent.com/openedx/edx-lint/master/edx_lint/files/common_constraints.txt
     #   -r requirements/base.in
@@ -40,9 +40,9 @@ django-crum==0.7.9
     # via edx-django-utils
 django-waffle==5.0.0
     # via edx-django-utils
-dnspython==2.8.0
+dnspython==2.9.0
     # via pymongo
-edx-ccx-keys==2.0.2
+edx-ccx-keys==2.1.0
     # via -r requirements/base.in
 edx-django-utils==8.1.0
     # via -r requirements/base.in
@@ -50,7 +50,7 @@ edx-opaque-keys[django]==4.0.1
     # via
     #   -r requirements/base.in
     #   edx-ccx-keys
-fastavro==1.12.2
+fastavro==1.13.1
     # via -r requirements/base.in
 kombu==5.6.2
     # via celery
@@ -60,9 +60,9 @@ prompt-toolkit==3.0.53
     # via click-repl
 psutil==7.2.2
     # via edx-django-utils
-pycparser==3.0
+pycparser==3.11
     # via cffi
-pymongo==4.18.2
+pymongo==4.18.3
     # via edx-opaque-keys
 pynacl==1.6.2
     # via edx-django-utils
