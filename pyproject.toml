@@ -91,7 +91,7 @@ dev = [
 ]
 
 [tool.setuptools]
-include-package-data = true
+include-package-data = false
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.rst"], content-type = "text/x-rst"}
@@ -100,12 +100,6 @@ readme = {file = ["README.rst"], content-type = "text/x-rst"}
 where = ["src"]
 include = ["openedx_events", "openedx_events.*"]
 exclude = ["*tests"]
-
-[tool.setuptools.exclude-package-data]
-# `packages.find.exclude` above only stops setuptools from *registering* the
-# tests subpackage -- with include-package-data=true, setuptools-scm still
-# sweeps tracked test files in as package_data unless excluded here too.
-"*" = ["tests/*", "tests/**/*"]
 
 [tool.setuptools_scm]
 version_scheme = "only-version"
@@ -155,7 +149,6 @@ indent = '    '
 line_length = 120
 multi_line_output = 3
 include_trailing_comma = true
-skip = ["migrations"]
 
 [tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "test_utils.test_settings"
