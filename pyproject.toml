@@ -8,7 +8,7 @@ description = "Open edX events from the Hooks Extensions Framework"
 requires-python = ">=3.12"
 license = "Apache-2.0"
 authors = [
-    {name = "edX", email = "oscm@edx.org"},
+    {name = "Open edX Project", email = "oscm@openedx.org"},
 ]
 classifiers = [
     'Development Status :: 3 - Alpha',
