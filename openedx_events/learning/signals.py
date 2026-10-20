@@ -24,6 +24,7 @@ from openedx_events.learning.data import (
     LtiProviderLaunchData,
     ORASubmissionData,
     PersistentCourseGradeData,
+    PersistentSubsectionGradeData,
     ProgramCertificateData,
     UserData,
     UserNotificationData,
@@ -42,7 +43,7 @@ STUDENT_REGISTRATION_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.student.registration.completed.v1",
     data={
         "user": UserData,
-    }
+    },
 )
 
 
@@ -56,7 +57,7 @@ SESSION_LOGIN_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.auth.session.login.completed.v1",
     data={
         "user": UserData,
-    }
+    },
 )
 
 
@@ -70,7 +71,7 @@ COURSE_ENROLLMENT_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.enrollment.created.v1",
     data={
         "enrollment": CourseEnrollmentData,
-    }
+    },
 )
 
 
@@ -84,7 +85,7 @@ COURSE_ENROLLMENT_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.enrollment.changed.v1",
     data={
         "enrollment": CourseEnrollmentData,
-    }
+    },
 )
 
 
@@ -98,7 +99,7 @@ COURSE_UNENROLLMENT_COMPLETED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.unenrollment.completed.v1",
     data={
         "enrollment": CourseEnrollmentData,
-    }
+    },
 )
 
 
@@ -112,7 +113,7 @@ CERTIFICATE_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.certificate.created.v1",
     data={
         "certificate": CertificateData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.program.certificate.awarded.v1
@@ -125,7 +126,7 @@ PROGRAM_CERTIFICATE_AWARDED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.program.certificate.awarded.v1",
     data={
         "program_certificate": ProgramCertificateData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.certificate.changed.v1
@@ -137,7 +138,7 @@ CERTIFICATE_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.certificate.changed.v1",
     data={
         "certificate": CertificateData,
-    }
+    },
 )
 
 
@@ -151,7 +152,7 @@ CERTIFICATE_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.certificate.revoked.v1",
     data={
         "certificate": CertificateData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.program.certificate.revoked.v1
@@ -164,7 +165,7 @@ PROGRAM_CERTIFICATE_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.program.certificate.revoked.v1",
     data={
         "program_certificate": ProgramCertificateData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.cohort_membership.changed.v1
@@ -176,7 +177,7 @@ COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.cohort_membership.changed.v1",
     data={
         "cohort": CohortData,
-    }
+    },
 )
 
 
@@ -189,9 +190,7 @@ COHORT_MEMBERSHIP_CHANGED = OpenEdxPublicSignal(
 # .. event_trigger_repository: openedx/edx-platform
 COURSE_DISCUSSIONS_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.discussions.configuration.changed.v1",
-    data={
-        "configuration": CourseDiscussionConfigurationData
-    }
+    data={"configuration": CourseDiscussionConfigurationData},
 )
 
 # .. event_type: org.openedx.learning.course.persistent_grade_summary.changed.v1
@@ -203,7 +202,20 @@ PERSISTENT_GRADE_SUMMARY_CHANGED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.persistent_grade_summary.changed.v1",
     data={
         "grade": PersistentCourseGradeData,
-    }
+    },
+)
+
+
+# .. event_type: org.openedx.learning.course.persistent_subsection_grade.changed.v1
+# .. event_name: PERSISTENT_SUBSECTION_GRADE_CHANGED
+# .. event_description: Emitted when a course's persistent grade summary changes for a user.
+# .. event_data: PersistentSubsectionGradeData
+# .. event_trigger_repository: openedx/edx-platform
+PERSISTENT_SUBSECTION_GRADE_CHANGED = OpenEdxPublicSignal(
+    event_type="org.openedx.learning.course.persistent_subsection_grade.changed.v1",
+    data={
+        "grade": PersistentSubsectionGradeData,
+    },
 )
 
 
@@ -217,7 +229,7 @@ XBLOCK_SKILL_VERIFIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.xblock.skill.verified.v1",
     data={
         "xblock_info": XBlockSkillVerificationData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.user.notification.requested.v1
@@ -231,7 +243,7 @@ USER_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.notification.requested.v1",
     data={
         "notification_data": UserNotificationData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.submitted.v1
@@ -243,7 +255,7 @@ EXAM_ATTEMPT_SUBMITTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.submitted.v1",
     data={
         "exam_attempt": ExamAttemptData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.rejected.v1
@@ -255,7 +267,7 @@ EXAM_ATTEMPT_REJECTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.rejected.v1",
     data={
         "exam_attempt": ExamAttemptData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.verified.v1
@@ -267,7 +279,7 @@ EXAM_ATTEMPT_VERIFIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.verified.v1",
     data={
         "exam_attempt": ExamAttemptData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.errored.v1
@@ -279,7 +291,7 @@ EXAM_ATTEMPT_ERRORED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.errored.v1",
     data={
         "exam_attempt": ExamAttemptData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.exam.attempt.reset.v1
@@ -291,7 +303,7 @@ EXAM_ATTEMPT_RESET = OpenEdxPublicSignal(
     event_type="org.openedx.learning.exam.attempt.reset.v1",
     data={
         "exam_attempt": ExamAttemptData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.user.course_access_role.added.v1
@@ -303,7 +315,7 @@ COURSE_ACCESS_ROLE_ADDED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.course_access_role.added.v1",
     data={
         "course_access_role_data": CourseAccessRoleData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.user.course_access_role.removed.v1
@@ -316,7 +328,7 @@ COURSE_ACCESS_ROLE_REMOVED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.user.course_access_role.removed.v1",
     data={
         "course_access_role_data": CourseAccessRoleData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.forum.thread.created.v1
@@ -330,7 +342,7 @@ FORUM_THREAD_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.forum.thread.created.v1",
     data={
         "thread": DiscussionThreadData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.forum.thread.response.created.v1
@@ -344,7 +356,7 @@ FORUM_THREAD_RESPONSE_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.forum.thread.response.created.v1",
     data={
         "thread": DiscussionThreadData,
-    }
+    },
 )
 
 # .. event_type: org.openedx.learning.forum.thread.response.comment.created.v1
@@ -358,7 +370,7 @@ FORUM_RESPONSE_COMMENT_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.forum.thread.response.comment.created.v1",
     data={
         "thread": DiscussionThreadData,
-    }
+    },
 )
 
 
@@ -373,7 +385,7 @@ COURSE_NOTIFICATION_REQUESTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.notification.requested.v1",
     data={
         "course_notification_data": CourseNotificationData,
-    }
+    },
 )
 
 
@@ -400,7 +412,7 @@ COURSE_PASSING_STATUS_UPDATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.course.passing.status.updated.v1",
     data={
         "course_passing_status": CoursePassingStatusData,
-    }
+    },
 )
 
 
@@ -413,7 +425,7 @@ CCX_COURSE_PASSING_STATUS_UPDATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.ccx.course.passing.status.updated.v1",
     data={
         "course_passing_status": CcxCoursePassingStatusData,
-    }
+    },
 )
 
 
@@ -426,7 +438,7 @@ BADGE_AWARDED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.badge.awarded.v1",
     data={
         "badge": BadgeData,
-    }
+    },
 )
 
 
@@ -439,7 +451,7 @@ BADGE_REVOKED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.badge.revoked.v1",
     data={
         "badge": BadgeData,
-    }
+    },
 )
 
 
@@ -452,7 +464,7 @@ IDV_ATTEMPT_CREATED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.created.v1",
     data={
         "idv_attempt": VerificationAttemptData,
-    }
+    },
 )
 
 
@@ -465,7 +477,7 @@ IDV_ATTEMPT_PENDING = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.pending.v1",
     data={
         "idv_attempt": VerificationAttemptData,
-    }
+    },
 )
 
 
@@ -478,7 +490,7 @@ IDV_ATTEMPT_APPROVED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.approved.v1",
     data={
         "idv_attempt": VerificationAttemptData,
-    }
+    },
 )
 
 
@@ -491,7 +503,7 @@ IDV_ATTEMPT_DENIED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.idv_attempt.denied.v1",
     data={
         "idv_attempt": VerificationAttemptData,
-    }
+    },
 )
 
 
@@ -503,7 +515,7 @@ EXTERNAL_GRADER_SCORE_SUBMITTED = OpenEdxPublicSignal(
     event_type="org.openedx.learning.external_grader.score.submitted.v1",
     data={
         "score": ExternalGraderScoreData,
-    }
+    },
 )
 
 
@@ -515,5 +527,5 @@ LTI_PROVIDER_LAUNCH_SUCCESS = OpenEdxPublicSignal(
     event_type="org.openedx.learning.lti_provider.launch.success.v1",
     data={
         "launch_data": LtiProviderLaunchData,
-    }
+    },
 )
