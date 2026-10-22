@@ -33,7 +33,6 @@ docs: ## generate Sphinx HTML documentation, including API docs
 	$(BROWSER)docs/_build/html/index.html
 
 serve_docs: ## serve the built docs locally to preview the RtD in the browser with theme working
-	uv sync --group doc
 	make -e -C docs serve_docs
 
 compile-requirements: ## generate the uv.lock file without upgrading packages
