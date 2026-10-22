@@ -1,10 +1,13 @@
 """
 Tests for openedx_events/testing.py.
 """
+import ddt
 from django.test import TestCase
+from packaging.version import InvalidVersion
 
 from openedx_events.testing import FreezeSignalCacheMixin, OpenEdxEventsTestMixin
 from openedx_events.tooling import OpenEdxPublicSignal, load_all_signals
+from openedx_events.utils import parse_sourcelib_release
 
 
 class OpenEdxEventsTestMixinIsolationTest(FreezeSignalCacheMixin, TestCase):
@@ -73,3 +76,24 @@ class OpenEdxEventsTestMixinIsolationTest(FreezeSignalCacheMixin, TestCase):
             self._all_events_enabled(),
             "tearDownClass should re-enable all events regardless of how many were enabled.",
         )
+
+
+@ddt.ddt
+class TestParseSourcelibRelease(TestCase):
+    """Tests for parse_sourcelib_release utility."""
+
+    @ddt.data(
+        ("11.2.0", (11, 2, 0)),
+        ("9.10.post1", (9, 10)),
+        ("1.2.3rc1", (1, 2, 3)),
+        ("2.0.dev4", (2, 0)),
+    )
+    @ddt.unpack
+    def test_valid_pep440_versions(self, raw_version, expected):
+        """It returns the release tuple for valid PEP 440 versions."""
+        assert parse_sourcelib_release(raw_version) == expected
+
+    def test_invalid_version_raises(self):
+        """It raises InvalidVersion for malformed versions."""
+        with self.assertRaises(InvalidVersion):
+            parse_sourcelib_release("not-a-version")

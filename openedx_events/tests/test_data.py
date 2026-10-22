@@ -46,3 +46,35 @@ class TestEventsMetadata(TestCase):
                 event_type='test_type'
             )
             self.assertEqual(metadata.source, expected_source)
+
+    def test_events_metadata_from_json_with_string_sourcelib(self):
+        """from_json parses PEP 440 sourcelib strings into release tuple of ints."""
+        json_string = """
+        {
+        "event_type": "test_type",
+        "id": "c45efb10-3556-11ee-9f19-7e694b1e500b",
+        "minorversion": 0,
+        "source": "test_source",
+        "sourcehost": "test_source_host",
+        "time": "2024-01-01T00:00:00+00:00",
+        "sourcelib": "9.10.post1"
+        }
+        """
+        metadata = EventsMetadata.from_json(json_string)
+        self.assertEqual(metadata.sourcelib, (9, 10))
+
+    def test_events_metadata_from_json_with_list_sourcelib(self):
+        """from_json preserves list/tuple sourcelib input from JSON."""
+        json_string = """
+        {
+        "event_type": "test_type",
+        "id": "c45efb10-3556-11ee-9f19-7e694b1e500b",
+        "minorversion": 0,
+        "source": "test_source",
+        "sourcehost": "test_source_host",
+        "time": "2024-01-01T00:00:00+00:00",
+        "sourcelib": [1, 2, 3]
+        }
+        """
+        metadata = EventsMetadata.from_json(json_string)
+        self.assertEqual(metadata.sourcelib, (1, 2, 3))
