@@ -18,6 +18,7 @@ from openedx_events.content_authoring.data import (
     LibraryBlockData,
     LibraryCollectionData,
     LibraryContainerData,
+    LtiGradePassbackData,
     XBlockData,
 )
 from openedx_events.tooling import OpenEdxPublicSignal
@@ -369,4 +370,17 @@ COURSE_RERUN_COMPLETED = OpenEdxPublicSignal(
     data={
         "course": CourseData,
     }
+)
+
+# .. event_type: org.openedx.content_authoring.xblock.lti.grade.passback.v1
+# .. event_name: XBLOCK_LTI_GRADE_PASSBACK
+# .. event_key_field: lti_grade_passback.usage_key
+# .. event_description: emitted when an LTI tool reports a grade passback via XBlock
+# .. event_data: LtiGradePassbackData
+# .. event_trigger_repository: openedx/xblock-lti-consumer
+XBLOCK_LTI_GRADE_PASSBACK = OpenEdxPublicSignal(
+    event_type="org.openedx.content_authoring.xblock.lti.grade.passback.v1",
+    data={
+        "lti_grade_passback": LtiGradePassbackData,
+    },
 )
