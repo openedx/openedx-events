@@ -74,7 +74,7 @@ An :term:`Event Receiver` is simply a function that listens for a specific event
 - This event has a single field called ``enrollment``, which is an instance of the ``CourseEnrollmentData`` class. You can review the ``CourseEnrollmentData`` class to understand the data that is available to you and how you can use it to implement the custom logic.
 - The ``metadata`` parameter contains the Open edX-specific metadata for the event, such as the event version and timestamp when the event was sent. You can use this metadata to understand more about the event and its context.
 
-These event receivers are usually implemented independently of the service in an `Open edX Django plugin`_ and are registered in the ``handlers.py`` (according to `OEP-49`_) file of the plugin. You can review the ``handlers.py`` file of the `openedx-events-2-zapier`_ plugin to understand how the event receivers are implemented and connected to the events.
+These event receivers are usually implemented independently of the service in an `Open edX Django plugin`_ and are registered in the ``handlers.py`` (according to `OEP-49`_) file of the plugin. You can review the ``handlers.py`` file of the `openedx-events-2-zapier`_ or `openedx-events-2-n8n`_ plugins to understand how the event receivers are implemented and connected to the events.
 
 Consider the following when implementing the event receiver:
 
@@ -123,7 +123,7 @@ Given the design of Open edX Events, you can include the events' definitions in 
 - In the test suite, you can use the ``send_event`` method to trigger the event and pass the necessary data to the event receiver. In this case, we pass the user, course, and enrollment data to the event receiver as the triggering logic would.
 - After triggering the event, you can assert that the event receiver executed the custom logic as expected. In this case, we check that the request was sent to the webhook with the correct data.
 
-You can review this example to understand how you can test the event receiver and ensure that the custom logic is executed when the event is triggered in the `openedx-events-2-zapier`_ plugin.
+You can review this example to understand how you can test the event receiver and ensure that the custom logic is executed when the event is triggered in the `openedx-events-2-zapier`_ or `openedx-events-2-n8n`_ plugins.
 
 This way you can ensure that the event receiver is working as expected and that the custom logic is executed when the event is triggered. If the event definition or payload changes in any way, you can catch the error in the test suite instead of in production.
 
