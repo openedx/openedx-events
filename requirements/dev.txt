@@ -8,7 +8,7 @@ amqp==5.4.1
     # via
     #   -r requirements/quality.txt
     #   kombu
-asgiref==3.12.1
+asgiref==3.13.0
     # via
     #   -r requirements/quality.txt
     #   django
@@ -27,13 +27,13 @@ build==1.6.1
     # via
     #   -r requirements/pip-tools.txt
     #   pip-tools
-cachetools==7.2.3
+cachetools==7.2.5
     # via
     #   -r requirements/ci.txt
     #   tox
 celery==5.6.3
     # via -r requirements/quality.txt
-certifi==2026.10.19
+certifi==2026.10.23
     # via
     #   -r requirements/quality.txt
     #   requests
@@ -85,7 +85,7 @@ colorama==0.4.6
     # via
     #   -r requirements/ci.txt
     #   tox
-coverage[toml]==7.16.2
+coverage[toml]==7.17.0
     # via
     #   -r requirements/quality.txt
     #   pytest-cov
@@ -140,7 +140,7 @@ edx-opaque-keys[django]==4.0.1
     #   edx-ccx-keys
 fastavro==1.13.1
     # via -r requirements/quality.txt
-filelock==4.2.2
+filelock==4.2.4
     # via
     #   -r requirements/ci.txt
     #   python-discovery
@@ -236,7 +236,7 @@ packaging==26.3
     #   wheel
 pip-tools==7.6.2
     # via -r requirements/pip-tools.txt
-platformdirs==4.13.4
+platformdirs==4.13.5
     # via
     #   -r requirements/ci.txt
     #   -r requirements/quality.txt
@@ -261,7 +261,7 @@ psutil==7.2.2
     #   edx-django-utils
 pycodestyle==2.15.0
     # via -r requirements/quality.txt
-pycparser==3.11
+pycparser==3.12
     # via
     #   -r requirements/quality.txt
     #   cffi
@@ -318,11 +318,11 @@ pytest-cov==7.1.0
     # via -r requirements/quality.txt
 pytest-django==4.14.0
     # via -r requirements/quality.txt
-python-dateutil==2.9.0.post0
+python-dateutil==3.0.0
     # via
     #   -r requirements/quality.txt
     #   celery
-python-discovery==1.6.3
+python-discovery==1.6.4
     # via
     #   -r requirements/ci.txt
     #   tox
@@ -356,7 +356,7 @@ rich==15.0.0
     # via
     #   -r requirements/quality.txt
     #   twine
-ruff==0.17.1
+ruff==0.17.2
     # via -r requirements/quality.txt
 secretstorage==3.5.0
     # via
@@ -406,7 +406,8 @@ tzdata==2026.5
     # via
     #   -r requirements/quality.txt
     #   kombu
-tzlocal==5.4.4
+    #   python-dateutil
+tzlocal==5.4.5
     # via
     #   -r requirements/quality.txt
     #   celery
@@ -422,11 +423,11 @@ vine==5.1.0
     #   amqp
     #   celery
     #   kombu
-virtualenv==21.14.11
+virtualenv==21.14.13
     # via
     #   -r requirements/ci.txt
     #   tox
-wcwidth==0.9.2
+wcwidth==0.9.4
     # via
     #   -r requirements/quality.txt
     #   prompt-toolkit
