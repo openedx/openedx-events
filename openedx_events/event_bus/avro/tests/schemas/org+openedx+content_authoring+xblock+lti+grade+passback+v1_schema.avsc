@@ -1,0 +1,45 @@
+{
+  "name": "CloudEvent",
+  "type": "record",
+  "doc": "Avro Event Format for CloudEvents created with openedx_events/schema",
+  "fields": [
+    {
+      "name": "lti_grade_passback",
+      "type": {
+        "name": "LtiGradePassbackData",
+        "type": "record",
+        "fields": [
+          {
+            "name": "user_id",
+            "type": "long"
+          },
+          {
+            "name": "anonymous_user_id",
+            "type": "string"
+          },
+          {
+            "name": "course_key",
+            "type": "string"
+          },
+          {
+            "name": "usage_key",
+            "type": "string"
+          },
+          {
+            "name": "score",
+            "type": "double"
+          },
+          {
+            "name": "max_score",
+            "type": "double"
+          },
+          {
+            "name": "lti_version",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "namespace": "org.openedx.content_authoring.xblock.lti.grade.passback.v1"
+}
