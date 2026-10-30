@@ -55,8 +55,6 @@ Check off if complete *or* not applicable:
 - [ ] All reviewers approved
 - [ ] Reviewer tested the code following the testing instructions
 - [ ] CI build is green
-- [ ] Version bumped
-- [ ] Changelog record added with short description of the change and current date
 - [ ] Documentation updated (not only docstrings)
 - [ ] Integration with other services reviewed
 - [ ] Fixup commits are squashed away
@@ -64,9 +62,5 @@ Check off if complete *or* not applicable:
 - [ ] Noted any: Concerns, dependencies, migration issues, deadlines, tickets
 
 **Post Merge:**
-- [ ] Create a tag
-- [ ] Create a release on GitHub
-- [ ] Check new version is pushed to PyPI after tag-triggered build is
-      finished.
 - [ ] Delete working branch (if not needed anymore)
 - [ ] Upgrade the package in the Open edX platform requirements (if applicable)

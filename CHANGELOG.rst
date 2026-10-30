@@ -1,6 +1,9 @@
 Change Log
 ==========
 
+This changelog is no longer maintained. Release notes are published only on
+the `GitHub Releases page <https://github.com/openedx/openedx-events/releases>`_.
+
 ..
    All enhancements and patches to openedx_events will be documented
    in this file.  It adheres to the structure of https://keepachangelog.com/ ,

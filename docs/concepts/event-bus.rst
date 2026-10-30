@@ -127,9 +127,9 @@ The event bus is used to broadcast Open edX Events to multiple services, allowin
 
 We encourage you to review the :ref:`Real-Life Use Cases` page for examples of how the community uses the event bus in the Open edX ecosystem. Also, see the :ref:`Use the Open edX Event Bus to Broadcast and Consume Events` guide to start sending events to the event bus.
 
-.. _general_signal_handler: https://github.com/openedx/openedx-events/blob/main/openedx_events/apps.py#L16-L44
-.. _EventProducer: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/__init__.py#L71-L91
-.. _EventConsumer: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/__init__.py#L128-L139
+.. _general_signal_handler: https://github.com/openedx/openedx-events/blob/main/src/openedx_events/apps.py#L16-L44
+.. _EventProducer: https://github.com/openedx/openedx-events/blob/main/src/openedx_events/event_bus/__init__.py#L71-L91
+.. _EventConsumer: https://github.com/openedx/openedx-events/blob/main/src/openedx_events/event_bus/__init__.py#L128-L139
 .. _publish/subscribe messaging pattern: https://en.wikipedia.org/wiki/Publish%E2%80%93subscribe_pattern
 
 **Maintenance chart**
