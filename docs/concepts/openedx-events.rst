@@ -88,9 +88,9 @@ For more information on using Open edX Events, refer to the :ref:`Create a New O
 .. _Django signals registry mechanism: https://docs.djangoproject.com/en/4.2/topics/signals/#listening-to-signals
 .. _signal receivers in their plugins: https://docs.openedx.org/projects/edx-django-utils/en/latest/edx_django_utils.plugins.html#edx_django_utils.plugins.constants.PluginSignals
 .. _Open edX Django plugins: https://docs.openedx.org/projects/edx-django-utils/en/latest/plugins/readme.html
-.. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
+.. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/src/openedx_events/tooling.py#L37
 .. _Django's Signals class: https://docs.djangoproject.com/en/4.2/topics/signals/#defining-and-sending-signals
-.. _send_event: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L185
+.. _send_event: https://github.com/openedx/openedx-events/blob/main/src/openedx_events/tooling.py#L185
 .. _send or send_robust: https://docs.djangoproject.com/en/4.2/topics/signals/#sending-signals
 
 **Maintenance chart**
