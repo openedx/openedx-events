@@ -354,7 +354,7 @@ For more details on how the contribution flow works, refer to the :ref:`docs.ope
 .. _Add Program Certificate events: https://github.com/openedx/openedx-events/issues/250
 .. _attrs: https://www.attrs.org/en/stable/
 .. _Tutor: https://docs.tutor.edly.io/
-.. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/openedx_events/tooling.py#L37
+.. _OpenEdxPublicSignal: https://github.com/openedx/openedx-events/blob/main/src/openedx_events/tooling.py#L37
 
 **Maintenance chart**
 

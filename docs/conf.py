@@ -232,7 +232,7 @@ def linkcode_resolve(domain: str, info: dict[str, str]) -> str | None:
 
     import openedx_events
 
-    start_dir = os.path.abspath(os.path.join(dirname(openedx_events.__file__), ".."))
+    start_dir = os.path.abspath(os.path.join(dirname(openedx_events.__file__), "..", ".."))
     file_path = relpath(file_path, start=start_dir).replace(os.path.sep, "/")
 
     return f"{REPO_URL}/{file_path}{linespec}"

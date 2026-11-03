@@ -1,11 +1,11 @@
 name: Python CI
 
 on:
-  push:
-    branches: [main]
   pull_request:
     branches:
     - '**'
+  # So the release workflow can run CI before cutting a release.
+  workflow_call:
 
 
 jobs:
@@ -20,21 +20,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-    - name: Setup python
-      uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
+    - name: Install uv
+      uses: astral-sh/setup-uv@11f9893b081a58869d3b5fccaea48c9e9e46f990 # v8.3.2
       with:
+        enable-cache: true
         python-version: ${{ matrix.python-version }}
 
-    - name: Install pip
-      run: pip install -r requirements/pip.txt
-
     - name: Install Dependencies
-      run: pip install -r requirements/ci.txt
+      run: uv sync --locked --group ci
 
     - name: Run Tests
       env:
         TOXENV: ${{ matrix.toxenv }}
-      run: tox
+      run: uv run --locked tox
 
     - name: Run coverage
       if: matrix.python-version == '3.12' && matrix.toxenv == 'django42'

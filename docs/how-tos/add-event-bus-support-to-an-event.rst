@@ -184,8 +184,8 @@ To validate that you can consume the event emitted by a service through the even
 
 .. _Avro: https://avro.apache.org/
 .. _attrs data classes: https://www.attrs.org/en/stable/overview.html
-.. _serialize_event_data_to_bytes: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/avro/serializer.py#L82-L98
-.. _deserialize_bytes_to_event_data: https://github.com/openedx/openedx-events/blob/main/openedx_events/event_bus/avro/deserializer.py#L86-L98
+.. _serialize_event_data_to_bytes: https://github.com/openedx/openedx-events/blob/main/src/openedx_events/event_bus/avro/serializer.py#L82-L98
+.. _deserialize_bytes_to_event_data: https://github.com/openedx/openedx-events/blob/main/src/openedx_events/event_bus/avro/deserializer.py#L86-L98
 .. _setup instructions in a Tutor environment: https://github.com/openedx/event-bus-redis/blob/main/docs/tutor_installation.rst
 .. _serialization: https://github.com/openedx/event-bus-redis/blob/main/edx_event_bus_redis/internal/producer.py#L128-L137
 .. _deserialization: https://github.com/openedx/event-bus-redis/blob/main/edx_event_bus_redis/internal/consumer.py#L276-L289
